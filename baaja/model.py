@@ -6,7 +6,7 @@ with the same seed drifted onto different random streams and paired differences 
 Distributions are unchanged; individual seeds no longer match v3 exactly."""
 import numpy as np
 
-from .params import T, TURNOVERS, TYPES
+from .params import CHALLENGER_FILTER, CHALLENGER_MIX, CHALLENGER_WIN_REL, CHALLENGERS, T, TURNOVERS, TYPES
 
 KIND = np.array(["CE", "EA", "EIS"])
 RENEWABLE_SIDE = ("Solar", "Onshore wind", "Offshore wind", "Storage", "Transmission")
@@ -48,11 +48,15 @@ def simulate(p, seed, hostile_to):
         intake = p["intake_pub"] if ty["pub"] else p["intake_oth"]
         tP = t0 + np.where(nexus, intake + D + ty["nonnepa"] * p["nonnepa_mult"], 0)
         # challengers
-        lit_p = np.where(kind == 2, ty["lit"], np.where(kind == 1, p["lit_ea"], p["lit_ce"])) * p["suit_mult"]
+        # challengers: the would-be lead challenger is drawn from the technology's mix; Sec.1110 filters it by type
+        who = rng.choice(len(CHALLENGERS), n, p=CHALLENGER_MIX[name])
+        filt = np.ones(len(CHALLENGERS)) if p["challenger_filter"] is None else np.array(CHALLENGER_FILTER[p["challenger_filter"]])
+        lit_p = np.where(kind == 2, ty["lit"], np.where(kind == 1, p["lit_ea"], p["lit_ce"])) * p["suit_mult"] * filt[who]
         sued = nexus & (rng.random(n) < lit_p)
         L = p["lit_med"] * rng.lognormal(0, .5, n)
         paused = sued & (rng.random(n) < p["pause"])
-        lost = sued & (rng.random(n) < p["p_loss"] * np.where(trunc, p["trunc_loss_mult"], 1))
+        p_lose = p["p_loss"] * np.array(CHALLENGER_WIN_REL)[who] * np.where(trunc, p["trunc_loss_mult"], 1)
+        lost = sued & (rng.random(n) < np.minimum(p_lose, 1))
         delay = np.where(paused, L, 0.0)
         killed = np.zeros(n, bool)
         u_vac, u_kill = rng.random(n), rng.random(n)     # drawn in every scenario (common random numbers)
@@ -87,7 +91,8 @@ def simulate(p, seed, hostile_to):
         done = ~withdrawn & ~killed
         rows.append(dict(type=name, t0=t0, nexus=nexus, kind=kind, sued=sued, trunc=trunc, cut=cut,
                          cut_months=cut_months, halted=halted, done=done, tCOD=tCOD, mw=ty["mw"], wait=tCOD - t0,
-                         tPermit=np.where(nexus, tPermit, np.nan), killed=killed))
+                         tPermit=np.where(nexus, tPermit, np.nan), killed=killed,
+                         who=np.where(sued, who, -1), lost=lost, paused=paused))
     return rows
 
 
@@ -115,6 +120,9 @@ def summarize(rows, p):
             truncated_share=float(r["trunc"][r["nexus"]].mean()) if r["nexus"].any() else 0.0,
             mean_review_cut=float(r["cut"][r["trunc"]].mean()) if r["trunc"].any() else 0.0,
             harm=harm_index(r, p))
+        for j, c in enumerate(CHALLENGERS):
+            out[r["type"]][f"suits: {c}"] = float((r["who"] == j).sum())
+            out[r["type"]][f"wins: {c}"] = float(((r["who"] == j) & r["lost"]).sum())
     out["_groups"] = summarize_groups(rows)
     return out
 
@@ -139,4 +147,8 @@ def summarize_groups(rows):
             permitted_share_of_nexus=float(permitted.sum() / nx.sum()) if nx.any() else np.nan,
             sued_share_of_nexus=float(sued[nx].mean()) if nx.any() else np.nan,
             suits=float(sued.sum()))
+        who, lost = cat("who"), cat("lost")
+        for j, c in enumerate(CHALLENGERS):
+            out[g][f"suits: {c}"] = float((who == j).sum())
+            out[g][f"challenger wins: {c}"] = float(((who == j) & lost).sum())
     return out

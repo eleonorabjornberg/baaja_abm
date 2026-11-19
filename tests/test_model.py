@@ -121,3 +121,33 @@ def test_paired_difference_has_interval():
     base = ex.run_scenario({}, 4, H); z = ex.run_scenario(BAAJA, 4, H)
     d = ex.aggregate(z, base)["diff_vs_baseline"]["GW_total"]
     assert d["p5"] <= d["mean"] <= d["p95"] and d["mean"] > 0
+
+
+# --- challengers ---
+from baaja.params import CHALLENGER_FILTER, CHALLENGER_MIX, CHALLENGERS
+
+
+def test_challenger_mixes_are_distributions():
+    for t in TYPES:
+        assert len(CHALLENGER_MIX[t]) == len(CHALLENGERS) and sum(CHALLENGER_MIX[t]) == pytest.approx(1.0)
+
+
+def test_challenger_filter_mean_close_to_v3_factor():
+    # technology-weighted mean of the Sec.1110 filter should stay near v3's single 0.55
+    f = np.array(CHALLENGER_FILTER["BAAJA"])
+    means = [np.dot(CHALLENGER_MIX[t], f) for t in TYPES]
+    assert all(0.5 < m < 0.65 for m in means)
+
+
+def test_suits_by_challenger_sum_to_total_suits():
+    p = params(BAAJA); s = summarize(simulate(p, 0, POL), p)
+    for t in TYPES:
+        assert sum(s[t][f"suits: {c}"] for c in CHALLENGERS) == s[t]["suits"]
+        assert all(s[t][f"wins: {c}"] <= s[t][f"suits: {c}"] for c in CHALLENGERS)
+
+
+def test_baaja_filters_local_groups_harder_than_governments():
+    base = ex.run_scenario({}, 20, H); z = ex.run_scenario(BAAJA, 20, H)
+    tot = lambda runs, c: sum(r[t][f"suits: {c}"] for r in runs for t in TYPES)
+    keep = {c: tot(z, c) / tot(base, c) for c in CHALLENGERS}
+    assert keep["Local group / residents"] < keep["State / local government"]

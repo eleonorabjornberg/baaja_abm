@@ -66,9 +66,12 @@ BASE = dict(enforced=False, deadline={"EA": 12, "EIS": 24}, enf_lag=4, ce_shift=
             vacatur=True, remand=12, p_kill_vac=.2,
             ix_med=40, ix_speedup=1.0, ix_rule_month=24, halt_mult=1.0, halt_len=8, p_kill_halt=.25, hazard=None, n_scale=1.0,
             delay_weight=1.0,                       # weight of litigation/halt delay in the attrition wait (see README)
+            challenger_filter=None,                 # None = current law: no comment-exhaustion/standing filter
             harm_w={"CE": 0.0, "EA": 0.3, "EIS": 1.0}, harm_mw_transmission=300)   # harm index weights [A]
 BAAJA = dict(enforced=True, ce_shift=.10, recond=.25, geo_path=[.85,.13,.02], intake_pub=4, esa=2, nonnepa_mult=.75,
-             suit_mult=.55*.6, pause=.15, lit_med=12, vacatur=False, remand=6, ix_speedup=0.9, halt_mult=.1)
+             # suit payoff x0.6 under remand-only; v3's x0.55 filter is now challenger-type-specific (CHALLENGER_FILTER)
+             suit_mult=.6, challenger_filter="BAAJA",
+             pause=.15, lit_med=12, vacatur=False, remand=6, ix_speedup=0.9, halt_mult=.1)
 SCEN = {
   "Baseline (current law)": {},
   "BAAJA (all levers)": BAAJA,
@@ -105,10 +108,48 @@ POLITICS = {
 LEVER_KEYS = {
     "Sec.1106 enforceable deadlines": ["enforced"],
     "Sec.1108/2102 CE adoption + reconductoring": ["ce_shift", "recond"],
-    "Sec.1110 judicial review": ["suit_mult", "pause", "lit_med", "vacatur", "remand"],
+    "Sec.1110 judicial review": ["suit_mult", "challenger_filter", "pause", "lit_med", "vacatur", "remand"],
     "Sec.1202/1302 CWA 401 + ESA clocks": ["nonnepa_mult", "esa"],
     "Sec.1401 permit certainty": ["halt_mult"],
     "Sec.2110 interconnection rule": ["ix_speedup"],
     "Sec.2213 renewable ROW deadlines": ["intake_pub"],
     "Sec.2229 geothermal CE": ["geo_path"],
 }
+
+# ---- challengers: who sues ---------------------------------------------------------------------------
+# Five challenger types. Each lawsuit has a lead challenger drawn from a technology-specific mix; the type sets
+# how BAAJA's Sec.1110 filters (150-day limitation, comment exhaustion, direct-injury standing) bite and how
+# often the challenger wins.
+CHALLENGERS = ["National NGO", "Local group / residents", "Tribe", "State / local government", "Business"]
+
+# Lead-challenger mix by technology (shares sum to 1).
+#   Anchors [D]: CEQ NEPA Litigation Surveys 2001-13 (all NEPA cases, n=3,650 plaintiff entries): public-interest
+#   groups 52.5%, individuals/citizen associations 18.5%, business 6.7%, local gov 5.1%, tribes 3.2%, states 2.9%,
+#   property owners 2.6%, multiple 8.5%. Breakthrough Institute 2024 (387 appeals 2013-22): NGOs in 72% of cases;
+#   top-10 national NGOs in 35%; fossil-infrastructure appeals led by Sierra Club + regional riverkeepers + tribes
+#   (Standing Rock); clean-energy appeals more localized (local coalitions, Pit River Tribe), national NGOs a
+#   smaller share. Technology-specific splits are [A] built on these anchors plus case examples:
+#   offshore wind - fishing industry (RODA, Seafreeze) and shore-town/resident groups; geothermal - tribes (Pit River,
+#   Fallon Paiute-Shoshone); hydro relicensing - American Rivers and Klamath Basin tribes; transmission - landowners.
+CHALLENGER_MIX = {
+    "Solar":           [.25, .45, .10, .10, .10],
+    "Storage":         [.20, .50, .05, .15, .10],
+    "Onshore wind":    [.25, .45, .10, .12, .08],
+    "Offshore wind":   [.10, .40, .05, .10, .35],
+    "Gas":             [.45, .30, .10, .08, .07],
+    "Geothermal":      [.20, .30, .40, .05, .05],
+    "Transmission":    [.25, .45, .05, .15, .10],
+    "Hydro relicense": [.35, .20, .25, .15, .05],
+}
+# Sec.1110 filter: share of would-be suits by each type that survive the 150-day limitation, comment exhaustion
+# and direct-injury standing [A]. Reasoning: national NGOs comment on every major EIS and have legal staff, but
+#   associational standing through distant members is what a direct-injury test narrows; local groups and
+#   residents have direct injury but often miss formal comment periods and a 150-day clock; tribes, states and
+#   local governments have sovereign/proprietary injury and participate in consultation; businesses (competitors,
+#   fishing) face zone-of-interests limits. Chosen so the technology-weighted mean is ~0.55, v3's single factor.
+CHALLENGER_FILTER = {"BAAJA": [.55, .45, .75, .80, .50]}
+# Relative probability that a challenger wins, by type [D]: Breakthrough 2024 appeal success rates divided by the
+# all-plaintiff rate (20.4%): top-10 national NGOs 26% -> 1.27; local groups = mix of regional NGOs (22.2%) and
+# individuals (11.3%) -> 0.87; tribal governments 31.0% -> 1.52; state (20.0%) and local gov (18.8%) -> 0.94;
+# companies (8.7%) and industry associations (21.1%) -> 0.69. Multiplies p_loss (P agency loses).
+CHALLENGER_WIN_REL = [1.27, 0.87, 1.52, 0.94, 0.69]

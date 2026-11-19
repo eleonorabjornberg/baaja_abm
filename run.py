@@ -3,7 +3,7 @@ import argparse, json, os
 
 from baaja import experiments as ex
 from baaja.calibrate import calibrate
-from baaja.params import BAAJA, BASE, LEVER_KEYS, POLITICS, SCEN
+from baaja.params import BAAJA, BASE, CHALLENGERS, LEVER_KEYS, POLITICS, SCEN
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--runs", type=int, default=30)
@@ -62,6 +62,16 @@ for s in ["Baseline (current law)", "BAAJA (all levers)"]:
     for g in ["Renewable (new)", "Fossil (gas)", "Storage"]:
         L.append(f"| {s} | {g} | {f(t[f'median_months_to_permit | {g}'])} | {f(t[f'median_months_to_COD | {g}'])} "
                  f"| {100*t[f'permitted_share_of_nexus | {g}']['mean']:.1f} | {100*t[f'sued_share_of_nexus | {g}']['mean']:.1f} |")
+L += ["\nWho sues: lawsuits over the 15 years by lead challenger, current law -> BAAJA (share of the group's suits; challenger win rate):\n",
+      "| group | challenger | suits, current law | suits, BAAJA | change | share of suits, law -> BAAJA | challenger wins % |", "|---|---|---|---|---|---|---|"]
+for g in ["Renewable (new)", "Fossil (gas)", "Storage", "Renewable (retained hydro)"]:
+    b, z = res["Baseline (current law)"]["totals"], res["BAAJA (all levers)"]["totals"]
+    tb, tz = b[f"suits | {g}"]["mean"], z[f"suits | {g}"]["mean"]
+    for c in CHALLENGERS:
+        sb, sz = b[f"suits: {c} | {g}"]["mean"], z[f"suits: {c} | {g}"]["mean"]
+        wb = b[f"challenger wins: {c} | {g}"]["mean"]
+        L.append(f"| {g} | {c} | {sb:.1f} | {sz:.1f} | {100*(sz/sb-1) if sb else 0:+.0f}% | {100*sb/tb:.0f}% -> {100*sz/tz:.0f}% "
+                 f"| {100*wb/sb if sb else 0:.0f} |")
 L += ["\nLever decomposition, GW vs current law (alone = only this provision; full minus = full BAAJA gain lost without it):\n",
       "| provision | renewable alone | gas alone | storage alone | renewable-share pts alone | full minus: renewable | full minus: gas |",
       "|---|---|---|---|---|---|---|"]
