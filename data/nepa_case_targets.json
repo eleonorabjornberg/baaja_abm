@@ -1,0 +1,218 @@
+{
+ "meta": {
+  "n_cases": 1821,
+  "filed_years": [
+   2001,
+   2022
+  ],
+  "all_case_challenger_win": 0.28786964393482195,
+  "unmapped_lead": 0
+ },
+ "by_group": {
+  "Fossil infrastructure": {
+   "n": 100,
+   "n_district": 57,
+   "challenger_win": 0.30851063829787234,
+   "injunction_share": 0.07,
+   "vacatur_share_of_remands": 0.7,
+   "n_remands": 10,
+   "median_months_in_litigation": 12.828515111695138,
+   "n_filing_delay": 68,
+   "share_filed_after_150_days": 0.5294117647058824,
+   "median_days_decision_to_filing": 181.01999999999998,
+   "doc_share": {
+    "CE": 0.02,
+    "EA": 0.47,
+    "EIS": 0.28
+   },
+   "lead_mix": {
+    "National NGO": 0.27,
+    "Local group / residents": 0.37,
+    "Tribe": 0.13,
+    "State / local government": 0.08,
+    "Business": 0.15
+   }
+  },
+  "Hydro": {
+   "n": 8,
+   "n_district": 3,
+   "challenger_win": 0.2857142857142857,
+   "injunction_share": 0.0,
+   "vacatur_share_of_remands": 0.0,
+   "n_remands": 0,
+   "median_months_in_litigation": 21.517082785808146,
+   "n_filing_delay": 5,
+   "share_filed_after_150_days": 0.6,
+   "median_days_decision_to_filing": 254.04,
+   "doc_share": {
+    "CE": 0.0,
+    "EA": 0.375,
+    "EIS": 0.25
+   },
+   "lead_mix": {
+    "National NGO": 0.5,
+    "Local group / residents": 0.375,
+    "Tribe": 0.0,
+    "State / local government": 0.125,
+    "Business": 0.0
+   }
+  },
+  "Non-energy": {
+   "n": 1398,
+   "n_district": 1129,
+   "challenger_win": 0.25334382376081827,
+   "injunction_share": 0.07010014306151645,
+   "vacatur_share_of_remands": 0.6958762886597938,
+   "n_remands": 194,
+   "median_months_in_litigation": 14.126149802890932,
+   "n_filing_delay": 1036,
+   "share_filed_after_150_days": 0.6573359073359073,
+   "median_days_decision_to_filing": 249.5,
+   "doc_share": {
+    "CE": 0.11659513590844063,
+    "EA": 0.3834048640915594,
+    "EIS": 0.3698140200286123
+   },
+   "lead_mix": {
+    "National NGO": 0.18669527896995708,
+    "Local group / residents": 0.6280400572246065,
+    "Tribe": 0.024320457796852647,
+    "State / local government": 0.0736766809728183,
+    "Business": 0.08726752503576538
+   }
+  },
+  "Other energy": {
+   "n": 245,
+   "n_district": 194,
+   "challenger_win": 0.47465437788018433,
+   "injunction_share": 0.11836734693877551,
+   "vacatur_share_of_remands": 0.7192982456140351,
+   "n_remands": 57,
+   "median_months_in_litigation": 14.290407358738502,
+   "n_filing_delay": 177,
+   "share_filed_after_150_days": 0.6892655367231638,
+   "median_days_decision_to_filing": 402.0,
+   "doc_share": {
+    "CE": 0.07755102040816327,
+    "EA": 0.44081632653061226,
+    "EIS": 0.4
+   },
+   "lead_mix": {
+    "National NGO": 0.27755102040816326,
+    "Local group / residents": 0.563265306122449,
+    "Tribe": 0.02040816326530612,
+    "State / local government": 0.0653061224489796,
+    "Business": 0.07346938775510205
+   }
+  },
+  "Renewable": {
+   "n": 44,
+   "n_district": 30,
+   "challenger_win": 0.23809523809523808,
+   "injunction_share": 0.045454545454545456,
+   "vacatur_share_of_remands": 1.0,
+   "n_remands": 6,
+   "median_months_in_litigation": 16.68856767411301,
+   "n_filing_delay": 37,
+   "share_filed_after_150_days": 0.5675675675675675,
+   "median_days_decision_to_filing": 294.04,
+   "doc_share": {
+    "CE": 0.045454545454545456,
+    "EA": 0.18181818181818182,
+    "EIS": 0.6590909090909091
+   },
+   "lead_mix": {
+    "National NGO": 0.045454545454545456,
+    "Local group / residents": 0.7045454545454546,
+    "Tribe": 0.11363636363636363,
+    "State / local government": 0.022727272727272728,
+    "Business": 0.11363636363636363
+   }
+  },
+  "Transmission": {
+   "n": 26,
+   "n_district": 22,
+   "challenger_win": 0.4230769230769231,
+   "injunction_share": 0.07692307692307693,
+   "vacatur_share_of_remands": 0.25,
+   "n_remands": 8,
+   "median_months_in_litigation": 10.38107752956636,
+   "n_filing_delay": 23,
+   "share_filed_after_150_days": 0.34782608695652173,
+   "median_days_decision_to_filing": 112.0,
+   "doc_share": {
+    "CE": 0.038461538461538464,
+    "EA": 0.34615384615384615,
+    "EIS": 0.6153846153846154
+   },
+   "lead_mix": {
+    "National NGO": 0.38461538461538464,
+    "Local group / residents": 0.5384615384615384,
+    "Tribe": 0.0,
+    "State / local government": 0.0,
+    "Business": 0.07692307692307693
+   }
+  }
+ },
+ "by_lead_challenger": {
+  "National NGO": {
+   "n": 372,
+   "win_rate": 0.3668639053254438,
+   "share_filed_after_150_days": 0.6029411764705882,
+   "n_filing_delay": 272,
+   "win_rel": 1.2744098346420554
+  },
+  "Local group / residents": {
+   "n": 1101,
+   "win_rate": 0.27254707631318137,
+   "share_filed_after_150_days": 0.6550480769230769,
+   "n_filing_delay": 832,
+   "win_rel": 0.9467725481151814
+  },
+  "Tribe": {
+   "n": 57,
+   "win_rate": 0.21153846153846154,
+   "share_filed_after_150_days": 0.5217391304347826,
+   "n_filing_delay": 46,
+   "win_rel": 0.7348411546524755
+  },
+  "State / local government": {
+   "n": 129,
+   "win_rate": 0.33620689655172414,
+   "share_filed_after_150_days": 0.6853932584269663,
+   "n_filing_delay": 89,
+   "win_rel": 1.1679136846671005
+  },
+  "Business": {
+   "n": 162,
+   "win_rate": 0.19718309859154928,
+   "share_filed_after_150_days": 0.719626168224299,
+   "n_filing_delay": 107,
+   "win_rel": 0.684973573094753
+  }
+ },
+ "energy": {
+  "n": 423,
+  "n_district": 306,
+  "challenger_win": 0.4015544041450777,
+  "injunction_share": 0.09456264775413711,
+  "vacatur_share_of_remands": 0.691358024691358,
+  "n_remands": 81,
+  "median_months_in_litigation": 14.060446780551905,
+  "n_filing_delay": 310,
+  "share_filed_after_150_days": 0.6129032258064516,
+  "median_days_decision_to_filing": 288.5,
+  "doc_share": {
+   "CE": 0.05673758865248227,
+   "EA": 0.41371158392434987,
+   "EIS": 0.408983451536643
+  },
+  "lead_mix": {
+   "National NGO": 0.2624113475177305,
+   "Local group / residents": 0.5271867612293144,
+   "Tribe": 0.054373522458628844,
+   "State / local government": 0.061465721040189124,
+   "Business": 0.09456264775413711
+  }
+ }
+}
