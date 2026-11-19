@@ -28,11 +28,11 @@ capped and flagged as truncated.
 The model is rebuilt on data (see README data and assumption registers) and organised as five simulations
 (`baaja/sims/`, map in `docs/bill_question_map.md`). Results in `results/`, charts in `figures/`.
 
-Main findings: data-sized provisions add ~+14 GW by 2041 (renewables +9.9, gas +1.2, storage +1.3); grid access
+Main findings: data-sized provisions add ~+11 GW by 2041 (renewables +8.2, gas +1.2, storage +0.3); grid access
 (Sec.2106) is unsized by the bill and dominates (each 5% study-time cut ~ +35-45 GW).
 
 ## Next steps
-1. National EA/CE counts (BLM ePlanning) to replace `ea_share_nonEIS` and `lit_ea`.
+1. Done: BLM ePlanning (EA share, durations, suit rates), FHWA/FTA limitation experiment, ERCOT interconnection bracket.
 2. Measure current-law right-of-way intake time on federal land (biggest Sim 1 uncertainty).
 3. Recent storage completion (backcast underestimates storage by ~2/3).
 4. Onshore wind federal nexus: find the missing hooks (FWS specific eagle permits, HCPs, state-federal overlaps).
