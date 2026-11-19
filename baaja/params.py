@@ -15,6 +15,8 @@ FED = _load("federal_nexus_targets.json")
 LIMIT = _load("limitation_experiment.json")["late_adapt"]   # [D] highway/transit 150-180 day limit vs other NEPA suits
 IXB = _load("interconnection_benchmark.json")              # [D] ERCOT vs CAISO/MISO request -> IA times
 BLM = _load("blm_eplanning_targets.json")                  # [D] BLM ePlanning energy NEPA register
+E860M = _load("eia860m_targets.json")                      # [D] EIA-860M late-stage completion, planned pipeline
+_GAS2025 = ENGINE["lbnl"]["arrivals_by_year"]["Gas"]["2025"] / 12 / LBNL["types"]["Gas"]["arr_per_month"]
 MIN_N = 30
 
 T = 180
@@ -41,6 +43,8 @@ ASSUMPTIONS = {
     "p_kill_halt":       (0.1, 0.25, 0.5, "P(cancelled | halted)"),
     "halt_mult_other":   (0.5, 1.0, 2.0, "multiplier on halt probabilities for technologies other than offshore wind"),
     # BAAJA levers whose size the text does not fix
+    "gas_arr_mult":      (1.0, 1.0, round(_GAS2025, 2), "gas requests relative to the 2021-25 mean [D: high = 2025 rate; "
+                          "EIA-860M planned gas 29 GW (Dec 2021) -> 71 GW (Sep 2026)]"),
     "deadline_bind":     (0.25, 0.5, 1.0, "Sec.1106: share of over-deadline EA/EIS reviews actually cut to deadline + 4 months"),
     "ce_shift":          (0.0, 0.10, 0.25, "Sec.1105/1108: share of EAs that become CEs"),
     "recond_ce":         (0.10, 0.25, 0.50, "Sec.2102: extra share of transmission EAs that become CEs"),
@@ -86,6 +90,10 @@ TYPES["Geothermal"]["mw"] = 40            # [A] 10 built projects
 _h = ENGINE["lbnl"]["hybrid_storage"]; _s = TYPES["Storage"]
 _s["mw"] = round((_s["arr"] * _s["mw"] + _h["req_per_month_2021_25"] * _h["mw_built_mean"]) / (_s["arr"] + _h["req_per_month_2021_25"]))
 _s["arr"] += _h["req_per_month_2021_25"]
+# storage: LBNL's 2000-20 cohort predates most batteries. Late-stage completion in EIA-860M (planned Dec 2021 -> Sep
+# 2026) is 1.07x solar's, so storage's target = solar's LBNL completion x that ratio [D]
+TYPES["Storage"]["completion_target_lbnl_2000_20"] = TYPES["Storage"]["completion_target"]
+TYPES["Storage"]["completion_target"] = TYPES["Solar"]["completion_target"] * E860M["storage_vs_solar"]
 TYPES["Transmission"] = dict(arr=2.0, mw=0, ix=False, completion_target=None, cod_target=None, ix_med=0, ix_sigma=.5)  # [A] arrivals
 TYPES["Hydro relicense"] = dict(arr=2.5, mw=50, ix=False, completion_target=None, cod_target=None, ix_med=0, ix_sigma=.5)  # [A]
 
@@ -148,7 +156,7 @@ UTILITY_OWNED = {t: FED["types"][t]["utility_owned_share_MW"] for t in GEN}   # 
 BASE = dict(T=T, turnovers=TURNOVERS, n_scale=1.0, seed_queue=True, arrivals=None, start_year=2026,
             hazard=None, build=None, p_eis=None, nex_mult=1.0,
             ea_share_nonEIS=A["ea_share_nonEIS"], intake_pub=A["intake_pub"], intake_oth=A["intake_oth"],
-            nonnepa_hydro=A["nonnepa_hydro"], esa_months=3.0, esa_share=0.25,
+            nonnepa_hydro=A["nonnepa_hydro"], esa_months=3.0, esa_share=0.25, gas_arr_mult=A["gas_arr_mult"],
             intake_pub_2213=None, nonnepa_hydro_1202=None,    # BAAJA overrides (None = current-law value applies)
             lit_ea=A["lit_ea"], lit_ce=A["lit_ce"], lit_data_mult=A["lit_data_mult"], p_kill_vac=A["p_kill_vac"], remand_months=A["remand_months"],
             delay_weight=A["delay_weight"], halt_len=A["halt_len"], p_kill_halt=A["p_kill_halt"],

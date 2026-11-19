@@ -42,7 +42,7 @@ def seeded_queue(name, rng, n_scale):
 
 def arrival_times(name, ty, p, rng):
     if p["arrivals"] is None:
-        n = rng.poisson(ty["arr"] * p["T"] * p["n_scale"])
+        n = rng.poisson(ty["arr"] * (p["gas_arr_mult"] if name == "Gas" else 1.0) * p["T"] * p["n_scale"])
         return rng.uniform(0, p["T"], n)
     per_year = p["arrivals"].get(name, {})                     # backcast: requests by calendar year
     out = []

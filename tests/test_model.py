@@ -136,3 +136,9 @@ def test_blm_review_parameters_come_from_eplanning():
     assert TYPES["Solar"]["ea_med"] == pytest.approx(BLM["median_months"]["Solar"]["EA"]["median"])
     assert TYPES["Solar"]["lit_ea_data"] == pytest.approx(BLM["lit_rate"]["Renewable"]["lit_ea"])
     assert "lit_ea_data" not in TYPES["Gas"]          # gas keeps the generic all-sector rate
+
+
+def test_storage_completion_target_uses_eia860m_late_stage_ratio():
+    from baaja.params import E860M
+    assert TYPES["Storage"]["completion_target"] == pytest.approx(TYPES["Solar"]["completion_target"] * E860M["storage_vs_solar"])
+    assert TYPES["Storage"]["completion_target"] > TYPES["Storage"]["completion_target_lbnl_2000_20"]

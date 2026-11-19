@@ -1,0 +1,74 @@
+{
+ "late_stage_completion": {
+  "Gas": {
+   "n": 165,
+   "completed": 0.6121212121212121,
+   "cancelled": 0.2909090909090909,
+   "still planned": 0.05454545454545454,
+   "dropped": 0.04242424242424243,
+   "completed_MW_share": 0.4965801482105664
+  },
+  "Offshore wind": {
+   "n": 10,
+   "completed": 0.1,
+   "cancelled": 0.8,
+   "still planned": 0.1,
+   "dropped": 0.0,
+   "completed_MW_share": 0.17092556191778482
+  },
+  "Onshore wind": {
+   "n": 100,
+   "completed": 0.47,
+   "cancelled": 0.16,
+   "still planned": 0.3,
+   "dropped": 0.07,
+   "completed_MW_share": 0.4869775471750651
+  },
+  "Solar": {
+   "n": 728,
+   "completed": 0.6277472527472527,
+   "cancelled": 0.19505494505494506,
+   "still planned": 0.15247252747252749,
+   "dropped": 0.024725274725274724,
+   "completed_MW_share": 0.5954171450252984
+  },
+  "Storage": {
+   "n": 219,
+   "completed": 0.6712328767123288,
+   "cancelled": 0.1324200913242009,
+   "still planned": 0.136986301369863,
+   "dropped": 0.0593607305936073,
+   "completed_MW_share": 0.5751751310154937
+  }
+ },
+ "storage_vs_solar": 1.069272503821828,
+ "planned_GW": {
+  "Dec 2021": {
+   "Gas": 29.431099999999997,
+   "Offshore wind": 4.6804,
+   "Onshore wind": 21.547400000000003,
+   "Solar": 51.1297,
+   "Storage": 13.1473
+  },
+  "latest": {
+   "Gas": 71.0935,
+   "Offshore wind": 5.089,
+   "Onshore wind": 18.454099999999997,
+   "Solar": 122.0252,
+   "Storage": 64.2346
+  }
+ },
+ "gas_planned_GW_by_year": {
+  "2026": 2.6683000000000003,
+  "2027": 10.725700000000002,
+  "2028": 19.6992,
+  "2029": 15.7476,
+  "2030": 18.134,
+  "2031": 2.3409,
+  "2034": 1.7778
+ },
+ "files": [
+  "december_generator2021.xlsx",
+  "september_generator2026.xlsx"
+ ]
+}

@@ -19,7 +19,7 @@ ALONE = {
     "Sec.2102 reconductoring CE": dict(recond_ce=P["recond_ce"]),
     "Sec.2229 geothermal": dict(geo_ce=P["geo_ce"]),
 }
-SWEEP = ["deadline_bind", "ce_shift", "intake_pub_baaja", "intake_pub", "ea_share_nonEIS", "geo_ce", "delay_weight"]
+SWEEP = ["deadline_bind", "ce_shift", "intake_pub_baaja", "intake_pub", "ea_share_nonEIS", "geo_ce", "delay_weight", "gas_arr_mult"]
 
 
 def run(n_runs, cal, res_dir, fig_dir):
