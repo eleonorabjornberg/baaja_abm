@@ -1,0 +1,100 @@
+{
+ "meta": {
+  "source": "EIA-860 2025 (plants with generators online 2015-2025) x BLM National SMA",
+  "federal_layers": [
+   "BLM",
+   "USFS",
+   "NPS",
+   "FWS",
+   "DOD",
+   "BOR",
+   "OTHFED",
+   "BIA"
+  ],
+  "federal_BAs": [
+   "BPAT",
+   "SPA",
+   "TVA",
+   "WACM",
+   "WALC",
+   "WAUE",
+   "WAUW"
+  ],
+  "caveat": "lower bound: s.404, ESA/eagle take, federal financing not observed"
+ },
+ "types": {
+  "Gas": {
+   "plants": 461,
+   "GW": 96.3986,
+   "federal_BA_share_MW": 0.052870062428292515,
+   "utility_owned_share_MW": 0.5074669134199045,
+   "federal_land_share_MW_buf0": 0.0017448386179882277,
+   "nexus_share_MW_buf0": 0.054614901046280744,
+   "nexus_share_plants_buf0": 0.0455531453362256,
+   "federal_land_share_MW_buf1000": 0.02891743241084414,
+   "nexus_share_MW_buf1000": 0.08170346872257479,
+   "nexus_share_plants_buf1000": 0.07592190889370933
+  },
+  "Geothermal": {
+   "plants": 20,
+   "GW": 0.6593,
+   "federal_BA_share_MW": 0.024268163203397544,
+   "utility_owned_share_MW": 0.005612012740785682,
+   "federal_land_share_MW_buf0": 0.4844532079478234,
+   "nexus_share_MW_buf0": 0.508721371151221,
+   "nexus_share_plants_buf0": 0.45,
+   "federal_land_share_MW_buf1000": 0.7733960260882755,
+   "nexus_share_MW_buf1000": 0.7733960260882755,
+   "nexus_share_plants_buf1000": 0.8
+  },
+  "Offshore wind": {
+   "plants": 3,
+   "GW": 0.172,
+   "federal_BA_share_MW": 0.0,
+   "utility_owned_share_MW": 0.06976744186046512,
+   "federal_land_share_MW_buf0": 0.0,
+   "nexus_share_MW_buf0": 1.0,
+   "nexus_share_plants_buf0": 1.0,
+   "federal_land_share_MW_buf1000": 0.0,
+   "nexus_share_MW_buf1000": 1.0,
+   "nexus_share_plants_buf1000": 1.0,
+   "note": "federal by statute (OCS); SMA does not cover the OCS"
+  },
+  "Onshore wind": {
+   "plants": 595,
+   "GW": 95.36959999999999,
+   "federal_BA_share_MW": 0.031759596349360805,
+   "utility_owned_share_MW": 0.21000088078381374,
+   "federal_land_share_MW_buf0": 0.014797168070328492,
+   "nexus_share_MW_buf0": 0.042886831862564166,
+   "nexus_share_plants_buf0": 0.052100840336134456,
+   "federal_land_share_MW_buf1000": 0.03713552326946951,
+   "nexus_share_MW_buf1000": 0.06522518706170521,
+   "nexus_share_plants_buf1000": 0.08907563025210084
+  },
+  "Solar": {
+   "plants": 6290,
+   "GW": 144.06390000000002,
+   "federal_BA_share_MW": 0.024448178898391616,
+   "utility_owned_share_MW": 0.16243486397355617,
+   "federal_land_share_MW_buf0": 0.060902141341446385,
+   "nexus_share_MW_buf0": 0.0844722376667576,
+   "nexus_share_plants_buf0": 0.04880763116057234,
+   "federal_land_share_MW_buf1000": 0.11304913999968068,
+   "nexus_share_MW_buf1000": 0.13394472869330898,
+   "nexus_share_plants_buf1000": 0.08426073131955485
+  },
+  "Storage": {
+   "plants": 941,
+   "GW": 43.5128,
+   "federal_BA_share_MW": 0.009916622235296282,
+   "utility_owned_share_MW": 0.10817046937912524,
+   "federal_land_share_MW_buf0": 0.10779127061462376,
+   "nexus_share_MW_buf0": 0.1164163188762847,
+   "nexus_share_plants_buf0": 0.0765143464399575,
+   "federal_land_share_MW_buf1000": 0.1937843577062382,
+   "nexus_share_MW_buf1000": 0.19990439594785903,
+   "nexus_share_plants_buf1000": 0.14133900106269925
+  }
+ }
+}
