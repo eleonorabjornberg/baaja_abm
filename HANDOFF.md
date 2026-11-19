@@ -28,7 +28,7 @@ capped and flagged as truncated.
 The model is rebuilt on data (see README data and assumption registers) and organised as five simulations
 (`baaja/sims/`, map in `docs/bill_question_map.md`). Results in `results/`, charts in `figures/`.
 
-Main findings: data-sized provisions add ~+11 GW by 2041 (renewables +8.2, gas +1.2, storage +0.3); grid access
+Main findings: data-sized provisions add ~+11 GW by 2041 (renewables +7.7, gas +1.2, storage +0.3); grid access
 (Sec.2106) is unsized by the bill and dominates (each 5% study-time cut ~ +35-45 GW).
 
 ## Next steps

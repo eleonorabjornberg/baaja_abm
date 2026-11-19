@@ -7,18 +7,18 @@ Each project is in an ISO/RTO market (mostly merchant developers) or a non-ISO r
 | technology | non-ISO share of requests | completion ISO / non-ISO | utility-owned share of new MW (EIA-860) | GW 2041, law | gain: BAAJA (data-based) | gain: BAAJA + Sec.2106 at 15% |
 |---|---|---|---|---|---|---|
 | Gas | 50% | 33% / 19% | 51% | 99 / 58 | +0.7 / +0.5 | +7.6 / +5.2 |
-| Geothermal | 95% | 6% / 17% | 1% | 0 / 2 | +0.0 / +0.2 | +0.0 / +0.4 |
-| Offshore wind | 0% | 3% / - | 7% | 13 / 0 | +0.7 / +0.0 | +1.9 / +0.0 |
+| Geothermal | 95% | 6% / 17% | 1% | 0 / 2 | +0.0 / +0.3 | +0.0 / +0.5 |
+| Offshore wind | 0% | 3% / - | 7% | 13 / 0 | +0.8 / +0.0 | +2.2 / +0.0 |
 | Onshore wind | 30% | 20% / 16% | 21% | 128 / 51 | +1.1 / +0.4 | +12.7 / +5.1 |
-| Solar | 39% | 13% / 12% | 16% | 281 / 177 | +2.6 / +1.6 | +32.9 / +20.7 |
+| Solar | 39% | 13% / 12% | 16% | 282 / 178 | +2.6 / +1.6 | +33.1 / +20.8 |
 | Storage | 21% | 7% / 19% | 11% | 153 / 76 | +0.2 / +0.1 | +19.1 / +8.7 |
 
 ## Who gets the gain: utility-owned vs merchant (EIA-860 ownership shares applied to each technology's gain)
 
 | scenario | total GW gain | utility-owned | merchant / other |
 |---|---|---|---|
-| BAAJA (data-based) | +8.0 | +1.6 | +6.3 |
-| BAAJA + Sec.2106 at 15% | +114.2 | +22.1 | +92.2 |
+| BAAJA (data-based) | +8.3 | +1.7 | +6.6 |
+| BAAJA + Sec.2106 at 15% | +115.0 | +22.2 | +92.9 |
 
 ## Not modelled with data
 
