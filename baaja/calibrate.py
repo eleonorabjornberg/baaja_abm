@@ -47,6 +47,33 @@ def calibrate(rounds=2, seeds=(7, 8, 9), n_scale=0.5, base=None):
     return dict(hazard=p["hazard"], build=p["build"], p_eis=p["p_eis"])
 
 
+def calibrate_markets(cal, seeds=(7, 8, 9), n_scale=0.5):
+    """Sim 5: separate withdrawal hazards for ISO and non-ISO regions, fitted to LBNL completion by market [D]
+    (2000-20 cohort, cells with >= 30 projects); build and p_eis kept from the pooled calibration."""
+    from .params import ENGINE
+    targets = {}
+    for t in GEN:
+        for m in ("ISO", "non-ISO"):
+            v = ENGINE["lbnl"]["by_market"][t][m]
+            if v["n_cohort"] >= 30 and v["completion"] is not None:
+                targets[f"{t}|{m}"] = v["completion"]
+    p = dict(BASE, n_scale=n_scale, seed_queue=False, **cal)
+    p["hazard"] = dict(cal["hazard"])
+    lo = {k: 1e-4 for k in targets}; hi = {k: 0.5 for k in targets}
+    for _ in range(18):
+        x = {k: (lo[k] + hi[k]) / 2 for k in targets}
+        p["hazard"] = {**cal["hazard"], **x}
+        r = _runs(p, seeds)
+        for k in targets:
+            t, m = k.split("|")
+            got = np.nanmean([s[t][f"completion_rate|{m}"] for s in r])
+            if got > targets[k]:
+                lo[k] = x[k]
+            else:
+                hi[k] = x[k]
+    return dict(cal, hazard={**cal["hazard"], **{k: (lo[k] + hi[k]) / 2 for k in targets}}), targets
+
+
 def check(cal, seeds=(20, 21, 22), n_scale=1.0):
     """Fitted vs target for every calibrated quantity."""
     p = dict(BASE, n_scale=n_scale, seed_queue=False, **cal)

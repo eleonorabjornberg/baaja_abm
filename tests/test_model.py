@@ -113,3 +113,12 @@ def test_backcast_within_tolerance_of_eia(cal):
 def test_harm_zero_under_current_law(cal):
     p = P(cal); s = summarize(simulate(p, 9, POL), p)
     assert sum(s[t]["harm"] for t in TYPES) == 0
+
+
+# --- the five simulations run end to end -------------------------------------------------------------------
+@pytest.mark.parametrize("mod", ["sim1_permitting", "sim2_litigation", "sim3_grid", "sim4_certainty", "sim5_decision_control"])
+def test_simulation_runs(mod, cal, tmp_path):
+    import importlib
+    m = importlib.import_module(f"baaja.sims.{mod}")
+    md, data = m.run(2, cal, str(tmp_path), str(tmp_path))
+    assert md.startswith("# Simulation") and (tmp_path / f"{mod}.md").exists()

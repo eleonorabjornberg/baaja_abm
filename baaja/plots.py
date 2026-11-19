@@ -1,105 +1,59 @@
-"""Static PNG charts (matplotlib). Palette: reference categorical slots, assigned per entity, never cycled."""
+"""Static charts (matplotlib). Categorical colours follow the entity (group or scenario), never the rank."""
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 INK, INK2, GRID, SURF = "#0b0b0b", "#52514e", "#e4e3df", "#fcfcfb"
-COLOR = {"Renewable (new)": "#1baf7a", "Fossil (gas)": "#eb6834", "Storage": "#2a78d6",
-         "Renewable (retained hydro)": "#6250d6", "Baseline": "#8a8984", "BAAJA": "#2a78d6"}
-plt.rcParams.update({"figure.facecolor": SURF, "axes.facecolor": SURF, "axes.edgecolor": GRID,
-                     "axes.labelcolor": INK2, "xtick.color": INK2, "ytick.color": INK2, "text.color": INK,
-                     "axes.grid": True, "grid.color": GRID, "grid.linewidth": .8, "axes.axisbelow": True,
-                     "axes.spines.top": False, "axes.spines.right": False, "font.size": 10})
+GROUP_COLOR = {"Renewable (new)": "#1baf7a", "Fossil (gas)": "#eb6834", "Storage": "#2a78d6",
+               "Renewable (retained hydro)": "#6250d6"}
+SCEN_COLOR = ["#8a8984", "#2a78d6", "#eb6834", "#1baf7a", "#6250d6", "#e87ba4"]
+plt.rcParams.update({"figure.facecolor": SURF, "axes.facecolor": SURF, "axes.edgecolor": GRID, "axes.labelcolor": INK2,
+                     "xtick.color": INK2, "ytick.color": INK2, "text.color": INK, "axes.grid": True, "grid.color": GRID,
+                     "grid.linewidth": .8, "axes.axisbelow": True, "axes.spines.top": False, "axes.spines.right": False,
+                     "font.size": 10})
 
 
 def _err(b):
-    return [[b["mean"] - b["p5"]], [b["p95"] - b["mean"]]]
+    return [[max(b["mean"] - b["p5"], 0)], [max(b["p95"] - b["mean"], 0)]]
 
 
-def scenarios_gw(res, path):
-    names = list(res); fig, ax = plt.subplots(figsize=(8, 3.6))
-    for i, n in enumerate(names):
-        b = res[n]["totals"]["GW_total"]
-        ax.barh(i, b["mean"], xerr=_err(b), color=COLOR["Baseline" if i == 0 else "BAAJA"], height=.55,
-                error_kw=dict(ecolor=INK2, lw=1.2, capsize=3))
-        ax.text(b["p95"] + 5, i, f"{b['mean']:.0f} GW", va="center", color=INK2)
-    ax.set_yticks(range(len(names)), names); ax.invert_yaxis(); ax.grid(axis="y", visible=False)
-    ax.set_xlabel("GW online by Nov 2041 (bars: mean, whiskers: 90% interval across runs)")
-    ax.set_title("Capacity online by 2041, by scenario", loc="left"); fig.tight_layout(); fig.savefig(path, dpi=200); plt.close(fig)
-
-
-def renew_vs_fossil(res, path, scen=("Baseline (current law)", "BAAJA (all levers)"), unit="GW"):
-    groups = ["Renewable (new)", "Fossil (gas)", "Storage"] + (["Renewable (retained hydro)"] if unit == "GW" else [])
-    if unit == "TWh":
-        groups = [g for g in groups if g != "Storage"]
-    fig, ax = plt.subplots(figsize=(8, 3.8)); w = .38
-    for j, s in enumerate(scen):
-        for i, g in enumerate(groups):
-            b = res[s]["totals"][f"{unit} {g}"]
-            ax.bar(i + (j - .5) * w * 1.05, b["mean"], w, yerr=_err(b), color=COLOR[g], alpha=1 if j else .45,
+def grouped_bars(categories, series, path, title, ylabel, colors=None, fmt="{:.0f}"):
+    """series: {label: [band per category]}; each band = dict(mean, p5, p95)."""
+    k = len(series); w = .8 / k
+    fig, ax = plt.subplots(figsize=(max(7, 1.3 * len(categories) + 2), 3.8))
+    for j, (lab, bands) in enumerate(series.items()):
+        c = (colors or SCEN_COLOR)[j % len(colors or SCEN_COLOR)]
+        for i, b in enumerate(bands):
+            x = i + (j - (k - 1) / 2) * w
+            ax.bar(x, b["mean"], w * .95, yerr=_err(b), color=c, label=lab if i == 0 else None,
                    error_kw=dict(ecolor=INK2, lw=1, capsize=2))
-            ax.text(i + (j - .5) * w * 1.05, b["p95"] * 1.02, f"{b['mean']:.0f}", ha="center", va="bottom", fontsize=8, color=INK2)
-    ax.set_xticks(range(len(groups)), groups); ax.grid(axis="x", visible=False)
-    ax.set_ylabel(f"{unit}{'/yr' if unit == 'TWh' else ''} from projects online by 2041")
-    ax.set_title(f"Renewable vs fossil, {unit}: pale = current law, solid = BAAJA", loc="left")
+            ax.text(x, max(b["p95"], b["mean"]) * 1.02 + 0.01, fmt.format(b["mean"]), ha="center", va="bottom", fontsize=7, color=INK2)
+    ax.set_xticks(range(len(categories)), categories, fontsize=8); ax.grid(axis="x", visible=False)
+    ax.set_ylabel(ylabel); ax.set_title(title, loc="left"); ax.legend(frameon=False, fontsize=8); ax.margins(y=.12)
     fig.tight_layout(); fig.savefig(path, dpi=200); plt.close(fig)
 
 
-def gain_by_type(res, path, scen="BAAJA (all levers)"):
-    d = res[scen]["diff_by_type_GW"]; types = [t for t in d if t != "Transmission"]
-    grp = {"Solar": "Renewable (new)", "Onshore wind": "Renewable (new)", "Offshore wind": "Renewable (new)",
-           "Geothermal": "Renewable (new)", "Gas": "Fossil (gas)", "Storage": "Storage", "Hydro relicense": "Renewable (retained hydro)"}
+def sweep(x, lines, path, title, xlabel, ylabel):
+    """lines: {group label: [band per x]}"""
     fig, ax = plt.subplots(figsize=(8, 3.6))
-    for i, t in enumerate(types):
-        b = d[t]; ax.barh(i, b["mean"], xerr=_err(b), color=COLOR[grp[t]], height=.55, error_kw=dict(ecolor=INK2, lw=1, capsize=2))
-        ax.text(max(b["p95"], 0) + .5, i, f"+{b['mean']:.1f}", va="center", fontsize=8, color=INK2)
-    ax.set_yticks(range(len(types)), types); ax.invert_yaxis(); ax.grid(axis="y", visible=False)
-    ax.set_xlabel("GW added by BAAJA vs current law (paired runs, 90% interval)")
-    ax.set_title("Where the BAAJA gain lands, by technology", loc="left"); fig.tight_layout(); fig.savefig(path, dpi=200); plt.close(fig)
-
-
-def politics(pol, path):
-    names = list(pol); fig, ax = plt.subplots(figsize=(8, 3.4)); w = .38
-    for i, n in enumerate(names):
-        for j, g in enumerate(["Renewable (new)", "Fossil (gas)"]):
-            b = pol[n][f"GW {g}"]
-            ax.bar(i + (j - .5) * w * 1.05, b["mean"], w, yerr=_err(b), color=COLOR[g], error_kw=dict(ecolor=INK2, lw=1, capsize=2))
-            ax.text(i + (j - .5) * w * 1.05, b["p95"] + .3, f"+{b['mean']:.1f}", ha="center", va="bottom", fontsize=8, color=INK2)
-    ax.set_xticks(range(len(names)), names); ax.grid(axis="x", visible=False)
-    ax.set_ylabel("GW gained from BAAJA vs current law")
-    ax.set_title("BAAJA gain by political path (green = renewable, orange = gas)", loc="left")
+    for lab, bands in lines.items():
+        c = GROUP_COLOR.get(lab, INK2)
+        ax.fill_between(x, [b["p5"] for b in bands], [b["p95"] for b in bands], color=c, alpha=.15, lw=0)
+        ax.plot(x, [b["mean"] for b in bands], color=c, lw=2, marker="o", ms=4, label=lab)
+    ax.axhline(0, color=GRID, lw=1)
+    ax.set_xlabel(xlabel); ax.set_ylabel(ylabel); ax.set_title(title, loc="left"); ax.legend(frameon=False)
     fig.tight_layout(); fig.savefig(path, dpi=200); plt.close(fig)
 
 
-def sweep_ix(sw, divA, path):
-    x = [round(100 * (1 - s["value"])) for s in sw]
-    fig, ax = plt.subplots(figsize=(8, 3.6))
-    for key, g in [("GW Renewable (new)", "Renewable (new)"), ("GW Fossil (gas)", "Fossil (gas)"), ("GW Storage", "Storage")]:
-        m = [s["diff"][key]["mean"] for s in sw]
-        ax.fill_between(x, [s["diff"][key]["p5"] for s in sw], [s["diff"][key]["p95"] for s in sw], color=COLOR[g], alpha=.15, lw=0)
-        ax.plot(x, m, color=COLOR[g], lw=2, marker="o", ms=4, label=g)
-        ax.axhline(divA["diff_vs_baseline"][key]["mean"], color=COLOR[g], lw=1, ls=":")
-    ax.set_xlabel("Assumed Sec.2110 interconnection speedup (%)"); ax.set_ylabel("GW gained vs current law")
-    ax.set_title("Sensitivity to the Sec.2110 assumption (dotted: Division A alone)", loc="left")
-    ax.legend(frameon=False, loc="upper left"); fig.tight_layout(); fig.savefig(path, dpi=200); plt.close(fig)
-
-
-def who_sues(res, challengers, path):
-    """Small multiples: lawsuits by lead challenger, current law (pale) vs BAAJA (solid), renewable vs gas."""
-    b, z = res["Baseline (current law)"]["totals"], res["BAAJA (all levers)"]["totals"]
-    fig, axes = plt.subplots(1, 2, figsize=(9, 3.8), sharey=False); w = .38
-    for ax, g in zip(axes, ["Renewable (new)", "Fossil (gas)"]):
-        for i, c in enumerate(challengers):
-            for j, (src, a) in enumerate([(b, .45), (z, 1)]):
-                v = src[f"suits: {c} | {g}"]
-                ax.bar(i + (j - .5) * w * 1.05, v["mean"], w, yerr=_err(v), color=COLOR[g], alpha=a,
-                       error_kw=dict(ecolor=INK2, lw=1, capsize=2))
-            sb, sz = b[f"suits: {c} | {g}"]["mean"], z[f"suits: {c} | {g}"]["mean"]
-            top = max(b[f"suits: {c} | {g}"]["p95"], z[f"suits: {c} | {g}"]["p95"])
-            ax.text(i, top * 1.04, f"{100*(sz/sb-1):+.0f}%", ha="center", va="bottom", fontsize=8, color=INK2)
-        ax.margins(y=.12)
-        ax.set_xticks(range(len(challengers)), [c.replace(" / ", "/\n") for c in challengers], fontsize=8)
-        ax.grid(axis="x", visible=False); ax.set_title(g, loc="left")
-    axes[0].set_ylabel("lawsuits, 2026-41")
-    fig.suptitle("Who sues: pale = current law, solid = BAAJA (label: change)", x=.01, ha="left")
+def tornado(items, central, path, title, xlabel):
+    """items: [(label, value at low end, value at high end)]; sorted by swing."""
+    items = sorted(items, key=lambda t: abs(t[2] - t[1]))
+    fig, ax = plt.subplots(figsize=(8, 0.45 * len(items) + 1.4))
+    for i, (lab, lo, hi) in enumerate(items):
+        ax.barh(i, hi - central, left=central, color="#2a78d6", height=.55)
+        ax.barh(i, lo - central, left=central, color="#8a8984", height=.55)
+        ax.text(max(lo, hi, central) + 0.01 * (abs(central) + 1), i, f"{min(lo, hi):.1f} to {max(lo, hi):.1f}", va="center", fontsize=7, color=INK2)
+    ax.axvline(central, color=INK, lw=1)
+    ax.set_yticks(range(len(items)), [t[0] for t in items], fontsize=8); ax.grid(axis="y", visible=False)
+    ax.set_xlabel(xlabel); ax.set_title(title + "  (grey: low end, blue: high end)", loc="left", fontsize=9)
     fig.tight_layout(); fig.savefig(path, dpi=200); plt.close(fig)

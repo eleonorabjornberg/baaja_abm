@@ -69,7 +69,9 @@ def simulate(p, seed, hostile_to):
         u_nex, u_kind, z_D, u_esa, u_trunc = (rng.random(n), rng.random(n), rng.normal(0, 1, n), rng.random(n), rng.random(n))
         who = rng.choice(len(CHALLENGERS), n, p=CHALLENGER_MIX[name])
         u_sue, u_late, u_ex, z_L, u_inj, u_lose, u_vac, u_kill = (rng.random(n) for _ in range(8))
-        u_ix, u_w = rng.random(n), rng.random(n)
+        u_ix, u_w, u_mkt = rng.random(n), rng.random(n), rng.random(n)
+        mk = ENGINE["lbnl"]["by_market"].get(name)
+        mkt = (u_mkt < mk["non-ISO"]["arrivals_share_2021_25"]).astype(int) if mk else np.zeros(n, int)   # 1 = non-ISO
         # ---- federal review ----
         nexus = u_nex < min(1.0, ty["nex"] * p["nex_mult"])
         p_eis = (p["p_eis"] or {}).get(name, 0.0)
@@ -94,7 +96,8 @@ def simulate(p, seed, hostile_to):
         nonnepa = p["nonnepa_hydro"] if ty["nonnepa"] else 0.0
         tDec = t0 + intake + D + nonnepa                         # permit decision, absent litigation
         # ---- sponsor withdrawal clock (drawn now; seeded projects are alive at month 0, memoryless) ----
-        h = (p["hazard"] or {}).get(name, 0.02)
+        hz = p["hazard"] or {}
+        h = np.where(mkt == 1, hz.get(f"{name}|non-ISO", hz.get(name, 0.02)), hz.get(f"{name}|ISO", hz.get(name, 0.02)))
         W = (np.ceil(np.log1p(-u_w) / np.log1p(-h)) + age0) if ty["ix"] else np.full(n, 1e9)
         decided = nexus & (W >= tDec - t0) & (tDec >= 0) & (tDec <= T)
         # ---- litigation on decided projects ----
@@ -147,7 +150,7 @@ def simulate(p, seed, hostile_to):
         rows.append(dict(type=name, t0=t0, seeded=seeded, nexus=nexus, kind=kind, decided=decided, tDec=tDec,
                          sued=sued, who=np.where(sued, who, -1), lost=lost, vacated=vacated, paused=paused,
                          trunc=trunc, cut_months=cut_months, halted=halted, killed=killed, done=done,
-                         tPermit=tPermit, tCOD=tCOD, wait=tCOD - t0, mw=ty["mw"], T=T))
+                         tPermit=tPermit, tCOD=tCOD, wait=tCOD - t0, mw=ty["mw"], T=T, mkt=mkt))
     return rows
 
 
@@ -182,6 +185,10 @@ def summarize(rows, p):
                  median_months_to_permit=float(np.median((r["tPermit"] - r["t0"])[dec & coh])) if (dec & coh).any() else np.nan,
                  truncated_share=float(r["trunc"][dec].mean()) if dec.any() else 0.0,
                  harm=harm_index(r, p))
+        for m, lab in ((0, "ISO"), (1, "non-ISO")):
+            sel = r["mkt"] == m
+            s[f"GW_online|{lab}"] = float((online & sel).sum() * r["mw"] / 1000)
+            s[f"completion_rate|{lab}"] = float(r["done"][coh & sel].mean()) if (coh & sel).any() else np.nan
         for j, c in enumerate(CHALLENGERS):
             s[f"suits: {c}"] = float((r["who"] == j).sum())
             s[f"wins: {c}"] = float(((r["who"] == j) & r["lost"]).sum())

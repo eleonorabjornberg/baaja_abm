@@ -69,18 +69,22 @@ def compare(scenarios, n_runs, cal, politics=None, base_key=None):
     return {k: aggregate(r, None if r is b else b) for k, r in raw.items()}
 
 
+LAW_KEYS = {"ea_share_nonEIS", "intake_pub", "intake_oth", "nonnepa_hydro", "lit_ea", "lit_ce", "p_kill_vac", "remand_months",
+            "delay_weight", "halt_len", "p_kill_halt", "halt_mult_other"}   # describe current law: vary in both runs
+
+
 def assumption_sweep(levers, keys, n_runs, cal, base_runs, base=None):
     """For each assumption key: BAAJA (levers) at the low and high end of its range, everything else central.
-    Returns {key: {low: diff totals, high: diff totals}} vs current law."""
+    Current-law assumptions (LAW_KEYS) are changed in the baseline too, so the difference stays paired and fair.
+    Returns {key: {low: {value, diff}, high: {value, diff}, note}} with diff = BAAJA - current law."""
     out = {}
     for k in keys:
         lo, _, hi, note = ASSUMPTIONS[k]
-        o = {}
+        o = {"note": note, "current_law_assumption": k in LAW_KEYS}
         for lab, v in (("low", lo), ("high", hi)):
-            over = dict(levers); over.update(base or {})
-            over[_lever_key(k)] = v
-            o[lab] = dict(value=v, diff=aggregate(run_scenario(over, n_runs, cal), base_runs)["diff_vs_baseline"])
-        o["note"] = note
+            over = dict(base or {}); over.update(levers); over[_lever_key(k)] = v
+            b = run_scenario({_lever_key(k): v, **(base or {})}, n_runs, cal) if k in LAW_KEYS else base_runs
+            o[lab] = dict(value=v, diff=aggregate(run_scenario(over, n_runs, cal), b)["diff_vs_baseline"])
         out[k] = o
     return out
 
