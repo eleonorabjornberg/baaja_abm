@@ -82,3 +82,24 @@ def sweep_ix(sw, divA, path):
     ax.set_xlabel("Assumed Sec.2110 interconnection speedup (%)"); ax.set_ylabel("GW gained vs current law")
     ax.set_title("Sensitivity to the Sec.2110 assumption (dotted: Division A alone)", loc="left")
     ax.legend(frameon=False, loc="upper left"); fig.tight_layout(); fig.savefig(path, dpi=200); plt.close(fig)
+
+
+def who_sues(res, challengers, path):
+    """Small multiples: lawsuits by lead challenger, current law (pale) vs BAAJA (solid), renewable vs gas."""
+    b, z = res["Baseline (current law)"]["totals"], res["BAAJA (all levers)"]["totals"]
+    fig, axes = plt.subplots(1, 2, figsize=(9, 3.8), sharey=False); w = .38
+    for ax, g in zip(axes, ["Renewable (new)", "Fossil (gas)"]):
+        for i, c in enumerate(challengers):
+            for j, (src, a) in enumerate([(b, .45), (z, 1)]):
+                v = src[f"suits: {c} | {g}"]
+                ax.bar(i + (j - .5) * w * 1.05, v["mean"], w, yerr=_err(v), color=COLOR[g], alpha=a,
+                       error_kw=dict(ecolor=INK2, lw=1, capsize=2))
+            sb, sz = b[f"suits: {c} | {g}"]["mean"], z[f"suits: {c} | {g}"]["mean"]
+            top = max(b[f"suits: {c} | {g}"]["p95"], z[f"suits: {c} | {g}"]["p95"])
+            ax.text(i, top * 1.04, f"{100*(sz/sb-1):+.0f}%", ha="center", va="bottom", fontsize=8, color=INK2)
+        ax.margins(y=.12)
+        ax.set_xticks(range(len(challengers)), [c.replace(" / ", "/\n") for c in challengers], fontsize=8)
+        ax.grid(axis="x", visible=False); ax.set_title(g, loc="left")
+    axes[0].set_ylabel("lawsuits, 2026-41")
+    fig.suptitle("Who sues: pale = current law, solid = BAAJA (label: change)", x=.01, ha="left")
+    fig.tight_layout(); fig.savefig(path, dpi=200); plt.close(fig)

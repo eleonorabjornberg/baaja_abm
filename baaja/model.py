@@ -66,10 +66,10 @@ def simulate(p, seed, hostile_to):
             killed |= vac & (u_kill < p["p_kill_vac"])
         tPermit = tP + delay
         # interconnection (parallel gate)
-        IX = np.where(ty["ix"], p["ix_med"] * rng.lognormal(0, .5, n), 0)
+        IX = np.where(ty["ix"], ty["ix_med"] * rng.lognormal(0, ty["ix_sigma"], n), 0)
         IX = apply_ix_rule(IX, t0, p["ix_speedup"], p["ix_rule_month"])
         tStart = np.maximum(tPermit, t0 + IX)
-        tCOD = tStart + ty["build"]
+        tCOD = tStart + (p["build"] or {}).get(name, ty["build"])
         # executive halts after hostile turnovers (permitted, not yet online)
         halted = np.zeros(n, bool)
         for k, tt in enumerate(TURNOVERS):
@@ -86,7 +86,9 @@ def simulate(p, seed, hostile_to):
         # (tStart - t0), which already contains litigation delay when permitting is the binding gate, so
         # delay counts double there. delay_weight=1 keeps v3; set 0 for a pure time-in-queue hazard.
         wait = (tStart - t0) + p["delay_weight"] * delay
-        W = rng.geometric(p["hazard"], n) if ty["ix"] else np.full(n, 10**6)
+        h = p["hazard"].get(name, 0.01) if isinstance(p["hazard"], dict) else p["hazard"]
+        u_w = rng.random(n)                              # inversion: one uniform per project whatever the hazard
+        W = np.ceil(np.log1p(-u_w) / np.log1p(-h)) if ty["ix"] else np.full(n, 10**6)
         withdrawn = W < wait
         done = ~withdrawn & ~killed
         rows.append(dict(type=name, t0=t0, nexus=nexus, kind=kind, sued=sued, trunc=trunc, cut=cut,

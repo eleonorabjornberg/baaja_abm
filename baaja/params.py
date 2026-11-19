@@ -59,6 +59,29 @@ TYPES = {
   "Hydro relicense":dict(arr=2.5, mw=50,  nex=1.0, path=[0,.40,.60],   eis=30, lit=.20, halt=.01, build=0,  ix=False, pub=False, nonnepa=48),
 }
 GEN = [k for k, v in TYPES.items() if v["ix"]]
+TYPES_V3 = {k: dict(v) for k, v in TYPES.items()}     # v3 assumptions, kept for comparison
+
+# ---- data calibration (v4): LBNL Queued Up interconnection queue data through 2025 ----------------------
+# data/lbnl_targets.json is produced by data/extract_lbnl.py from the LBNL workbook. For each generation
+# technology it sets [D]: arrivals (requests/month 2021-25), built project size (mean MW of operational projects
+# queued 2010+), interconnection duration (IR -> IA median and log-sd, 2015+), and the current-law completion
+# target used to calibrate a technology-specific withdrawal hazard. A value is used only if it rests on >= 30
+# projects; otherwise the v3 assumption stays (offshore wind size: 3 built projects; geothermal IX: 3 IAs).
+import json as _json, os as _os
+LBNL = _json.load(open(_os.path.join(_os.path.dirname(__file__), "..", "data", "lbnl_targets.json")))
+MIN_N = 30
+for _t, _d in LBNL["types"].items():
+    ty = TYPES[_t]; ty["ix_med"], ty["ix_sigma"] = 40.0, 0.5           # v3 defaults
+    ty["arr"] = round(_d["arr_per_month"], 2)
+    if _d["n_built"] >= MIN_N:
+        ty["mw"] = round(_d["mw_built"])
+    if _d["n_ix"] >= MIN_N:
+        ty["ix_med"], ty["ix_sigma"] = round(_d["ix_median"], 1), round(_d["ix_logsd"], 2)
+    ty["completion_target"] = _d["completion"]
+    if _d["n_cod"] >= MIN_N:
+        ty["cod_target"] = _d["cod_median"]   # build months are calibrated so current-law median IR->COD matches
+for _t in TYPES:
+    TYPES[_t].setdefault("ix_med", 40.0); TYPES[_t].setdefault("ix_sigma", 0.5)
 
 BASE = dict(enforced=False, deadline={"EA": 12, "EIS": 24}, enf_lag=4, ce_shift=0.0, recond=0.0, geo_path=None,
             intake_pub=12, intake_oth=3, esa=3, esa_share=.25, nonnepa_mult=1.0,
@@ -66,7 +89,8 @@ BASE = dict(enforced=False, deadline={"EA": 12, "EIS": 24}, enf_lag=4, ce_shift=
             vacatur=True, remand=12, p_kill_vac=.2,
             ix_med=40, ix_speedup=1.0, ix_rule_month=24, halt_mult=1.0, halt_len=8, p_kill_halt=.25, hazard=None, n_scale=1.0,
             delay_weight=1.0,                       # weight of litigation/halt delay in the attrition wait (see README)
-            challenger_filter=None,                 # None = current law: no comment-exhaustion/standing filter
+            challenger_filter=None,
+            build=None,                             # dict type -> construction months; None = TYPES[...]["build"]                 # None = current law: no comment-exhaustion/standing filter
             harm_w={"CE": 0.0, "EA": 0.3, "EIS": 1.0}, harm_mw_transmission=300)   # harm index weights [A]
 BAAJA = dict(enforced=True, ce_shift=.10, recond=.25, geo_path=[.85,.13,.02], intake_pub=4, esa=2, nonnepa_mult=.75,
              # suit payoff x0.6 under remand-only; v3's x0.55 filter is now challenger-type-specific (CHALLENGER_FILTER)

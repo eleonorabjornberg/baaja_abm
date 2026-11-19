@@ -37,11 +37,32 @@ def test_ix_no_speedup_is_identity():
 
 
 # --- calibration ---
-def test_calibrated_baseline_queue_completion_near_19pct():
+def test_calibrated_baseline_completion_matches_lbnl_by_technology():
     h = calibrate()
     p = params(hazard=h)
-    c = np.mean([queue_completion(summarize(simulate(p, s, POL), p)) for s in range(3)])
-    assert abs(c - 0.19) < 0.02
+    s = [summarize(simulate(p, seed, POL), p) for seed in range(3)]
+    for t in GEN:
+        c = np.mean([x[t]["completion_rate"] for x in s])
+        tol = 0.02 if TYPES[t]["arr"] > 5 else 0.06       # geothermal and offshore wind: ~1-2 requests/month
+        assert abs(c - TYPES[t]["completion_target"]) < tol, t
+
+
+def test_build_calibration_matches_lbnl_time_to_cod():
+    from baaja.calibrate import calibrate_all
+    h, b = calibrate_all(rounds=2)
+    p = params(hazard=h, build=b)
+    s = [summarize(simulate(p, seed, POL), p) for seed in range(20, 23)]
+    for t in b:
+        m = np.mean([x[t]["median_months_to_COD"] for x in s])
+        assert abs(m - TYPES[t]["cod_target"]) < 3, t
+
+
+def test_data_calibrated_types_use_lbnl_values():
+    from baaja.params import LBNL
+    d = LBNL["types"]["Solar"]
+    assert TYPES["Solar"]["arr"] == pytest.approx(d["arr_per_month"], abs=0.01)
+    assert TYPES["Solar"]["mw"] == round(d["mw_built"])
+    assert TYPES["Offshore wind"]["mw"] == 800          # too few built projects -> v3 assumption kept
 
 
 # --- enforced deadlines ---

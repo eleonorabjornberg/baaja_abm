@@ -14,9 +14,11 @@ def politics_draw(s, fixed=None):
     return list(np.random.default_rng(1000 + s).choice(["renew", "fossil"], len(TURNOVERS)))
 
 
-def run_scenario(over, n_runs, hazard, politics=None):
+def run_scenario(over, n_runs, hazard, politics=None, build=None):
     """List of per-run summaries. Seeds and political draws are shared across scenarios (paired runs)."""
     p = dict(BASE); p.update(over); p["hazard"] = hazard
+    if build is not None:
+        p["build"] = build
     return [summarize(simulate(p, s, politics_draw(s, politics)), p) for s in range(n_runs)]
 
 
@@ -58,11 +60,11 @@ def aggregate(runs, base_runs=None):
     return res
 
 
-def sweep(base_over, key, values, n_runs, hazard, base_runs):
+def sweep(base_over, key, values, n_runs, hazard, base_runs, build=None):
     """Re-run `base_over` with `key` set to each value; return headline totals and paired gain vs baseline."""
     out = []
     for v in values:
-        runs = run_scenario(dict(base_over, **{key: v}), n_runs, hazard)
+        runs = run_scenario(dict(base_over, **{key: v}), n_runs, hazard, build=build)
         a = aggregate(runs, base_runs)
         out.append(dict(value=v, totals=a["totals"], diff=a["diff_vs_baseline"]))
     return out

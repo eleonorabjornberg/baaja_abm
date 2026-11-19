@@ -50,6 +50,8 @@ DOE NEPA metrics (EA durations); DOE WPTO hydropower licensing (7.6-yr relicensi
 2025/2026; 2025 offshore wind stop-work order coverage (CRS LSB11402, Axios, E&E News).
 
 ## Next phase (requested)
-Base parameters on data and add: who sues (challenger types), vertically integrated utility vs merchant
-decision control, asset lifetimes / retirements, permit reconsideration. LBNL Queued Up is behind a bot check from
-the cloud session; EIA-860M is reachable.
+Done: who sues (challenger agents, CEQ + Breakthrough data); LBNL data calibration (handoff #2: arrivals, sizes,
+interconnection, per-technology attrition, time to COD).
+To do: vertically integrated utility vs merchant decision control (LBNL `region`/`entity` separates ISO from
+non-ISO West/Southeast); asset lifetimes / retirements (EIA-860M is reachable from the cloud session); permit
+reconsideration; federal-nexus shares from BLM/BOEM lists; hybrid storage components.

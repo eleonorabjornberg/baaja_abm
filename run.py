@@ -2,7 +2,7 @@
 import argparse, json, os
 
 from baaja import experiments as ex
-from baaja.calibrate import calibrate
+from baaja.calibrate import calibrate_all
 from baaja.params import BAAJA, BASE, CHALLENGERS, LEVER_KEYS, POLITICS, SCEN
 
 ap = argparse.ArgumentParser()
@@ -12,33 +12,34 @@ ap.add_argument("--plots", action="store_true")
 a = ap.parse_args()
 os.makedirs("results", exist_ok=True); os.makedirs("figures", exist_ok=True)
 
-h = calibrate()
-raw = {s: ex.run_scenario(o, a.runs, h) for s, o in SCEN.items()}
+h, bld = calibrate_all()
+raw = {s: ex.run_scenario(o, a.runs, h, build=bld) for s, o in SCEN.items()}
 base = raw["Baseline (current law)"]
 res = {s: ex.aggregate(r, None if s == "Baseline (current law)" else base) for s, r in raw.items()}
 
 # renewable vs fossil under fixed political paths: BAAJA gain vs current law on the same path
 pol = {}
 for name, path in POLITICS.items():
-    b = ex.run_scenario({}, a.runs, h, path); z = ex.run_scenario(BAAJA, a.runs, h, path)
+    b = ex.run_scenario({}, a.runs, h, path, build=bld); z = ex.run_scenario(BAAJA, a.runs, h, path, build=bld)
     agg = ex.aggregate(z, b)
     pol[name] = dict(agg["diff_vs_baseline"], baseline=ex.aggregate(b)["totals"], baaja=agg["totals"])
 
 # lever decomposition: each provision alone vs current law, and full BAAJA without it
 lev = {}
 for name, keys in LEVER_KEYS.items():
-    alone = ex.aggregate(ex.run_scenario({k: BAAJA[k] for k in keys}, a.runs, h), base)["diff_vs_baseline"]
-    without = ex.aggregate(ex.run_scenario(dict(BAAJA, **{k: BASE[k] for k in keys}), a.runs, h), base)["diff_vs_baseline"]
+    alone = ex.aggregate(ex.run_scenario({k: BAAJA[k] for k in keys}, a.runs, h, build=bld), base)["diff_vs_baseline"]
+    without = ex.aggregate(ex.run_scenario(dict(BAAJA, **{k: BASE[k] for k in keys}), a.runs, h, build=bld), base)["diff_vs_baseline"]
     lev[name] = dict(alone=alone, without=without)
 
-out = dict(hazard=h, n_runs=a.runs, scenarios=res, politics=pol, levers=lev)
+out = dict(hazard=h, build_months=bld, n_runs=a.runs, scenarios=res, politics=pol, levers=lev)
 if a.sweep:
     vals = [1.0, .95, .9, .85, .8, .75, .7]
-    out["sweep_ix_speedup"] = ex.sweep(BAAJA, "ix_speedup", vals, a.runs, h, base)
+    out["sweep_ix_speedup"] = ex.sweep(BAAJA, "ix_speedup", vals, a.runs, h, base, build=bld)
 json.dump(out, open("results/results.json", "w"), indent=1)
 
 # console + markdown summary
-L = [f"calibrated monthly withdrawal hazard = {h:.4f}, {a.runs} runs, mean [90% interval]\n"]
+L = [f"calibrated monthly withdrawal hazard by technology: {', '.join(f'{k} {v:.4f}' for k, v in h.items())}; "
+     f"post-IA months to COD (calibrated): {', '.join(f'{k} {v:.0f}' for k, v in bld.items())}; {a.runs} runs, mean [90% interval]\n"]
 f = lambda b, d=0: f"{b['mean']:.{d}f} [{b['p5']:.{d}f}, {b['p95']:.{d}f}]"
 L += ["| scenario | GW total | GW renewable (new) | GW gas | GW storage | renewable share of new TWh | suits | harm index |",
       "|---|---|---|---|---|---|---|---|"]
@@ -101,6 +102,7 @@ if a.plots:
     plots.renew_vs_fossil(res, "figures/renewable_vs_fossil_gw.png")
     plots.renew_vs_fossil(res, "figures/renewable_vs_fossil_twh.png", unit="TWh")
     plots.gain_by_type(res, "figures/gain_by_technology.png")
+    plots.who_sues(res, CHALLENGERS, "figures/who_sues.png")
     plots.politics(pol, "figures/gain_by_political_path.png")
     if a.sweep:
         plots.sweep_ix(out["sweep_ix_speedup"], res["BAAJA: NEPA + courts only (Div. A)"], "figures/sweep_ix_speedup.png")
