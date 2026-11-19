@@ -80,7 +80,7 @@ def simulate(p, seed, hostile_to):
         kind = np.where(u_kind < p_eis, 2, np.where(u_kind < p_eis + max(p_ea, 0), 1, 0))
         if name == "Geothermal" and p["geo_ce"] > 0:            # Sec.2229: lease activities not a major federal action
             kind = np.where(u_kind < p["geo_ce"], 0, kind)
-        med = np.where(kind == 0, 4.0, np.where(kind == 1, ty["ea_med"], ty["eis_med"]))
+        med = np.where(kind == 0, ty["ce_med"], np.where(kind == 1, ty["ea_med"], ty["eis_med"]))
         sig = np.where(kind == 0, 1.0, np.where(kind == 1, .6, .74))
         D = med * np.exp(sig * z_D)
         D = D + np.where((kind > 0) & (u_esa < p["esa_share"]), p["esa_months"], 0)
@@ -101,7 +101,9 @@ def simulate(p, seed, hostile_to):
         W = (np.ceil(np.log1p(-u_w) / np.log1p(-h)) + age0) if ty["ix"] else np.full(n, 1e9)
         decided = nexus & (W >= tDec - t0) & (tDec >= 0) & (tDec <= T)
         # ---- litigation on decided projects ----
-        lit_p = np.where(kind == 2, ty["lit_eis"], np.where(kind == 1, p["lit_ea"], p["lit_ce"]))
+        l_ea = ty["lit_ea_data"] * p["lit_data_mult"] if "lit_ea_data" in ty else p["lit_ea"]
+        l_ce = ty["lit_ce_data"] * p["lit_data_mult"] if "lit_ce_data" in ty else p["lit_ce"]
+        lit_p = np.where(kind == 2, ty["lit_eis"], np.where(kind == 1, l_ea, l_ce))
         if p["court"] == "baaja":
             timely = u_late >= np.array(LATE_SHARE)[who] * (1 - p["late_adapt"])
             passes = timely & (u_ex < p["exhaust_injury"])

@@ -1,0 +1,155 @@
+{
+ "n_actions": 1530,
+ "ea_share_nonEIS": {
+  "project": 0.5306122448979592,
+  "n_project": 49,
+  "all": 0.3242320819112628,
+  "n_all": 1465,
+  "by_tech_all": {
+   "Geothermal": 0.31699346405228757,
+   "Onshore wind": 0.232,
+   "Solar": 0.32669322709163345,
+   "Storage": 0.6089743589743589,
+   "Transmission": 0.2743221690590112
+  }
+ },
+ "median_months": {
+  "Geothermal": {
+   "CE": {
+    "median": 1.609724047306176,
+    "n": 154
+   },
+   "EA": {
+    "median": 6.011826544021025,
+    "n": 73
+   },
+   "EIS": {
+    "median": 82.1287779237845,
+    "n": 2
+   }
+  },
+  "Onshore wind": {
+   "CE": {
+    "median": 1.757555847568988,
+    "n": 72
+   },
+   "EA": {
+    "median": 5.88042049934297,
+    "n": 22
+   },
+   "EIS": {
+    "median": 32.867936925098554,
+    "n": 4
+   }
+  },
+  "Solar": {
+   "CE": {
+    "median": 1.609724047306176,
+    "n": 133
+   },
+   "EA": {
+    "median": 6.241787122207621,
+    "n": 65
+   },
+   "EIS": {
+    "median": 21.81340341655716,
+    "n": 19
+   }
+  },
+  "Storage": {
+   "CE": {
+    "median": 1.773981603153745,
+    "n": 35
+   },
+   "EA": {
+    "median": 1.9710906701708277,
+    "n": 83
+   }
+  },
+  "Transmission": {
+   "CE": {
+    "median": 1.6590013140604467,
+    "n": 350
+   },
+   "EA": {
+    "median": 3.7943495400788434,
+    "n": 134
+   },
+   "EIS": {
+    "median": 32.605124835742444,
+    "n": 10
+   }
+  }
+ },
+ "decisions_per_yr": {
+  "Geothermal": {
+   "CE": 4.1,
+   "EA": 2.7,
+   "EIS": 0.2
+  },
+  "Onshore wind": {
+   "CE": 3.0,
+   "EA": 0.7,
+   "EIS": 0.2
+  },
+  "Solar": {
+   "CE": 5.7,
+   "EA": 3.8,
+   "EIS": 1.4
+  },
+  "Storage": {
+   "CE": 1.6,
+   "EA": 1.4
+  },
+  "Transmission": {
+   "CE": 13.2,
+   "EA": 6.0,
+   "EIS": 0.8
+  }
+ },
+ "cancelled_share": {
+  "Geothermal": 0.09003215434083602,
+  "Onshore wind": 0.145985401459854,
+  "Solar": 0.09929078014184398,
+  "Storage": 0.04487179487179487,
+  "Transmission": 0.07298136645962733
+ },
+ "lit_rate": {
+  "Renewable": {
+   "suits_per_yr": {
+    "CE": 0.2,
+    "EA": 0.6
+   },
+   "reviews_per_yr": {
+    "CE": 14.4,
+    "EA": 12.6,
+    "EIS": 1.7999999999999998
+   },
+   "doe_ea_per_yr": 4.0,
+   "lit_ea": 0.047619047619047616,
+   "lit_ce": 0.01388888888888889
+  },
+  "Transmission": {
+   "suits_per_yr": {
+    "CE": 0.1,
+    "EA": 0.7
+   },
+   "reviews_per_yr": {
+    "CE": 13.2,
+    "EA": 8.1,
+    "EIS": 0.8
+   },
+   "doe_ea_per_yr": 2.1,
+   "lit_ea": 0.08641975308641975,
+   "lit_ce": 0.007575757575757577
+  }
+ },
+ "meta": {
+  "source": "BLM ePlanning NEPA register export (Lands and Realty energy keyword + Renewable Energy program)",
+  "years_for_rates": [
+   2012,
+   2021
+  ],
+  "note": "NEPA start date is after the right-of-way application, so intake time is not measured"
+ }
+}

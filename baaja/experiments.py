@@ -69,7 +69,7 @@ def compare(scenarios, n_runs, cal, politics=None, base_key=None):
     return {k: aggregate(r, None if r is b else b) for k, r in raw.items()}
 
 
-LAW_KEYS = {"ea_share_nonEIS", "intake_pub", "intake_oth", "nonnepa_hydro", "lit_ea", "lit_ce", "p_kill_vac", "remand_months",
+LAW_KEYS = {"ea_share_nonEIS", "intake_pub", "intake_oth", "nonnepa_hydro", "lit_ea", "lit_ce", "lit_data_mult", "p_kill_vac", "remand_months",
             "delay_weight", "halt_len", "p_kill_halt", "halt_mult_other"}   # describe current law: vary in both runs
 
 

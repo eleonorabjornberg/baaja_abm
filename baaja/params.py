@@ -14,6 +14,7 @@ LBNL, ENGINE, NEXUS, CEQ, CASES = (_load("lbnl_targets.json"), _load("engine_inp
 FED = _load("federal_nexus_targets.json")
 LIMIT = _load("limitation_experiment.json")["late_adapt"]   # [D] highway/transit 150-180 day limit vs other NEPA suits
 IXB = _load("interconnection_benchmark.json")              # [D] ERCOT vs CAISO/MISO request -> IA times
+BLM = _load("blm_eplanning_targets.json")                  # [D] BLM ePlanning energy NEPA register
 MIN_N = 30
 
 T = 180
@@ -23,12 +24,16 @@ BACKCAST = dict(T=192, start_year=2010, turnovers=[84, 132, 180], politics=["ren
 # ---- assumptions: (low, central, high, note). Everything not listed here is [D]. -----------------------------
 ASSUMPTIONS = {
     # permitting
-    "ea_share_nonEIS":   (0.25, 0.50, 0.75, "share of non-EIS federal reviews that are EAs (rest CEs); no national EA/CE count"),
+    "ea_share_nonEIS":   (round(BLM["ea_share_nonEIS"]["all"], 2), round(BLM["ea_share_nonEIS"]["project"], 2), 0.67,
+                          "share of non-EIS federal reviews that are EAs (rest CEs/DNAs) [D: BLM ePlanning; central = actions "
+                          "naming >= 20 MW (n=49), low = all energy actions, high = central + 95% binomial margin]"),
     "intake_pub":        (6, 12, 18, "months from federal-land right-of-way application to start of review, current law"),
     "intake_oth":        (1, 3, 6, "months from application to start of review, other federal nexus"),
     "nonnepa_hydro":     (36, 48, 60, "hydro relicensing months outside NEPA (s.401 certification, license terms)"),
-    "lit_ea":            (0.0025, 0.005, 0.01, "P(sued | EA): EA/EIS suit ratio in case data x ~10,000 EAs/yr (CEQ estimate)"),
-    "lit_ce":            (0.0001, 0.0002, 0.0005, "P(sued | CE): same method, ~100,000 CEs/yr"),
+    "lit_ea":            (0.0025, 0.005, 0.01, "P(sued | EA) for gas and hydro: all-sector case data x ~10,000 EAs/yr (CEQ estimate)"),
+    "lit_ce":            (0.0001, 0.0002, 0.0005, "P(sued | CE) for gas and hydro: same method, ~100,000 CEs/yr"),
+    "lit_data_mult":     (0.5, 0.75, 1.0, "scale on the energy-specific EA/CE suit rates (renewables, transmission) [D: suits / "
+                          "BLM + DOE reviews, 2012-21]; < 1 because other agencies' reviews are missing from the denominator"),
     "p_kill_vac":        (0.1, 0.2, 0.4, "P(project cancelled | permit vacated)"),
     "remand_months":     (6, 12, 18, "delay after vacatur, current law"),
     "delay_weight":      (0.0, 1.0, 1.0, "weight of litigation/halt delay in the sponsor's withdrawal clock"),
@@ -91,11 +96,16 @@ for t, ty in TYPES.items():
     ty["eis_target"] = _ceq(t, "eis_per_year") or 0.0        # [D] CEQ final EISs/yr 2015-24
     m, n_all = _ceq(t, "median_months_noi_to_feis"), _ceq(t, "n_all") or 0
     ty["eis_med"] = m if (m and n_all >= 10) else _eis_all  # [D] CEQ by technology if n >= 10, else all EISs (37 mo)
-    ty["ea_med"] = 12.0                                     # [D] DOE EA median
+    _bm = BLM["median_months"].get(t, {})                   # [D] BLM ePlanning medians where n >= 20, else DOE EA 12 / USFS CE 4
+    ty["ea_med"] = _bm["EA"]["median"] if _bm.get("EA", {}).get("n", 0) >= 20 else 12.0
+    ty["ce_med"] = _bm["CE"]["median"] if _bm.get("CE", {}).get("n", 0) >= 20 else 4.0
     ty["pub"] = t in ("Solar", "Onshore wind", "Geothermal")  # rights-of-way on federal land (Sec.2213 eligible)
     ty["nonnepa"] = t == "Hydro relicense"
 # gas: federal nexus is mostly Corps individual permits (28 of 33 points), each with a Corps EA [D]
 TYPES["Gas"]["ea_share_nonEIS"] = min(1.0, _n["Gas"]["corps_individual_net"] / TYPES["Gas"]["nex"])
+for _t, _g in (("Solar", "Renewable"), ("Onshore wind", "Renewable"), ("Offshore wind", "Renewable"), ("Geothermal", "Renewable"),
+               ("Storage", "Renewable"), ("Transmission", "Transmission")):   # [D] energy-specific suit rates
+    TYPES[_t]["lit_ea_data"] = BLM["lit_rate"][_g]["lit_ea"]; TYPES[_t]["lit_ce_data"] = BLM["lit_rate"][_g]["lit_ce"]
 TYPES["Gas"]["ea_med"] = ENGINE["corps"]["standard_permit"]["median_months"] + 2   # [D] 5.7 mo notice->decision, +2 pre-notice [A]
 
 # EIS litigation rates [D] Bennon & Wilson 2023 / RFF (solar ~2/3, wind .38, transmission .31, pipelines .50, geo 1/3)
@@ -140,7 +150,7 @@ BASE = dict(T=T, turnovers=TURNOVERS, n_scale=1.0, seed_queue=True, arrivals=Non
             ea_share_nonEIS=A["ea_share_nonEIS"], intake_pub=A["intake_pub"], intake_oth=A["intake_oth"],
             nonnepa_hydro=A["nonnepa_hydro"], esa_months=3.0, esa_share=0.25,
             intake_pub_2213=None, nonnepa_hydro_1202=None,    # BAAJA overrides (None = current-law value applies)
-            lit_ea=A["lit_ea"], lit_ce=A["lit_ce"], p_kill_vac=A["p_kill_vac"], remand_months=A["remand_months"],
+            lit_ea=A["lit_ea"], lit_ce=A["lit_ce"], lit_data_mult=A["lit_data_mult"], p_kill_vac=A["p_kill_vac"], remand_months=A["remand_months"],
             delay_weight=A["delay_weight"], halt_len=A["halt_len"], p_kill_halt=A["p_kill_halt"],
             halt_mult_other=A["halt_mult_other"],
             # current law: no BAAJA levers

@@ -128,3 +128,11 @@ def test_late_adapt_comes_from_limitation_experiment():
     from baaja.params import ASSUMPTIONS, LIMIT
     lo, c, hi, _ = ASSUMPTIONS["late_adapt"]
     assert lo == pytest.approx(LIMIT["low"], abs=0.01) and c == pytest.approx(LIMIT["central"], abs=0.01) and lo < c < hi
+
+
+def test_blm_review_parameters_come_from_eplanning():
+    from baaja.params import ASSUMPTIONS, BLM
+    assert ASSUMPTIONS["ea_share_nonEIS"][1] == pytest.approx(BLM["ea_share_nonEIS"]["project"], abs=0.01)
+    assert TYPES["Solar"]["ea_med"] == pytest.approx(BLM["median_months"]["Solar"]["EA"]["median"])
+    assert TYPES["Solar"]["lit_ea_data"] == pytest.approx(BLM["lit_rate"]["Renewable"]["lit_ea"])
+    assert "lit_ea_data" not in TYPES["Gas"]          # gas keeps the generic all-sector rate

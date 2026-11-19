@@ -11,7 +11,7 @@ from ..params import BAAJA, CHALLENGERS, LEVERS, _load
 from . import G3, fmt, headline, save, sweep_table, table
 
 L = LEVERS["litigation"]
-SWEEP = ["late_adapt", "exhaust_injury", "suit_payoff", "inj_nonNEPA", "lit_months_baaja", "lit_ea", "p_kill_vac", "remand_months"]
+SWEEP = ["late_adapt", "exhaust_injury", "suit_payoff", "inj_nonNEPA", "lit_months_baaja", "lit_data_mult", "lit_ea", "p_kill_vac", "remand_months"]
 
 
 def run(n_runs, cal, res_dir, fig_dir):
