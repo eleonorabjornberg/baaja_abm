@@ -23,7 +23,7 @@ or an assumption range), **listed** (in the bill, not simulated, reason given).
 
 | Section | What it does | Model | Data |
 |---|---|---|---|
-| 1110 | NEPA claims within 150 days; only detailed commenters; direct injury; appeals-court original jurisdiction; remedy is remand without vacatur or injunction, <= 180 days; injunctions only on non-NEPA grounds; no NEPA review of tribal trust actions | modelled: 150-day filter from observed filing delays by challenger type x adaptation range; exhaustion/injury range; suit payoff range; no vacatur; injunctions x non-NEPA share | 1,821 NEPA cases: challenger mix, win rates, 61% filed > 150 days, injunctions 9.5%, vacatur 69% of remands, 13-month cases |
+| 1110 | NEPA claims within 150 days; only detailed commenters; direct injury; appeals-court original jurisdiction; remedy is remand without vacatur or injunction, <= 180 days; injunctions only on non-NEPA grounds; no NEPA review of tribal trust actions | modelled: 150-day filter from observed filing delays by challenger type x adaptation (0.39 [0.26, 1.0] from the FHWA/FTA limitation natural experiment); exhaustion/injury range; suit payoff range; no vacatur; injunctions x non-NEPA share | 1,821 NEPA cases: challenger mix, win rates, 61% filed > 150 days, injunctions 9.5%, vacatur 69% of remands, 13-month cases |
 | 2201 | 150 days and expedited review for all federal claims on energy authorizations | modelled together with 1110 (the filter applies to all suits) | |
 | 1205, 1305 | 150-day limits for s.404 program approvals and ESA biological opinions | listed (no separate claim type in the model) | |
 | outside the bill | state-court and administrative litigation | reported, not simulated | Sabin: ~80% of litigated renewable projects in state/administrative venues |
@@ -32,7 +32,7 @@ or an assumption range), **listed** (in the bill, not simulated, reason given).
 
 | Section | What it does | Model | Data |
 |---|---|---|---|
-| 2106 | FERC rule within 18 months: consolidated interconnection + regional planning, published locations with fixed per-MW cost | modelled as a sweep: study-time cut 0-30% from month 36 (rule timing 24-48) | LBNL interconnection durations and completion |
+| 2106 | FERC rule within 18 months: consolidated interconnection + regional planning, published locations with fixed per-MW cost | modelled as a sweep: study-time cut 0-42% from month 36 (rule timing 24-48); floor = no measured effect of past reforms, ceiling = ERCOT's pace | LBNL request -> agreement times by region (`data/interconnection_benchmark.json`) |
 | 2110 | FERC rulemaking on computing/AI queue practices; no target | central 0%, range 0-5% | |
 | 2101-2103 | transmission permitting, DOE congestion study, planning | listed | |
 

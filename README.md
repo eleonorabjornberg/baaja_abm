@@ -36,6 +36,9 @@ The renewable share of new generation rises by +0.2 points.
      individual permits, vs ~5% wind and ~11% solar), but its reviews are short Corps EAs, so deadlines barely bind.
 2. **Litigation (Sim 2)**: the court provisions cut suits by about two-thirds (by 28-50 suits over 15 years across
    the assumption ranges), but add only +0.8 GW, because only ~9.5% of energy suits ever win an injunction.
+   - How challengers respond to the 150-day limit comes from a natural experiment: highway/transit approvals have had
+     a 150-180 day limit since 2005, and those suits bunch just inside it. 27% are filed more than 240 days after the
+     decision vs 45% of other NEPA suits, so ~39% of would-be late filers file in time (range 26-100%).
    - Renewables are sued mostly by **local groups and residents** (about 70% of renewable suits). They lose the most
      under the 150-day limit and comment-exhaustion rule (28 -> 9 suits).
    - Vacatur disappears (it is 69% of remands today); cancellations by courts fall modestly.
@@ -45,6 +48,10 @@ The renewable share of new generation rises by +0.2 points.
    on computing/AI queue practices; Sec.2106 requires consolidated planning with published interconnection locations
    and fixed costs. Every 5% cut in interconnection study time adds about 35-45 GW by 2041 (renewables ~2/3). At 10%:
    +82 GW total, +53 renewable, +9 gas, +18 storage.
+   - The data bracket the effect but can't point to a value. Floor: past queue reforms show no measured shortening
+     (MISO's request-to-agreement times rose from ~33 to 45-51 months for 2017-21 requests). Ceiling: ERCOT's pace,
+     23 vs 40 months in CAISO/MISO (2015-19 requests), a 42% cut, worth **+427 GW** (renewables +275, gas +46,
+     storage +105). Reaching it would also need energy-only interconnection, which the bill does not mandate.
 4. **Permit certainty (Sec.1401, Sim 4)**: halted GW falls from ~8 to ~1. That is worth +1.2 GW of renewables in a
    random political future and +2.5 GW if every administration is hostile to renewables; for gas, +0.1-0.2 GW.
    Offshore wind carries most of the risk (anchored on the 2025 stop-work orders).
@@ -54,8 +61,8 @@ The renewable share of new generation rises by +0.2 points.
 
 **Bottom line for renewables vs gas.** The provisions that data can size favour renewables (about 8:1 in GW), mainly
 through federal-land rights-of-way and the court changes that hit local opposition. But they are small next to
-interconnection. Whether BAAJA is a +14 GW or a +100 GW bill depends on what FERC does under Sec.2106, which this
-model can only bracket.
+interconnection. Whether BAAJA is a +14 GW bill or a several-hundred-GW bill depends on what FERC does under
+Sec.2106: the data bracket it between no change and ERCOT's pace, but nothing measured picks a point inside.
 
 ## Validation
 Backcast, current law, Jan 2010 to Dec 2025, with LBNL requests by year (`results/backcast.md`). Cumulative 2018-25
@@ -72,6 +79,8 @@ GW are underestimated). Calibration fits LBNL completion and time to operation b
 | EIS counts and durations by technology | CEQ EIS Timeline Data 2010-2024 | `extract_ceq_eis.py` |
 | challenger mix, win rates, filing delays, injunctions, vacatur, case length | case-level NEPA litigation export (1,821 cases, 2001-22) | `extract_nepa_cases.py` |
 | Corps standard-permit processing time | USACE ORM final individual permits | `extract_engine_inputs.py` |
+| adaptation to a 150-day limit | FHWA/FTA highway/transit suits (150-180 day limit) vs other NEPA suits, case-level export | `extract_limitation_experiment.py` |
+| interconnection bracket for Sec.2106 | LBNL request -> agreement times, ERCOT vs CAISO/MISO | `extract_interconnection_benchmark.py` |
 | state vs federal venue of renewable opposition | Sabin Center 2026 contested projects and restrictions | `extract_permits_opposition.py` |
 | DOE EAs and EISs | DOE NEPA document lists | `extract_permits_opposition.py`, `combine_federal_hooks.py` |
 | EIS litigation rates by sector | Bennon & Wilson 2023 (53 ELR 10836); RFF | `params.LIT_EIS` |
@@ -101,13 +110,13 @@ the JSON summaries in `data/` from them.
 | `geo_ce` | 0.5 | 0.85 | 1.0 | Sec.2229: geothermal reviews that stop being major actions |
 | `intake_pub_baaja` | 3 | 4 | 6 | Sec.2213: months to start of review on federal land |
 | `nonnepa_hydro_baaja` | 30 | 36 | 42 | Sec.1202: hydro months outside NEPA |
-| `late_adapt` | 0 | 0.5 | 1.0 | Sec.1110/2201: late filers who file within 150 days instead |
+| `late_adapt` | 0.26 | 0.39 | 1.0 | Sec.1110/2201: late filers who file within 150 days instead. **From data**: FHWA/FTA limitation natural experiment (`data/limitation_experiment.json`) |
 | `exhaust_injury` | 0.6 | 0.8 | 0.95 | Sec.1110: timely suits passing comment exhaustion + direct injury |
 | `suit_payoff` | 0.4 | 0.6 | 1.0 | Sec.1110: suits filed when the only remedy is remand, relative to now |
 | `inj_nonNEPA` | 0 | 0.3 | 0.5 | Sec.1110: injunctions resting on non-NEPA laws (still allowed) |
 | `lit_months_baaja` | 8 | 12 | 16.4 | Sec.1110/2201: months in litigation under appeals-court jurisdiction |
 | `halt_mult_1401` | 0 | 0.1 | 0.3 | Sec.1401: residual halt probability |
-| `ix_2110`, `ix_2106` | 0, 0 | 0, 0 | 0.05, 0.30 | interconnection study-time cuts (Sim 3 sweeps 0-30%) |
+| `ix_2110`, `ix_2106` | 0, 0 | 0, 0 | 0.05, 0.42 | interconnection study-time cuts. Sec.2106 ceiling **from data**: ERCOT's pace vs CAISO/MISO (`data/interconnection_benchmark.json`); Sim 3 sweeps 0-42% |
 | `ix_rule_month` | 24 | 36 | 48 | months until the rules affect studies |
 
 Other assumptions without a range: transmission and hydro-relicensing arrival rates; offshore wind (800 MW) and

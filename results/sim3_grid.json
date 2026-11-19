@@ -3,9 +3,9 @@
   0.0,
   0.05,
   0.1,
-  0.15,
   0.2,
-  0.3
+  0.3,
+  0.42
  ],
  "results": {
   "0.0": {
@@ -47,14 +47,14 @@
       "p95": 19.953333333333333
      },
      "suits": {
-      "mean": 0.5,
+      "mean": 0.46,
       "p5": 0.0,
-      "p95": 2.0
+      "p95": 1.0
      },
      "suits_per_year": {
-      "mean": 0.03333333333333333,
+      "mean": 0.030666666666666665,
       "p5": 0.0,
-      "p95": 0.13333333333333333
+      "p95": 0.06666666666666667
      },
      "vacated": {
       "mean": 0.0,
@@ -221,12 +221,12 @@
       "p95": 1.8666666666666667
      },
      "suits": {
-      "mean": 4.41,
+      "mean": 3.94,
       "p5": 1.0,
       "p95": 8.0
      },
      "suits_per_year": {
-      "mean": 0.294,
+      "mean": 0.26266666666666666,
       "p5": 0.06666666666666667,
       "p95": 0.5333333333333333
      },
@@ -278,12 +278,12 @@
       "p95": 0.1963841552714072
      },
      "GW_online": {
-      "mean": 180.10511999999994,
+      "mean": 180.10719999999998,
       "p5": 165.776,
       "p95": 190.14319999999998
      },
      "projects_online": {
-      "mean": 865.89,
+      "mean": 865.9,
       "p5": 797.0,
       "p95": 914.15
      },
@@ -308,14 +308,14 @@
       "p95": 0.0
      },
      "suits": {
-      "mean": 3.99,
+      "mean": 3.59,
       "p5": 1.0,
-      "p95": 7.049999999999997
+      "p95": 7.0
      },
      "suits_per_year": {
-      "mean": 0.26599999999999996,
+      "mean": 0.23933333333333334,
       "p5": 0.06666666666666667,
-      "p95": 0.4699999999999998
+      "p95": 0.4666666666666667
      },
      "vacated": {
       "mean": 0.0,
@@ -395,14 +395,14 @@
       "p95": 22.740000000000002
      },
      "suits": {
-      "mean": 9.95,
-      "p5": 4.0,
-      "p95": 16.0
+      "mean": 8.79,
+      "p5": 3.0,
+      "p95": 14.0
      },
      "suits_per_year": {
-      "mean": 0.6633333333333333,
-      "p5": 0.26666666666666666,
-      "p95": 1.0666666666666667
+      "mean": 0.586,
+      "p5": 0.2,
+      "p95": 0.9333333333333333
      },
      "vacated": {
       "mean": 0.0,
@@ -482,12 +482,12 @@
       "p95": 22.14333333333333
      },
      "suits": {
-      "mean": 0.54,
+      "mean": 0.47,
       "p5": 0.0,
       "p95": 2.0
      },
      "suits_per_year": {
-      "mean": 0.036000000000000004,
+      "mean": 0.03133333333333334,
       "p5": 0.0,
       "p95": 0.13333333333333333
      },
@@ -569,14 +569,14 @@
       "p95": 3.673333333333333
      },
      "suits": {
-      "mean": 4.87,
-      "p5": 1.9500000000000002,
-      "p95": 9.0
+      "mean": 4.32,
+      "p5": 1.0,
+      "p95": 8.0
      },
      "suits_per_year": {
-      "mean": 0.32466666666666666,
-      "p5": 0.13,
-      "p95": 0.6
+      "mean": 0.288,
+      "p5": 0.06666666666666667,
+      "p95": 0.5333333333333333
      },
      "vacated": {
       "mean": 0.0,
@@ -656,14 +656,14 @@
       "p95": 9.870000000000001
      },
      "suits": {
-      "mean": 1.57,
+      "mean": 1.4,
       "p5": 0.0,
-      "p95": 3.049999999999997
+      "p95": 3.0
      },
      "suits_per_year": {
-      "mean": 0.10466666666666664,
+      "mean": 0.09333333333333331,
       "p5": 0.0,
-      "p95": 0.20333333333333314
+      "p95": 0.2
      },
      "vacated": {
       "mean": 0.0,
@@ -709,7 +709,7 @@
    },
    "totals": {
     "GW_total": {
-     "mean": 1082.9963200000002,
+     "mean": 1082.9984000000002,
      "p5": 1060.3178,
      "p95": 1104.1465
     },
@@ -719,9 +719,9 @@
      "p95": 327.2119293099118
     },
     "suits_total": {
-     "mean": 25.84,
-     "p5": 17.95,
-     "p95": 34.05
+     "mean": 22.98,
+     "p5": 15.0,
+     "p95": 31.049999999999997
     },
     "EIS_per_year_total": {
      "mean": 12.394666666666668,
@@ -734,12 +734,12 @@
      "p95": 2.612
     },
     "GW Renewable (new)": {
-     "mean": 668.93536,
+     "mean": 668.9374399999999,
      "p5": 651.4685,
      "p95": 684.8583
     },
     "TWh Renewable (new)": {
-     "mean": 1609.7148720864,
+     "mean": 1609.7210714016003,
      "p5": 1559.5818516000002,
      "p95": 1650.840960816
     },
@@ -774,7 +774,7 @@
      "p95": 0.0
     },
     "renewable share of new TWh": {
-     "mean": 0.645988685439285,
+     "mean": 0.6459895938786245,
      "p5": 0.631558564754011,
      "p95": 0.6571994715320011
     },
@@ -794,9 +794,9 @@
      "p95": 1.0
     },
     "sued_share_of_decided | Renewable (new)": {
-     "mean": 0.015163244732611743,
-     "p5": 0.009140272165438555,
-     "p95": 0.02198227749811392
+     "mean": 0.013489192887333466,
+     "p5": 0.00747989292499461,
+     "p95": 0.020005025125628143
     },
     "decisions | Renewable (new)": {
      "mean": 1211.82,
@@ -804,34 +804,34 @@
      "p95": 1267.15
     },
     "suits | Renewable (new)": {
-     "mean": 18.36,
-     "p5": 11.0,
-     "p95": 25.099999999999994
+     "mean": 16.33,
+     "p5": 9.0,
+     "p95": 24.0
     },
     "suits: National NGO | Renewable (new)": {
-     "mean": 0.77,
+     "mean": 0.68,
      "p5": 0.0,
-     "p95": 3.0
+     "p95": 2.049999999999997
     },
     "challenger wins: National NGO | Renewable (new)": {
-     "mean": 0.23,
+     "mean": 0.22,
      "p5": 0.0,
      "p95": 1.0
     },
     "suits: Local group / residents | Renewable (new)": {
-     "mean": 13.19,
-     "p5": 7.0,
-     "p95": 20.0
+     "mean": 11.79,
+     "p5": 6.0,
+     "p95": 17.0
     },
     "challenger wins: Local group / residents | Renewable (new)": {
-     "mean": 2.91,
-     "p5": 0.9500000000000002,
-     "p95": 6.0
+     "mean": 2.58,
+     "p5": 0.0,
+     "p95": 5.049999999999997
     },
     "suits: Tribe | Renewable (new)": {
-     "mean": 2.18,
+     "mean": 2.01,
      "p5": 0.0,
-     "p95": 5.0
+     "p95": 4.0
     },
     "challenger wins: Tribe | Renewable (new)": {
      "mean": 0.27,
@@ -839,22 +839,22 @@
      "p95": 1.0
     },
     "suits: State / local government | Renewable (new)": {
-     "mean": 0.48,
+     "mean": 0.41,
      "p5": 0.0,
-     "p95": 2.0
+     "p95": 1.0499999999999972
     },
     "challenger wins: State / local government | Renewable (new)": {
-     "mean": 0.19,
+     "mean": 0.17,
      "p5": 0.0,
      "p95": 1.0
     },
     "suits: Business | Renewable (new)": {
-     "mean": 1.74,
+     "mean": 1.44,
      "p5": 0.0,
-     "p95": 4.0
+     "p95": 3.0
     },
     "challenger wins: Business | Renewable (new)": {
-     "mean": 0.23,
+     "mean": 0.21,
      "p5": 0.0,
      "p95": 1.0
     },
@@ -874,9 +874,9 @@
      "p95": 1.0
     },
     "sued_share_of_decided | Renewable (retained hydro)": {
-     "mean": 0.004773702052375296,
+     "mean": 0.004255551276301441,
      "p5": 0.0,
-     "p95": 0.010110206476693437
+     "p95": 0.009345794392523364
     },
     "decisions | Renewable (retained hydro)": {
      "mean": 327.32,
@@ -884,27 +884,27 @@
      "p95": 354.0
     },
     "suits | Renewable (retained hydro)": {
-     "mean": 1.57,
+     "mean": 1.4,
      "p5": 0.0,
-     "p95": 3.049999999999997
+     "p95": 3.0
     },
     "suits: National NGO | Renewable (retained hydro)": {
-     "mean": 0.78,
+     "mean": 0.71,
      "p5": 0.0,
      "p95": 2.0
     },
     "challenger wins: National NGO | Renewable (retained hydro)": {
-     "mean": 0.28,
+     "mean": 0.26,
      "p5": 0.0,
      "p95": 1.0
     },
     "suits: Local group / residents | Renewable (retained hydro)": {
-     "mean": 0.61,
+     "mean": 0.53,
      "p5": 0.0,
      "p95": 2.0
     },
     "challenger wins: Local group / residents | Renewable (retained hydro)": {
-     "mean": 0.21,
+     "mean": 0.2,
      "p5": 0.0,
      "p95": 1.0
     },
@@ -919,12 +919,12 @@
      "p95": 0.0
     },
     "suits: State / local government | Renewable (retained hydro)": {
-     "mean": 0.18,
+     "mean": 0.16,
      "p5": 0.0,
      "p95": 1.0
     },
     "challenger wins: State / local government | Renewable (retained hydro)": {
-     "mean": 0.07,
+     "mean": 0.06,
      "p5": 0.0,
      "p95": 1.0
     },
@@ -954,9 +954,9 @@
      "p95": 1.0
     },
     "sued_share_of_decided | Fossil (gas)": {
-     "mean": 0.0013186258430612258,
+     "mean": 0.001215662377106518,
      "p5": 0.0,
-     "p95": 0.004749283248493359
+     "p95": 0.0029095569010595844
     },
     "decisions | Fossil (gas)": {
      "mean": 378.87,
@@ -964,22 +964,22 @@
      "p95": 407.29999999999995
     },
     "suits | Fossil (gas)": {
-     "mean": 0.5,
+     "mean": 0.46,
      "p5": 0.0,
-     "p95": 2.0
+     "p95": 1.0
     },
     "suits: National NGO | Fossil (gas)": {
-     "mean": 0.17,
+     "mean": 0.15,
      "p5": 0.0,
      "p95": 1.0
     },
     "challenger wins: National NGO | Fossil (gas)": {
-     "mean": 0.04,
+     "mean": 0.03,
      "p5": 0.0,
      "p95": 0.0
     },
     "suits: Local group / residents | Fossil (gas)": {
-     "mean": 0.2,
+     "mean": 0.19,
      "p5": 0.0,
      "p95": 1.0
     },
@@ -1009,7 +1009,7 @@
      "p95": 0.0
     },
     "suits: Business | Fossil (gas)": {
-     "mean": 0.04,
+     "mean": 0.03,
      "p5": 0.0,
      "p95": 0.0
     },
@@ -1034,9 +1034,9 @@
      "p95": 1.0
     },
     "sued_share_of_decided | Storage": {
-     "mean": 0.00044534300739093076,
+     "mean": 0.00038791656807681224,
      "p5": 0.0,
-     "p95": 0.001640756441186415
+     "p95": 0.0016213409188634935
     },
     "decisions | Storage": {
      "mean": 1215.62,
@@ -1044,22 +1044,22 @@
      "p95": 1272.1
     },
     "suits | Storage": {
-     "mean": 0.54,
+     "mean": 0.47,
      "p5": 0.0,
      "p95": 2.0
     },
     "suits: National NGO | Storage": {
-     "mean": 0.03,
+     "mean": 0.01,
      "p5": 0.0,
      "p95": 0.0
     },
     "challenger wins: National NGO | Storage": {
-     "mean": 0.02,
+     "mean": 0.0,
      "p5": 0.0,
      "p95": 0.0
     },
     "suits: Local group / residents | Storage": {
-     "mean": 0.33,
+     "mean": 0.31,
      "p5": 0.0,
      "p95": 1.0
     },
@@ -1069,7 +1069,7 @@
      "p95": 1.0
     },
     "suits: Tribe | Storage": {
-     "mean": 0.1,
+     "mean": 0.09,
      "p5": 0.0,
      "p95": 1.0
     },
@@ -1079,7 +1079,7 @@
      "p95": 0.0
     },
     "suits: State / local government | Storage": {
-     "mean": 0.02,
+     "mean": 0.01,
      "p5": 0.0,
      "p95": 0.0
     },
@@ -1089,9 +1089,9 @@
      "p95": 0.0
     },
     "suits: Business | Storage": {
-     "mean": 0.06,
+     "mean": 0.05,
      "p5": 0.0,
-     "p95": 1.0
+     "p95": 0.04999999999999716
     },
     "challenger wins: Business | Storage": {
      "mean": 0.01,
@@ -1101,7 +1101,7 @@
    },
    "diff_vs_baseline": {
     "GW_total": {
-     "mean": 14.109960000000017,
+     "mean": 14.112040000000015,
      "p5": 11.311800000000165,
      "p95": 17.375500000000088
     },
@@ -1111,9 +1111,9 @@
      "p95": 327.2119293099118
     },
     "suits_total": {
-     "mean": -34.19,
-     "p5": -45.0,
-     "p95": -22.0
+     "mean": -37.05,
+     "p5": -48.05,
+     "p95": -25.0
     },
     "EIS_per_year_total": {
      "mean": 2.9319999999999995,
@@ -1126,12 +1126,12 @@
      "p95": -1.1974000000000002
     },
     "GW Renewable (new)": {
-     "mean": 9.90678,
+     "mean": 9.908859999999999,
      "p5": 7.506000000000012,
      "p95": 13.311100000000101
     },
     "TWh Renewable (new)": {
-     "mean": 26.7084872352,
+     "mean": 26.714686550400003,
      "p5": 18.624664367999777,
      "p95": 38.57082076800011
     },
@@ -1166,7 +1166,7 @@
      "p95": 0.0
     },
     "renewable share of new TWh": {
-     "mean": 0.0022840233141211298,
+     "mean": 0.002284931753460564,
      "p5": 0.0005884161478621197,
      "p95": 0.0038832240215367626
     },
@@ -1186,9 +1186,9 @@
      "p95": 0.01102153708394039
     },
     "sued_share_of_decided | Renewable (new)": {
-     "mean": -0.042372564870990864,
-     "p5": -0.055365873114297505,
-     "p95": -0.02591421381429606
+     "mean": -0.04404661671626915,
+     "p5": -0.060088059890492616,
+     "p95": -0.028675777781587326
     },
     "decisions | Renewable (new)": {
      "mean": 537.94,
@@ -1196,33 +1196,33 @@
      "p95": 572.05
     },
     "suits | Renewable (new)": {
-     "mean": -20.41,
-     "p5": -31.05,
-     "p95": -8.950000000000003
+     "mean": -22.44,
+     "p5": -34.0,
+     "p95": -10.0
     },
     "suits: National NGO | Renewable (new)": {
-     "mean": -0.99,
+     "mean": -1.08,
      "p5": -3.0,
      "p95": 1.0
     },
     "challenger wins: National NGO | Renewable (new)": {
-     "mean": -0.25,
-     "p5": -1.0,
+     "mean": -0.26,
+     "p5": -1.0499999999999998,
      "p95": 1.0
     },
     "suits: Local group / residents | Renewable (new)": {
-     "mean": -14.55,
-     "p5": -23.05,
-     "p95": -6.900000000000006
+     "mean": -15.95,
+     "p5": -24.0,
+     "p95": -7.0
     },
     "challenger wins: Local group / residents | Renewable (new)": {
-     "mean": -3.22,
+     "mean": -3.55,
      "p5": -8.0,
      "p95": 0.04999999999999716
     },
     "suits: Tribe | Renewable (new)": {
-     "mean": -1.98,
-     "p5": -5.05,
+     "mean": -2.15,
+     "p5": -6.0,
      "p95": 1.0
     },
     "challenger wins: Tribe | Renewable (new)": {
@@ -1231,22 +1231,22 @@
      "p95": 1.0
     },
     "suits: State / local government | Renewable (new)": {
-     "mean": -0.48,
+     "mean": -0.55,
      "p5": -2.0,
      "p95": 1.0
     },
     "challenger wins: State / local government | Renewable (new)": {
-     "mean": -0.06,
+     "mean": -0.08,
      "p5": -1.0,
      "p95": 1.0
     },
     "suits: Business | Renewable (new)": {
-     "mean": -2.41,
-     "p5": -5.0,
+     "mean": -2.71,
+     "p5": -6.05,
      "p95": 0.04999999999999716
     },
     "challenger wins: Business | Renewable (new)": {
-     "mean": -0.54,
+     "mean": -0.56,
      "p5": -2.0,
      "p95": 1.0
     },
@@ -1266,8 +1266,8 @@
      "p95": 0.0034370186041000005
     },
     "sued_share_of_decided | Renewable (retained hydro)": {
-     "mean": -0.008337272138439565,
-     "p5": -0.01773355892543179,
+     "mean": -0.008855422914513422,
+     "p5": -0.01779557572211628,
      "p95": -0.00034311930043457107
     },
     "decisions | Renewable (retained hydro)": {
@@ -1276,27 +1276,27 @@
      "p95": 43.05
     },
     "suits | Renewable (retained hydro)": {
-     "mean": -2.28,
+     "mean": -2.45,
      "p5": -5.0,
      "p95": 0.0
     },
     "suits: National NGO | Renewable (retained hydro)": {
-     "mean": -1.07,
+     "mean": -1.14,
      "p5": -3.0,
      "p95": 0.0
     },
     "challenger wins: National NGO | Renewable (retained hydro)": {
-     "mean": -0.3,
+     "mean": -0.32,
      "p5": -1.0499999999999998,
      "p95": 0.04999999999999716
     },
     "suits: Local group / residents | Renewable (retained hydro)": {
-     "mean": -0.91,
+     "mean": -0.99,
      "p5": -3.0,
      "p95": 0.0
     },
     "challenger wins: Local group / residents | Renewable (retained hydro)": {
-     "mean": -0.25,
+     "mean": -0.26,
      "p5": -1.0499999999999998,
      "p95": 0.0
     },
@@ -1311,12 +1311,12 @@
      "p95": 0.0
     },
     "suits: State / local government | Renewable (retained hydro)": {
-     "mean": -0.3,
+     "mean": -0.32,
      "p5": -1.0,
      "p95": 0.0
     },
     "challenger wins: State / local government | Renewable (retained hydro)": {
-     "mean": -0.12,
+     "mean": -0.13,
      "p5": -1.0,
      "p95": 0.0
     },
@@ -1346,7 +1346,7 @@
      "p95": 0.0056022408963585235
     },
     "sued_share_of_decided | Fossil (gas)": {
-     "mean": -0.003201966789309095,
+     "mean": -0.0033049302552638033,
      "p5": -0.00837610521083128,
      "p95": 0.0
     },
@@ -1356,22 +1356,22 @@
      "p95": 25.049999999999997
     },
     "suits | Fossil (gas)": {
-     "mean": -1.14,
+     "mean": -1.18,
      "p5": -3.0,
      "p95": 0.0
     },
     "suits: National NGO | Fossil (gas)": {
-     "mean": -0.26,
+     "mean": -0.28,
      "p5": -1.0,
      "p95": 0.0
     },
     "challenger wins: National NGO | Fossil (gas)": {
-     "mean": -0.11,
+     "mean": -0.12,
      "p5": -1.0,
      "p95": 0.0
     },
     "suits: Local group / residents | Fossil (gas)": {
-     "mean": -0.5,
+     "mean": -0.51,
      "p5": -2.0,
      "p95": 0.0
     },
@@ -1401,7 +1401,7 @@
      "p95": 0.0
     },
     "suits: Business | Fossil (gas)": {
-     "mean": -0.18,
+     "mean": -0.19,
      "p5": -1.0,
      "p95": 0.0
     },
@@ -1426,8 +1426,8 @@
      "p95": 0.0008990448721250432
     },
     "sued_share_of_decided | Storage": {
-     "mean": -0.0011186503701801922,
-     "p5": -0.0028027761479680778,
+     "mean": -0.0011760768094943106,
+     "p5": -0.00283159845096825,
      "p95": 0.0
     },
     "decisions | Storage": {
@@ -1436,22 +1436,22 @@
      "p95": 97.14999999999999
     },
     "suits | Storage": {
-     "mean": -1.23,
-     "p5": -3.0,
+     "mean": -1.3,
+     "p5": -3.05,
      "p95": 0.0
     },
     "suits: National NGO | Storage": {
-     "mean": -0.06,
+     "mean": -0.08,
      "p5": -1.0,
      "p95": 0.0
     },
     "challenger wins: National NGO | Storage": {
-     "mean": -0.02,
+     "mean": -0.04,
      "p5": 0.0,
      "p95": 0.0
     },
     "suits: Local group / residents | Storage": {
-     "mean": -0.84,
+     "mean": -0.86,
      "p5": -3.0,
      "p95": 0.0
     },
@@ -1461,7 +1461,7 @@
      "p95": 0.0
     },
     "suits: Tribe | Storage": {
-     "mean": -0.12,
+     "mean": -0.13,
      "p5": -1.0,
      "p95": 0.0
     },
@@ -1471,7 +1471,7 @@
      "p95": 0.0
     },
     "suits: State / local government | Storage": {
-     "mean": -0.02,
+     "mean": -0.03,
      "p5": 0.0,
      "p95": 0.0
     },
@@ -1481,7 +1481,7 @@
      "p95": 0.0
     },
     "suits: Business | Storage": {
-     "mean": -0.19,
+     "mean": -0.2,
      "p5": -1.0,
      "p95": 0.0
     },
@@ -1499,7 +1499,7 @@
       "p95": 2.219999999999999
      },
      "suits": {
-      "mean": -1.14,
+      "mean": -1.18,
       "p5": -3.0,
       "p95": 0.0
      },
@@ -1533,8 +1533,8 @@
       "p95": 4.800000000000001
      },
      "suits": {
-      "mean": -7.95,
-      "p5": -12.05,
+      "mean": -8.42,
+      "p5": -13.0,
       "p95": -4.0
      },
      "median_months_to_permit": {
@@ -1545,14 +1545,14 @@
     },
     "Onshore wind": {
      "GW_online": {
-      "mean": 1.4664000000000013,
+      "mean": 1.4684800000000013,
       "p5": 0.6239999999999952,
       "p95": 2.288000000000011
      },
      "suits": {
-      "mean": -3.42,
+      "mean": -3.82,
       "p5": -9.0,
-      "p95": 3.0
+      "p95": 2.0
      },
      "median_months_to_permit": {
       "mean": -6.8081581553443415,
@@ -1567,9 +1567,9 @@
       "p95": 7.3139999999999645
      },
      "suits": {
-      "mean": -7.23,
-      "p5": -14.05,
-      "p95": -0.9500000000000028
+      "mean": -8.39,
+      "p5": -16.05,
+      "p95": -1.0
      },
      "median_months_to_permit": {
       "mean": -8.214179844501697,
@@ -1584,8 +1584,8 @@
       "p95": 1.773200000000001
      },
      "suits": {
-      "mean": -1.23,
-      "p5": -3.0,
+      "mean": -1.3,
+      "p5": -3.05,
       "p95": 0.0
      },
      "median_months_to_permit": {
@@ -1601,8 +1601,8 @@
       "p95": 0.0
      },
      "suits": {
-      "mean": -9.13,
-      "p5": -14.0,
+      "mean": -9.68,
+      "p5": -15.0,
       "p95": -5.0
      },
      "median_months_to_permit": {
@@ -1618,7 +1618,7 @@
       "p95": 2.1525000000000003
      },
      "suits": {
-      "mean": -2.28,
+      "mean": -2.45,
       "p5": -5.0,
       "p95": 0.0
      },
@@ -1669,14 +1669,14 @@
       "p95": 19.953333333333333
      },
      "suits": {
-      "mean": 0.5,
+      "mean": 0.46,
       "p5": 0.0,
-      "p95": 2.0
+      "p95": 1.0
      },
      "suits_per_year": {
-      "mean": 0.03333333333333333,
+      "mean": 0.030666666666666665,
       "p5": 0.0,
-      "p95": 0.13333333333333333
+      "p95": 0.06666666666666667
      },
      "vacated": {
       "mean": 0.0,
@@ -1843,12 +1843,12 @@
       "p95": 1.8666666666666667
      },
      "suits": {
-      "mean": 4.41,
+      "mean": 3.94,
       "p5": 1.0,
       "p95": 8.0
      },
      "suits_per_year": {
-      "mean": 0.294,
+      "mean": 0.26266666666666666,
       "p5": 0.06666666666666667,
       "p95": 0.5333333333333333
      },
@@ -1900,12 +1900,12 @@
       "p95": 0.20328822360966478
      },
      "GW_online": {
-      "mean": 185.22816000000003,
+      "mean": 185.23024,
       "p5": 172.7544,
       "p95": 194.9168
      },
      "projects_online": {
-      "mean": 890.52,
+      "mean": 890.53,
       "p5": 830.55,
       "p95": 937.1
      },
@@ -1930,14 +1930,14 @@
       "p95": 0.0
      },
      "suits": {
-      "mean": 3.99,
+      "mean": 3.59,
       "p5": 1.0,
-      "p95": 7.049999999999997
+      "p95": 7.0
      },
      "suits_per_year": {
-      "mean": 0.26599999999999996,
+      "mean": 0.23933333333333334,
       "p5": 0.06666666666666667,
-      "p95": 0.4699999999999998
+      "p95": 0.4666666666666667
      },
      "vacated": {
       "mean": 0.0,
@@ -2017,14 +2017,14 @@
       "p95": 22.740000000000002
      },
      "suits": {
-      "mean": 9.95,
-      "p5": 4.0,
-      "p95": 16.0
+      "mean": 8.79,
+      "p5": 3.0,
+      "p95": 14.0
      },
      "suits_per_year": {
-      "mean": 0.6633333333333333,
-      "p5": 0.26666666666666666,
-      "p95": 1.0666666666666667
+      "mean": 0.586,
+      "p5": 0.2,
+      "p95": 0.9333333333333333
      },
      "vacated": {
       "mean": 0.0,
@@ -2104,12 +2104,12 @@
       "p95": 22.14333333333333
      },
      "suits": {
-      "mean": 0.54,
+      "mean": 0.47,
       "p5": 0.0,
       "p95": 2.0
      },
      "suits_per_year": {
-      "mean": 0.036000000000000004,
+      "mean": 0.03133333333333334,
       "p5": 0.0,
       "p95": 0.13333333333333333
      },
@@ -2191,14 +2191,14 @@
       "p95": 3.673333333333333
      },
      "suits": {
-      "mean": 4.87,
-      "p5": 1.9500000000000002,
-      "p95": 9.0
+      "mean": 4.32,
+      "p5": 1.0,
+      "p95": 8.0
      },
      "suits_per_year": {
-      "mean": 0.32466666666666666,
-      "p5": 0.13,
-      "p95": 0.6
+      "mean": 0.288,
+      "p5": 0.06666666666666667,
+      "p95": 0.5333333333333333
      },
      "vacated": {
       "mean": 0.0,
@@ -2278,14 +2278,14 @@
       "p95": 9.870000000000001
      },
      "suits": {
-      "mean": 1.57,
+      "mean": 1.4,
       "p5": 0.0,
-      "p95": 3.049999999999997
+      "p95": 3.0
      },
      "suits_per_year": {
-      "mean": 0.10466666666666664,
+      "mean": 0.09333333333333331,
       "p5": 0.0,
-      "p95": 0.20333333333333314
+      "p95": 0.2
      },
      "vacated": {
       "mean": 0.0,
@@ -2331,7 +2331,7 @@
    },
    "totals": {
     "GW_total": {
-     "mean": 1115.6341,
+     "mean": 1115.63618,
      "p5": 1094.7718,
      "p95": 1137.9272
     },
@@ -2341,9 +2341,9 @@
      "p95": 327.74734869635904
     },
     "suits_total": {
-     "mean": 25.84,
-     "p5": 17.95,
-     "p95": 34.05
+     "mean": 22.98,
+     "p5": 15.0,
+     "p95": 31.049999999999997
     },
     "EIS_per_year_total": {
      "mean": 12.394666666666668,
@@ -2356,12 +2356,12 @@
      "p95": 2.612
     },
     "GW Renewable (new)": {
-     "mean": 689.87022,
+     "mean": 689.8723000000001,
      "p5": 673.1031,
      "p95": 707.5322
     },
     "TWh Renewable (new)": {
-     "mean": 1659.7933329888003,
+     "mean": 1659.799532304,
      "p5": 1613.0663032319999,
      "p95": 1703.29656456
     },
@@ -2396,7 +2396,7 @@
      "p95": 0.0
     },
     "renewable share of new TWh": {
-     "mean": 0.648033394287424,
+     "mean": 0.6480342728919938,
      "p5": 0.634096451688554,
      "p95": 0.6591605360923624
     },
@@ -2416,9 +2416,9 @@
      "p95": 1.0
     },
     "sued_share_of_decided | Renewable (new)": {
-     "mean": 0.015163244732611743,
-     "p5": 0.009140272165438555,
-     "p95": 0.02198227749811392
+     "mean": 0.013489192887333466,
+     "p5": 0.00747989292499461,
+     "p95": 0.020005025125628143
     },
     "decisions | Renewable (new)": {
      "mean": 1211.82,
@@ -2426,34 +2426,34 @@
      "p95": 1267.15
     },
     "suits | Renewable (new)": {
-     "mean": 18.36,
-     "p5": 11.0,
-     "p95": 25.099999999999994
+     "mean": 16.33,
+     "p5": 9.0,
+     "p95": 24.0
     },
     "suits: National NGO | Renewable (new)": {
-     "mean": 0.77,
+     "mean": 0.68,
      "p5": 0.0,
-     "p95": 3.0
+     "p95": 2.049999999999997
     },
     "challenger wins: National NGO | Renewable (new)": {
-     "mean": 0.23,
+     "mean": 0.22,
      "p5": 0.0,
      "p95": 1.0
     },
     "suits: Local group / residents | Renewable (new)": {
-     "mean": 13.19,
-     "p5": 7.0,
-     "p95": 20.0
+     "mean": 11.79,
+     "p5": 6.0,
+     "p95": 17.0
     },
     "challenger wins: Local group / residents | Renewable (new)": {
-     "mean": 2.91,
-     "p5": 0.9500000000000002,
-     "p95": 6.0
+     "mean": 2.58,
+     "p5": 0.0,
+     "p95": 5.049999999999997
     },
     "suits: Tribe | Renewable (new)": {
-     "mean": 2.18,
+     "mean": 2.01,
      "p5": 0.0,
-     "p95": 5.0
+     "p95": 4.0
     },
     "challenger wins: Tribe | Renewable (new)": {
      "mean": 0.27,
@@ -2461,22 +2461,22 @@
      "p95": 1.0
     },
     "suits: State / local government | Renewable (new)": {
-     "mean": 0.48,
+     "mean": 0.41,
      "p5": 0.0,
-     "p95": 2.0
+     "p95": 1.0499999999999972
     },
     "challenger wins: State / local government | Renewable (new)": {
-     "mean": 0.19,
+     "mean": 0.17,
      "p5": 0.0,
      "p95": 1.0
     },
     "suits: Business | Renewable (new)": {
-     "mean": 1.74,
+     "mean": 1.44,
      "p5": 0.0,
-     "p95": 4.0
+     "p95": 3.0
     },
     "challenger wins: Business | Renewable (new)": {
-     "mean": 0.23,
+     "mean": 0.21,
      "p5": 0.0,
      "p95": 1.0
     },
@@ -2496,9 +2496,9 @@
      "p95": 1.0
     },
     "sued_share_of_decided | Renewable (retained hydro)": {
-     "mean": 0.004773702052375296,
+     "mean": 0.004255551276301441,
      "p5": 0.0,
-     "p95": 0.010110206476693437
+     "p95": 0.009345794392523364
     },
     "decisions | Renewable (retained hydro)": {
      "mean": 327.32,
@@ -2506,27 +2506,27 @@
      "p95": 354.0
     },
     "suits | Renewable (retained hydro)": {
-     "mean": 1.57,
+     "mean": 1.4,
      "p5": 0.0,
-     "p95": 3.049999999999997
+     "p95": 3.0
     },
     "suits: National NGO | Renewable (retained hydro)": {
-     "mean": 0.78,
+     "mean": 0.71,
      "p5": 0.0,
      "p95": 2.0
     },
     "challenger wins: National NGO | Renewable (retained hydro)": {
-     "mean": 0.28,
+     "mean": 0.26,
      "p5": 0.0,
      "p95": 1.0
     },
     "suits: Local group / residents | Renewable (retained hydro)": {
-     "mean": 0.61,
+     "mean": 0.53,
      "p5": 0.0,
      "p95": 2.0
     },
     "challenger wins: Local group / residents | Renewable (retained hydro)": {
-     "mean": 0.21,
+     "mean": 0.2,
      "p5": 0.0,
      "p95": 1.0
     },
@@ -2541,12 +2541,12 @@
      "p95": 0.0
     },
     "suits: State / local government | Renewable (retained hydro)": {
-     "mean": 0.18,
+     "mean": 0.16,
      "p5": 0.0,
      "p95": 1.0
     },
     "challenger wins: State / local government | Renewable (retained hydro)": {
-     "mean": 0.07,
+     "mean": 0.06,
      "p5": 0.0,
      "p95": 1.0
     },
@@ -2576,9 +2576,9 @@
      "p95": 1.0
     },
     "sued_share_of_decided | Fossil (gas)": {
-     "mean": 0.0013186258430612258,
+     "mean": 0.001215662377106518,
      "p5": 0.0,
-     "p95": 0.004749283248493359
+     "p95": 0.0029095569010595844
     },
     "decisions | Fossil (gas)": {
      "mean": 378.87,
@@ -2586,22 +2586,22 @@
      "p95": 407.29999999999995
     },
     "suits | Fossil (gas)": {
-     "mean": 0.5,
+     "mean": 0.46,
      "p5": 0.0,
-     "p95": 2.0
+     "p95": 1.0
     },
     "suits: National NGO | Fossil (gas)": {
-     "mean": 0.17,
+     "mean": 0.15,
      "p5": 0.0,
      "p95": 1.0
     },
     "challenger wins: National NGO | Fossil (gas)": {
-     "mean": 0.04,
+     "mean": 0.03,
      "p5": 0.0,
      "p95": 0.0
     },
     "suits: Local group / residents | Fossil (gas)": {
-     "mean": 0.2,
+     "mean": 0.19,
      "p5": 0.0,
      "p95": 1.0
     },
@@ -2631,7 +2631,7 @@
      "p95": 0.0
     },
     "suits: Business | Fossil (gas)": {
-     "mean": 0.04,
+     "mean": 0.03,
      "p5": 0.0,
      "p95": 0.0
     },
@@ -2656,9 +2656,9 @@
      "p95": 1.0
     },
     "sued_share_of_decided | Storage": {
-     "mean": 0.00044534300739093076,
+     "mean": 0.00038791656807681224,
      "p5": 0.0,
-     "p95": 0.001640756441186415
+     "p95": 0.0016213409188634935
     },
     "decisions | Storage": {
      "mean": 1215.62,
@@ -2666,22 +2666,22 @@
      "p95": 1272.1
     },
     "suits | Storage": {
-     "mean": 0.54,
+     "mean": 0.47,
      "p5": 0.0,
      "p95": 2.0
     },
     "suits: National NGO | Storage": {
-     "mean": 0.03,
+     "mean": 0.01,
      "p5": 0.0,
      "p95": 0.0
     },
     "challenger wins: National NGO | Storage": {
-     "mean": 0.02,
+     "mean": 0.0,
      "p5": 0.0,
      "p95": 0.0
     },
     "suits: Local group / residents | Storage": {
-     "mean": 0.33,
+     "mean": 0.31,
      "p5": 0.0,
      "p95": 1.0
     },
@@ -2691,7 +2691,7 @@
      "p95": 1.0
     },
     "suits: Tribe | Storage": {
-     "mean": 0.1,
+     "mean": 0.09,
      "p5": 0.0,
      "p95": 1.0
     },
@@ -2701,7 +2701,7 @@
      "p95": 0.0
     },
     "suits: State / local government | Storage": {
-     "mean": 0.02,
+     "mean": 0.01,
      "p5": 0.0,
      "p95": 0.0
     },
@@ -2711,9 +2711,9 @@
      "p95": 0.0
     },
     "suits: Business | Storage": {
-     "mean": 0.06,
+     "mean": 0.05,
      "p5": 0.0,
-     "p95": 1.0
+     "p95": 0.04999999999999716
     },
     "challenger wins: Business | Storage": {
      "mean": 0.01,
@@ -2723,7 +2723,7 @@
    },
    "diff_vs_baseline": {
     "GW_total": {
-     "mean": 46.74774,
+     "mean": 46.74982000000001,
      "p5": 42.278399999999955,
      "p95": 51.374300000000076
     },
@@ -2733,9 +2733,9 @@
      "p95": 327.74734869635904
     },
     "suits_total": {
-     "mean": -34.19,
-     "p5": -45.0,
-     "p95": -22.0
+     "mean": -37.05,
+     "p5": -48.05,
+     "p95": -25.0
     },
     "EIS_per_year_total": {
      "mean": 2.9319999999999995,
@@ -2748,12 +2748,12 @@
      "p95": -1.1974000000000002
     },
     "GW Renewable (new)": {
-     "mean": 30.841640000000005,
+     "mean": 30.843720000000012,
      "p5": 26.978899999999964,
      "p95": 35.98589999999994
     },
     "TWh Renewable (new)": {
-     "mean": 76.78694813759998,
+     "mean": 76.7931474528,
      "p5": 64.46270951999983,
      "p95": 90.37872230400004
     },
@@ -2788,7 +2788,7 @@
      "p95": 0.0
     },
     "renewable share of new TWh": {
-     "mean": 0.004328732162260113,
+     "mean": 0.004329610766829936,
      "p5": 0.002000572206835466,
      "p95": 0.00698116606927765
     },
@@ -2808,9 +2808,9 @@
      "p95": 0.01102153708394039
     },
     "sued_share_of_decided | Renewable (new)": {
-     "mean": -0.042372564870990864,
-     "p5": -0.055365873114297505,
-     "p95": -0.02591421381429606
+     "mean": -0.04404661671626915,
+     "p5": -0.060088059890492616,
+     "p95": -0.028675777781587326
     },
     "decisions | Renewable (new)": {
      "mean": 537.94,
@@ -2818,33 +2818,33 @@
      "p95": 572.05
     },
     "suits | Renewable (new)": {
-     "mean": -20.41,
-     "p5": -31.05,
-     "p95": -8.950000000000003
+     "mean": -22.44,
+     "p5": -34.0,
+     "p95": -10.0
     },
     "suits: National NGO | Renewable (new)": {
-     "mean": -0.99,
+     "mean": -1.08,
      "p5": -3.0,
      "p95": 1.0
     },
     "challenger wins: National NGO | Renewable (new)": {
-     "mean": -0.25,
-     "p5": -1.0,
+     "mean": -0.26,
+     "p5": -1.0499999999999998,
      "p95": 1.0
     },
     "suits: Local group / residents | Renewable (new)": {
-     "mean": -14.55,
-     "p5": -23.05,
-     "p95": -6.900000000000006
+     "mean": -15.95,
+     "p5": -24.0,
+     "p95": -7.0
     },
     "challenger wins: Local group / residents | Renewable (new)": {
-     "mean": -3.22,
+     "mean": -3.55,
      "p5": -8.0,
      "p95": 0.04999999999999716
     },
     "suits: Tribe | Renewable (new)": {
-     "mean": -1.98,
-     "p5": -5.05,
+     "mean": -2.15,
+     "p5": -6.0,
      "p95": 1.0
     },
     "challenger wins: Tribe | Renewable (new)": {
@@ -2853,22 +2853,22 @@
      "p95": 1.0
     },
     "suits: State / local government | Renewable (new)": {
-     "mean": -0.48,
+     "mean": -0.55,
      "p5": -2.0,
      "p95": 1.0
     },
     "challenger wins: State / local government | Renewable (new)": {
-     "mean": -0.06,
+     "mean": -0.08,
      "p5": -1.0,
      "p95": 1.0
     },
     "suits: Business | Renewable (new)": {
-     "mean": -2.41,
-     "p5": -5.0,
+     "mean": -2.71,
+     "p5": -6.05,
      "p95": 0.04999999999999716
     },
     "challenger wins: Business | Renewable (new)": {
-     "mean": -0.54,
+     "mean": -0.56,
      "p5": -2.0,
      "p95": 1.0
     },
@@ -2888,8 +2888,8 @@
      "p95": 0.0034370186041000005
     },
     "sued_share_of_decided | Renewable (retained hydro)": {
-     "mean": -0.008337272138439565,
-     "p5": -0.01773355892543179,
+     "mean": -0.008855422914513422,
+     "p5": -0.01779557572211628,
      "p95": -0.00034311930043457107
     },
     "decisions | Renewable (retained hydro)": {
@@ -2898,27 +2898,27 @@
      "p95": 43.05
     },
     "suits | Renewable (retained hydro)": {
-     "mean": -2.28,
+     "mean": -2.45,
      "p5": -5.0,
      "p95": 0.0
     },
     "suits: National NGO | Renewable (retained hydro)": {
-     "mean": -1.07,
+     "mean": -1.14,
      "p5": -3.0,
      "p95": 0.0
     },
     "challenger wins: National NGO | Renewable (retained hydro)": {
-     "mean": -0.3,
+     "mean": -0.32,
      "p5": -1.0499999999999998,
      "p95": 0.04999999999999716
     },
     "suits: Local group / residents | Renewable (retained hydro)": {
-     "mean": -0.91,
+     "mean": -0.99,
      "p5": -3.0,
      "p95": 0.0
     },
     "challenger wins: Local group / residents | Renewable (retained hydro)": {
-     "mean": -0.25,
+     "mean": -0.26,
      "p5": -1.0499999999999998,
      "p95": 0.0
     },
@@ -2933,12 +2933,12 @@
      "p95": 0.0
     },
     "suits: State / local government | Renewable (retained hydro)": {
-     "mean": -0.3,
+     "mean": -0.32,
      "p5": -1.0,
      "p95": 0.0
     },
     "challenger wins: State / local government | Renewable (retained hydro)": {
-     "mean": -0.12,
+     "mean": -0.13,
      "p5": -1.0,
      "p95": 0.0
     },
@@ -2968,7 +2968,7 @@
      "p95": 0.0056022408963585235
     },
     "sued_share_of_decided | Fossil (gas)": {
-     "mean": -0.003201966789309095,
+     "mean": -0.0033049302552638033,
      "p5": -0.00837610521083128,
      "p95": 0.0
     },
@@ -2978,22 +2978,22 @@
      "p95": 25.049999999999997
     },
     "suits | Fossil (gas)": {
-     "mean": -1.14,
+     "mean": -1.18,
      "p5": -3.0,
      "p95": 0.0
     },
     "suits: National NGO | Fossil (gas)": {
-     "mean": -0.26,
+     "mean": -0.28,
      "p5": -1.0,
      "p95": 0.0
     },
     "challenger wins: National NGO | Fossil (gas)": {
-     "mean": -0.11,
+     "mean": -0.12,
      "p5": -1.0,
      "p95": 0.0
     },
     "suits: Local group / residents | Fossil (gas)": {
-     "mean": -0.5,
+     "mean": -0.51,
      "p5": -2.0,
      "p95": 0.0
     },
@@ -3023,7 +3023,7 @@
      "p95": 0.0
     },
     "suits: Business | Fossil (gas)": {
-     "mean": -0.18,
+     "mean": -0.19,
      "p5": -1.0,
      "p95": 0.0
     },
@@ -3048,8 +3048,8 @@
      "p95": 0.0008990448721250432
     },
     "sued_share_of_decided | Storage": {
-     "mean": -0.0011186503701801922,
-     "p5": -0.0028027761479680778,
+     "mean": -0.0011760768094943106,
+     "p5": -0.00283159845096825,
      "p95": 0.0
     },
     "decisions | Storage": {
@@ -3058,22 +3058,22 @@
      "p95": 97.14999999999999
     },
     "suits | Storage": {
-     "mean": -1.23,
-     "p5": -3.0,
+     "mean": -1.3,
+     "p5": -3.05,
      "p95": 0.0
     },
     "suits: National NGO | Storage": {
-     "mean": -0.06,
+     "mean": -0.08,
      "p5": -1.0,
      "p95": 0.0
     },
     "challenger wins: National NGO | Storage": {
-     "mean": -0.02,
+     "mean": -0.04,
      "p5": 0.0,
      "p95": 0.0
     },
     "suits: Local group / residents | Storage": {
-     "mean": -0.84,
+     "mean": -0.86,
      "p5": -3.0,
      "p95": 0.0
     },
@@ -3083,7 +3083,7 @@
      "p95": 0.0
     },
     "suits: Tribe | Storage": {
-     "mean": -0.12,
+     "mean": -0.13,
      "p5": -1.0,
      "p95": 0.0
     },
@@ -3093,7 +3093,7 @@
      "p95": 0.0
     },
     "suits: State / local government | Storage": {
-     "mean": -0.02,
+     "mean": -0.03,
      "p5": 0.0,
      "p95": 0.0
     },
@@ -3103,7 +3103,7 @@
      "p95": 0.0
     },
     "suits: Business | Storage": {
-     "mean": -0.19,
+     "mean": -0.2,
      "p5": -1.0,
      "p95": 0.0
     },
@@ -3121,7 +3121,7 @@
       "p95": 6.882000000000005
      },
      "suits": {
-      "mean": -1.14,
+      "mean": -1.18,
       "p5": -3.0,
       "p95": 0.0
      },
@@ -3155,8 +3155,8 @@
       "p95": 5.600000000000001
      },
      "suits": {
-      "mean": -7.95,
-      "p5": -12.05,
+      "mean": -8.42,
+      "p5": -13.0,
       "p95": -4.0
      },
      "median_months_to_permit": {
@@ -3167,14 +3167,14 @@
     },
     "Onshore wind": {
      "GW_online": {
-      "mean": 6.58944,
+      "mean": 6.59152,
       "p5": 4.9815999999999905,
       "p95": 8.736000000000018
      },
      "suits": {
-      "mean": -3.42,
+      "mean": -3.82,
       "p5": -9.0,
-      "p95": 3.0
+      "p95": 2.0
      },
      "median_months_to_permit": {
       "mean": -6.8081581553443415,
@@ -3189,9 +3189,9 @@
       "p95": 23.007300000000008
      },
      "suits": {
-      "mean": -7.23,
-      "p5": -14.05,
-      "p95": -0.9500000000000028
+      "mean": -8.39,
+      "p5": -16.05,
+      "p95": -1.0
      },
      "median_months_to_permit": {
       "mean": -8.214179844501697,
@@ -3206,8 +3206,8 @@
       "p95": 10.831600000000002
      },
      "suits": {
-      "mean": -1.23,
-      "p5": -3.0,
+      "mean": -1.3,
+      "p5": -3.05,
       "p95": 0.0
      },
      "median_months_to_permit": {
@@ -3223,8 +3223,8 @@
       "p95": 0.0
      },
      "suits": {
-      "mean": -9.13,
-      "p5": -14.0,
+      "mean": -9.68,
+      "p5": -15.0,
       "p95": -5.0
      },
      "median_months_to_permit": {
@@ -3240,7 +3240,7 @@
       "p95": 2.1525000000000003
      },
      "suits": {
-      "mean": -2.28,
+      "mean": -2.45,
       "p5": -5.0,
       "p95": 0.0
      },
@@ -3291,14 +3291,14 @@
       "p95": 19.953333333333333
      },
      "suits": {
-      "mean": 0.5,
+      "mean": 0.46,
       "p5": 0.0,
-      "p95": 2.0
+      "p95": 1.0
      },
      "suits_per_year": {
-      "mean": 0.03333333333333333,
+      "mean": 0.030666666666666665,
       "p5": 0.0,
-      "p95": 0.13333333333333333
+      "p95": 0.06666666666666667
      },
      "vacated": {
       "mean": 0.0,
@@ -3465,12 +3465,12 @@
       "p95": 1.8666666666666667
      },
      "suits": {
-      "mean": 4.41,
+      "mean": 3.94,
       "p5": 1.0,
       "p95": 8.0
      },
      "suits_per_year": {
-      "mean": 0.294,
+      "mean": 0.26266666666666666,
       "p5": 0.06666666666666667,
       "p95": 0.5333333333333333
      },
@@ -3522,12 +3522,12 @@
       "p95": 0.2101458818014114
      },
      "GW_online": {
-      "mean": 190.59664,
+      "mean": 190.59872,
       "p5": 176.8,
       "p95": 200.5224
      },
      "projects_online": {
-      "mean": 916.33,
+      "mean": 916.34,
       "p5": 850.0,
       "p95": 964.05
      },
@@ -3552,14 +3552,14 @@
       "p95": 0.0
      },
      "suits": {
-      "mean": 3.99,
+      "mean": 3.59,
       "p5": 1.0,
-      "p95": 7.049999999999997
+      "p95": 7.0
      },
      "suits_per_year": {
-      "mean": 0.26599999999999996,
+      "mean": 0.23933333333333334,
       "p5": 0.06666666666666667,
-      "p95": 0.4699999999999998
+      "p95": 0.4666666666666667
      },
      "vacated": {
       "mean": 0.0,
@@ -3639,14 +3639,14 @@
       "p95": 22.740000000000002
      },
      "suits": {
-      "mean": 9.95,
-      "p5": 4.0,
-      "p95": 16.0
+      "mean": 8.79,
+      "p5": 3.0,
+      "p95": 14.0
      },
      "suits_per_year": {
-      "mean": 0.6633333333333333,
-      "p5": 0.26666666666666666,
-      "p95": 1.0666666666666667
+      "mean": 0.586,
+      "p5": 0.2,
+      "p95": 0.9333333333333333
      },
      "vacated": {
       "mean": 0.0,
@@ -3726,12 +3726,12 @@
       "p95": 22.14333333333333
      },
      "suits": {
-      "mean": 0.54,
+      "mean": 0.47,
       "p5": 0.0,
       "p95": 2.0
      },
      "suits_per_year": {
-      "mean": 0.036000000000000004,
+      "mean": 0.03133333333333334,
       "p5": 0.0,
       "p95": 0.13333333333333333
      },
@@ -3813,14 +3813,14 @@
       "p95": 3.673333333333333
      },
      "suits": {
-      "mean": 4.87,
-      "p5": 1.9500000000000002,
-      "p95": 9.0
+      "mean": 4.32,
+      "p5": 1.0,
+      "p95": 8.0
      },
      "suits_per_year": {
-      "mean": 0.32466666666666666,
-      "p5": 0.13,
-      "p95": 0.6
+      "mean": 0.288,
+      "p5": 0.06666666666666667,
+      "p95": 0.5333333333333333
      },
      "vacated": {
       "mean": 0.0,
@@ -3900,14 +3900,14 @@
       "p95": 9.870000000000001
      },
      "suits": {
-      "mean": 1.57,
+      "mean": 1.4,
       "p5": 0.0,
-      "p95": 3.049999999999997
+      "p95": 3.0
      },
      "suits_per_year": {
-      "mean": 0.10466666666666664,
+      "mean": 0.09333333333333331,
       "p5": 0.0,
-      "p95": 0.20333333333333314
+      "p95": 0.2
      },
      "vacated": {
       "mean": 0.0,
@@ -3953,7 +3953,7 @@
    },
    "totals": {
     "GW_total": {
-     "mean": 1151.02062,
+     "mean": 1151.0227,
      "p5": 1128.8475,
      "p95": 1173.4679
     },
@@ -3963,9 +3963,9 @@
      "p95": 327.7482664894589
     },
     "suits_total": {
-     "mean": 25.84,
-     "p5": 17.95,
-     "p95": 34.05
+     "mean": 22.98,
+     "p5": 15.0,
+     "p95": 31.049999999999997
     },
     "EIS_per_year_total": {
      "mean": 12.394666666666668,
@@ -3978,12 +3978,12 @@
      "p95": 2.612
     },
     "GW Renewable (new)": {
-     "mean": 712.4621800000001,
+     "mean": 712.4642600000002,
      "p5": 696.0411999999999,
      "p95": 728.83
     },
     "TWh Renewable (new)": {
-     "mean": 1713.8745598752,
+     "mean": 1713.8807591904,
      "p5": 1668.664763424,
      "p95": 1758.3145752960002
     },
@@ -4018,7 +4018,7 @@
      "p95": 0.0
     },
     "renewable share of new TWh": {
-     "mean": 0.6502536634113689,
+     "mean": 0.6502545163798997,
      "p5": 0.6376926514301352,
      "p95": 0.6619006900879941
     },
@@ -4038,9 +4038,9 @@
      "p95": 1.0
     },
     "sued_share_of_decided | Renewable (new)": {
-     "mean": 0.015163244732611743,
-     "p5": 0.009140272165438555,
-     "p95": 0.02198227749811392
+     "mean": 0.013489192887333466,
+     "p5": 0.00747989292499461,
+     "p95": 0.020005025125628143
     },
     "decisions | Renewable (new)": {
      "mean": 1211.82,
@@ -4048,34 +4048,34 @@
      "p95": 1267.15
     },
     "suits | Renewable (new)": {
-     "mean": 18.36,
-     "p5": 11.0,
-     "p95": 25.099999999999994
+     "mean": 16.33,
+     "p5": 9.0,
+     "p95": 24.0
     },
     "suits: National NGO | Renewable (new)": {
-     "mean": 0.77,
+     "mean": 0.68,
      "p5": 0.0,
-     "p95": 3.0
+     "p95": 2.049999999999997
     },
     "challenger wins: National NGO | Renewable (new)": {
-     "mean": 0.23,
+     "mean": 0.22,
      "p5": 0.0,
      "p95": 1.0
     },
     "suits: Local group / residents | Renewable (new)": {
-     "mean": 13.19,
-     "p5": 7.0,
-     "p95": 20.0
+     "mean": 11.79,
+     "p5": 6.0,
+     "p95": 17.0
     },
     "challenger wins: Local group / residents | Renewable (new)": {
-     "mean": 2.91,
-     "p5": 0.9500000000000002,
-     "p95": 6.0
+     "mean": 2.58,
+     "p5": 0.0,
+     "p95": 5.049999999999997
     },
     "suits: Tribe | Renewable (new)": {
-     "mean": 2.18,
+     "mean": 2.01,
      "p5": 0.0,
-     "p95": 5.0
+     "p95": 4.0
     },
     "challenger wins: Tribe | Renewable (new)": {
      "mean": 0.27,
@@ -4083,22 +4083,22 @@
      "p95": 1.0
     },
     "suits: State / local government | Renewable (new)": {
-     "mean": 0.48,
+     "mean": 0.41,
      "p5": 0.0,
-     "p95": 2.0
+     "p95": 1.0499999999999972
     },
     "challenger wins: State / local government | Renewable (new)": {
-     "mean": 0.19,
+     "mean": 0.17,
      "p5": 0.0,
      "p95": 1.0
     },
     "suits: Business | Renewable (new)": {
-     "mean": 1.74,
+     "mean": 1.44,
      "p5": 0.0,
-     "p95": 4.0
+     "p95": 3.0
     },
     "challenger wins: Business | Renewable (new)": {
-     "mean": 0.23,
+     "mean": 0.21,
      "p5": 0.0,
      "p95": 1.0
     },
@@ -4118,9 +4118,9 @@
      "p95": 1.0
     },
     "sued_share_of_decided | Renewable (retained hydro)": {
-     "mean": 0.004773702052375296,
+     "mean": 0.004255551276301441,
      "p5": 0.0,
-     "p95": 0.010110206476693437
+     "p95": 0.009345794392523364
     },
     "decisions | Renewable (retained hydro)": {
      "mean": 327.32,
@@ -4128,27 +4128,27 @@
      "p95": 354.0
     },
     "suits | Renewable (retained hydro)": {
-     "mean": 1.57,
+     "mean": 1.4,
      "p5": 0.0,
-     "p95": 3.049999999999997
+     "p95": 3.0
     },
     "suits: National NGO | Renewable (retained hydro)": {
-     "mean": 0.78,
+     "mean": 0.71,
      "p5": 0.0,
      "p95": 2.0
     },
     "challenger wins: National NGO | Renewable (retained hydro)": {
-     "mean": 0.28,
+     "mean": 0.26,
      "p5": 0.0,
      "p95": 1.0
     },
     "suits: Local group / residents | Renewable (retained hydro)": {
-     "mean": 0.61,
+     "mean": 0.53,
      "p5": 0.0,
      "p95": 2.0
     },
     "challenger wins: Local group / residents | Renewable (retained hydro)": {
-     "mean": 0.21,
+     "mean": 0.2,
      "p5": 0.0,
      "p95": 1.0
     },
@@ -4163,12 +4163,12 @@
      "p95": 0.0
     },
     "suits: State / local government | Renewable (retained hydro)": {
-     "mean": 0.18,
+     "mean": 0.16,
      "p5": 0.0,
      "p95": 1.0
     },
     "challenger wins: State / local government | Renewable (retained hydro)": {
-     "mean": 0.07,
+     "mean": 0.06,
      "p5": 0.0,
      "p95": 1.0
     },
@@ -4198,9 +4198,9 @@
      "p95": 1.0
     },
     "sued_share_of_decided | Fossil (gas)": {
-     "mean": 0.0013186258430612258,
+     "mean": 0.001215662377106518,
      "p5": 0.0,
-     "p95": 0.004749283248493359
+     "p95": 0.0029095569010595844
     },
     "decisions | Fossil (gas)": {
      "mean": 378.87,
@@ -4208,22 +4208,22 @@
      "p95": 407.29999999999995
     },
     "suits | Fossil (gas)": {
-     "mean": 0.5,
+     "mean": 0.46,
      "p5": 0.0,
-     "p95": 2.0
+     "p95": 1.0
     },
     "suits: National NGO | Fossil (gas)": {
-     "mean": 0.17,
+     "mean": 0.15,
      "p5": 0.0,
      "p95": 1.0
     },
     "challenger wins: National NGO | Fossil (gas)": {
-     "mean": 0.04,
+     "mean": 0.03,
      "p5": 0.0,
      "p95": 0.0
     },
     "suits: Local group / residents | Fossil (gas)": {
-     "mean": 0.2,
+     "mean": 0.19,
      "p5": 0.0,
      "p95": 1.0
     },
@@ -4253,7 +4253,7 @@
      "p95": 0.0
     },
     "suits: Business | Fossil (gas)": {
-     "mean": 0.04,
+     "mean": 0.03,
      "p5": 0.0,
      "p95": 0.0
     },
@@ -4278,9 +4278,9 @@
      "p95": 1.0
     },
     "sued_share_of_decided | Storage": {
-     "mean": 0.00044534300739093076,
+     "mean": 0.00038791656807681224,
      "p5": 0.0,
-     "p95": 0.001640756441186415
+     "p95": 0.0016213409188634935
     },
     "decisions | Storage": {
      "mean": 1215.62,
@@ -4288,22 +4288,22 @@
      "p95": 1272.1
     },
     "suits | Storage": {
-     "mean": 0.54,
+     "mean": 0.47,
      "p5": 0.0,
      "p95": 2.0
     },
     "suits: National NGO | Storage": {
-     "mean": 0.03,
+     "mean": 0.01,
      "p5": 0.0,
      "p95": 0.0
     },
     "challenger wins: National NGO | Storage": {
-     "mean": 0.02,
+     "mean": 0.0,
      "p5": 0.0,
      "p95": 0.0
     },
     "suits: Local group / residents | Storage": {
-     "mean": 0.33,
+     "mean": 0.31,
      "p5": 0.0,
      "p95": 1.0
     },
@@ -4313,7 +4313,7 @@
      "p95": 1.0
     },
     "suits: Tribe | Storage": {
-     "mean": 0.1,
+     "mean": 0.09,
      "p5": 0.0,
      "p95": 1.0
     },
@@ -4323,7 +4323,7 @@
      "p95": 0.0
     },
     "suits: State / local government | Storage": {
-     "mean": 0.02,
+     "mean": 0.01,
      "p5": 0.0,
      "p95": 0.0
     },
@@ -4333,9 +4333,9 @@
      "p95": 0.0
     },
     "suits: Business | Storage": {
-     "mean": 0.06,
+     "mean": 0.05,
      "p5": 0.0,
-     "p95": 1.0
+     "p95": 0.04999999999999716
     },
     "challenger wins: Business | Storage": {
      "mean": 0.01,
@@ -4345,7 +4345,7 @@
    },
    "diff_vs_baseline": {
     "GW_total": {
-     "mean": 82.13426000000003,
+     "mean": 82.13634000000002,
      "p5": 76.38850000000005,
      "p95": 87.89819999999999
     },
@@ -4355,9 +4355,9 @@
      "p95": 327.7482664894589
     },
     "suits_total": {
-     "mean": -34.19,
-     "p5": -45.0,
-     "p95": -22.0
+     "mean": -37.05,
+     "p5": -48.05,
+     "p95": -25.0
     },
     "EIS_per_year_total": {
      "mean": 2.9319999999999995,
@@ -4370,12 +4370,12 @@
      "p95": -1.1974000000000002
     },
     "GW Renewable (new)": {
-     "mean": 53.433600000000006,
+     "mean": 53.43568000000001,
      "p5": 48.211999999999975,
      "p95": 58.42640000000001
     },
     "TWh Renewable (new)": {
-     "mean": 130.86817502399998,
+     "mean": 130.87437433920002,
      "p5": 116.49943871999987,
      "p95": 146.42656271999996
     },
@@ -4410,7 +4410,7 @@
      "p95": 0.0
     },
     "renewable share of new TWh": {
-     "mean": 0.006549001286204999,
+     "mean": 0.006549854254735848,
      "p5": 0.0029904418468819417,
      "p95": 0.009931762843656471
     },
@@ -4430,9 +4430,9 @@
      "p95": 0.01102153708394039
     },
     "sued_share_of_decided | Renewable (new)": {
-     "mean": -0.042372564870990864,
-     "p5": -0.055365873114297505,
-     "p95": -0.02591421381429606
+     "mean": -0.04404661671626915,
+     "p5": -0.060088059890492616,
+     "p95": -0.028675777781587326
     },
     "decisions | Renewable (new)": {
      "mean": 537.94,
@@ -4440,33 +4440,33 @@
      "p95": 572.05
     },
     "suits | Renewable (new)": {
-     "mean": -20.41,
-     "p5": -31.05,
-     "p95": -8.950000000000003
+     "mean": -22.44,
+     "p5": -34.0,
+     "p95": -10.0
     },
     "suits: National NGO | Renewable (new)": {
-     "mean": -0.99,
+     "mean": -1.08,
      "p5": -3.0,
      "p95": 1.0
     },
     "challenger wins: National NGO | Renewable (new)": {
-     "mean": -0.25,
-     "p5": -1.0,
+     "mean": -0.26,
+     "p5": -1.0499999999999998,
      "p95": 1.0
     },
     "suits: Local group / residents | Renewable (new)": {
-     "mean": -14.55,
-     "p5": -23.05,
-     "p95": -6.900000000000006
+     "mean": -15.95,
+     "p5": -24.0,
+     "p95": -7.0
     },
     "challenger wins: Local group / residents | Renewable (new)": {
-     "mean": -3.22,
+     "mean": -3.55,
      "p5": -8.0,
      "p95": 0.04999999999999716
     },
     "suits: Tribe | Renewable (new)": {
-     "mean": -1.98,
-     "p5": -5.05,
+     "mean": -2.15,
+     "p5": -6.0,
      "p95": 1.0
     },
     "challenger wins: Tribe | Renewable (new)": {
@@ -4475,22 +4475,22 @@
      "p95": 1.0
     },
     "suits: State / local government | Renewable (new)": {
-     "mean": -0.48,
+     "mean": -0.55,
      "p5": -2.0,
      "p95": 1.0
     },
     "challenger wins: State / local government | Renewable (new)": {
-     "mean": -0.06,
+     "mean": -0.08,
      "p5": -1.0,
      "p95": 1.0
     },
     "suits: Business | Renewable (new)": {
-     "mean": -2.41,
-     "p5": -5.0,
+     "mean": -2.71,
+     "p5": -6.05,
      "p95": 0.04999999999999716
     },
     "challenger wins: Business | Renewable (new)": {
-     "mean": -0.54,
+     "mean": -0.56,
      "p5": -2.0,
      "p95": 1.0
     },
@@ -4510,8 +4510,8 @@
      "p95": 0.0034370186041000005
     },
     "sued_share_of_decided | Renewable (retained hydro)": {
-     "mean": -0.008337272138439565,
-     "p5": -0.01773355892543179,
+     "mean": -0.008855422914513422,
+     "p5": -0.01779557572211628,
      "p95": -0.00034311930043457107
     },
     "decisions | Renewable (retained hydro)": {
@@ -4520,27 +4520,27 @@
      "p95": 43.05
     },
     "suits | Renewable (retained hydro)": {
-     "mean": -2.28,
+     "mean": -2.45,
      "p5": -5.0,
      "p95": 0.0
     },
     "suits: National NGO | Renewable (retained hydro)": {
-     "mean": -1.07,
+     "mean": -1.14,
      "p5": -3.0,
      "p95": 0.0
     },
     "challenger wins: National NGO | Renewable (retained hydro)": {
-     "mean": -0.3,
+     "mean": -0.32,
      "p5": -1.0499999999999998,
      "p95": 0.04999999999999716
     },
     "suits: Local group / residents | Renewable (retained hydro)": {
-     "mean": -0.91,
+     "mean": -0.99,
      "p5": -3.0,
      "p95": 0.0
     },
     "challenger wins: Local group / residents | Renewable (retained hydro)": {
-     "mean": -0.25,
+     "mean": -0.26,
      "p5": -1.0499999999999998,
      "p95": 0.0
     },
@@ -4555,12 +4555,12 @@
      "p95": 0.0
     },
     "suits: State / local government | Renewable (retained hydro)": {
-     "mean": -0.3,
+     "mean": -0.32,
      "p5": -1.0,
      "p95": 0.0
     },
     "challenger wins: State / local government | Renewable (retained hydro)": {
-     "mean": -0.12,
+     "mean": -0.13,
      "p5": -1.0,
      "p95": 0.0
     },
@@ -4590,7 +4590,7 @@
      "p95": 0.0056022408963585235
     },
     "sued_share_of_decided | Fossil (gas)": {
-     "mean": -0.003201966789309095,
+     "mean": -0.0033049302552638033,
      "p5": -0.00837610521083128,
      "p95": 0.0
     },
@@ -4600,22 +4600,22 @@
      "p95": 25.049999999999997
     },
     "suits | Fossil (gas)": {
-     "mean": -1.14,
+     "mean": -1.18,
      "p5": -3.0,
      "p95": 0.0
     },
     "suits: National NGO | Fossil (gas)": {
-     "mean": -0.26,
+     "mean": -0.28,
      "p5": -1.0,
      "p95": 0.0
     },
     "challenger wins: National NGO | Fossil (gas)": {
-     "mean": -0.11,
+     "mean": -0.12,
      "p5": -1.0,
      "p95": 0.0
     },
     "suits: Local group / residents | Fossil (gas)": {
-     "mean": -0.5,
+     "mean": -0.51,
      "p5": -2.0,
      "p95": 0.0
     },
@@ -4645,7 +4645,7 @@
      "p95": 0.0
     },
     "suits: Business | Fossil (gas)": {
-     "mean": -0.18,
+     "mean": -0.19,
      "p5": -1.0,
      "p95": 0.0
     },
@@ -4670,8 +4670,8 @@
      "p95": 0.0008990448721250432
     },
     "sued_share_of_decided | Storage": {
-     "mean": -0.0011186503701801922,
-     "p5": -0.0028027761479680778,
+     "mean": -0.0011760768094943106,
+     "p5": -0.00283159845096825,
      "p95": 0.0
     },
     "decisions | Storage": {
@@ -4680,22 +4680,22 @@
      "p95": 97.14999999999999
     },
     "suits | Storage": {
-     "mean": -1.23,
-     "p5": -3.0,
+     "mean": -1.3,
+     "p5": -3.05,
      "p95": 0.0
     },
     "suits: National NGO | Storage": {
-     "mean": -0.06,
+     "mean": -0.08,
      "p5": -1.0,
      "p95": 0.0
     },
     "challenger wins: National NGO | Storage": {
-     "mean": -0.02,
+     "mean": -0.04,
      "p5": 0.0,
      "p95": 0.0
     },
     "suits: Local group / residents | Storage": {
-     "mean": -0.84,
+     "mean": -0.86,
      "p5": -3.0,
      "p95": 0.0
     },
@@ -4705,7 +4705,7 @@
      "p95": 0.0
     },
     "suits: Tribe | Storage": {
-     "mean": -0.12,
+     "mean": -0.13,
      "p5": -1.0,
      "p95": 0.0
     },
@@ -4715,7 +4715,7 @@
      "p95": 0.0
     },
     "suits: State / local government | Storage": {
-     "mean": -0.02,
+     "mean": -0.03,
      "p5": 0.0,
      "p95": 0.0
     },
@@ -4725,7 +4725,7 @@
      "p95": 0.0
     },
     "suits: Business | Storage": {
-     "mean": -0.19,
+     "mean": -0.2,
      "p5": -1.0,
      "p95": 0.0
     },
@@ -4743,7 +4743,7 @@
       "p95": 11.77709999999999
      },
      "suits": {
-      "mean": -1.14,
+      "mean": -1.18,
       "p5": -3.0,
       "p95": 0.0
      },
@@ -4777,8 +4777,8 @@
       "p95": 7.199999999999999
      },
      "suits": {
-      "mean": -7.95,
-      "p5": -12.05,
+      "mean": -8.42,
+      "p5": -13.0,
       "p95": -4.0
      },
      "median_months_to_permit": {
@@ -4789,14 +4789,14 @@
     },
     "Onshore wind": {
      "GW_online": {
-      "mean": 11.957920000000001,
+      "mean": 11.960000000000003,
       "p5": 9.765599999999981,
       "p95": 14.154400000000004
      },
      "suits": {
-      "mean": -3.42,
+      "mean": -3.82,
       "p5": -9.0,
-      "p95": 3.0
+      "p95": 2.0
      },
      "median_months_to_permit": {
       "mean": -6.8081581553443415,
@@ -4811,9 +4811,9 @@
       "p95": 39.855999999999995
      },
      "suits": {
-      "mean": -7.23,
-      "p5": -14.05,
-      "p95": -0.9500000000000028
+      "mean": -8.39,
+      "p5": -16.05,
+      "p95": -1.0
      },
      "median_months_to_permit": {
       "mean": -8.214179844501697,
@@ -4828,8 +4828,8 @@
       "p95": 20.191600000000015
      },
      "suits": {
-      "mean": -1.23,
-      "p5": -3.0,
+      "mean": -1.3,
+      "p5": -3.05,
       "p95": 0.0
      },
      "median_months_to_permit": {
@@ -4845,8 +4845,8 @@
       "p95": 0.0
      },
      "suits": {
-      "mean": -9.13,
-      "p5": -14.0,
+      "mean": -9.68,
+      "p5": -15.0,
       "p95": -5.0
      },
      "median_months_to_permit": {
@@ -4862,1629 +4862,7 @@
       "p95": 2.1525000000000003
      },
      "suits": {
-      "mean": -2.28,
-      "p5": -5.0,
-      "p95": 0.0
-     },
-     "median_months_to_permit": {
-      "mean": -12.588244650833882,
-      "p5": -13.251235810855395,
-      "p95": -12.10433762639514
-     }
-    }
-   }
-  },
-  "0.15": {
-   "by_type": {
-    "Gas": {
-     "completion_rate": {
-      "mean": 0.3191617480760918,
-      "p5": 0.29208748449618527,
-      "p95": 0.35004270696452033
-     },
-     "GW_online": {
-      "mean": 192.46734000000004,
-      "p5": 184.2489,
-      "p95": 204.4842
-     },
-     "projects_online": {
-      "mean": 866.97,
-      "p5": 829.95,
-      "p95": 921.1
-     },
-     "median_months_to_COD": {
-      "mean": 36.942536415302456,
-      "p5": 36.052735024953414,
-      "p95": 37.71658008509213
-     },
-     "decisions_per_year": {
-      "mean": 25.258000000000006,
-      "p5": 23.0,
-      "p95": 27.153333333333332
-     },
-     "EIS_per_year": {
-      "mean": 0.0,
-      "p5": 0.0,
-      "p95": 0.0
-     },
-     "EA_per_year": {
-      "mean": 18.319333333333333,
-      "p5": 16.33,
-      "p95": 19.953333333333333
-     },
-     "suits": {
-      "mean": 0.5,
-      "p5": 0.0,
-      "p95": 2.0
-     },
-     "suits_per_year": {
-      "mean": 0.03333333333333333,
-      "p5": 0.0,
-      "p95": 0.13333333333333333
-     },
-     "vacated": {
-      "mean": 0.0,
-      "p5": 0.0,
-      "p95": 0.0
-     },
-     "halted": {
-      "mean": 0.29,
-      "p5": 0.0,
-      "p95": 1.0
-     },
-     "halted_GW": {
-      "mean": 0.06438,
-      "p5": 0.0,
-      "p95": 0.222
-     },
-     "killed_by_courts_or_halts": {
-      "mean": 0.08,
-      "p5": 0.0,
-      "p95": 1.0
-     },
-     "permitted_share": {
-      "mean": 0.9998340980587583,
-      "p5": 0.9998659517426274,
-      "p95": 1.0
-     },
-     "median_months_to_permit": {
-      "mean": 9.130533699874347,
-      "p5": 8.347086089986918,
-      "p95": 9.92084236442085
-     },
-     "truncated_share": {
-      "mean": 0.02765018724993906,
-      "p5": 0.014733776978674938,
-      "p95": 0.041563328316261965
-     },
-     "harm": {
-      "mean": 2.5364667095596856,
-      "p5": 0.4979966917969034,
-      "p95": 5.0734422513444315
-     }
-    },
-    "Geothermal": {
-     "completion_rate": {
-      "mean": 0.20402782655573518,
-      "p5": 0.13314814814814815,
-      "p95": 0.27562929061784897
-     },
-     "GW_online": {
-      "mean": 2.346,
-      "p5": 1.88,
-      "p95": 2.722
-     },
-     "projects_online": {
-      "mean": 58.65,
-      "p5": 47.0,
-      "p95": 68.05
-     },
-     "median_months_to_COD": {
-      "mean": 50.21722156988279,
-      "p5": 44.79756646147911,
-      "p95": 56.85786090682752
-     },
-     "decisions_per_year": {
-      "mean": 4.9526666666666666,
-      "p5": 3.9966666666666666,
-      "p95": 5.8
-     },
-     "EIS_per_year": {
-      "mean": 0.0,
-      "p5": 0.0,
-      "p95": 0.0
-     },
-     "EA_per_year": {
-      "mean": 0.0,
-      "p5": 0.0,
-      "p95": 0.0
-     },
-     "suits": {
-      "mean": 0.01,
-      "p5": 0.0,
-      "p95": 0.0
-     },
-     "suits_per_year": {
-      "mean": 0.0006666666666666666,
-      "p5": 0.0,
-      "p95": 0.0
-     },
-     "vacated": {
-      "mean": 0.0,
-      "p5": 0.0,
-      "p95": 0.0
-     },
-     "halted": {
-      "mean": 0.0,
-      "p5": 0.0,
-      "p95": 0.0
-     },
-     "halted_GW": {
-      "mean": 0.0,
-      "p5": 0.0,
-      "p95": 0.0
-     },
-     "killed_by_courts_or_halts": {
-      "mean": 0.0,
-      "p5": 0.0,
-      "p95": 0.0
-     },
-     "permitted_share": {
-      "mean": 1.0,
-      "p5": 1.0,
-      "p95": 1.0
-     },
-     "median_months_to_permit": {
-      "mean": 7.4270411171861,
-      "p5": 6.301462573632002,
-      "p95": 8.78779000533798
-     },
-     "truncated_share": {
-      "mean": 0.0,
-      "p5": 0.0,
-      "p95": 0.0
-     },
-     "harm": {
-      "mean": 0.0,
-      "p5": 0.0,
-      "p95": 0.0
-     }
-    },
-    "Offshore wind": {
-     "completion_rate": {
-      "mean": 0.07297302584341939,
-      "p5": 0.030470521541950114,
-      "p95": 0.1147681451612903
-     },
-     "GW_online": {
-      "mean": 25.471999999999994,
-      "p5": 17.6,
-      "p95": 32.8
-     },
-     "projects_online": {
-      "mean": 31.84,
-      "p5": 22.0,
-      "p95": 41.0
-     },
-     "median_months_to_COD": {
-      "mean": 50.176526614653575,
-      "p5": 43.79443429557742,
-      "p95": 56.581542185578705
-     },
-     "decisions_per_year": {
-      "mean": 5.682666666666665,
-      "p5": 4.726666666666667,
-      "p95": 6.743333333333333
-     },
-     "EIS_per_year": {
-      "mean": 1.4773333333333334,
-      "p5": 1.1333333333333333,
-      "p95": 2.0
-     },
-     "EA_per_year": {
-      "mean": 1.3366666666666667,
-      "p5": 0.8666666666666667,
-      "p95": 1.8666666666666667
-     },
-     "suits": {
-      "mean": 4.41,
-      "p5": 1.0,
-      "p95": 8.0
-     },
-     "suits_per_year": {
-      "mean": 0.294,
-      "p5": 0.06666666666666667,
-      "p95": 0.5333333333333333
-     },
-     "vacated": {
-      "mean": 0.0,
-      "p5": 0.0,
-      "p95": 0.0
-     },
-     "halted": {
-      "mean": 0.89,
-      "p5": 0.0,
-      "p95": 3.0
-     },
-     "halted_GW": {
-      "mean": 0.7120000000000001,
-      "p5": 0.0,
-      "p95": 2.4
-     },
-     "killed_by_courts_or_halts": {
-      "mean": 0.2,
-      "p5": 0.0,
-      "p95": 1.0
-     },
-     "permitted_share": {
-      "mean": 0.997876984508431,
-      "p5": 0.9874839743589744,
-      "p95": 1.0
-     },
-     "median_months_to_permit": {
-      "mean": 10.048262314459857,
-      "p5": 7.75412267241822,
-      "p95": 12.92892714442872
-     },
-     "truncated_share": {
-      "mean": 0.06061916732510686,
-      "p5": 0.018864468864468867,
-      "p95": 0.1012220549055948
-     },
-     "harm": {
-      "mean": 30.361853858489948,
-      "p5": 0.0,
-      "p95": 88.62959556965129
-     }
-    },
-    "Onshore wind": {
-     "completion_rate": {
-      "mean": 0.20127907294108843,
-      "p5": 0.18046835278013168,
-      "p95": 0.2194735433907715
-     },
-     "GW_online": {
-      "mean": 196.7576,
-      "p5": 184.7664,
-      "p95": 205.9304
-     },
-     "projects_online": {
-      "mean": 945.95,
-      "p5": 888.3,
-      "p95": 990.05
-     },
-     "median_months_to_COD": {
-      "mean": 50.96227323788701,
-      "p5": 49.7815927891441,
-      "p95": 52.46492407785633
-     },
-     "decisions_per_year": {
-      "mean": 2.094666666666667,
-      "p5": 1.4,
-      "p95": 2.7333333333333334
-     },
-     "EIS_per_year": {
-      "mean": 2.094666666666667,
-      "p5": 1.4,
-      "p95": 2.7333333333333334
-     },
-     "EA_per_year": {
-      "mean": 0.0,
-      "p5": 0.0,
-      "p95": 0.0
-     },
-     "suits": {
-      "mean": 3.99,
-      "p5": 1.0,
-      "p95": 7.049999999999997
-     },
-     "suits_per_year": {
-      "mean": 0.26599999999999996,
-      "p5": 0.06666666666666667,
-      "p95": 0.4699999999999998
-     },
-     "vacated": {
-      "mean": 0.0,
-      "p5": 0.0,
-      "p95": 0.0
-     },
-     "halted": {
-      "mean": 0.04,
-      "p5": 0.0,
-      "p95": 0.0
-     },
-     "halted_GW": {
-      "mean": 0.00832,
-      "p5": 0.0,
-      "p95": 0.0
-     },
-     "killed_by_courts_or_halts": {
-      "mean": 0.0,
-      "p5": 0.0,
-      "p95": 0.0
-     },
-     "permitted_share": {
-      "mean": 1.0,
-      "p5": 1.0,
-      "p95": 1.0
-     },
-     "median_months_to_permit": {
-      "mean": 24.079257078265385,
-      "p5": 15.793120631106618,
-      "p95": 32.0
-     },
-     "truncated_share": {
-      "mean": 0.17876513636534888,
-      "p5": 0.07678062678062679,
-      "p95": 0.2859447004608295
-     },
-     "harm": {
-      "mean": 22.183876372882597,
-      "p5": 0.23314555623504565,
-      "p95": 55.19485044952463
-     }
-    },
-    "Solar": {
-     "completion_rate": {
-      "mean": 0.1550340273829639,
-      "p5": 0.14927802471818796,
-      "p95": 0.16075314646455968
-     },
-     "GW_online": {
-      "mean": 513.0463599999999,
-      "p5": 497.4474,
-      "p95": 523.6135
-     },
-     "projects_online": {
-      "mean": 4840.06,
-      "p5": 4692.9,
-      "p95": 4939.75
-     },
-     "median_months_to_COD": {
-      "mean": 61.260499088402476,
-      "p5": 60.636802047094776,
-      "p95": 61.75106728653234
-     },
-     "decisions_per_year": {
-      "mean": 68.05799999999999,
-      "p5": 64.91000000000001,
-      "p95": 71.07666666666667
-     },
-     "EIS_per_year": {
-      "mean": 4.216000000000001,
-      "p5": 3.3333333333333335,
-      "p95": 5.066666666666666
-     },
-     "EA_per_year": {
-      "mean": 20.956000000000003,
-      "p5": 18.993333333333332,
-      "p95": 22.740000000000002
-     },
-     "suits": {
-      "mean": 9.95,
-      "p5": 4.0,
-      "p95": 16.0
-     },
-     "suits_per_year": {
-      "mean": 0.6633333333333333,
-      "p5": 0.26666666666666666,
-      "p95": 1.0666666666666667
-     },
-     "vacated": {
-      "mean": 0.0,
-      "p5": 0.0,
-      "p95": 0.0
-     },
-     "halted": {
-      "mean": 0.83,
-      "p5": 0.0,
-      "p95": 3.0
-     },
-     "halted_GW": {
-      "mean": 0.08798,
-      "p5": 0.0,
-      "p95": 0.318
-     },
-     "killed_by_courts_or_halts": {
-      "mean": 0.28,
-      "p5": 0.0,
-      "p95": 1.0
-     },
-     "permitted_share": {
-      "mean": 0.9998022005936561,
-      "p5": 0.9989926445605561,
-      "p95": 1.0
-     },
-     "median_months_to_permit": {
-      "mean": 9.260190573251778,
-      "p5": 8.659779749175394,
-      "p95": 9.82058568467803
-     },
-     "truncated_share": {
-      "mean": 0.039666533696446946,
-      "p5": 0.030682827632069105,
-      "p95": 0.048092431761786604
-     },
-     "harm": {
-      "mean": 7.377297174835872,
-      "p5": 2.9090894982212707,
-      "p95": 14.324618414949992
-     }
-    },
-    "Storage": {
-     "completion_rate": {
-      "mean": 0.10441201305648638,
-      "p5": 0.0992304326867658,
-      "p95": 0.10965476417970416
-     },
-     "GW_online": {
-      "mean": 243.94448,
-      "p5": 236.3816,
-      "p95": 251.5864
-     },
-     "projects_online": {
-      "mean": 2345.62,
-      "p5": 2272.9,
-      "p95": 2419.1
-     },
-     "median_months_to_COD": {
-      "mean": 72.47544204891355,
-      "p5": 72.09999510794262,
-      "p95": 72.92487834787181
-     },
-     "decisions_per_year": {
-      "mean": 81.04133333333333,
-      "p5": 77.93333333333334,
-      "p95": 84.80666666666666
-     },
-     "EIS_per_year": {
-      "mean": 0.0,
-      "p5": 0.0,
-      "p95": 0.0
-     },
-     "EA_per_year": {
-      "mean": 20.532666666666664,
-      "p5": 18.133333333333333,
-      "p95": 22.14333333333333
-     },
-     "suits": {
-      "mean": 0.54,
-      "p5": 0.0,
-      "p95": 2.0
-     },
-     "suits_per_year": {
-      "mean": 0.036000000000000004,
-      "p5": 0.0,
-      "p95": 0.13333333333333333
-     },
-     "vacated": {
-      "mean": 0.0,
-      "p5": 0.0,
-      "p95": 0.0
-     },
-     "halted": {
-      "mean": 0.07,
-      "p5": 0.0,
-      "p95": 1.0
-     },
-     "halted_GW": {
-      "mean": 0.00728,
-      "p5": 0.0,
-      "p95": 0.104
-     },
-     "killed_by_courts_or_halts": {
-      "mean": 0.03,
-      "p5": 0.0,
-      "p95": 0.0
-     },
-     "permitted_share": {
-      "mean": 0.9999754493678055,
-      "p5": 1.0,
-      "p95": 1.0
-     },
-     "median_months_to_permit": {
-      "mean": 6.611952559187861,
-      "p5": 6.1785651145045835,
-      "p95": 6.98379289306507
-     },
-     "truncated_share": {
-      "mean": 0.021480557322383288,
-      "p5": 0.014666357325147681,
-      "p95": 0.02744760547610565
-     },
-     "harm": {
-      "mean": 2.331335623923049,
-      "p5": 0.9341419513566592,
-      "p95": 4.192330860512126
-     }
-    },
-    "Transmission": {
-     "completion_rate": {
-      "mean": 0.9996844623016671,
-      "p5": 1.0,
-      "p95": 1.0
-     },
-     "GW_online": {
-      "mean": 0.0,
-      "p5": 0.0,
-      "p95": 0.0
-     },
-     "projects_online": {
-      "mean": 267.29,
-      "p5": 247.95,
-      "p95": 291.29999999999995
-     },
-     "median_months_to_COD": {
-      "mean": 41.429533828628784,
-      "p5": 39.63624625258632,
-      "p95": 43.63517109548716
-     },
-     "decisions_per_year": {
-      "mean": 13.018666666666666,
-      "p5": 11.526666666666667,
-      "p95": 14.473333333333333
-     },
-     "EIS_per_year": {
-      "mean": 3.2273333333333327,
-      "p5": 2.533333333333333,
-      "p95": 3.936666666666666
-     },
-     "EA_per_year": {
-      "mean": 3.055999999999999,
-      "p5": 2.3966666666666665,
-      "p95": 3.673333333333333
-     },
-     "suits": {
-      "mean": 4.87,
-      "p5": 1.9500000000000002,
-      "p95": 9.0
-     },
-     "suits_per_year": {
-      "mean": 0.32466666666666666,
-      "p5": 0.13,
-      "p95": 0.6
-     },
-     "vacated": {
-      "mean": 0.0,
-      "p5": 0.0,
-      "p95": 0.0
-     },
-     "halted": {
-      "mean": 0.27,
-      "p5": 0.0,
-      "p95": 1.0
-     },
-     "halted_GW": {
-      "mean": 0.0,
-      "p5": 0.0,
-      "p95": 0.0
-     },
-     "killed_by_courts_or_halts": {
-      "mean": 0.06,
-      "p5": 0.0,
-      "p95": 1.0
-     },
-     "permitted_share": {
-      "mean": 0.9997053510438496,
-      "p5": 0.995429542317086,
-      "p95": 1.0
-     },
-     "median_months_to_permit": {
-      "mean": 13.313216686006058,
-      "p5": 10.50539589723996,
-      "p95": 16.166565953583184
-     },
-     "truncated_share": {
-      "mean": 0.12385455699006036,
-      "p5": 0.08091087078127913,
-      "p95": 0.1617036703670367
-     },
-     "harm": {
-      "mean": 135.33046236957222,
-      "p5": 58.84002811208739,
-      "p95": 252.43030499126542
-     }
-    },
-    "Hydro relicense": {
-     "completion_rate": {
-      "mean": 1.0,
-      "p5": 1.0,
-      "p95": 1.0
-     },
-     "GW_online": {
-      "mean": 16.366,
-      "p5": 15.0925,
-      "p95": 17.7
-     },
-     "projects_online": {
-      "mean": 327.32,
-      "p5": 301.85,
-      "p95": 354.0
-     },
-     "median_months_to_COD": {
-      "mean": 47.36664806848347,
-      "p5": 46.11003572472878,
-      "p95": 48.96806200980705
-     },
-     "decisions_per_year": {
-      "mean": 21.82133333333333,
-      "p5": 20.12333333333333,
-      "p95": 23.6
-     },
-     "EIS_per_year": {
-      "mean": 1.3793333333333333,
-      "p5": 0.8666666666666667,
-      "p95": 1.8066666666666664
-     },
-     "EA_per_year": {
-      "mean": 8.873333333333333,
-      "p5": 7.663333333333334,
-      "p95": 9.870000000000001
-     },
-     "suits": {
-      "mean": 1.57,
-      "p5": 0.0,
-      "p95": 3.049999999999997
-     },
-     "suits_per_year": {
-      "mean": 0.10466666666666664,
-      "p5": 0.0,
-      "p95": 0.20333333333333314
-     },
-     "vacated": {
-      "mean": 0.0,
-      "p5": 0.0,
-      "p95": 0.0
-     },
-     "halted": {
-      "mean": 0.0,
-      "p5": 0.0,
-      "p95": 0.0
-     },
-     "halted_GW": {
-      "mean": 0.0,
-      "p5": 0.0,
-      "p95": 0.0
-     },
-     "killed_by_courts_or_halts": {
-      "mean": 0.0,
-      "p5": 0.0,
-      "p95": 0.0
-     },
-     "permitted_share": {
-      "mean": 1.0,
-      "p5": 1.0,
-      "p95": 1.0
-     },
-     "median_months_to_permit": {
-      "mean": 47.361705854767145,
-      "p5": 46.08620348526578,
-      "p95": 48.96806200980705
-     },
-     "truncated_share": {
-      "mean": 0.07564096471205811,
-      "p5": 0.05581643343560578,
-      "p95": 0.09805298523903944
-     },
-     "harm": {
-      "mean": 5.728875911314886,
-      "p5": 2.7049855786438255,
-      "p95": 10.188421515777446
-     }
-    }
-   },
-   "totals": {
-    "GW_total": {
-     "mean": 1190.39978,
-     "p5": 1167.6816,
-     "p95": 1215.8397
-    },
-    "harm_total": {
-     "mean": 205.85016802057825,
-     "p5": 102.95984062310905,
-     "p95": 331.2931528607058
-    },
-    "suits_total": {
-     "mean": 25.84,
-     "p5": 17.95,
-     "p95": 34.05
-    },
-    "EIS_per_year_total": {
-     "mean": 12.394666666666668,
-     "p5": 11.063333333333333,
-     "p95": 14.336666666666668
-    },
-    "halted_GW_total": {
-     "mean": 0.87996,
-     "p5": 0.0,
-     "p95": 2.612
-    },
-    "GW Renewable (new)": {
-     "mean": 737.6219599999998,
-     "p5": 721.037,
-     "p95": 756.1198
-    },
-    "TWh Renewable (new)": {
-     "mean": 1773.9679724064001,
-     "p5": 1723.831165008,
-     "p95": 1824.2763409440001
-    },
-    "GW Renewable (retained hydro)": {
-     "mean": 16.366,
-     "p5": 15.0925,
-     "p95": 17.7
-    },
-    "TWh Renewable (retained hydro)": {
-     "mean": 51.64716815999999,
-     "p5": 47.628307799999995,
-     "p95": 55.856952
-    },
-    "GW Fossil (gas)": {
-     "mean": 192.46734000000004,
-     "p5": 184.2489,
-     "p95": 204.4842
-    },
-    "TWh Fossil (gas)": {
-     "mean": 944.8144733664003,
-     "p5": 904.4704801440001,
-     "p95": 1003.8047584320001
-    },
-    "GW Storage": {
-     "mean": 243.94448,
-     "p5": 236.3816,
-     "p95": 251.5864
-    },
-    "TWh Storage": {
-     "mean": 0.0,
-     "p5": 0.0,
-     "p95": 0.0
-    },
-    "renewable share of new TWh": {
-     "mean": 0.6525349388096927,
-     "p5": 0.6395577198767537,
-     "p95": 0.6639706619386665
-    },
-    "median_months_to_COD | Renewable (new)": {
-     "mean": 60.03625731347411,
-     "p5": 59.45148115312572,
-     "p95": 60.54349758635794
-    },
-    "median_months_to_permit | Renewable (new)": {
-     "mean": 9.281104689993018,
-     "p5": 8.786025858240375,
-     "p95": 9.777468832506813
-    },
-    "permitted_share | Renewable (new)": {
-     "mean": 0.9996859204003086,
-     "p5": 0.9991420487160447,
-     "p95": 1.0
-    },
-    "sued_share_of_decided | Renewable (new)": {
-     "mean": 0.015163244732611743,
-     "p5": 0.009140272165438555,
-     "p95": 0.02198227749811392
-    },
-    "decisions | Renewable (new)": {
-     "mean": 1211.82,
-     "p5": 1154.5,
-     "p95": 1267.15
-    },
-    "suits | Renewable (new)": {
-     "mean": 18.36,
-     "p5": 11.0,
-     "p95": 25.099999999999994
-    },
-    "suits: National NGO | Renewable (new)": {
-     "mean": 0.77,
-     "p5": 0.0,
-     "p95": 3.0
-    },
-    "challenger wins: National NGO | Renewable (new)": {
-     "mean": 0.23,
-     "p5": 0.0,
-     "p95": 1.0
-    },
-    "suits: Local group / residents | Renewable (new)": {
-     "mean": 13.19,
-     "p5": 7.0,
-     "p95": 20.0
-    },
-    "challenger wins: Local group / residents | Renewable (new)": {
-     "mean": 2.91,
-     "p5": 0.9500000000000002,
-     "p95": 6.0
-    },
-    "suits: Tribe | Renewable (new)": {
-     "mean": 2.18,
-     "p5": 0.0,
-     "p95": 5.0
-    },
-    "challenger wins: Tribe | Renewable (new)": {
-     "mean": 0.27,
-     "p5": 0.0,
-     "p95": 1.0
-    },
-    "suits: State / local government | Renewable (new)": {
-     "mean": 0.48,
-     "p5": 0.0,
-     "p95": 2.0
-    },
-    "challenger wins: State / local government | Renewable (new)": {
-     "mean": 0.19,
-     "p5": 0.0,
-     "p95": 1.0
-    },
-    "suits: Business | Renewable (new)": {
-     "mean": 1.74,
-     "p5": 0.0,
-     "p95": 4.0
-    },
-    "challenger wins: Business | Renewable (new)": {
-     "mean": 0.23,
-     "p5": 0.0,
-     "p95": 1.0
-    },
-    "median_months_to_COD | Renewable (retained hydro)": {
-     "mean": 47.36664806848347,
-     "p5": 46.11003572472878,
-     "p95": 48.96806200980705
-    },
-    "median_months_to_permit | Renewable (retained hydro)": {
-     "mean": 47.361705854767145,
-     "p5": 46.08620348526578,
-     "p95": 48.96806200980705
-    },
-    "permitted_share | Renewable (retained hydro)": {
-     "mean": 1.0,
-     "p5": 1.0,
-     "p95": 1.0
-    },
-    "sued_share_of_decided | Renewable (retained hydro)": {
-     "mean": 0.004773702052375296,
-     "p5": 0.0,
-     "p95": 0.010110206476693437
-    },
-    "decisions | Renewable (retained hydro)": {
-     "mean": 327.32,
-     "p5": 301.85,
-     "p95": 354.0
-    },
-    "suits | Renewable (retained hydro)": {
-     "mean": 1.57,
-     "p5": 0.0,
-     "p95": 3.049999999999997
-    },
-    "suits: National NGO | Renewable (retained hydro)": {
-     "mean": 0.78,
-     "p5": 0.0,
-     "p95": 2.0
-    },
-    "challenger wins: National NGO | Renewable (retained hydro)": {
-     "mean": 0.28,
-     "p5": 0.0,
-     "p95": 1.0
-    },
-    "suits: Local group / residents | Renewable (retained hydro)": {
-     "mean": 0.61,
-     "p5": 0.0,
-     "p95": 2.0
-    },
-    "challenger wins: Local group / residents | Renewable (retained hydro)": {
-     "mean": 0.21,
-     "p5": 0.0,
-     "p95": 1.0
-    },
-    "suits: Tribe | Renewable (retained hydro)": {
-     "mean": 0.0,
-     "p5": 0.0,
-     "p95": 0.0
-    },
-    "challenger wins: Tribe | Renewable (retained hydro)": {
-     "mean": 0.0,
-     "p5": 0.0,
-     "p95": 0.0
-    },
-    "suits: State / local government | Renewable (retained hydro)": {
-     "mean": 0.18,
-     "p5": 0.0,
-     "p95": 1.0
-    },
-    "challenger wins: State / local government | Renewable (retained hydro)": {
-     "mean": 0.07,
-     "p5": 0.0,
-     "p95": 1.0
-    },
-    "suits: Business | Renewable (retained hydro)": {
-     "mean": 0.0,
-     "p5": 0.0,
-     "p95": 0.0
-    },
-    "challenger wins: Business | Renewable (retained hydro)": {
-     "mean": 0.0,
-     "p5": 0.0,
-     "p95": 0.0
-    },
-    "median_months_to_COD | Fossil (gas)": {
-     "mean": 36.942536415302456,
-     "p5": 36.052735024953414,
-     "p95": 37.71658008509213
-    },
-    "median_months_to_permit | Fossil (gas)": {
-     "mean": 9.130533699874347,
-     "p5": 8.347086089986918,
-     "p95": 9.92084236442085
-    },
-    "permitted_share | Fossil (gas)": {
-     "mean": 0.9998340980587583,
-     "p5": 0.9998659517426274,
-     "p95": 1.0
-    },
-    "sued_share_of_decided | Fossil (gas)": {
-     "mean": 0.0013186258430612258,
-     "p5": 0.0,
-     "p95": 0.004749283248493359
-    },
-    "decisions | Fossil (gas)": {
-     "mean": 378.87,
-     "p5": 345.0,
-     "p95": 407.29999999999995
-    },
-    "suits | Fossil (gas)": {
-     "mean": 0.5,
-     "p5": 0.0,
-     "p95": 2.0
-    },
-    "suits: National NGO | Fossil (gas)": {
-     "mean": 0.17,
-     "p5": 0.0,
-     "p95": 1.0
-    },
-    "challenger wins: National NGO | Fossil (gas)": {
-     "mean": 0.04,
-     "p5": 0.0,
-     "p95": 0.0
-    },
-    "suits: Local group / residents | Fossil (gas)": {
-     "mean": 0.2,
-     "p5": 0.0,
-     "p95": 1.0
-    },
-    "challenger wins: Local group / residents | Fossil (gas)": {
-     "mean": 0.06,
-     "p5": 0.0,
-     "p95": 1.0
-    },
-    "suits: Tribe | Fossil (gas)": {
-     "mean": 0.08,
-     "p5": 0.0,
-     "p95": 1.0
-    },
-    "challenger wins: Tribe | Fossil (gas)": {
-     "mean": 0.03,
-     "p5": 0.0,
-     "p95": 0.0
-    },
-    "suits: State / local government | Fossil (gas)": {
-     "mean": 0.01,
-     "p5": 0.0,
-     "p95": 0.0
-    },
-    "challenger wins: State / local government | Fossil (gas)": {
-     "mean": 0.01,
-     "p5": 0.0,
-     "p95": 0.0
-    },
-    "suits: Business | Fossil (gas)": {
-     "mean": 0.04,
-     "p5": 0.0,
-     "p95": 0.0
-    },
-    "challenger wins: Business | Fossil (gas)": {
-     "mean": 0.02,
-     "p5": 0.0,
-     "p95": 0.0
-    },
-    "median_months_to_COD | Storage": {
-     "mean": 72.47544204891355,
-     "p5": 72.09999510794262,
-     "p95": 72.92487834787181
-    },
-    "median_months_to_permit | Storage": {
-     "mean": 6.611952559187861,
-     "p5": 6.1785651145045835,
-     "p95": 6.98379289306507
-    },
-    "permitted_share | Storage": {
-     "mean": 0.9999754493678055,
-     "p5": 1.0,
-     "p95": 1.0
-    },
-    "sued_share_of_decided | Storage": {
-     "mean": 0.00044534300739093076,
-     "p5": 0.0,
-     "p95": 0.001640756441186415
-    },
-    "decisions | Storage": {
-     "mean": 1215.62,
-     "p5": 1169.0,
-     "p95": 1272.1
-    },
-    "suits | Storage": {
-     "mean": 0.54,
-     "p5": 0.0,
-     "p95": 2.0
-    },
-    "suits: National NGO | Storage": {
-     "mean": 0.03,
-     "p5": 0.0,
-     "p95": 0.0
-    },
-    "challenger wins: National NGO | Storage": {
-     "mean": 0.02,
-     "p5": 0.0,
-     "p95": 0.0
-    },
-    "suits: Local group / residents | Storage": {
-     "mean": 0.33,
-     "p5": 0.0,
-     "p95": 1.0
-    },
-    "challenger wins: Local group / residents | Storage": {
-     "mean": 0.08,
-     "p5": 0.0,
-     "p95": 1.0
-    },
-    "suits: Tribe | Storage": {
-     "mean": 0.1,
-     "p5": 0.0,
-     "p95": 1.0
-    },
-    "challenger wins: Tribe | Storage": {
-     "mean": 0.01,
-     "p5": 0.0,
-     "p95": 0.0
-    },
-    "suits: State / local government | Storage": {
-     "mean": 0.02,
-     "p5": 0.0,
-     "p95": 0.0
-    },
-    "challenger wins: State / local government | Storage": {
-     "mean": 0.0,
-     "p5": 0.0,
-     "p95": 0.0
-    },
-    "suits: Business | Storage": {
-     "mean": 0.06,
-     "p5": 0.0,
-     "p95": 1.0
-    },
-    "challenger wins: Business | Storage": {
-     "mean": 0.01,
-     "p5": 0.0,
-     "p95": 0.0
-    }
-   },
-   "diff_vs_baseline": {
-    "GW_total": {
-     "mean": 121.51342000000001,
-     "p5": 115.00839999999997,
-     "p95": 128.84969999999993
-    },
-    "harm_total": {
-     "mean": 205.85016802057825,
-     "p5": 102.95984062310905,
-     "p95": 331.2931528607058
-    },
-    "suits_total": {
-     "mean": -34.19,
-     "p5": -45.0,
-     "p95": -22.0
-    },
-    "EIS_per_year_total": {
-     "mean": 2.9319999999999995,
-     "p5": 2.0666666666666664,
-     "p95": 3.7333333333333343
-    },
-    "halted_GW_total": {
-     "mean": -7.180020000000001,
-     "p5": -13.9144,
-     "p95": -1.1974000000000002
-    },
-    "GW Renewable (new)": {
-     "mean": 78.59338000000001,
-     "p5": 72.91959999999995,
-     "p95": 85.07620000000006
-    },
-    "TWh Renewable (new)": {
-     "mean": 190.96158755520005,
-     "p5": 173.2555719360001,
-     "p95": 209.01923899200008
-    },
-    "GW Renewable (retained hydro)": {
-     "mean": 1.7379999999999998,
-     "p5": 1.297499999999999,
-     "p95": 2.1525000000000003
-    },
-    "TWh Renewable (retained hydro)": {
-     "mean": 5.48471088,
-     "p5": 4.094598599999988,
-     "p95": 6.792773399999997
-    },
-    "GW Fossil (gas)": {
-     "mean": 13.937160000000004,
-     "p5": 11.53290000000001,
-     "p95": 16.872000000000014
-    },
-    "TWh Fossil (gas)": {
-     "mean": 68.4169609536,
-     "p5": 56.614544783999975,
-     "p95": 82.82397312
-    },
-    "GW Storage": {
-     "mean": 27.24488,
-     "p5": 24.75200000000001,
-     "p95": 30.07160000000001
-    },
-    "TWh Storage": {
-     "mean": 0.0,
-     "p5": 0.0,
-     "p95": 0.0
-    },
-    "renewable share of new TWh": {
-     "mean": 0.008830276684528782,
-     "p5": 0.004393905260814379,
-     "p95": 0.012984727186161225
-    },
-    "median_months_to_COD | Renewable (new)": {
-     "mean": -1.156463103731831,
-     "p5": -1.5234246689654392,
-     "p95": -0.8099839945666372
-    },
-    "median_months_to_permit | Renewable (new)": {
-     "mean": -7.870651718574181,
-     "p5": -8.504888261044089,
-     "p95": -7.263319305090736
-    },
-    "permitted_share | Renewable (new)": {
-     "mean": 0.0057348437359278125,
-     "p5": 0.0006827709130443228,
-     "p95": 0.01102153708394039
-    },
-    "sued_share_of_decided | Renewable (new)": {
-     "mean": -0.042372564870990864,
-     "p5": -0.055365873114297505,
-     "p95": -0.02591421381429606
-    },
-    "decisions | Renewable (new)": {
-     "mean": 537.94,
-     "p5": 497.0,
-     "p95": 572.05
-    },
-    "suits | Renewable (new)": {
-     "mean": -20.41,
-     "p5": -31.05,
-     "p95": -8.950000000000003
-    },
-    "suits: National NGO | Renewable (new)": {
-     "mean": -0.99,
-     "p5": -3.0,
-     "p95": 1.0
-    },
-    "challenger wins: National NGO | Renewable (new)": {
-     "mean": -0.25,
-     "p5": -1.0,
-     "p95": 1.0
-    },
-    "suits: Local group / residents | Renewable (new)": {
-     "mean": -14.55,
-     "p5": -23.05,
-     "p95": -6.900000000000006
-    },
-    "challenger wins: Local group / residents | Renewable (new)": {
-     "mean": -3.22,
-     "p5": -8.0,
-     "p95": 0.04999999999999716
-    },
-    "suits: Tribe | Renewable (new)": {
-     "mean": -1.98,
-     "p5": -5.05,
-     "p95": 1.0
-    },
-    "challenger wins: Tribe | Renewable (new)": {
-     "mean": -0.45,
-     "p5": -2.0,
-     "p95": 1.0
-    },
-    "suits: State / local government | Renewable (new)": {
-     "mean": -0.48,
-     "p5": -2.0,
-     "p95": 1.0
-    },
-    "challenger wins: State / local government | Renewable (new)": {
-     "mean": -0.06,
-     "p5": -1.0,
-     "p95": 1.0
-    },
-    "suits: Business | Renewable (new)": {
-     "mean": -2.41,
-     "p5": -5.0,
-     "p95": 0.04999999999999716
-    },
-    "challenger wins: Business | Renewable (new)": {
-     "mean": -0.54,
-     "p5": -2.0,
-     "p95": 1.0
-    },
-    "median_months_to_COD | Renewable (retained hydro)": {
-     "mean": -12.600905704137718,
-     "p5": -13.409987067075656,
-     "p95": -12.10433762639514
-    },
-    "median_months_to_permit | Renewable (retained hydro)": {
-     "mean": -12.588244650833882,
-     "p5": -13.251235810855395,
-     "p95": -12.10433762639514
-    },
-    "permitted_share | Renewable (retained hydro)": {
-     "mean": 0.00047960062399590275,
-     "p5": 0.0,
-     "p95": 0.0034370186041000005
-    },
-    "sued_share_of_decided | Renewable (retained hydro)": {
-     "mean": -0.008337272138439565,
-     "p5": -0.01773355892543179,
-     "p95": -0.00034311930043457107
-    },
-    "decisions | Renewable (retained hydro)": {
-     "mean": 34.47,
-     "p5": 25.95,
-     "p95": 43.05
-    },
-    "suits | Renewable (retained hydro)": {
-     "mean": -2.28,
-     "p5": -5.0,
-     "p95": 0.0
-    },
-    "suits: National NGO | Renewable (retained hydro)": {
-     "mean": -1.07,
-     "p5": -3.0,
-     "p95": 0.0
-    },
-    "challenger wins: National NGO | Renewable (retained hydro)": {
-     "mean": -0.3,
-     "p5": -1.0499999999999998,
-     "p95": 0.04999999999999716
-    },
-    "suits: Local group / residents | Renewable (retained hydro)": {
-     "mean": -0.91,
-     "p5": -3.0,
-     "p95": 0.0
-    },
-    "challenger wins: Local group / residents | Renewable (retained hydro)": {
-     "mean": -0.25,
-     "p5": -1.0499999999999998,
-     "p95": 0.0
-    },
-    "suits: Tribe | Renewable (retained hydro)": {
-     "mean": 0.0,
-     "p5": 0.0,
-     "p95": 0.0
-    },
-    "challenger wins: Tribe | Renewable (retained hydro)": {
-     "mean": 0.0,
-     "p5": 0.0,
-     "p95": 0.0
-    },
-    "suits: State / local government | Renewable (retained hydro)": {
-     "mean": -0.3,
-     "p5": -1.0,
-     "p95": 0.0
-    },
-    "challenger wins: State / local government | Renewable (retained hydro)": {
-     "mean": -0.12,
-     "p5": -1.0,
-     "p95": 0.0
-    },
-    "suits: Business | Renewable (retained hydro)": {
-     "mean": 0.0,
-     "p5": 0.0,
-     "p95": 0.0
-    },
-    "challenger wins: Business | Renewable (retained hydro)": {
-     "mean": 0.0,
-     "p5": 0.0,
-     "p95": 0.0
-    },
-    "median_months_to_COD | Fossil (gas)": {
-     "mean": -0.4145946101055845,
-     "p5": -0.8019801414658904,
-     "p95": -0.0526085163556443
-    },
-    "median_months_to_permit | Fossil (gas)": {
-     "mean": -0.477689930089072,
-     "p5": -0.8940267873910045,
-     "p95": -0.12815014445441691
-    },
-    "permitted_share | Fossil (gas)": {
-     "mean": 0.001119380219793733,
-     "p5": 0.0,
-     "p95": 0.0056022408963585235
-    },
-    "sued_share_of_decided | Fossil (gas)": {
-     "mean": -0.003201966789309095,
-     "p5": -0.00837610521083128,
-     "p95": 0.0
-    },
-    "decisions | Fossil (gas)": {
-     "mean": 16.78,
-     "p5": 9.0,
-     "p95": 25.049999999999997
-    },
-    "suits | Fossil (gas)": {
-     "mean": -1.14,
-     "p5": -3.0,
-     "p95": 0.0
-    },
-    "suits: National NGO | Fossil (gas)": {
-     "mean": -0.26,
-     "p5": -1.0,
-     "p95": 0.0
-    },
-    "challenger wins: National NGO | Fossil (gas)": {
-     "mean": -0.11,
-     "p5": -1.0,
-     "p95": 0.0
-    },
-    "suits: Local group / residents | Fossil (gas)": {
-     "mean": -0.5,
-     "p5": -2.0,
-     "p95": 0.0
-    },
-    "challenger wins: Local group / residents | Fossil (gas)": {
-     "mean": -0.14,
-     "p5": -1.0,
-     "p95": 0.0
-    },
-    "suits: Tribe | Fossil (gas)": {
-     "mean": -0.12,
-     "p5": -1.0,
-     "p95": 0.0
-    },
-    "challenger wins: Tribe | Fossil (gas)": {
-     "mean": -0.03,
-     "p5": 0.0,
-     "p95": 0.0
-    },
-    "suits: State / local government | Fossil (gas)": {
-     "mean": -0.08,
-     "p5": -1.0,
-     "p95": 0.0
-    },
-    "challenger wins: State / local government | Fossil (gas)": {
-     "mean": -0.03,
-     "p5": 0.0,
-     "p95": 0.0
-    },
-    "suits: Business | Fossil (gas)": {
-     "mean": -0.18,
-     "p5": -1.0,
-     "p95": 0.0
-    },
-    "challenger wins: Business | Fossil (gas)": {
-     "mean": -0.02,
-     "p5": 0.0,
-     "p95": 0.0
-    },
-    "median_months_to_COD | Storage": {
-     "mean": -0.3523912944072683,
-     "p5": -0.6137069031394766,
-     "p95": -0.06508355850651457
-    },
-    "median_months_to_permit | Storage": {
-     "mean": -0.08238334298983034,
-     "p5": -0.23760616984671473,
-     "p95": 0.04252134163085531
-    },
-    "permitted_share | Storage": {
-     "mean": 0.00017661524827386588,
-     "p5": 0.0,
-     "p95": 0.0008990448721250432
-    },
-    "sued_share_of_decided | Storage": {
-     "mean": -0.0011186503701801922,
-     "p5": -0.0028027761479680778,
-     "p95": 0.0
-    },
-    "decisions | Storage": {
-     "mean": 84.17,
-     "p5": 70.9,
-     "p95": 97.14999999999999
-    },
-    "suits | Storage": {
-     "mean": -1.23,
-     "p5": -3.0,
-     "p95": 0.0
-    },
-    "suits: National NGO | Storage": {
-     "mean": -0.06,
-     "p5": -1.0,
-     "p95": 0.0
-    },
-    "challenger wins: National NGO | Storage": {
-     "mean": -0.02,
-     "p5": 0.0,
-     "p95": 0.0
-    },
-    "suits: Local group / residents | Storage": {
-     "mean": -0.84,
-     "p5": -3.0,
-     "p95": 0.0
-    },
-    "challenger wins: Local group / residents | Storage": {
-     "mean": -0.16,
-     "p5": -1.0,
-     "p95": 0.0
-    },
-    "suits: Tribe | Storage": {
-     "mean": -0.12,
-     "p5": -1.0,
-     "p95": 0.0
-    },
-    "challenger wins: Tribe | Storage": {
-     "mean": -0.02,
-     "p5": 0.0,
-     "p95": 0.0
-    },
-    "suits: State / local government | Storage": {
-     "mean": -0.02,
-     "p5": 0.0,
-     "p95": 0.0
-    },
-    "challenger wins: State / local government | Storage": {
-     "mean": -0.01,
-     "p5": 0.0,
-     "p95": 0.0
-    },
-    "suits: Business | Storage": {
-     "mean": -0.19,
-     "p5": -1.0,
-     "p95": 0.0
-    },
-    "challenger wins: Business | Storage": {
-     "mean": -0.01,
-     "p5": 0.0,
-     "p95": 0.0
-    }
-   },
-   "diff_by_type": {
-    "Gas": {
-     "GW_online": {
-      "mean": 13.937160000000004,
-      "p5": 11.53290000000001,
-      "p95": 16.872000000000014
-     },
-     "suits": {
-      "mean": -1.14,
-      "p5": -3.0,
-      "p95": 0.0
-     },
-     "median_months_to_permit": {
-      "mean": -0.477689930089072,
-      "p5": -0.8940267873910045,
-      "p95": -0.12815014445441691
-     }
-    },
-    "Geothermal": {
-     "GW_online": {
-      "mean": 0.48479999999999995,
-      "p5": 0.31999999999999984,
-      "p95": 0.6799999999999999
-     },
-     "suits": {
-      "mean": -1.81,
-      "p5": -4.05,
-      "p95": 0.0
-     },
-     "median_months_to_permit": {
-      "mean": -12.305935675835073,
-      "p5": -17.79280416960854,
-      "p95": -8.032641956521962
-     }
-    },
-    "Offshore wind": {
-     "GW_online": {
-      "mean": 4.928,
-      "p5": 2.359999999999999,
-      "p95": 8.8
-     },
-     "suits": {
-      "mean": -7.95,
-      "p5": -12.05,
-      "p95": -4.0
-     },
-     "median_months_to_permit": {
-      "mean": 0.076883512518487,
-      "p5": -1.0541319099554884,
-      "p95": 1.8806695509950746
-     }
-    },
-    "Onshore wind": {
-     "GW_online": {
-      "mean": 18.118879999999997,
-      "p5": 15.183999999999997,
-      "p95": 21.434400000000007
-     },
-     "suits": {
-      "mean": -3.42,
-      "p5": -9.0,
-      "p95": 3.0
-     },
-     "median_months_to_permit": {
-      "mean": -6.8081581553443415,
-      "p5": -14.746978929395539,
-      "p95": 1.335504444877186
-     }
-    },
-    "Solar": {
-     "GW_online": {
-      "mean": 55.06170000000001,
-      "p5": 51.298700000000025,
-      "p95": 58.30530000000001
-     },
-     "suits": {
-      "mean": -7.23,
-      "p5": -14.05,
-      "p95": -0.9500000000000028
-     },
-     "median_months_to_permit": {
-      "mean": -8.214179844501697,
-      "p5": -8.805779610905843,
-      "p95": -7.598037134466728
-     }
-    },
-    "Storage": {
-     "GW_online": {
-      "mean": 27.24488,
-      "p5": 24.75200000000001,
-      "p95": 30.07160000000001
-     },
-     "suits": {
-      "mean": -1.23,
-      "p5": -3.0,
-      "p95": 0.0
-     },
-     "median_months_to_permit": {
-      "mean": -0.08238334298983034,
-      "p5": -0.23760616984671473,
-      "p95": 0.04252134163085531
-     }
-    },
-    "Transmission": {
-     "GW_online": {
-      "mean": 0.0,
-      "p5": 0.0,
-      "p95": 0.0
-     },
-     "suits": {
-      "mean": -9.13,
-      "p5": -14.0,
-      "p95": -5.0
-     },
-     "median_months_to_permit": {
-      "mean": -2.090395889371124,
-      "p5": -3.78475932805164,
-      "p95": -0.6314046765185481
-     }
-    },
-    "Hydro relicense": {
-     "GW_online": {
-      "mean": 1.7379999999999998,
-      "p5": 1.297499999999999,
-      "p95": 2.1525000000000003
-     },
-     "suits": {
-      "mean": -2.28,
+      "mean": -2.45,
       "p5": -5.0,
       "p95": 0.0
      },
@@ -6535,14 +4913,14 @@
       "p95": 19.953333333333333
      },
      "suits": {
-      "mean": 0.5,
+      "mean": 0.46,
       "p5": 0.0,
-      "p95": 2.0
+      "p95": 1.0
      },
      "suits_per_year": {
-      "mean": 0.03333333333333333,
+      "mean": 0.030666666666666665,
       "p5": 0.0,
-      "p95": 0.13333333333333333
+      "p95": 0.06666666666666667
      },
      "vacated": {
       "mean": 0.0,
@@ -6709,12 +5087,12 @@
       "p95": 1.8666666666666667
      },
      "suits": {
-      "mean": 4.41,
+      "mean": 3.94,
       "p5": 1.0,
       "p95": 8.0
      },
      "suits_per_year": {
-      "mean": 0.294,
+      "mean": 0.26266666666666666,
       "p5": 0.06666666666666667,
       "p95": 0.5333333333333333
      },
@@ -6766,12 +5144,12 @@
       "p95": 0.23180267288942216
      },
      "GW_online": {
-      "mean": 203.45519999999996,
+      "mean": 203.45728,
       "p5": 192.01520000000002,
       "p95": 212.576
      },
      "projects_online": {
-      "mean": 978.15,
+      "mean": 978.16,
       "p5": 923.15,
       "p95": 1022.0
      },
@@ -6796,14 +5174,14 @@
       "p95": 0.0
      },
      "suits": {
-      "mean": 3.99,
+      "mean": 3.59,
       "p5": 1.0,
-      "p95": 7.049999999999997
+      "p95": 7.0
      },
      "suits_per_year": {
-      "mean": 0.26599999999999996,
+      "mean": 0.23933333333333334,
       "p5": 0.06666666666666667,
-      "p95": 0.4699999999999998
+      "p95": 0.4666666666666667
      },
      "vacated": {
       "mean": 0.0,
@@ -6883,14 +5261,14 @@
       "p95": 22.740000000000002
      },
      "suits": {
-      "mean": 9.95,
-      "p5": 4.0,
-      "p95": 16.0
+      "mean": 8.79,
+      "p5": 3.0,
+      "p95": 14.0
      },
      "suits_per_year": {
-      "mean": 0.6633333333333333,
-      "p5": 0.26666666666666666,
-      "p95": 1.0666666666666667
+      "mean": 0.586,
+      "p5": 0.2,
+      "p95": 0.9333333333333333
      },
      "vacated": {
       "mean": 0.0,
@@ -6970,12 +5348,12 @@
       "p95": 22.14333333333333
      },
      "suits": {
-      "mean": 0.54,
+      "mean": 0.47,
       "p5": 0.0,
       "p95": 2.0
      },
      "suits_per_year": {
-      "mean": 0.036000000000000004,
+      "mean": 0.03133333333333334,
       "p5": 0.0,
       "p95": 0.13333333333333333
      },
@@ -7057,14 +5435,14 @@
       "p95": 3.673333333333333
      },
      "suits": {
-      "mean": 4.87,
-      "p5": 1.9500000000000002,
-      "p95": 9.0
+      "mean": 4.32,
+      "p5": 1.0,
+      "p95": 8.0
      },
      "suits_per_year": {
-      "mean": 0.32466666666666666,
-      "p5": 0.13,
-      "p95": 0.6
+      "mean": 0.288,
+      "p5": 0.06666666666666667,
+      "p95": 0.5333333333333333
      },
      "vacated": {
       "mean": 0.0,
@@ -7144,14 +5522,14 @@
       "p95": 9.870000000000001
      },
      "suits": {
-      "mean": 1.57,
+      "mean": 1.4,
       "p5": 0.0,
-      "p95": 3.049999999999997
+      "p95": 3.0
      },
      "suits_per_year": {
-      "mean": 0.10466666666666664,
+      "mean": 0.09333333333333331,
       "p5": 0.0,
-      "p95": 0.20333333333333314
+      "p95": 0.2
      },
      "vacated": {
       "mean": 0.0,
@@ -7197,7 +5575,7 @@
    },
    "totals": {
     "GW_total": {
-     "mean": 1234.036,
+     "mean": 1234.03808,
      "p5": 1214.5326,
      "p95": 1259.3037000000002
     },
@@ -7207,9 +5585,9 @@
      "p95": 339.14699259400425
     },
     "suits_total": {
-     "mean": 25.84,
-     "p5": 17.95,
-     "p95": 34.05
+     "mean": 22.98,
+     "p5": 15.0,
+     "p95": 31.049999999999997
     },
     "EIS_per_year_total": {
      "mean": 12.394666666666668,
@@ -7222,12 +5600,12 @@
      "p95": 2.612
     },
     "GW Renewable (new)": {
-     "mean": 765.5376799999999,
+     "mean": 765.5397599999998,
      "p5": 748.4192,
      "p95": 784.4883
     },
     "TWh Renewable (new)": {
-     "mean": 1840.7713862592,
+     "mean": 1840.7775855743998,
      "p5": 1791.0126669600002,
      "p95": 1890.5978632319998
     },
@@ -7262,7 +5640,7 @@
      "p95": 0.0
     },
     "renewable share of new TWh": {
-     "mean": 0.6551339689173622,
+     "mean": 0.6551347592136403,
      "p5": 0.6431115078210511,
      "p95": 0.6668978359963814
     },
@@ -7282,9 +5660,9 @@
      "p95": 1.0
     },
     "sued_share_of_decided | Renewable (new)": {
-     "mean": 0.015163244732611743,
-     "p5": 0.009140272165438555,
-     "p95": 0.02198227749811392
+     "mean": 0.013489192887333466,
+     "p5": 0.00747989292499461,
+     "p95": 0.020005025125628143
     },
     "decisions | Renewable (new)": {
      "mean": 1211.82,
@@ -7292,34 +5670,34 @@
      "p95": 1267.15
     },
     "suits | Renewable (new)": {
-     "mean": 18.36,
-     "p5": 11.0,
-     "p95": 25.099999999999994
+     "mean": 16.33,
+     "p5": 9.0,
+     "p95": 24.0
     },
     "suits: National NGO | Renewable (new)": {
-     "mean": 0.77,
+     "mean": 0.68,
      "p5": 0.0,
-     "p95": 3.0
+     "p95": 2.049999999999997
     },
     "challenger wins: National NGO | Renewable (new)": {
-     "mean": 0.23,
+     "mean": 0.22,
      "p5": 0.0,
      "p95": 1.0
     },
     "suits: Local group / residents | Renewable (new)": {
-     "mean": 13.19,
-     "p5": 7.0,
-     "p95": 20.0
+     "mean": 11.79,
+     "p5": 6.0,
+     "p95": 17.0
     },
     "challenger wins: Local group / residents | Renewable (new)": {
-     "mean": 2.91,
-     "p5": 0.9500000000000002,
-     "p95": 6.0
+     "mean": 2.58,
+     "p5": 0.0,
+     "p95": 5.049999999999997
     },
     "suits: Tribe | Renewable (new)": {
-     "mean": 2.18,
+     "mean": 2.01,
      "p5": 0.0,
-     "p95": 5.0
+     "p95": 4.0
     },
     "challenger wins: Tribe | Renewable (new)": {
      "mean": 0.27,
@@ -7327,22 +5705,22 @@
      "p95": 1.0
     },
     "suits: State / local government | Renewable (new)": {
-     "mean": 0.48,
+     "mean": 0.41,
      "p5": 0.0,
-     "p95": 2.0
+     "p95": 1.0499999999999972
     },
     "challenger wins: State / local government | Renewable (new)": {
-     "mean": 0.19,
+     "mean": 0.17,
      "p5": 0.0,
      "p95": 1.0
     },
     "suits: Business | Renewable (new)": {
-     "mean": 1.74,
+     "mean": 1.44,
      "p5": 0.0,
-     "p95": 4.0
+     "p95": 3.0
     },
     "challenger wins: Business | Renewable (new)": {
-     "mean": 0.23,
+     "mean": 0.21,
      "p5": 0.0,
      "p95": 1.0
     },
@@ -7362,9 +5740,9 @@
      "p95": 1.0
     },
     "sued_share_of_decided | Renewable (retained hydro)": {
-     "mean": 0.004773702052375296,
+     "mean": 0.004255551276301441,
      "p5": 0.0,
-     "p95": 0.010110206476693437
+     "p95": 0.009345794392523364
     },
     "decisions | Renewable (retained hydro)": {
      "mean": 327.32,
@@ -7372,27 +5750,27 @@
      "p95": 354.0
     },
     "suits | Renewable (retained hydro)": {
-     "mean": 1.57,
+     "mean": 1.4,
      "p5": 0.0,
-     "p95": 3.049999999999997
+     "p95": 3.0
     },
     "suits: National NGO | Renewable (retained hydro)": {
-     "mean": 0.78,
+     "mean": 0.71,
      "p5": 0.0,
      "p95": 2.0
     },
     "challenger wins: National NGO | Renewable (retained hydro)": {
-     "mean": 0.28,
+     "mean": 0.26,
      "p5": 0.0,
      "p95": 1.0
     },
     "suits: Local group / residents | Renewable (retained hydro)": {
-     "mean": 0.61,
+     "mean": 0.53,
      "p5": 0.0,
      "p95": 2.0
     },
     "challenger wins: Local group / residents | Renewable (retained hydro)": {
-     "mean": 0.21,
+     "mean": 0.2,
      "p5": 0.0,
      "p95": 1.0
     },
@@ -7407,12 +5785,12 @@
      "p95": 0.0
     },
     "suits: State / local government | Renewable (retained hydro)": {
-     "mean": 0.18,
+     "mean": 0.16,
      "p5": 0.0,
      "p95": 1.0
     },
     "challenger wins: State / local government | Renewable (retained hydro)": {
-     "mean": 0.07,
+     "mean": 0.06,
      "p5": 0.0,
      "p95": 1.0
     },
@@ -7442,9 +5820,9 @@
      "p95": 1.0
     },
     "sued_share_of_decided | Fossil (gas)": {
-     "mean": 0.0013186258430612258,
+     "mean": 0.001215662377106518,
      "p5": 0.0,
-     "p95": 0.004749283248493359
+     "p95": 0.0029095569010595844
     },
     "decisions | Fossil (gas)": {
      "mean": 378.87,
@@ -7452,22 +5830,22 @@
      "p95": 407.29999999999995
     },
     "suits | Fossil (gas)": {
-     "mean": 0.5,
+     "mean": 0.46,
      "p5": 0.0,
-     "p95": 2.0
+     "p95": 1.0
     },
     "suits: National NGO | Fossil (gas)": {
-     "mean": 0.17,
+     "mean": 0.15,
      "p5": 0.0,
      "p95": 1.0
     },
     "challenger wins: National NGO | Fossil (gas)": {
-     "mean": 0.04,
+     "mean": 0.03,
      "p5": 0.0,
      "p95": 0.0
     },
     "suits: Local group / residents | Fossil (gas)": {
-     "mean": 0.2,
+     "mean": 0.19,
      "p5": 0.0,
      "p95": 1.0
     },
@@ -7497,7 +5875,7 @@
      "p95": 0.0
     },
     "suits: Business | Fossil (gas)": {
-     "mean": 0.04,
+     "mean": 0.03,
      "p5": 0.0,
      "p95": 0.0
     },
@@ -7522,9 +5900,9 @@
      "p95": 1.0
     },
     "sued_share_of_decided | Storage": {
-     "mean": 0.00044534300739093076,
+     "mean": 0.00038791656807681224,
      "p5": 0.0,
-     "p95": 0.001640756441186415
+     "p95": 0.0016213409188634935
     },
     "decisions | Storage": {
      "mean": 1215.62,
@@ -7532,22 +5910,22 @@
      "p95": 1272.1
     },
     "suits | Storage": {
-     "mean": 0.54,
+     "mean": 0.47,
      "p5": 0.0,
      "p95": 2.0
     },
     "suits: National NGO | Storage": {
-     "mean": 0.03,
+     "mean": 0.01,
      "p5": 0.0,
      "p95": 0.0
     },
     "challenger wins: National NGO | Storage": {
-     "mean": 0.02,
+     "mean": 0.0,
      "p5": 0.0,
      "p95": 0.0
     },
     "suits: Local group / residents | Storage": {
-     "mean": 0.33,
+     "mean": 0.31,
      "p5": 0.0,
      "p95": 1.0
     },
@@ -7557,7 +5935,7 @@
      "p95": 1.0
     },
     "suits: Tribe | Storage": {
-     "mean": 0.1,
+     "mean": 0.09,
      "p5": 0.0,
      "p95": 1.0
     },
@@ -7567,7 +5945,7 @@
      "p95": 0.0
     },
     "suits: State / local government | Storage": {
-     "mean": 0.02,
+     "mean": 0.01,
      "p5": 0.0,
      "p95": 0.0
     },
@@ -7577,9 +5955,9 @@
      "p95": 0.0
     },
     "suits: Business | Storage": {
-     "mean": 0.06,
+     "mean": 0.05,
      "p5": 0.0,
-     "p95": 1.0
+     "p95": 0.04999999999999716
     },
     "challenger wins: Business | Storage": {
      "mean": 0.01,
@@ -7589,7 +5967,7 @@
    },
    "diff_vs_baseline": {
     "GW_total": {
-     "mean": 165.14964000000003,
+     "mean": 165.15172,
      "p5": 157.97850000000005,
      "p95": 173.35119999999984
     },
@@ -7599,9 +5977,9 @@
      "p95": 339.14699259400425
     },
     "suits_total": {
-     "mean": -34.19,
-     "p5": -45.0,
-     "p95": -22.0
+     "mean": -37.05,
+     "p5": -48.05,
+     "p95": -25.0
     },
     "EIS_per_year_total": {
      "mean": 2.9319999999999995,
@@ -7614,12 +5992,12 @@
      "p95": -1.1974000000000002
     },
     "GW Renewable (new)": {
-     "mean": 106.5091,
+     "mean": 106.51117999999998,
      "p5": 99.0964,
      "p95": 113.77329999999992
     },
     "TWh Renewable (new)": {
-     "mean": 257.76500140800005,
+     "mean": 257.7712007232,
      "p5": 239.3480561759999,
      "p95": 279.3621813119999
     },
@@ -7654,7 +6032,7 @@
      "p95": 0.0
     },
     "renewable share of new TWh": {
-     "mean": 0.011429306792198203,
+     "mean": 0.011430097088476365,
      "p5": 0.00676203061358,
      "p95": 0.01606721334219785
     },
@@ -7674,9 +6052,9 @@
      "p95": 0.01102153708394039
     },
     "sued_share_of_decided | Renewable (new)": {
-     "mean": -0.042372564870990864,
-     "p5": -0.055365873114297505,
-     "p95": -0.02591421381429606
+     "mean": -0.04404661671626915,
+     "p5": -0.060088059890492616,
+     "p95": -0.028675777781587326
     },
     "decisions | Renewable (new)": {
      "mean": 537.94,
@@ -7684,33 +6062,33 @@
      "p95": 572.05
     },
     "suits | Renewable (new)": {
-     "mean": -20.41,
-     "p5": -31.05,
-     "p95": -8.950000000000003
+     "mean": -22.44,
+     "p5": -34.0,
+     "p95": -10.0
     },
     "suits: National NGO | Renewable (new)": {
-     "mean": -0.99,
+     "mean": -1.08,
      "p5": -3.0,
      "p95": 1.0
     },
     "challenger wins: National NGO | Renewable (new)": {
-     "mean": -0.25,
-     "p5": -1.0,
+     "mean": -0.26,
+     "p5": -1.0499999999999998,
      "p95": 1.0
     },
     "suits: Local group / residents | Renewable (new)": {
-     "mean": -14.55,
-     "p5": -23.05,
-     "p95": -6.900000000000006
+     "mean": -15.95,
+     "p5": -24.0,
+     "p95": -7.0
     },
     "challenger wins: Local group / residents | Renewable (new)": {
-     "mean": -3.22,
+     "mean": -3.55,
      "p5": -8.0,
      "p95": 0.04999999999999716
     },
     "suits: Tribe | Renewable (new)": {
-     "mean": -1.98,
-     "p5": -5.05,
+     "mean": -2.15,
+     "p5": -6.0,
      "p95": 1.0
     },
     "challenger wins: Tribe | Renewable (new)": {
@@ -7719,22 +6097,22 @@
      "p95": 1.0
     },
     "suits: State / local government | Renewable (new)": {
-     "mean": -0.48,
+     "mean": -0.55,
      "p5": -2.0,
      "p95": 1.0
     },
     "challenger wins: State / local government | Renewable (new)": {
-     "mean": -0.06,
+     "mean": -0.08,
      "p5": -1.0,
      "p95": 1.0
     },
     "suits: Business | Renewable (new)": {
-     "mean": -2.41,
-     "p5": -5.0,
+     "mean": -2.71,
+     "p5": -6.05,
      "p95": 0.04999999999999716
     },
     "challenger wins: Business | Renewable (new)": {
-     "mean": -0.54,
+     "mean": -0.56,
      "p5": -2.0,
      "p95": 1.0
     },
@@ -7754,8 +6132,8 @@
      "p95": 0.0034370186041000005
     },
     "sued_share_of_decided | Renewable (retained hydro)": {
-     "mean": -0.008337272138439565,
-     "p5": -0.01773355892543179,
+     "mean": -0.008855422914513422,
+     "p5": -0.01779557572211628,
      "p95": -0.00034311930043457107
     },
     "decisions | Renewable (retained hydro)": {
@@ -7764,27 +6142,27 @@
      "p95": 43.05
     },
     "suits | Renewable (retained hydro)": {
-     "mean": -2.28,
+     "mean": -2.45,
      "p5": -5.0,
      "p95": 0.0
     },
     "suits: National NGO | Renewable (retained hydro)": {
-     "mean": -1.07,
+     "mean": -1.14,
      "p5": -3.0,
      "p95": 0.0
     },
     "challenger wins: National NGO | Renewable (retained hydro)": {
-     "mean": -0.3,
+     "mean": -0.32,
      "p5": -1.0499999999999998,
      "p95": 0.04999999999999716
     },
     "suits: Local group / residents | Renewable (retained hydro)": {
-     "mean": -0.91,
+     "mean": -0.99,
      "p5": -3.0,
      "p95": 0.0
     },
     "challenger wins: Local group / residents | Renewable (retained hydro)": {
-     "mean": -0.25,
+     "mean": -0.26,
      "p5": -1.0499999999999998,
      "p95": 0.0
     },
@@ -7799,12 +6177,12 @@
      "p95": 0.0
     },
     "suits: State / local government | Renewable (retained hydro)": {
-     "mean": -0.3,
+     "mean": -0.32,
      "p5": -1.0,
      "p95": 0.0
     },
     "challenger wins: State / local government | Renewable (retained hydro)": {
-     "mean": -0.12,
+     "mean": -0.13,
      "p5": -1.0,
      "p95": 0.0
     },
@@ -7834,7 +6212,7 @@
      "p95": 0.0056022408963585235
     },
     "sued_share_of_decided | Fossil (gas)": {
-     "mean": -0.003201966789309095,
+     "mean": -0.0033049302552638033,
      "p5": -0.00837610521083128,
      "p95": 0.0
     },
@@ -7844,22 +6222,22 @@
      "p95": 25.049999999999997
     },
     "suits | Fossil (gas)": {
-     "mean": -1.14,
+     "mean": -1.18,
      "p5": -3.0,
      "p95": 0.0
     },
     "suits: National NGO | Fossil (gas)": {
-     "mean": -0.26,
+     "mean": -0.28,
      "p5": -1.0,
      "p95": 0.0
     },
     "challenger wins: National NGO | Fossil (gas)": {
-     "mean": -0.11,
+     "mean": -0.12,
      "p5": -1.0,
      "p95": 0.0
     },
     "suits: Local group / residents | Fossil (gas)": {
-     "mean": -0.5,
+     "mean": -0.51,
      "p5": -2.0,
      "p95": 0.0
     },
@@ -7889,7 +6267,7 @@
      "p95": 0.0
     },
     "suits: Business | Fossil (gas)": {
-     "mean": -0.18,
+     "mean": -0.19,
      "p5": -1.0,
      "p95": 0.0
     },
@@ -7914,8 +6292,8 @@
      "p95": 0.0008990448721250432
     },
     "sued_share_of_decided | Storage": {
-     "mean": -0.0011186503701801922,
-     "p5": -0.0028027761479680778,
+     "mean": -0.0011760768094943106,
+     "p5": -0.00283159845096825,
      "p95": 0.0
     },
     "decisions | Storage": {
@@ -7924,22 +6302,22 @@
      "p95": 97.14999999999999
     },
     "suits | Storage": {
-     "mean": -1.23,
-     "p5": -3.0,
+     "mean": -1.3,
+     "p5": -3.05,
      "p95": 0.0
     },
     "suits: National NGO | Storage": {
-     "mean": -0.06,
+     "mean": -0.08,
      "p5": -1.0,
      "p95": 0.0
     },
     "challenger wins: National NGO | Storage": {
-     "mean": -0.02,
+     "mean": -0.04,
      "p5": 0.0,
      "p95": 0.0
     },
     "suits: Local group / residents | Storage": {
-     "mean": -0.84,
+     "mean": -0.86,
      "p5": -3.0,
      "p95": 0.0
     },
@@ -7949,7 +6327,7 @@
      "p95": 0.0
     },
     "suits: Tribe | Storage": {
-     "mean": -0.12,
+     "mean": -0.13,
      "p5": -1.0,
      "p95": 0.0
     },
@@ -7959,7 +6337,7 @@
      "p95": 0.0
     },
     "suits: State / local government | Storage": {
-     "mean": -0.02,
+     "mean": -0.03,
      "p5": 0.0,
      "p95": 0.0
     },
@@ -7969,7 +6347,7 @@
      "p95": 0.0
     },
     "suits: Business | Storage": {
-     "mean": -0.19,
+     "mean": -0.2,
      "p5": -1.0,
      "p95": 0.0
     },
@@ -7987,7 +6365,7 @@
       "p95": 22.200000000000017
      },
      "suits": {
-      "mean": -1.14,
+      "mean": -1.18,
       "p5": -3.0,
       "p95": 0.0
      },
@@ -8021,8 +6399,8 @@
       "p95": 9.639999999999999
      },
      "suits": {
-      "mean": -7.95,
-      "p5": -12.05,
+      "mean": -8.42,
+      "p5": -13.0,
       "p95": -4.0
      },
      "median_months_to_permit": {
@@ -8033,14 +6411,14 @@
     },
     "Onshore wind": {
      "GW_online": {
-      "mean": 24.816480000000002,
+      "mean": 24.81856,
       "p5": 20.592000000000013,
       "p95": 29.130400000000005
      },
      "suits": {
-      "mean": -3.42,
+      "mean": -3.82,
       "p5": -9.0,
-      "p95": 3.0
+      "p95": 2.0
      },
      "median_months_to_permit": {
       "mean": -6.8081581553443415,
@@ -8055,9 +6433,9 @@
       "p95": 78.75799999999998
      },
      "suits": {
-      "mean": -7.23,
-      "p5": -14.05,
-      "p95": -0.9500000000000028
+      "mean": -8.39,
+      "p5": -16.05,
+      "p95": -1.0
      },
      "median_months_to_permit": {
       "mean": -8.214179844501697,
@@ -8072,8 +6450,8 @@
       "p95": 41.49599999999998
      },
      "suits": {
-      "mean": -1.23,
-      "p5": -3.0,
+      "mean": -1.3,
+      "p5": -3.05,
       "p95": 0.0
      },
      "median_months_to_permit": {
@@ -8089,8 +6467,8 @@
       "p95": 0.0
      },
      "suits": {
-      "mean": -9.13,
-      "p5": -14.0,
+      "mean": -9.68,
+      "p5": -15.0,
       "p95": -5.0
      },
      "median_months_to_permit": {
@@ -8106,7 +6484,7 @@
       "p95": 2.1525000000000003
      },
      "suits": {
-      "mean": -2.28,
+      "mean": -2.45,
       "p5": -5.0,
       "p95": 0.0
      },
@@ -8157,14 +6535,14 @@
       "p95": 19.953333333333333
      },
      "suits": {
-      "mean": 0.5,
+      "mean": 0.46,
       "p5": 0.0,
-      "p95": 2.0
+      "p95": 1.0
      },
      "suits_per_year": {
-      "mean": 0.03333333333333333,
+      "mean": 0.030666666666666665,
       "p5": 0.0,
-      "p95": 0.13333333333333333
+      "p95": 0.06666666666666667
      },
      "vacated": {
       "mean": 0.0,
@@ -8331,12 +6709,12 @@
       "p95": 1.8666666666666667
      },
      "suits": {
-      "mean": 4.41,
+      "mean": 3.94,
       "p5": 1.0,
       "p95": 8.0
      },
      "suits_per_year": {
-      "mean": 0.294,
+      "mean": 0.26266666666666666,
       "p5": 0.06666666666666667,
       "p95": 0.5333333333333333
      },
@@ -8388,12 +6766,12 @@
       "p95": 0.2532385777277418
      },
      "GW_online": {
-      "mean": 218.59135999999998,
+      "mean": 218.59344,
       "p5": 205.88879999999997,
       "p95": 228.1968
      },
      "projects_online": {
-      "mean": 1050.92,
+      "mean": 1050.93,
       "p5": 989.85,
       "p95": 1097.1
      },
@@ -8418,14 +6796,14 @@
       "p95": 0.0
      },
      "suits": {
-      "mean": 3.99,
+      "mean": 3.59,
       "p5": 1.0,
-      "p95": 7.049999999999997
+      "p95": 7.0
      },
      "suits_per_year": {
-      "mean": 0.26599999999999996,
+      "mean": 0.23933333333333334,
       "p5": 0.06666666666666667,
-      "p95": 0.4699999999999998
+      "p95": 0.4666666666666667
      },
      "vacated": {
       "mean": 0.0,
@@ -8505,14 +6883,14 @@
       "p95": 22.740000000000002
      },
      "suits": {
-      "mean": 9.95,
-      "p5": 4.0,
-      "p95": 16.0
+      "mean": 8.79,
+      "p5": 3.0,
+      "p95": 14.0
      },
      "suits_per_year": {
-      "mean": 0.6633333333333333,
-      "p5": 0.26666666666666666,
-      "p95": 1.0666666666666667
+      "mean": 0.586,
+      "p5": 0.2,
+      "p95": 0.9333333333333333
      },
      "vacated": {
       "mean": 0.0,
@@ -8592,12 +6970,12 @@
       "p95": 22.14333333333333
      },
      "suits": {
-      "mean": 0.54,
+      "mean": 0.47,
       "p5": 0.0,
       "p95": 2.0
      },
      "suits_per_year": {
-      "mean": 0.036000000000000004,
+      "mean": 0.03133333333333334,
       "p5": 0.0,
       "p95": 0.13333333333333333
      },
@@ -8679,14 +7057,14 @@
       "p95": 3.673333333333333
      },
      "suits": {
-      "mean": 4.87,
-      "p5": 1.9500000000000002,
-      "p95": 9.0
+      "mean": 4.32,
+      "p5": 1.0,
+      "p95": 8.0
      },
      "suits_per_year": {
-      "mean": 0.32466666666666666,
-      "p5": 0.13,
-      "p95": 0.6
+      "mean": 0.288,
+      "p5": 0.06666666666666667,
+      "p95": 0.5333333333333333
      },
      "vacated": {
       "mean": 0.0,
@@ -8766,14 +7144,14 @@
       "p95": 9.870000000000001
      },
      "suits": {
-      "mean": 1.57,
+      "mean": 1.4,
       "p5": 0.0,
-      "p95": 3.049999999999997
+      "p95": 3.0
      },
      "suits_per_year": {
-      "mean": 0.10466666666666664,
+      "mean": 0.09333333333333331,
       "p5": 0.0,
-      "p95": 0.20333333333333314
+      "p95": 0.2
      },
      "vacated": {
       "mean": 0.0,
@@ -8819,7 +7197,7 @@
    },
    "totals": {
     "GW_total": {
-     "mean": 1336.7627199999997,
+     "mean": 1336.7648,
      "p5": 1315.5529,
      "p95": 1363.5334
     },
@@ -8829,9 +7207,9 @@
      "p95": 359.51924422835197
     },
     "suits_total": {
-     "mean": 25.84,
-     "p5": 17.95,
-     "p95": 34.05
+     "mean": 22.98,
+     "p5": 15.0,
+     "p95": 31.049999999999997
     },
     "EIS_per_year_total": {
      "mean": 12.394666666666668,
@@ -8844,12 +7222,12 @@
      "p95": 2.612
     },
     "GW Renewable (new)": {
-     "mean": 831.1876,
+     "mean": 831.18968,
      "p5": 813.6827000000001,
      "p95": 848.8957
     },
     "TWh Renewable (new)": {
-     "mean": 1997.6685923520001,
+     "mean": 1997.6747916672,
      "p5": 1946.0484234720002,
      "p95": 2041.6318355520002
     },
@@ -8884,7 +7262,7 @@
      "p95": 0.0
     },
     "renewable share of new TWh": {
-     "mean": 0.6611848113193236,
+     "mean": 0.6611855355350176,
      "p5": 0.6489540905992982,
      "p95": 0.6730808098221521
     },
@@ -8904,9 +7282,9 @@
      "p95": 1.0
     },
     "sued_share_of_decided | Renewable (new)": {
-     "mean": 0.015163244732611743,
-     "p5": 0.009140272165438555,
-     "p95": 0.02198227749811392
+     "mean": 0.013489192887333466,
+     "p5": 0.00747989292499461,
+     "p95": 0.020005025125628143
     },
     "decisions | Renewable (new)": {
      "mean": 1211.82,
@@ -8914,34 +7292,34 @@
      "p95": 1267.15
     },
     "suits | Renewable (new)": {
-     "mean": 18.36,
-     "p5": 11.0,
-     "p95": 25.099999999999994
+     "mean": 16.33,
+     "p5": 9.0,
+     "p95": 24.0
     },
     "suits: National NGO | Renewable (new)": {
-     "mean": 0.77,
+     "mean": 0.68,
      "p5": 0.0,
-     "p95": 3.0
+     "p95": 2.049999999999997
     },
     "challenger wins: National NGO | Renewable (new)": {
-     "mean": 0.23,
+     "mean": 0.22,
      "p5": 0.0,
      "p95": 1.0
     },
     "suits: Local group / residents | Renewable (new)": {
-     "mean": 13.19,
-     "p5": 7.0,
-     "p95": 20.0
+     "mean": 11.79,
+     "p5": 6.0,
+     "p95": 17.0
     },
     "challenger wins: Local group / residents | Renewable (new)": {
-     "mean": 2.91,
-     "p5": 0.9500000000000002,
-     "p95": 6.0
+     "mean": 2.58,
+     "p5": 0.0,
+     "p95": 5.049999999999997
     },
     "suits: Tribe | Renewable (new)": {
-     "mean": 2.18,
+     "mean": 2.01,
      "p5": 0.0,
-     "p95": 5.0
+     "p95": 4.0
     },
     "challenger wins: Tribe | Renewable (new)": {
      "mean": 0.27,
@@ -8949,22 +7327,22 @@
      "p95": 1.0
     },
     "suits: State / local government | Renewable (new)": {
-     "mean": 0.48,
+     "mean": 0.41,
      "p5": 0.0,
-     "p95": 2.0
+     "p95": 1.0499999999999972
     },
     "challenger wins: State / local government | Renewable (new)": {
-     "mean": 0.19,
+     "mean": 0.17,
      "p5": 0.0,
      "p95": 1.0
     },
     "suits: Business | Renewable (new)": {
-     "mean": 1.74,
+     "mean": 1.44,
      "p5": 0.0,
-     "p95": 4.0
+     "p95": 3.0
     },
     "challenger wins: Business | Renewable (new)": {
-     "mean": 0.23,
+     "mean": 0.21,
      "p5": 0.0,
      "p95": 1.0
     },
@@ -8984,9 +7362,9 @@
      "p95": 1.0
     },
     "sued_share_of_decided | Renewable (retained hydro)": {
-     "mean": 0.004773702052375296,
+     "mean": 0.004255551276301441,
      "p5": 0.0,
-     "p95": 0.010110206476693437
+     "p95": 0.009345794392523364
     },
     "decisions | Renewable (retained hydro)": {
      "mean": 327.32,
@@ -8994,27 +7372,27 @@
      "p95": 354.0
     },
     "suits | Renewable (retained hydro)": {
-     "mean": 1.57,
+     "mean": 1.4,
      "p5": 0.0,
-     "p95": 3.049999999999997
+     "p95": 3.0
     },
     "suits: National NGO | Renewable (retained hydro)": {
-     "mean": 0.78,
+     "mean": 0.71,
      "p5": 0.0,
      "p95": 2.0
     },
     "challenger wins: National NGO | Renewable (retained hydro)": {
-     "mean": 0.28,
+     "mean": 0.26,
      "p5": 0.0,
      "p95": 1.0
     },
     "suits: Local group / residents | Renewable (retained hydro)": {
-     "mean": 0.61,
+     "mean": 0.53,
      "p5": 0.0,
      "p95": 2.0
     },
     "challenger wins: Local group / residents | Renewable (retained hydro)": {
-     "mean": 0.21,
+     "mean": 0.2,
      "p5": 0.0,
      "p95": 1.0
     },
@@ -9029,12 +7407,12 @@
      "p95": 0.0
     },
     "suits: State / local government | Renewable (retained hydro)": {
-     "mean": 0.18,
+     "mean": 0.16,
      "p5": 0.0,
      "p95": 1.0
     },
     "challenger wins: State / local government | Renewable (retained hydro)": {
-     "mean": 0.07,
+     "mean": 0.06,
      "p5": 0.0,
      "p95": 1.0
     },
@@ -9064,9 +7442,9 @@
      "p95": 1.0
     },
     "sued_share_of_decided | Fossil (gas)": {
-     "mean": 0.0013186258430612258,
+     "mean": 0.001215662377106518,
      "p5": 0.0,
-     "p95": 0.004749283248493359
+     "p95": 0.0029095569010595844
     },
     "decisions | Fossil (gas)": {
      "mean": 378.87,
@@ -9074,22 +7452,22 @@
      "p95": 407.29999999999995
     },
     "suits | Fossil (gas)": {
-     "mean": 0.5,
+     "mean": 0.46,
      "p5": 0.0,
-     "p95": 2.0
+     "p95": 1.0
     },
     "suits: National NGO | Fossil (gas)": {
-     "mean": 0.17,
+     "mean": 0.15,
      "p5": 0.0,
      "p95": 1.0
     },
     "challenger wins: National NGO | Fossil (gas)": {
-     "mean": 0.04,
+     "mean": 0.03,
      "p5": 0.0,
      "p95": 0.0
     },
     "suits: Local group / residents | Fossil (gas)": {
-     "mean": 0.2,
+     "mean": 0.19,
      "p5": 0.0,
      "p95": 1.0
     },
@@ -9119,7 +7497,7 @@
      "p95": 0.0
     },
     "suits: Business | Fossil (gas)": {
-     "mean": 0.04,
+     "mean": 0.03,
      "p5": 0.0,
      "p95": 0.0
     },
@@ -9144,9 +7522,9 @@
      "p95": 1.0
     },
     "sued_share_of_decided | Storage": {
-     "mean": 0.00044534300739093076,
+     "mean": 0.00038791656807681224,
      "p5": 0.0,
-     "p95": 0.001640756441186415
+     "p95": 0.0016213409188634935
     },
     "decisions | Storage": {
      "mean": 1215.62,
@@ -9154,22 +7532,22 @@
      "p95": 1272.1
     },
     "suits | Storage": {
-     "mean": 0.54,
+     "mean": 0.47,
      "p5": 0.0,
      "p95": 2.0
     },
     "suits: National NGO | Storage": {
-     "mean": 0.03,
+     "mean": 0.01,
      "p5": 0.0,
      "p95": 0.0
     },
     "challenger wins: National NGO | Storage": {
-     "mean": 0.02,
+     "mean": 0.0,
      "p5": 0.0,
      "p95": 0.0
     },
     "suits: Local group / residents | Storage": {
-     "mean": 0.33,
+     "mean": 0.31,
      "p5": 0.0,
      "p95": 1.0
     },
@@ -9179,7 +7557,7 @@
      "p95": 1.0
     },
     "suits: Tribe | Storage": {
-     "mean": 0.1,
+     "mean": 0.09,
      "p5": 0.0,
      "p95": 1.0
     },
@@ -9189,7 +7567,7 @@
      "p95": 0.0
     },
     "suits: State / local government | Storage": {
-     "mean": 0.02,
+     "mean": 0.01,
      "p5": 0.0,
      "p95": 0.0
     },
@@ -9199,9 +7577,9 @@
      "p95": 0.0
     },
     "suits: Business | Storage": {
-     "mean": 0.06,
+     "mean": 0.05,
      "p5": 0.0,
-     "p95": 1.0
+     "p95": 0.04999999999999716
     },
     "challenger wins: Business | Storage": {
      "mean": 0.01,
@@ -9211,7 +7589,7 @@
    },
    "diff_vs_baseline": {
     "GW_total": {
-     "mean": 267.87636,
+     "mean": 267.87844,
      "p5": 256.67429999999985,
      "p95": 278.63720000000006
     },
@@ -9221,9 +7599,9 @@
      "p95": 359.51924422835197
     },
     "suits_total": {
-     "mean": -34.19,
-     "p5": -45.0,
-     "p95": -22.0
+     "mean": -37.05,
+     "p5": -48.05,
+     "p95": -25.0
     },
     "EIS_per_year_total": {
      "mean": 2.9319999999999995,
@@ -9236,12 +7614,12 @@
      "p95": -1.1974000000000002
     },
     "GW Renewable (new)": {
-     "mean": 172.15902000000003,
+     "mean": 172.1611,
      "p5": 163.0753000000001,
      "p95": 180.61220000000012
     },
     "TWh Renewable (new)": {
-     "mean": 414.6622075007999,
+     "mean": 414.668406816,
      "p5": 387.426063168,
      "p95": 440.1407898719998
     },
@@ -9276,7 +7654,7 @@
      "p95": 0.0
     },
     "renewable share of new TWh": {
-     "mean": 0.017480149194159675,
+     "mean": 0.017480873409853697,
      "p5": 0.011395637081805705,
      "p95": 0.02301510359793077
     },
@@ -9296,9 +7674,9 @@
      "p95": 0.01102153708394039
     },
     "sued_share_of_decided | Renewable (new)": {
-     "mean": -0.042372564870990864,
-     "p5": -0.055365873114297505,
-     "p95": -0.02591421381429606
+     "mean": -0.04404661671626915,
+     "p5": -0.060088059890492616,
+     "p95": -0.028675777781587326
     },
     "decisions | Renewable (new)": {
      "mean": 537.94,
@@ -9306,33 +7684,33 @@
      "p95": 572.05
     },
     "suits | Renewable (new)": {
-     "mean": -20.41,
-     "p5": -31.05,
-     "p95": -8.950000000000003
+     "mean": -22.44,
+     "p5": -34.0,
+     "p95": -10.0
     },
     "suits: National NGO | Renewable (new)": {
-     "mean": -0.99,
+     "mean": -1.08,
      "p5": -3.0,
      "p95": 1.0
     },
     "challenger wins: National NGO | Renewable (new)": {
-     "mean": -0.25,
-     "p5": -1.0,
+     "mean": -0.26,
+     "p5": -1.0499999999999998,
      "p95": 1.0
     },
     "suits: Local group / residents | Renewable (new)": {
-     "mean": -14.55,
-     "p5": -23.05,
-     "p95": -6.900000000000006
+     "mean": -15.95,
+     "p5": -24.0,
+     "p95": -7.0
     },
     "challenger wins: Local group / residents | Renewable (new)": {
-     "mean": -3.22,
+     "mean": -3.55,
      "p5": -8.0,
      "p95": 0.04999999999999716
     },
     "suits: Tribe | Renewable (new)": {
-     "mean": -1.98,
-     "p5": -5.05,
+     "mean": -2.15,
+     "p5": -6.0,
      "p95": 1.0
     },
     "challenger wins: Tribe | Renewable (new)": {
@@ -9341,22 +7719,22 @@
      "p95": 1.0
     },
     "suits: State / local government | Renewable (new)": {
-     "mean": -0.48,
+     "mean": -0.55,
      "p5": -2.0,
      "p95": 1.0
     },
     "challenger wins: State / local government | Renewable (new)": {
-     "mean": -0.06,
+     "mean": -0.08,
      "p5": -1.0,
      "p95": 1.0
     },
     "suits: Business | Renewable (new)": {
-     "mean": -2.41,
-     "p5": -5.0,
+     "mean": -2.71,
+     "p5": -6.05,
      "p95": 0.04999999999999716
     },
     "challenger wins: Business | Renewable (new)": {
-     "mean": -0.54,
+     "mean": -0.56,
      "p5": -2.0,
      "p95": 1.0
     },
@@ -9376,8 +7754,8 @@
      "p95": 0.0034370186041000005
     },
     "sued_share_of_decided | Renewable (retained hydro)": {
-     "mean": -0.008337272138439565,
-     "p5": -0.01773355892543179,
+     "mean": -0.008855422914513422,
+     "p5": -0.01779557572211628,
      "p95": -0.00034311930043457107
     },
     "decisions | Renewable (retained hydro)": {
@@ -9386,27 +7764,27 @@
      "p95": 43.05
     },
     "suits | Renewable (retained hydro)": {
-     "mean": -2.28,
+     "mean": -2.45,
      "p5": -5.0,
      "p95": 0.0
     },
     "suits: National NGO | Renewable (retained hydro)": {
-     "mean": -1.07,
+     "mean": -1.14,
      "p5": -3.0,
      "p95": 0.0
     },
     "challenger wins: National NGO | Renewable (retained hydro)": {
-     "mean": -0.3,
+     "mean": -0.32,
      "p5": -1.0499999999999998,
      "p95": 0.04999999999999716
     },
     "suits: Local group / residents | Renewable (retained hydro)": {
-     "mean": -0.91,
+     "mean": -0.99,
      "p5": -3.0,
      "p95": 0.0
     },
     "challenger wins: Local group / residents | Renewable (retained hydro)": {
-     "mean": -0.25,
+     "mean": -0.26,
      "p5": -1.0499999999999998,
      "p95": 0.0
     },
@@ -9421,12 +7799,12 @@
      "p95": 0.0
     },
     "suits: State / local government | Renewable (retained hydro)": {
-     "mean": -0.3,
+     "mean": -0.32,
      "p5": -1.0,
      "p95": 0.0
     },
     "challenger wins: State / local government | Renewable (retained hydro)": {
-     "mean": -0.12,
+     "mean": -0.13,
      "p5": -1.0,
      "p95": 0.0
     },
@@ -9456,7 +7834,7 @@
      "p95": 0.0056022408963585235
     },
     "sued_share_of_decided | Fossil (gas)": {
-     "mean": -0.003201966789309095,
+     "mean": -0.0033049302552638033,
      "p5": -0.00837610521083128,
      "p95": 0.0
     },
@@ -9466,22 +7844,22 @@
      "p95": 25.049999999999997
     },
     "suits | Fossil (gas)": {
-     "mean": -1.14,
+     "mean": -1.18,
      "p5": -3.0,
      "p95": 0.0
     },
     "suits: National NGO | Fossil (gas)": {
-     "mean": -0.26,
+     "mean": -0.28,
      "p5": -1.0,
      "p95": 0.0
     },
     "challenger wins: National NGO | Fossil (gas)": {
-     "mean": -0.11,
+     "mean": -0.12,
      "p5": -1.0,
      "p95": 0.0
     },
     "suits: Local group / residents | Fossil (gas)": {
-     "mean": -0.5,
+     "mean": -0.51,
      "p5": -2.0,
      "p95": 0.0
     },
@@ -9511,7 +7889,7 @@
      "p95": 0.0
     },
     "suits: Business | Fossil (gas)": {
-     "mean": -0.18,
+     "mean": -0.19,
      "p5": -1.0,
      "p95": 0.0
     },
@@ -9536,8 +7914,8 @@
      "p95": 0.0008990448721250432
     },
     "sued_share_of_decided | Storage": {
-     "mean": -0.0011186503701801922,
-     "p5": -0.0028027761479680778,
+     "mean": -0.0011760768094943106,
+     "p5": -0.00283159845096825,
      "p95": 0.0
     },
     "decisions | Storage": {
@@ -9546,22 +7924,22 @@
      "p95": 97.14999999999999
     },
     "suits | Storage": {
-     "mean": -1.23,
-     "p5": -3.0,
+     "mean": -1.3,
+     "p5": -3.05,
      "p95": 0.0
     },
     "suits: National NGO | Storage": {
-     "mean": -0.06,
+     "mean": -0.08,
      "p5": -1.0,
      "p95": 0.0
     },
     "challenger wins: National NGO | Storage": {
-     "mean": -0.02,
+     "mean": -0.04,
      "p5": 0.0,
      "p95": 0.0
     },
     "suits: Local group / residents | Storage": {
-     "mean": -0.84,
+     "mean": -0.86,
      "p5": -3.0,
      "p95": 0.0
     },
@@ -9571,7 +7949,7 @@
      "p95": 0.0
     },
     "suits: Tribe | Storage": {
-     "mean": -0.12,
+     "mean": -0.13,
      "p5": -1.0,
      "p95": 0.0
     },
@@ -9581,7 +7959,7 @@
      "p95": 0.0
     },
     "suits: State / local government | Storage": {
-     "mean": -0.02,
+     "mean": -0.03,
      "p5": 0.0,
      "p95": 0.0
     },
@@ -9591,7 +7969,7 @@
      "p95": 0.0
     },
     "suits: Business | Storage": {
-     "mean": -0.19,
+     "mean": -0.2,
      "p5": -1.0,
      "p95": 0.0
     },
@@ -9609,7 +7987,7 @@
       "p95": 33.988200000000006
      },
      "suits": {
-      "mean": -1.14,
+      "mean": -1.18,
       "p5": -3.0,
       "p95": 0.0
      },
@@ -9643,8 +8021,8 @@
       "p95": 13.600000000000001
      },
      "suits": {
-      "mean": -7.95,
-      "p5": -12.05,
+      "mean": -8.42,
+      "p5": -13.0,
       "p95": -4.0
      },
      "median_months_to_permit": {
@@ -9655,14 +8033,14 @@
     },
     "Onshore wind": {
      "GW_online": {
-      "mean": 39.95264,
+      "mean": 39.954719999999995,
       "p5": 34.725600000000014,
       "p95": 45.1568
      },
      "suits": {
-      "mean": -3.42,
+      "mean": -3.82,
       "p5": -9.0,
-      "p95": 3.0
+      "p95": 2.0
      },
      "median_months_to_permit": {
       "mean": -6.8081581553443415,
@@ -9677,9 +8055,9 @@
       "p95": 127.53390000000003
      },
      "suits": {
-      "mean": -7.23,
-      "p5": -14.05,
-      "p95": -0.9500000000000028
+      "mean": -8.39,
+      "p5": -16.05,
+      "p95": -1.0
      },
      "median_months_to_permit": {
       "mean": -8.214179844501697,
@@ -9694,8 +8072,8 @@
       "p95": 68.67120000000001
      },
      "suits": {
-      "mean": -1.23,
-      "p5": -3.0,
+      "mean": -1.3,
+      "p5": -3.05,
       "p95": 0.0
      },
      "median_months_to_permit": {
@@ -9711,8 +8089,8 @@
       "p95": 0.0
      },
      "suits": {
-      "mean": -9.13,
-      "p5": -14.0,
+      "mean": -9.68,
+      "p5": -15.0,
       "p95": -5.0
      },
      "median_months_to_permit": {
@@ -9728,7 +8106,1629 @@
       "p95": 2.1525000000000003
      },
      "suits": {
-      "mean": -2.28,
+      "mean": -2.45,
+      "p5": -5.0,
+      "p95": 0.0
+     },
+     "median_months_to_permit": {
+      "mean": -12.588244650833882,
+      "p5": -13.251235810855395,
+      "p95": -12.10433762639514
+     }
+    }
+   }
+  },
+  "0.42": {
+   "by_type": {
+    "Gas": {
+     "completion_rate": {
+      "mean": 0.37009390368348827,
+      "p5": 0.3411631016042781,
+      "p95": 0.3978214316771987
+     },
+     "GW_online": {
+      "mean": 224.09124000000003,
+      "p5": 213.5529,
+      "p95": 236.2191
+     },
+     "projects_online": {
+      "mean": 1009.42,
+      "p5": 961.95,
+      "p95": 1064.05
+     },
+     "median_months_to_COD": {
+      "mean": 36.09911045863996,
+      "p5": 35.21225335181794,
+      "p95": 36.89845957475672
+     },
+     "decisions_per_year": {
+      "mean": 25.258000000000006,
+      "p5": 23.0,
+      "p95": 27.153333333333332
+     },
+     "EIS_per_year": {
+      "mean": 0.0,
+      "p5": 0.0,
+      "p95": 0.0
+     },
+     "EA_per_year": {
+      "mean": 18.319333333333333,
+      "p5": 16.33,
+      "p95": 19.953333333333333
+     },
+     "suits": {
+      "mean": 0.46,
+      "p5": 0.0,
+      "p95": 1.0
+     },
+     "suits_per_year": {
+      "mean": 0.030666666666666665,
+      "p5": 0.0,
+      "p95": 0.06666666666666667
+     },
+     "vacated": {
+      "mean": 0.0,
+      "p5": 0.0,
+      "p95": 0.0
+     },
+     "halted": {
+      "mean": 0.29,
+      "p5": 0.0,
+      "p95": 1.0
+     },
+     "halted_GW": {
+      "mean": 0.06438,
+      "p5": 0.0,
+      "p95": 0.222
+     },
+     "killed_by_courts_or_halts": {
+      "mean": 0.08,
+      "p5": 0.0,
+      "p95": 1.0
+     },
+     "permitted_share": {
+      "mean": 0.9998340980587583,
+      "p5": 0.9998659517426274,
+      "p95": 1.0
+     },
+     "median_months_to_permit": {
+      "mean": 9.130533699874347,
+      "p5": 8.347086089986918,
+      "p95": 9.92084236442085
+     },
+     "truncated_share": {
+      "mean": 0.02765018724993906,
+      "p5": 0.014733776978674938,
+      "p95": 0.041563328316261965
+     },
+     "harm": {
+      "mean": 2.8880333985140694,
+      "p5": 0.9019658640420806,
+      "p95": 6.428797105147079
+     }
+    },
+    "Geothermal": {
+     "completion_rate": {
+      "mean": 0.27946373586529016,
+      "p5": 0.1839285714285714,
+      "p95": 0.35766806722689076
+     },
+     "GW_online": {
+      "mean": 2.9452,
+      "p5": 2.438,
+      "p95": 3.4039999999999995
+     },
+     "projects_online": {
+      "mean": 73.63,
+      "p5": 60.95,
+      "p95": 85.1
+     },
+     "median_months_to_COD": {
+      "mean": 45.555970441434255,
+      "p5": 41.46087346305953,
+      "p95": 49.67299837107176
+     },
+     "decisions_per_year": {
+      "mean": 4.9526666666666666,
+      "p5": 3.9966666666666666,
+      "p95": 5.8
+     },
+     "EIS_per_year": {
+      "mean": 0.0,
+      "p5": 0.0,
+      "p95": 0.0
+     },
+     "EA_per_year": {
+      "mean": 0.0,
+      "p5": 0.0,
+      "p95": 0.0
+     },
+     "suits": {
+      "mean": 0.01,
+      "p5": 0.0,
+      "p95": 0.0
+     },
+     "suits_per_year": {
+      "mean": 0.0006666666666666666,
+      "p5": 0.0,
+      "p95": 0.0
+     },
+     "vacated": {
+      "mean": 0.0,
+      "p5": 0.0,
+      "p95": 0.0
+     },
+     "halted": {
+      "mean": 0.0,
+      "p5": 0.0,
+      "p95": 0.0
+     },
+     "halted_GW": {
+      "mean": 0.0,
+      "p5": 0.0,
+      "p95": 0.0
+     },
+     "killed_by_courts_or_halts": {
+      "mean": 0.0,
+      "p5": 0.0,
+      "p95": 0.0
+     },
+     "permitted_share": {
+      "mean": 1.0,
+      "p5": 1.0,
+      "p95": 1.0
+     },
+     "median_months_to_permit": {
+      "mean": 7.4270411171861,
+      "p5": 6.301462573632002,
+      "p95": 8.78779000533798
+     },
+     "truncated_share": {
+      "mean": 0.0,
+      "p5": 0.0,
+      "p95": 0.0
+     },
+     "harm": {
+      "mean": 0.0,
+      "p5": 0.0,
+      "p95": 0.0
+     }
+    },
+    "Offshore wind": {
+     "completion_rate": {
+      "mean": 0.11034017177727855,
+      "p5": 0.06019921269235357,
+      "p95": 0.16698717948717945
+     },
+     "GW_online": {
+      "mean": 34.544,
+      "p5": 26.36,
+      "p95": 42.44
+     },
+     "projects_online": {
+      "mean": 43.18,
+      "p5": 32.95,
+      "p95": 53.05
+     },
+     "median_months_to_COD": {
+      "mean": 46.53174624559864,
+      "p5": 41.762553962834644,
+      "p95": 51.944575541576846
+     },
+     "decisions_per_year": {
+      "mean": 5.682666666666665,
+      "p5": 4.726666666666667,
+      "p95": 6.743333333333333
+     },
+     "EIS_per_year": {
+      "mean": 1.4773333333333334,
+      "p5": 1.1333333333333333,
+      "p95": 2.0
+     },
+     "EA_per_year": {
+      "mean": 1.3366666666666667,
+      "p5": 0.8666666666666667,
+      "p95": 1.8666666666666667
+     },
+     "suits": {
+      "mean": 3.94,
+      "p5": 1.0,
+      "p95": 8.0
+     },
+     "suits_per_year": {
+      "mean": 0.26266666666666666,
+      "p5": 0.06666666666666667,
+      "p95": 0.5333333333333333
+     },
+     "vacated": {
+      "mean": 0.0,
+      "p5": 0.0,
+      "p95": 0.0
+     },
+     "halted": {
+      "mean": 0.88,
+      "p5": 0.0,
+      "p95": 3.0
+     },
+     "halted_GW": {
+      "mean": 0.7040000000000001,
+      "p5": 0.0,
+      "p95": 2.4
+     },
+     "killed_by_courts_or_halts": {
+      "mean": 0.19,
+      "p5": 0.0,
+      "p95": 1.0
+     },
+     "permitted_share": {
+      "mean": 0.9980004412985544,
+      "p5": 0.9874839743589744,
+      "p95": 1.0
+     },
+     "median_months_to_permit": {
+      "mean": 10.048262314459857,
+      "p5": 7.75412267241822,
+      "p95": 12.92892714442872
+     },
+     "truncated_share": {
+      "mean": 0.06061916732510686,
+      "p5": 0.018864468864468867,
+      "p95": 0.1012220549055948
+     },
+     "harm": {
+      "mean": 44.74279386018576,
+      "p5": 0.0,
+      "p95": 134.18520850904102
+     }
+    },
+    "Onshore wind": {
+     "completion_rate": {
+      "mean": 0.2649083178942275,
+      "p5": 0.24565888421970283,
+      "p95": 0.2893202361354824
+     },
+     "GW_online": {
+      "mean": 242.37615999999997,
+      "p5": 230.4536,
+      "p95": 252.9384
+     },
+     "projects_online": {
+      "mean": 1165.27,
+      "p5": 1107.95,
+      "p95": 1216.05
+     },
+     "median_months_to_COD": {
+      "mean": 48.4248077871584,
+      "p5": 47.4029712327299,
+      "p95": 49.66828772737147
+     },
+     "decisions_per_year": {
+      "mean": 2.094666666666667,
+      "p5": 1.4,
+      "p95": 2.7333333333333334
+     },
+     "EIS_per_year": {
+      "mean": 2.094666666666667,
+      "p5": 1.4,
+      "p95": 2.7333333333333334
+     },
+     "EA_per_year": {
+      "mean": 0.0,
+      "p5": 0.0,
+      "p95": 0.0
+     },
+     "suits": {
+      "mean": 3.59,
+      "p5": 1.0,
+      "p95": 7.0
+     },
+     "suits_per_year": {
+      "mean": 0.23933333333333334,
+      "p5": 0.06666666666666667,
+      "p95": 0.4666666666666667
+     },
+     "vacated": {
+      "mean": 0.0,
+      "p5": 0.0,
+      "p95": 0.0
+     },
+     "halted": {
+      "mean": 0.04,
+      "p5": 0.0,
+      "p95": 0.0
+     },
+     "halted_GW": {
+      "mean": 0.00832,
+      "p5": 0.0,
+      "p95": 0.0
+     },
+     "killed_by_courts_or_halts": {
+      "mean": 0.0,
+      "p5": 0.0,
+      "p95": 0.0
+     },
+     "permitted_share": {
+      "mean": 1.0,
+      "p5": 1.0,
+      "p95": 1.0
+     },
+     "median_months_to_permit": {
+      "mean": 24.079257078265385,
+      "p5": 15.793120631106618,
+      "p95": 32.0
+     },
+     "truncated_share": {
+      "mean": 0.17876513636534888,
+      "p5": 0.07678062678062679,
+      "p95": 0.2859447004608295
+     },
+     "harm": {
+      "mean": 25.855289918188678,
+      "p5": 1.7774525883545196,
+      "p95": 61.29709865170558
+     }
+    },
+    "Solar": {
+     "completion_rate": {
+      "mean": 0.214535907235955,
+      "p5": 0.20751429923631368,
+      "p95": 0.22162384974363877
+     },
+     "GW_online": {
+      "mean": 654.0835999999999,
+      "p5": 639.5881,
+      "p95": 664.8055
+     },
+     "projects_online": {
+      "mean": 6170.6,
+      "p5": 6033.85,
+      "p95": 6271.75
+     },
+     "median_months_to_COD": {
+      "mean": 58.66319464363326,
+      "p5": 58.25278716515043,
+      "p95": 59.048711964334956
+     },
+     "decisions_per_year": {
+      "mean": 68.05799999999999,
+      "p5": 64.91000000000001,
+      "p95": 71.07666666666667
+     },
+     "EIS_per_year": {
+      "mean": 4.216000000000001,
+      "p5": 3.3333333333333335,
+      "p95": 5.066666666666666
+     },
+     "EA_per_year": {
+      "mean": 20.956000000000003,
+      "p5": 18.993333333333332,
+      "p95": 22.740000000000002
+     },
+     "suits": {
+      "mean": 8.79,
+      "p5": 3.0,
+      "p95": 14.0
+     },
+     "suits_per_year": {
+      "mean": 0.586,
+      "p5": 0.2,
+      "p95": 0.9333333333333333
+     },
+     "vacated": {
+      "mean": 0.0,
+      "p5": 0.0,
+      "p95": 0.0
+     },
+     "halted": {
+      "mean": 0.83,
+      "p5": 0.0,
+      "p95": 3.0
+     },
+     "halted_GW": {
+      "mean": 0.08798,
+      "p5": 0.0,
+      "p95": 0.318
+     },
+     "killed_by_courts_or_halts": {
+      "mean": 0.28,
+      "p5": 0.0,
+      "p95": 1.0
+     },
+     "permitted_share": {
+      "mean": 0.9998022005936561,
+      "p5": 0.9989926445605561,
+      "p95": 1.0
+     },
+     "median_months_to_permit": {
+      "mean": 9.260190573251778,
+      "p5": 8.659779749175394,
+      "p95": 9.82058568467803
+     },
+     "truncated_share": {
+      "mean": 0.039666533696446946,
+      "p5": 0.030682827632069105,
+      "p95": 0.048092431761786604
+     },
+     "harm": {
+      "mean": 9.29217014434397,
+      "p5": 4.215399799774048,
+      "p95": 18.153291428595082
+     }
+    },
+    "Storage": {
+     "completion_rate": {
+      "mean": 0.14191869700365525,
+      "p5": 0.1354281700472383,
+      "p95": 0.1481572073129818
+     },
+     "GW_online": {
+      "mean": 321.67304,
+      "p5": 312.8268,
+      "p95": 330.0128
+     },
+     "projects_online": {
+      "mean": 3093.01,
+      "p5": 3007.95,
+      "p95": 3173.2
+     },
+     "median_months_to_COD": {
+      "mean": 71.37121816014097,
+      "p5": 70.98741789134074,
+      "p95": 71.72405313995505
+     },
+     "decisions_per_year": {
+      "mean": 81.04133333333333,
+      "p5": 77.93333333333334,
+      "p95": 84.80666666666666
+     },
+     "EIS_per_year": {
+      "mean": 0.0,
+      "p5": 0.0,
+      "p95": 0.0
+     },
+     "EA_per_year": {
+      "mean": 20.532666666666664,
+      "p5": 18.133333333333333,
+      "p95": 22.14333333333333
+     },
+     "suits": {
+      "mean": 0.47,
+      "p5": 0.0,
+      "p95": 2.0
+     },
+     "suits_per_year": {
+      "mean": 0.03133333333333334,
+      "p5": 0.0,
+      "p95": 0.13333333333333333
+     },
+     "vacated": {
+      "mean": 0.0,
+      "p5": 0.0,
+      "p95": 0.0
+     },
+     "halted": {
+      "mean": 0.07,
+      "p5": 0.0,
+      "p95": 1.0
+     },
+     "halted_GW": {
+      "mean": 0.00728,
+      "p5": 0.0,
+      "p95": 0.104
+     },
+     "killed_by_courts_or_halts": {
+      "mean": 0.03,
+      "p5": 0.0,
+      "p95": 0.0
+     },
+     "permitted_share": {
+      "mean": 0.9999754493678055,
+      "p5": 1.0,
+      "p95": 1.0
+     },
+     "median_months_to_permit": {
+      "mean": 6.611952559187861,
+      "p5": 6.1785651145045835,
+      "p95": 6.98379289306507
+     },
+     "truncated_share": {
+      "mean": 0.021480557322383288,
+      "p5": 0.014666357325147681,
+      "p95": 0.02744760547610565
+     },
+     "harm": {
+      "mean": 2.983972036390272,
+      "p5": 1.3592088155378643,
+      "p95": 4.9362515119997
+     }
+    },
+    "Transmission": {
+     "completion_rate": {
+      "mean": 0.9996844623016671,
+      "p5": 1.0,
+      "p95": 1.0
+     },
+     "GW_online": {
+      "mean": 0.0,
+      "p5": 0.0,
+      "p95": 0.0
+     },
+     "projects_online": {
+      "mean": 267.29,
+      "p5": 247.95,
+      "p95": 291.29999999999995
+     },
+     "median_months_to_COD": {
+      "mean": 41.429533828628784,
+      "p5": 39.63624625258632,
+      "p95": 43.63517109548716
+     },
+     "decisions_per_year": {
+      "mean": 13.018666666666666,
+      "p5": 11.526666666666667,
+      "p95": 14.473333333333333
+     },
+     "EIS_per_year": {
+      "mean": 3.2273333333333327,
+      "p5": 2.533333333333333,
+      "p95": 3.936666666666666
+     },
+     "EA_per_year": {
+      "mean": 3.055999999999999,
+      "p5": 2.3966666666666665,
+      "p95": 3.673333333333333
+     },
+     "suits": {
+      "mean": 4.32,
+      "p5": 1.0,
+      "p95": 8.0
+     },
+     "suits_per_year": {
+      "mean": 0.288,
+      "p5": 0.06666666666666667,
+      "p95": 0.5333333333333333
+     },
+     "vacated": {
+      "mean": 0.0,
+      "p5": 0.0,
+      "p95": 0.0
+     },
+     "halted": {
+      "mean": 0.27,
+      "p5": 0.0,
+      "p95": 1.0
+     },
+     "halted_GW": {
+      "mean": 0.0,
+      "p5": 0.0,
+      "p95": 0.0
+     },
+     "killed_by_courts_or_halts": {
+      "mean": 0.06,
+      "p5": 0.0,
+      "p95": 1.0
+     },
+     "permitted_share": {
+      "mean": 0.9997053510438496,
+      "p5": 0.995429542317086,
+      "p95": 1.0
+     },
+     "median_months_to_permit": {
+      "mean": 13.313216686006058,
+      "p5": 10.50539589723996,
+      "p95": 16.166565953583184
+     },
+     "truncated_share": {
+      "mean": 0.12385455699006036,
+      "p5": 0.08091087078127913,
+      "p95": 0.1617036703670367
+     },
+     "harm": {
+      "mean": 135.33046236957222,
+      "p5": 58.84002811208739,
+      "p95": 252.43030499126542
+     }
+    },
+    "Hydro relicense": {
+     "completion_rate": {
+      "mean": 1.0,
+      "p5": 1.0,
+      "p95": 1.0
+     },
+     "GW_online": {
+      "mean": 16.366,
+      "p5": 15.0925,
+      "p95": 17.7
+     },
+     "projects_online": {
+      "mean": 327.32,
+      "p5": 301.85,
+      "p95": 354.0
+     },
+     "median_months_to_COD": {
+      "mean": 47.36664806848347,
+      "p5": 46.11003572472878,
+      "p95": 48.96806200980705
+     },
+     "decisions_per_year": {
+      "mean": 21.82133333333333,
+      "p5": 20.12333333333333,
+      "p95": 23.6
+     },
+     "EIS_per_year": {
+      "mean": 1.3793333333333333,
+      "p5": 0.8666666666666667,
+      "p95": 1.8066666666666664
+     },
+     "EA_per_year": {
+      "mean": 8.873333333333333,
+      "p5": 7.663333333333334,
+      "p95": 9.870000000000001
+     },
+     "suits": {
+      "mean": 1.4,
+      "p5": 0.0,
+      "p95": 3.0
+     },
+     "suits_per_year": {
+      "mean": 0.09333333333333331,
+      "p5": 0.0,
+      "p95": 0.2
+     },
+     "vacated": {
+      "mean": 0.0,
+      "p5": 0.0,
+      "p95": 0.0
+     },
+     "halted": {
+      "mean": 0.0,
+      "p5": 0.0,
+      "p95": 0.0
+     },
+     "halted_GW": {
+      "mean": 0.0,
+      "p5": 0.0,
+      "p95": 0.0
+     },
+     "killed_by_courts_or_halts": {
+      "mean": 0.0,
+      "p5": 0.0,
+      "p95": 0.0
+     },
+     "permitted_share": {
+      "mean": 1.0,
+      "p5": 1.0,
+      "p95": 1.0
+     },
+     "median_months_to_permit": {
+      "mean": 47.361705854767145,
+      "p5": 46.08620348526578,
+      "p95": 48.96806200980705
+     },
+     "truncated_share": {
+      "mean": 0.07564096471205811,
+      "p5": 0.05581643343560578,
+      "p95": 0.09805298523903944
+     },
+     "harm": {
+      "mean": 5.728875911314886,
+      "p5": 2.7049855786438255,
+      "p95": 10.188421515777446
+     }
+    }
+   },
+   "totals": {
+    "GW_total": {
+     "mean": 1496.0792399999998,
+     "p5": 1475.4494,
+     "p95": 1524.376
+    },
+    "harm_total": {
+     "mean": 226.82159763850981,
+     "p5": 105.09683818457786,
+     "p95": 375.1320635254723
+    },
+    "suits_total": {
+     "mean": 22.98,
+     "p5": 15.0,
+     "p95": 31.049999999999997
+    },
+    "EIS_per_year_total": {
+     "mean": 12.394666666666668,
+     "p5": 11.063333333333333,
+     "p95": 14.336666666666668
+    },
+    "halted_GW_total": {
+     "mean": 0.8719599999999998,
+     "p5": 0.0,
+     "p95": 2.612
+    },
+    "GW Renewable (new)": {
+     "mean": 933.94896,
+     "p5": 915.0268,
+     "p95": 952.9666
+    },
+    "TWh Renewable (new)": {
+     "mean": 2243.7285152544,
+     "p5": 2188.796986368,
+     "p95": 2295.8020055519996
+    },
+    "GW Renewable (retained hydro)": {
+     "mean": 16.366,
+     "p5": 15.0925,
+     "p95": 17.7
+    },
+    "TWh Renewable (retained hydro)": {
+     "mean": 51.64716815999999,
+     "p5": 47.628307799999995,
+     "p95": 55.856952
+    },
+    "GW Fossil (gas)": {
+     "mean": 224.09124000000003,
+     "p5": 213.5529,
+     "p95": 236.2191
+    },
+    "TWh Fossil (gas)": {
+     "mean": 1100.0549335104004,
+     "p5": 1048.322643984,
+     "p95": 1159.5901131360001
+    },
+    "GW Storage": {
+     "mean": 321.67304,
+     "p5": 312.8268,
+     "p95": 330.0128
+    },
+    "TWh Storage": {
+     "mean": 0.0,
+     "p5": 0.0,
+     "p95": 0.0
+    },
+    "renewable share of new TWh": {
+     "mean": 0.6710576680380034,
+     "p5": 0.6582190033636075,
+     "p95": 0.6821145027735971
+    },
+    "median_months_to_COD | Renewable (new)": {
+     "mean": 57.517160802746254,
+     "p5": 57.18338251823408,
+     "p95": 57.87648493269138
+    },
+    "median_months_to_permit | Renewable (new)": {
+     "mean": 9.281104689993018,
+     "p5": 8.786025858240375,
+     "p95": 9.777468832506813
+    },
+    "permitted_share | Renewable (new)": {
+     "mean": 0.9996944310386064,
+     "p5": 0.9991420487160447,
+     "p95": 1.0
+    },
+    "sued_share_of_decided | Renewable (new)": {
+     "mean": 0.013489192887333466,
+     "p5": 0.00747989292499461,
+     "p95": 0.020005025125628143
+    },
+    "decisions | Renewable (new)": {
+     "mean": 1211.82,
+     "p5": 1154.5,
+     "p95": 1267.15
+    },
+    "suits | Renewable (new)": {
+     "mean": 16.33,
+     "p5": 9.0,
+     "p95": 24.0
+    },
+    "suits: National NGO | Renewable (new)": {
+     "mean": 0.68,
+     "p5": 0.0,
+     "p95": 2.049999999999997
+    },
+    "challenger wins: National NGO | Renewable (new)": {
+     "mean": 0.22,
+     "p5": 0.0,
+     "p95": 1.0
+    },
+    "suits: Local group / residents | Renewable (new)": {
+     "mean": 11.79,
+     "p5": 6.0,
+     "p95": 17.0
+    },
+    "challenger wins: Local group / residents | Renewable (new)": {
+     "mean": 2.58,
+     "p5": 0.0,
+     "p95": 5.049999999999997
+    },
+    "suits: Tribe | Renewable (new)": {
+     "mean": 2.01,
+     "p5": 0.0,
+     "p95": 4.0
+    },
+    "challenger wins: Tribe | Renewable (new)": {
+     "mean": 0.27,
+     "p5": 0.0,
+     "p95": 1.0
+    },
+    "suits: State / local government | Renewable (new)": {
+     "mean": 0.41,
+     "p5": 0.0,
+     "p95": 1.0499999999999972
+    },
+    "challenger wins: State / local government | Renewable (new)": {
+     "mean": 0.17,
+     "p5": 0.0,
+     "p95": 1.0
+    },
+    "suits: Business | Renewable (new)": {
+     "mean": 1.44,
+     "p5": 0.0,
+     "p95": 3.0
+    },
+    "challenger wins: Business | Renewable (new)": {
+     "mean": 0.21,
+     "p5": 0.0,
+     "p95": 1.0
+    },
+    "median_months_to_COD | Renewable (retained hydro)": {
+     "mean": 47.36664806848347,
+     "p5": 46.11003572472878,
+     "p95": 48.96806200980705
+    },
+    "median_months_to_permit | Renewable (retained hydro)": {
+     "mean": 47.361705854767145,
+     "p5": 46.08620348526578,
+     "p95": 48.96806200980705
+    },
+    "permitted_share | Renewable (retained hydro)": {
+     "mean": 1.0,
+     "p5": 1.0,
+     "p95": 1.0
+    },
+    "sued_share_of_decided | Renewable (retained hydro)": {
+     "mean": 0.004255551276301441,
+     "p5": 0.0,
+     "p95": 0.009345794392523364
+    },
+    "decisions | Renewable (retained hydro)": {
+     "mean": 327.32,
+     "p5": 301.85,
+     "p95": 354.0
+    },
+    "suits | Renewable (retained hydro)": {
+     "mean": 1.4,
+     "p5": 0.0,
+     "p95": 3.0
+    },
+    "suits: National NGO | Renewable (retained hydro)": {
+     "mean": 0.71,
+     "p5": 0.0,
+     "p95": 2.0
+    },
+    "challenger wins: National NGO | Renewable (retained hydro)": {
+     "mean": 0.26,
+     "p5": 0.0,
+     "p95": 1.0
+    },
+    "suits: Local group / residents | Renewable (retained hydro)": {
+     "mean": 0.53,
+     "p5": 0.0,
+     "p95": 2.0
+    },
+    "challenger wins: Local group / residents | Renewable (retained hydro)": {
+     "mean": 0.2,
+     "p5": 0.0,
+     "p95": 1.0
+    },
+    "suits: Tribe | Renewable (retained hydro)": {
+     "mean": 0.0,
+     "p5": 0.0,
+     "p95": 0.0
+    },
+    "challenger wins: Tribe | Renewable (retained hydro)": {
+     "mean": 0.0,
+     "p5": 0.0,
+     "p95": 0.0
+    },
+    "suits: State / local government | Renewable (retained hydro)": {
+     "mean": 0.16,
+     "p5": 0.0,
+     "p95": 1.0
+    },
+    "challenger wins: State / local government | Renewable (retained hydro)": {
+     "mean": 0.06,
+     "p5": 0.0,
+     "p95": 1.0
+    },
+    "suits: Business | Renewable (retained hydro)": {
+     "mean": 0.0,
+     "p5": 0.0,
+     "p95": 0.0
+    },
+    "challenger wins: Business | Renewable (retained hydro)": {
+     "mean": 0.0,
+     "p5": 0.0,
+     "p95": 0.0
+    },
+    "median_months_to_COD | Fossil (gas)": {
+     "mean": 36.09911045863996,
+     "p5": 35.21225335181794,
+     "p95": 36.89845957475672
+    },
+    "median_months_to_permit | Fossil (gas)": {
+     "mean": 9.130533699874347,
+     "p5": 8.347086089986918,
+     "p95": 9.92084236442085
+    },
+    "permitted_share | Fossil (gas)": {
+     "mean": 0.9998340980587583,
+     "p5": 0.9998659517426274,
+     "p95": 1.0
+    },
+    "sued_share_of_decided | Fossil (gas)": {
+     "mean": 0.001215662377106518,
+     "p5": 0.0,
+     "p95": 0.0029095569010595844
+    },
+    "decisions | Fossil (gas)": {
+     "mean": 378.87,
+     "p5": 345.0,
+     "p95": 407.29999999999995
+    },
+    "suits | Fossil (gas)": {
+     "mean": 0.46,
+     "p5": 0.0,
+     "p95": 1.0
+    },
+    "suits: National NGO | Fossil (gas)": {
+     "mean": 0.15,
+     "p5": 0.0,
+     "p95": 1.0
+    },
+    "challenger wins: National NGO | Fossil (gas)": {
+     "mean": 0.03,
+     "p5": 0.0,
+     "p95": 0.0
+    },
+    "suits: Local group / residents | Fossil (gas)": {
+     "mean": 0.19,
+     "p5": 0.0,
+     "p95": 1.0
+    },
+    "challenger wins: Local group / residents | Fossil (gas)": {
+     "mean": 0.06,
+     "p5": 0.0,
+     "p95": 1.0
+    },
+    "suits: Tribe | Fossil (gas)": {
+     "mean": 0.08,
+     "p5": 0.0,
+     "p95": 1.0
+    },
+    "challenger wins: Tribe | Fossil (gas)": {
+     "mean": 0.03,
+     "p5": 0.0,
+     "p95": 0.0
+    },
+    "suits: State / local government | Fossil (gas)": {
+     "mean": 0.01,
+     "p5": 0.0,
+     "p95": 0.0
+    },
+    "challenger wins: State / local government | Fossil (gas)": {
+     "mean": 0.01,
+     "p5": 0.0,
+     "p95": 0.0
+    },
+    "suits: Business | Fossil (gas)": {
+     "mean": 0.03,
+     "p5": 0.0,
+     "p95": 0.0
+    },
+    "challenger wins: Business | Fossil (gas)": {
+     "mean": 0.02,
+     "p5": 0.0,
+     "p95": 0.0
+    },
+    "median_months_to_COD | Storage": {
+     "mean": 71.37121816014097,
+     "p5": 70.98741789134074,
+     "p95": 71.72405313995505
+    },
+    "median_months_to_permit | Storage": {
+     "mean": 6.611952559187861,
+     "p5": 6.1785651145045835,
+     "p95": 6.98379289306507
+    },
+    "permitted_share | Storage": {
+     "mean": 0.9999754493678055,
+     "p5": 1.0,
+     "p95": 1.0
+    },
+    "sued_share_of_decided | Storage": {
+     "mean": 0.00038791656807681224,
+     "p5": 0.0,
+     "p95": 0.0016213409188634935
+    },
+    "decisions | Storage": {
+     "mean": 1215.62,
+     "p5": 1169.0,
+     "p95": 1272.1
+    },
+    "suits | Storage": {
+     "mean": 0.47,
+     "p5": 0.0,
+     "p95": 2.0
+    },
+    "suits: National NGO | Storage": {
+     "mean": 0.01,
+     "p5": 0.0,
+     "p95": 0.0
+    },
+    "challenger wins: National NGO | Storage": {
+     "mean": 0.0,
+     "p5": 0.0,
+     "p95": 0.0
+    },
+    "suits: Local group / residents | Storage": {
+     "mean": 0.31,
+     "p5": 0.0,
+     "p95": 1.0
+    },
+    "challenger wins: Local group / residents | Storage": {
+     "mean": 0.08,
+     "p5": 0.0,
+     "p95": 1.0
+    },
+    "suits: Tribe | Storage": {
+     "mean": 0.09,
+     "p5": 0.0,
+     "p95": 1.0
+    },
+    "challenger wins: Tribe | Storage": {
+     "mean": 0.01,
+     "p5": 0.0,
+     "p95": 0.0
+    },
+    "suits: State / local government | Storage": {
+     "mean": 0.01,
+     "p5": 0.0,
+     "p95": 0.0
+    },
+    "challenger wins: State / local government | Storage": {
+     "mean": 0.0,
+     "p5": 0.0,
+     "p95": 0.0
+    },
+    "suits: Business | Storage": {
+     "mean": 0.05,
+     "p5": 0.0,
+     "p95": 0.04999999999999716
+    },
+    "challenger wins: Business | Storage": {
+     "mean": 0.01,
+     "p5": 0.0,
+     "p95": 0.0
+    }
+   },
+   "diff_vs_baseline": {
+    "GW_total": {
+     "mean": 427.19288,
+     "p5": 414.41220000000015,
+     "p95": 440.09210000000013
+    },
+    "harm_total": {
+     "mean": 226.82159763850981,
+     "p5": 105.09683818457786,
+     "p95": 375.1320635254723
+    },
+    "suits_total": {
+     "mean": -37.05,
+     "p5": -48.05,
+     "p95": -25.0
+    },
+    "EIS_per_year_total": {
+     "mean": 2.9319999999999995,
+     "p5": 2.0666666666666664,
+     "p95": 3.7333333333333343
+    },
+    "halted_GW_total": {
+     "mean": -7.18802,
+     "p5": -13.9144,
+     "p95": -1.1974000000000002
+    },
+    "GW Renewable (new)": {
+     "mean": 274.92038,
+     "p5": 263.5760000000001,
+     "p95": 285.9661
+    },
+    "TWh Renewable (new)": {
+     "mean": 660.7221304032,
+     "p5": 628.0972944480001,
+     "p95": 694.1632703039996
+    },
+    "GW Renewable (retained hydro)": {
+     "mean": 1.7379999999999998,
+     "p5": 1.297499999999999,
+     "p95": 2.1525000000000003
+    },
+    "TWh Renewable (retained hydro)": {
+     "mean": 5.48471088,
+     "p5": 4.094598599999988,
+     "p95": 6.792773399999997
+    },
+    "GW Fossil (gas)": {
+     "mean": 45.561060000000005,
+     "p5": 39.738,
+     "p95": 50.4273
+    },
+    "TWh Fossil (gas)": {
+     "mean": 223.65742109760006,
+     "p5": 195.07225247999997,
+     "p95": 247.54559860800003
+    },
+    "GW Storage": {
+     "mean": 104.97344000000001,
+     "p5": 99.52800000000002,
+     "p95": 110.75999999999999
+    },
+    "TWh Storage": {
+     "mean": 0.0,
+     "p5": 0.0,
+     "p95": 0.0
+    },
+    "renewable share of new TWh": {
+     "mean": 0.027353005912839422,
+     "p5": 0.020084626618422106,
+     "p95": 0.03364195262017388
+    },
+    "median_months_to_COD | Renewable (new)": {
+     "mean": -3.675559614459671,
+     "p5": -4.123505740533515,
+     "p95": -3.08033568515894
+    },
+    "median_months_to_permit | Renewable (new)": {
+     "mean": -7.870651718574181,
+     "p5": -8.504888261044089,
+     "p95": -7.263319305090736
+    },
+    "permitted_share | Renewable (new)": {
+     "mean": 0.005743354374225685,
+     "p5": 0.0006827709130443228,
+     "p95": 0.01102153708394039
+    },
+    "sued_share_of_decided | Renewable (new)": {
+     "mean": -0.04404661671626915,
+     "p5": -0.060088059890492616,
+     "p95": -0.028675777781587326
+    },
+    "decisions | Renewable (new)": {
+     "mean": 537.94,
+     "p5": 497.0,
+     "p95": 572.05
+    },
+    "suits | Renewable (new)": {
+     "mean": -22.44,
+     "p5": -34.0,
+     "p95": -10.0
+    },
+    "suits: National NGO | Renewable (new)": {
+     "mean": -1.08,
+     "p5": -3.0,
+     "p95": 1.0
+    },
+    "challenger wins: National NGO | Renewable (new)": {
+     "mean": -0.26,
+     "p5": -1.0499999999999998,
+     "p95": 1.0
+    },
+    "suits: Local group / residents | Renewable (new)": {
+     "mean": -15.95,
+     "p5": -24.0,
+     "p95": -7.0
+    },
+    "challenger wins: Local group / residents | Renewable (new)": {
+     "mean": -3.55,
+     "p5": -8.0,
+     "p95": 0.04999999999999716
+    },
+    "suits: Tribe | Renewable (new)": {
+     "mean": -2.15,
+     "p5": -6.0,
+     "p95": 1.0
+    },
+    "challenger wins: Tribe | Renewable (new)": {
+     "mean": -0.45,
+     "p5": -2.0,
+     "p95": 1.0
+    },
+    "suits: State / local government | Renewable (new)": {
+     "mean": -0.55,
+     "p5": -2.0,
+     "p95": 1.0
+    },
+    "challenger wins: State / local government | Renewable (new)": {
+     "mean": -0.08,
+     "p5": -1.0,
+     "p95": 1.0
+    },
+    "suits: Business | Renewable (new)": {
+     "mean": -2.71,
+     "p5": -6.05,
+     "p95": 0.04999999999999716
+    },
+    "challenger wins: Business | Renewable (new)": {
+     "mean": -0.56,
+     "p5": -2.0,
+     "p95": 1.0
+    },
+    "median_months_to_COD | Renewable (retained hydro)": {
+     "mean": -12.600905704137718,
+     "p5": -13.409987067075656,
+     "p95": -12.10433762639514
+    },
+    "median_months_to_permit | Renewable (retained hydro)": {
+     "mean": -12.588244650833882,
+     "p5": -13.251235810855395,
+     "p95": -12.10433762639514
+    },
+    "permitted_share | Renewable (retained hydro)": {
+     "mean": 0.00047960062399590275,
+     "p5": 0.0,
+     "p95": 0.0034370186041000005
+    },
+    "sued_share_of_decided | Renewable (retained hydro)": {
+     "mean": -0.008855422914513422,
+     "p5": -0.01779557572211628,
+     "p95": -0.00034311930043457107
+    },
+    "decisions | Renewable (retained hydro)": {
+     "mean": 34.47,
+     "p5": 25.95,
+     "p95": 43.05
+    },
+    "suits | Renewable (retained hydro)": {
+     "mean": -2.45,
+     "p5": -5.0,
+     "p95": 0.0
+    },
+    "suits: National NGO | Renewable (retained hydro)": {
+     "mean": -1.14,
+     "p5": -3.0,
+     "p95": 0.0
+    },
+    "challenger wins: National NGO | Renewable (retained hydro)": {
+     "mean": -0.32,
+     "p5": -1.0499999999999998,
+     "p95": 0.04999999999999716
+    },
+    "suits: Local group / residents | Renewable (retained hydro)": {
+     "mean": -0.99,
+     "p5": -3.0,
+     "p95": 0.0
+    },
+    "challenger wins: Local group / residents | Renewable (retained hydro)": {
+     "mean": -0.26,
+     "p5": -1.0499999999999998,
+     "p95": 0.0
+    },
+    "suits: Tribe | Renewable (retained hydro)": {
+     "mean": 0.0,
+     "p5": 0.0,
+     "p95": 0.0
+    },
+    "challenger wins: Tribe | Renewable (retained hydro)": {
+     "mean": 0.0,
+     "p5": 0.0,
+     "p95": 0.0
+    },
+    "suits: State / local government | Renewable (retained hydro)": {
+     "mean": -0.32,
+     "p5": -1.0,
+     "p95": 0.0
+    },
+    "challenger wins: State / local government | Renewable (retained hydro)": {
+     "mean": -0.13,
+     "p5": -1.0,
+     "p95": 0.0
+    },
+    "suits: Business | Renewable (retained hydro)": {
+     "mean": 0.0,
+     "p5": 0.0,
+     "p95": 0.0
+    },
+    "challenger wins: Business | Renewable (retained hydro)": {
+     "mean": 0.0,
+     "p5": 0.0,
+     "p95": 0.0
+    },
+    "median_months_to_COD | Fossil (gas)": {
+     "mean": -1.2580205667680848,
+     "p5": -1.9524165638576396,
+     "p95": -0.6140413093593492
+    },
+    "median_months_to_permit | Fossil (gas)": {
+     "mean": -0.477689930089072,
+     "p5": -0.8940267873910045,
+     "p95": -0.12815014445441691
+    },
+    "permitted_share | Fossil (gas)": {
+     "mean": 0.001119380219793733,
+     "p5": 0.0,
+     "p95": 0.0056022408963585235
+    },
+    "sued_share_of_decided | Fossil (gas)": {
+     "mean": -0.0033049302552638033,
+     "p5": -0.00837610521083128,
+     "p95": 0.0
+    },
+    "decisions | Fossil (gas)": {
+     "mean": 16.78,
+     "p5": 9.0,
+     "p95": 25.049999999999997
+    },
+    "suits | Fossil (gas)": {
+     "mean": -1.18,
+     "p5": -3.0,
+     "p95": 0.0
+    },
+    "suits: National NGO | Fossil (gas)": {
+     "mean": -0.28,
+     "p5": -1.0,
+     "p95": 0.0
+    },
+    "challenger wins: National NGO | Fossil (gas)": {
+     "mean": -0.12,
+     "p5": -1.0,
+     "p95": 0.0
+    },
+    "suits: Local group / residents | Fossil (gas)": {
+     "mean": -0.51,
+     "p5": -2.0,
+     "p95": 0.0
+    },
+    "challenger wins: Local group / residents | Fossil (gas)": {
+     "mean": -0.14,
+     "p5": -1.0,
+     "p95": 0.0
+    },
+    "suits: Tribe | Fossil (gas)": {
+     "mean": -0.12,
+     "p5": -1.0,
+     "p95": 0.0
+    },
+    "challenger wins: Tribe | Fossil (gas)": {
+     "mean": -0.03,
+     "p5": 0.0,
+     "p95": 0.0
+    },
+    "suits: State / local government | Fossil (gas)": {
+     "mean": -0.08,
+     "p5": -1.0,
+     "p95": 0.0
+    },
+    "challenger wins: State / local government | Fossil (gas)": {
+     "mean": -0.03,
+     "p5": 0.0,
+     "p95": 0.0
+    },
+    "suits: Business | Fossil (gas)": {
+     "mean": -0.19,
+     "p5": -1.0,
+     "p95": 0.0
+    },
+    "challenger wins: Business | Fossil (gas)": {
+     "mean": -0.02,
+     "p5": 0.0,
+     "p95": 0.0
+    },
+    "median_months_to_COD | Storage": {
+     "mean": -1.4566151831798537,
+     "p5": -1.7988514840819234,
+     "p95": -1.1036100786147836
+    },
+    "median_months_to_permit | Storage": {
+     "mean": -0.08238334298983034,
+     "p5": -0.23760616984671473,
+     "p95": 0.04252134163085531
+    },
+    "permitted_share | Storage": {
+     "mean": 0.00017661524827386588,
+     "p5": 0.0,
+     "p95": 0.0008990448721250432
+    },
+    "sued_share_of_decided | Storage": {
+     "mean": -0.0011760768094943106,
+     "p5": -0.00283159845096825,
+     "p95": 0.0
+    },
+    "decisions | Storage": {
+     "mean": 84.17,
+     "p5": 70.9,
+     "p95": 97.14999999999999
+    },
+    "suits | Storage": {
+     "mean": -1.3,
+     "p5": -3.05,
+     "p95": 0.0
+    },
+    "suits: National NGO | Storage": {
+     "mean": -0.08,
+     "p5": -1.0,
+     "p95": 0.0
+    },
+    "challenger wins: National NGO | Storage": {
+     "mean": -0.04,
+     "p5": 0.0,
+     "p95": 0.0
+    },
+    "suits: Local group / residents | Storage": {
+     "mean": -0.86,
+     "p5": -3.0,
+     "p95": 0.0
+    },
+    "challenger wins: Local group / residents | Storage": {
+     "mean": -0.16,
+     "p5": -1.0,
+     "p95": 0.0
+    },
+    "suits: Tribe | Storage": {
+     "mean": -0.13,
+     "p5": -1.0,
+     "p95": 0.0
+    },
+    "challenger wins: Tribe | Storage": {
+     "mean": -0.02,
+     "p5": 0.0,
+     "p95": 0.0
+    },
+    "suits: State / local government | Storage": {
+     "mean": -0.03,
+     "p5": 0.0,
+     "p95": 0.0
+    },
+    "challenger wins: State / local government | Storage": {
+     "mean": -0.01,
+     "p5": 0.0,
+     "p95": 0.0
+    },
+    "suits: Business | Storage": {
+     "mean": -0.2,
+     "p5": -1.0,
+     "p95": 0.0
+    },
+    "challenger wins: Business | Storage": {
+     "mean": -0.01,
+     "p5": 0.0,
+     "p95": 0.0
+    }
+   },
+   "diff_by_type": {
+    "Gas": {
+     "GW_online": {
+      "mean": 45.561060000000005,
+      "p5": 39.738,
+      "p95": 50.4273
+     },
+     "suits": {
+      "mean": -1.18,
+      "p5": -3.0,
+      "p95": 0.0
+     },
+     "median_months_to_permit": {
+      "mean": -0.477689930089072,
+      "p5": -0.8940267873910045,
+      "p95": -0.12815014445441691
+     }
+    },
+    "Geothermal": {
+     "GW_online": {
+      "mean": 1.0839999999999999,
+      "p5": 0.76,
+      "p95": 1.3619999999999999
+     },
+     "suits": {
+      "mean": -1.81,
+      "p5": -4.05,
+      "p95": 0.0
+     },
+     "median_months_to_permit": {
+      "mean": -12.305935675835073,
+      "p5": -17.79280416960854,
+      "p95": -8.032641956521962
+     }
+    },
+    "Offshore wind": {
+     "GW_online": {
+      "mean": 14.000000000000002,
+      "p5": 7.959999999999997,
+      "p95": 20.0
+     },
+     "suits": {
+      "mean": -8.42,
+      "p5": -13.0,
+      "p95": -4.0
+     },
+     "median_months_to_permit": {
+      "mean": 0.076883512518487,
+      "p5": -1.0541319099554884,
+      "p95": 1.8806695509950746
+     }
+    },
+    "Onshore wind": {
+     "GW_online": {
+      "mean": 63.73744000000001,
+      "p5": 58.02160000000001,
+      "p95": 69.69040000000001
+     },
+     "suits": {
+      "mean": -3.82,
+      "p5": -9.0,
+      "p95": 2.0
+     },
+     "median_months_to_permit": {
+      "mean": -6.8081581553443415,
+      "p5": -14.746978929395539,
+      "p95": 1.335504444877186
+     }
+    },
+    "Solar": {
+     "GW_online": {
+      "mean": 196.09894,
+      "p5": 189.26300000000003,
+      "p95": 202.51299999999998
+     },
+     "suits": {
+      "mean": -8.39,
+      "p5": -16.05,
+      "p95": -1.0
+     },
+     "median_months_to_permit": {
+      "mean": -8.214179844501697,
+      "p5": -8.805779610905843,
+      "p95": -7.598037134466728
+     }
+    },
+    "Storage": {
+     "GW_online": {
+      "mean": 104.97344000000001,
+      "p5": 99.52800000000002,
+      "p95": 110.75999999999999
+     },
+     "suits": {
+      "mean": -1.3,
+      "p5": -3.05,
+      "p95": 0.0
+     },
+     "median_months_to_permit": {
+      "mean": -0.08238334298983034,
+      "p5": -0.23760616984671473,
+      "p95": 0.04252134163085531
+     }
+    },
+    "Transmission": {
+     "GW_online": {
+      "mean": 0.0,
+      "p5": 0.0,
+      "p95": 0.0
+     },
+     "suits": {
+      "mean": -9.68,
+      "p5": -15.0,
+      "p95": -5.0
+     },
+     "median_months_to_permit": {
+      "mean": -2.090395889371124,
+      "p5": -3.78475932805164,
+      "p95": -0.6314046765185481
+     }
+    },
+    "Hydro relicense": {
+     "GW_online": {
+      "mean": 1.7379999999999998,
+      "p5": 1.297499999999999,
+      "p95": 2.1525000000000003
+     },
+     "suits": {
+      "mean": -2.45,
       "p5": -5.0,
       "p95": 0.0
      },
@@ -9744,7 +9744,7 @@
  "rule_timing": {
   "24": {
    "GW_total": {
-    "mean": 90.54480000000001,
+    "mean": 90.54688,
     "p5": 85.07639999999994,
     "p95": 96.66110000000019
    },
@@ -9754,9 +9754,9 @@
     "p95": 327.7482664894589
    },
    "suits_total": {
-    "mean": -34.19,
-    "p5": -45.0,
-    "p95": -22.0
+    "mean": -37.05,
+    "p5": -48.05,
+    "p95": -25.0
    },
    "EIS_per_year_total": {
     "mean": 2.9319999999999995,
@@ -9769,12 +9769,12 @@
     "p95": -1.1974000000000002
    },
    "GW Renewable (new)": {
-    "mean": 58.52216000000001,
+    "mean": 58.524240000000006,
     "p5": 52.90049999999993,
     "p95": 63.71089999999993
    },
    "TWh Renewable (new)": {
-    "mean": 142.9273718784,
+    "mean": 142.9335711936,
     "p5": 127.5832392479998,
     "p95": 157.28770684800003
    },
@@ -9809,7 +9809,7 @@
     "p95": 0.0
    },
    "renewable share of new TWh": {
-    "mean": 0.007002342772788992,
+    "mean": 0.007003190154846029,
     "p5": 0.003313398634549236,
     "p95": 0.010127178384693186
    },
@@ -9829,9 +9829,9 @@
     "p95": 0.01102153708394039
    },
    "sued_share_of_decided | Renewable (new)": {
-    "mean": -0.042372564870990864,
-    "p5": -0.055365873114297505,
-    "p95": -0.02591421381429606
+    "mean": -0.04404661671626915,
+    "p5": -0.060088059890492616,
+    "p95": -0.028675777781587326
    },
    "decisions | Renewable (new)": {
     "mean": 537.94,
@@ -9839,33 +9839,33 @@
     "p95": 572.05
    },
    "suits | Renewable (new)": {
-    "mean": -20.41,
-    "p5": -31.05,
-    "p95": -8.950000000000003
+    "mean": -22.44,
+    "p5": -34.0,
+    "p95": -10.0
    },
    "suits: National NGO | Renewable (new)": {
-    "mean": -0.99,
+    "mean": -1.08,
     "p5": -3.0,
     "p95": 1.0
    },
    "challenger wins: National NGO | Renewable (new)": {
-    "mean": -0.25,
-    "p5": -1.0,
+    "mean": -0.26,
+    "p5": -1.0499999999999998,
     "p95": 1.0
    },
    "suits: Local group / residents | Renewable (new)": {
-    "mean": -14.55,
-    "p5": -23.05,
-    "p95": -6.900000000000006
+    "mean": -15.95,
+    "p5": -24.0,
+    "p95": -7.0
    },
    "challenger wins: Local group / residents | Renewable (new)": {
-    "mean": -3.22,
+    "mean": -3.55,
     "p5": -8.0,
     "p95": 0.04999999999999716
    },
    "suits: Tribe | Renewable (new)": {
-    "mean": -1.98,
-    "p5": -5.05,
+    "mean": -2.15,
+    "p5": -6.0,
     "p95": 1.0
    },
    "challenger wins: Tribe | Renewable (new)": {
@@ -9874,22 +9874,22 @@
     "p95": 1.0
    },
    "suits: State / local government | Renewable (new)": {
-    "mean": -0.48,
+    "mean": -0.55,
     "p5": -2.0,
     "p95": 1.0
    },
    "challenger wins: State / local government | Renewable (new)": {
-    "mean": -0.06,
+    "mean": -0.08,
     "p5": -1.0,
     "p95": 1.0
    },
    "suits: Business | Renewable (new)": {
-    "mean": -2.41,
-    "p5": -5.0,
+    "mean": -2.71,
+    "p5": -6.05,
     "p95": 0.04999999999999716
    },
    "challenger wins: Business | Renewable (new)": {
-    "mean": -0.54,
+    "mean": -0.56,
     "p5": -2.0,
     "p95": 1.0
    },
@@ -9909,8 +9909,8 @@
     "p95": 0.0034370186041000005
    },
    "sued_share_of_decided | Renewable (retained hydro)": {
-    "mean": -0.008337272138439565,
-    "p5": -0.01773355892543179,
+    "mean": -0.008855422914513422,
+    "p5": -0.01779557572211628,
     "p95": -0.00034311930043457107
    },
    "decisions | Renewable (retained hydro)": {
@@ -9919,27 +9919,27 @@
     "p95": 43.05
    },
    "suits | Renewable (retained hydro)": {
-    "mean": -2.28,
+    "mean": -2.45,
     "p5": -5.0,
     "p95": 0.0
    },
    "suits: National NGO | Renewable (retained hydro)": {
-    "mean": -1.07,
+    "mean": -1.14,
     "p5": -3.0,
     "p95": 0.0
    },
    "challenger wins: National NGO | Renewable (retained hydro)": {
-    "mean": -0.3,
+    "mean": -0.32,
     "p5": -1.0499999999999998,
     "p95": 0.04999999999999716
    },
    "suits: Local group / residents | Renewable (retained hydro)": {
-    "mean": -0.91,
+    "mean": -0.99,
     "p5": -3.0,
     "p95": 0.0
    },
    "challenger wins: Local group / residents | Renewable (retained hydro)": {
-    "mean": -0.25,
+    "mean": -0.26,
     "p5": -1.0499999999999998,
     "p95": 0.0
    },
@@ -9954,12 +9954,12 @@
     "p95": 0.0
    },
    "suits: State / local government | Renewable (retained hydro)": {
-    "mean": -0.3,
+    "mean": -0.32,
     "p5": -1.0,
     "p95": 0.0
    },
    "challenger wins: State / local government | Renewable (retained hydro)": {
-    "mean": -0.12,
+    "mean": -0.13,
     "p5": -1.0,
     "p95": 0.0
    },
@@ -9989,7 +9989,7 @@
     "p95": 0.0056022408963585235
    },
    "sued_share_of_decided | Fossil (gas)": {
-    "mean": -0.003201966789309095,
+    "mean": -0.0033049302552638033,
     "p5": -0.00837610521083128,
     "p95": 0.0
    },
@@ -9999,22 +9999,22 @@
     "p95": 25.049999999999997
    },
    "suits | Fossil (gas)": {
-    "mean": -1.14,
+    "mean": -1.18,
     "p5": -3.0,
     "p95": 0.0
    },
    "suits: National NGO | Fossil (gas)": {
-    "mean": -0.26,
+    "mean": -0.28,
     "p5": -1.0,
     "p95": 0.0
    },
    "challenger wins: National NGO | Fossil (gas)": {
-    "mean": -0.11,
+    "mean": -0.12,
     "p5": -1.0,
     "p95": 0.0
    },
    "suits: Local group / residents | Fossil (gas)": {
-    "mean": -0.5,
+    "mean": -0.51,
     "p5": -2.0,
     "p95": 0.0
    },
@@ -10044,7 +10044,7 @@
     "p95": 0.0
    },
    "suits: Business | Fossil (gas)": {
-    "mean": -0.18,
+    "mean": -0.19,
     "p5": -1.0,
     "p95": 0.0
    },
@@ -10069,8 +10069,8 @@
     "p95": 0.0008990448721250432
    },
    "sued_share_of_decided | Storage": {
-    "mean": -0.0011186503701801922,
-    "p5": -0.0028027761479680778,
+    "mean": -0.0011760768094943106,
+    "p5": -0.00283159845096825,
     "p95": 0.0
    },
    "decisions | Storage": {
@@ -10079,22 +10079,22 @@
     "p95": 97.14999999999999
    },
    "suits | Storage": {
-    "mean": -1.23,
-    "p5": -3.0,
+    "mean": -1.3,
+    "p5": -3.05,
     "p95": 0.0
    },
    "suits: National NGO | Storage": {
-    "mean": -0.06,
+    "mean": -0.08,
     "p5": -1.0,
     "p95": 0.0
    },
    "challenger wins: National NGO | Storage": {
-    "mean": -0.02,
+    "mean": -0.04,
     "p5": 0.0,
     "p95": 0.0
    },
    "suits: Local group / residents | Storage": {
-    "mean": -0.84,
+    "mean": -0.86,
     "p5": -3.0,
     "p95": 0.0
    },
@@ -10104,7 +10104,7 @@
     "p95": 0.0
    },
    "suits: Tribe | Storage": {
-    "mean": -0.12,
+    "mean": -0.13,
     "p5": -1.0,
     "p95": 0.0
    },
@@ -10114,7 +10114,7 @@
     "p95": 0.0
    },
    "suits: State / local government | Storage": {
-    "mean": -0.02,
+    "mean": -0.03,
     "p5": 0.0,
     "p95": 0.0
    },
@@ -10124,7 +10124,7 @@
     "p95": 0.0
    },
    "suits: Business | Storage": {
-    "mean": -0.19,
+    "mean": -0.2,
     "p5": -1.0,
     "p95": 0.0
    },
@@ -10136,7 +10136,7 @@
   },
   "48": {
    "GW_total": {
-    "mean": 73.77062,
+    "mean": 73.7727,
     "p5": 67.38539999999996,
     "p95": 79.77820000000007
    },
@@ -10146,9 +10146,9 @@
     "p95": 327.7482664894589
    },
    "suits_total": {
-    "mean": -34.19,
-    "p5": -45.0,
-    "p95": -22.0
+    "mean": -37.05,
+    "p5": -48.05,
+    "p95": -25.0
    },
    "EIS_per_year_total": {
     "mean": 2.9319999999999995,
@@ -10161,12 +10161,12 @@
     "p95": -1.1974000000000002
    },
    "GW Renewable (new)": {
-    "mean": 48.39678,
+    "mean": 48.398860000000006,
     "p5": 43.415100000000045,
     "p95": 53.62730000000004
    },
    "TWh Renewable (new)": {
-    "mean": 118.9559804832,
+    "mean": 118.96217979839999,
     "p5": 104.72943571199991,
     "p95": 134.38179820800016
    },
@@ -10201,7 +10201,7 @@
     "p95": 0.0
    },
    "renewable share of new TWh": {
-    "mean": 0.006081354283941258,
+    "mean": 0.006082213121482483,
     "p5": 0.003115009692566756,
     "p95": 0.009257402931981906
    },
@@ -10221,9 +10221,9 @@
     "p95": 0.01102153708394039
    },
    "sued_share_of_decided | Renewable (new)": {
-    "mean": -0.042372564870990864,
-    "p5": -0.055365873114297505,
-    "p95": -0.02591421381429606
+    "mean": -0.04404661671626915,
+    "p5": -0.060088059890492616,
+    "p95": -0.028675777781587326
    },
    "decisions | Renewable (new)": {
     "mean": 537.94,
@@ -10231,33 +10231,33 @@
     "p95": 572.05
    },
    "suits | Renewable (new)": {
-    "mean": -20.41,
-    "p5": -31.05,
-    "p95": -8.950000000000003
+    "mean": -22.44,
+    "p5": -34.0,
+    "p95": -10.0
    },
    "suits: National NGO | Renewable (new)": {
-    "mean": -0.99,
+    "mean": -1.08,
     "p5": -3.0,
     "p95": 1.0
    },
    "challenger wins: National NGO | Renewable (new)": {
-    "mean": -0.25,
-    "p5": -1.0,
+    "mean": -0.26,
+    "p5": -1.0499999999999998,
     "p95": 1.0
    },
    "suits: Local group / residents | Renewable (new)": {
-    "mean": -14.55,
-    "p5": -23.05,
-    "p95": -6.900000000000006
+    "mean": -15.95,
+    "p5": -24.0,
+    "p95": -7.0
    },
    "challenger wins: Local group / residents | Renewable (new)": {
-    "mean": -3.22,
+    "mean": -3.55,
     "p5": -8.0,
     "p95": 0.04999999999999716
    },
    "suits: Tribe | Renewable (new)": {
-    "mean": -1.98,
-    "p5": -5.05,
+    "mean": -2.15,
+    "p5": -6.0,
     "p95": 1.0
    },
    "challenger wins: Tribe | Renewable (new)": {
@@ -10266,22 +10266,22 @@
     "p95": 1.0
    },
    "suits: State / local government | Renewable (new)": {
-    "mean": -0.48,
+    "mean": -0.55,
     "p5": -2.0,
     "p95": 1.0
    },
    "challenger wins: State / local government | Renewable (new)": {
-    "mean": -0.06,
+    "mean": -0.08,
     "p5": -1.0,
     "p95": 1.0
    },
    "suits: Business | Renewable (new)": {
-    "mean": -2.41,
-    "p5": -5.0,
+    "mean": -2.71,
+    "p5": -6.05,
     "p95": 0.04999999999999716
    },
    "challenger wins: Business | Renewable (new)": {
-    "mean": -0.54,
+    "mean": -0.56,
     "p5": -2.0,
     "p95": 1.0
    },
@@ -10301,8 +10301,8 @@
     "p95": 0.0034370186041000005
    },
    "sued_share_of_decided | Renewable (retained hydro)": {
-    "mean": -0.008337272138439565,
-    "p5": -0.01773355892543179,
+    "mean": -0.008855422914513422,
+    "p5": -0.01779557572211628,
     "p95": -0.00034311930043457107
    },
    "decisions | Renewable (retained hydro)": {
@@ -10311,27 +10311,27 @@
     "p95": 43.05
    },
    "suits | Renewable (retained hydro)": {
-    "mean": -2.28,
+    "mean": -2.45,
     "p5": -5.0,
     "p95": 0.0
    },
    "suits: National NGO | Renewable (retained hydro)": {
-    "mean": -1.07,
+    "mean": -1.14,
     "p5": -3.0,
     "p95": 0.0
    },
    "challenger wins: National NGO | Renewable (retained hydro)": {
-    "mean": -0.3,
+    "mean": -0.32,
     "p5": -1.0499999999999998,
     "p95": 0.04999999999999716
    },
    "suits: Local group / residents | Renewable (retained hydro)": {
-    "mean": -0.91,
+    "mean": -0.99,
     "p5": -3.0,
     "p95": 0.0
    },
    "challenger wins: Local group / residents | Renewable (retained hydro)": {
-    "mean": -0.25,
+    "mean": -0.26,
     "p5": -1.0499999999999998,
     "p95": 0.0
    },
@@ -10346,12 +10346,12 @@
     "p95": 0.0
    },
    "suits: State / local government | Renewable (retained hydro)": {
-    "mean": -0.3,
+    "mean": -0.32,
     "p5": -1.0,
     "p95": 0.0
    },
    "challenger wins: State / local government | Renewable (retained hydro)": {
-    "mean": -0.12,
+    "mean": -0.13,
     "p5": -1.0,
     "p95": 0.0
    },
@@ -10381,7 +10381,7 @@
     "p95": 0.0056022408963585235
    },
    "sued_share_of_decided | Fossil (gas)": {
-    "mean": -0.003201966789309095,
+    "mean": -0.0033049302552638033,
     "p5": -0.00837610521083128,
     "p95": 0.0
    },
@@ -10391,22 +10391,22 @@
     "p95": 25.049999999999997
    },
    "suits | Fossil (gas)": {
-    "mean": -1.14,
+    "mean": -1.18,
     "p5": -3.0,
     "p95": 0.0
    },
    "suits: National NGO | Fossil (gas)": {
-    "mean": -0.26,
+    "mean": -0.28,
     "p5": -1.0,
     "p95": 0.0
    },
    "challenger wins: National NGO | Fossil (gas)": {
-    "mean": -0.11,
+    "mean": -0.12,
     "p5": -1.0,
     "p95": 0.0
    },
    "suits: Local group / residents | Fossil (gas)": {
-    "mean": -0.5,
+    "mean": -0.51,
     "p5": -2.0,
     "p95": 0.0
    },
@@ -10436,7 +10436,7 @@
     "p95": 0.0
    },
    "suits: Business | Fossil (gas)": {
-    "mean": -0.18,
+    "mean": -0.19,
     "p5": -1.0,
     "p95": 0.0
    },
@@ -10461,8 +10461,8 @@
     "p95": 0.0008990448721250432
    },
    "sued_share_of_decided | Storage": {
-    "mean": -0.0011186503701801922,
-    "p5": -0.0028027761479680778,
+    "mean": -0.0011760768094943106,
+    "p5": -0.00283159845096825,
     "p95": 0.0
    },
    "decisions | Storage": {
@@ -10471,22 +10471,22 @@
     "p95": 97.14999999999999
    },
    "suits | Storage": {
-    "mean": -1.23,
-    "p5": -3.0,
+    "mean": -1.3,
+    "p5": -3.05,
     "p95": 0.0
    },
    "suits: National NGO | Storage": {
-    "mean": -0.06,
+    "mean": -0.08,
     "p5": -1.0,
     "p95": 0.0
    },
    "challenger wins: National NGO | Storage": {
-    "mean": -0.02,
+    "mean": -0.04,
     "p5": 0.0,
     "p95": 0.0
    },
    "suits: Local group / residents | Storage": {
-    "mean": -0.84,
+    "mean": -0.86,
     "p5": -3.0,
     "p95": 0.0
    },
@@ -10496,7 +10496,7 @@
     "p95": 0.0
    },
    "suits: Tribe | Storage": {
-    "mean": -0.12,
+    "mean": -0.13,
     "p5": -1.0,
     "p95": 0.0
    },
@@ -10506,7 +10506,7 @@
     "p95": 0.0
    },
    "suits: State / local government | Storage": {
-    "mean": -0.02,
+    "mean": -0.03,
     "p5": 0.0,
     "p95": 0.0
    },
@@ -10516,7 +10516,7 @@
     "p95": 0.0
    },
    "suits: Business | Storage": {
-    "mean": -0.19,
+    "mean": -0.2,
     "p5": -1.0,
     "p95": 0.0
    },

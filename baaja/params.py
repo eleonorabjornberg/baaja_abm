@@ -13,6 +13,7 @@ LBNL, ENGINE, NEXUS, CEQ, CASES = (_load("lbnl_targets.json"), _load("engine_inp
                                    _load("nepa_case_targets.json"))
 FED = _load("federal_nexus_targets.json")
 LIMIT = _load("limitation_experiment.json")["late_adapt"]   # [D] highway/transit 150-180 day limit vs other NEPA suits
+IXB = _load("interconnection_benchmark.json")              # [D] ERCOT vs CAISO/MISO request -> IA times
 MIN_N = 30
 
 T = 180
@@ -51,7 +52,9 @@ ASSUMPTIONS = {
     "lit_months_baaja":  (8, 12, 16.4, "Sec.1110/2201: months in litigation with appeals-court original jurisdiction + expedited review"),
     "halt_mult_1401":    (0.0, 0.1, 0.3, "Sec.1401: residual halt probability relative to current law"),
     "ix_2110":           (0.0, 0.0, 0.05, "Sec.2110: interconnection study time cut (text sets no target)"),
-    "ix_2106":           (0.0, 0.0, 0.30, "Sec.2106: interconnection study time cut from consolidated planning (no data)"),
+    "ix_2106":           (0.0, 0.0, round(IXB["ercot_gap_cut"], 2),
+                          "Sec.2106: interconnection study time cut from consolidated planning [floor: no measured effect of "
+                          "past reforms; ceiling: ERCOT's pace, data/interconnection_benchmark.json]"),
     "ix_rule_month":     (24, 36, 48, "months until Sec.2106/2110 rules affect studies"),
     "build_months":      (None, None, None, "post-IA months to operation: calibrated to LBNL time to COD, not assumed"),
 }

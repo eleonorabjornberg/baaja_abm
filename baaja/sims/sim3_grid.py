@@ -7,10 +7,10 @@ import os
 
 from .. import experiments as ex
 from .. import plots
-from ..params import BAAJA
+from ..params import BAAJA, IXB
 from . import G3, fmt, headline, save, table
 
-CUTS = [0.0, 0.05, 0.10, 0.15, 0.20, 0.30]
+CUTS = [0.0, 0.05, 0.10, 0.20, 0.30, round(IXB["ercot_gap_cut"], 2)]   # last = ERCOT-pace ceiling [D]
 
 
 def run(n_runs, cal, res_dir, fig_dir):
@@ -31,13 +31,19 @@ def run(n_runs, cal, res_dir, fig_dir):
     md = "\n\n".join([
         "# Simulation 3: grid access",
         "All data-based BAAJA provisions are on in every row; only the interconnection study-time cut varies. "
-        "Sec.2110 sets no target (central 0%, range 0-5%); Sec.2106 has no precedent to measure (range 0-30%). "
+        "Sec.2110 sets no target (central 0%, range 0-5%). For Sec.2106 the data give a bracket, not a point: no measured "
+        f"shortening from past queue reforms (floor 0%), and ERCOT's pace as a ceiling: ERCOT {IXB['median_months_2015_19']['ERCOT']:.0f} vs "
+        f"CAISO/MISO {IXB['pooled_non_ERCOT_median']:.0f} months from request to signed agreement (2015-19 requests), a "
+        f"{100*IXB['ercot_gap_cut']:.0f}% cut. Reaching it fully would also need energy-only interconnection, which the bill does not mandate. "
         "The cut applies to study months after the rules take effect (central month 36 = late 2029).",
         "## GW gained vs current law by interconnection cut",
         table(["study-time cut", "total GW", "renewable GW", "gas GW", "storage GW", "renewable share pts"], rows),
         "## Timing of the rules (10% cut)",
         table(["rules affect studies from", "renewable GW", "gas GW"],
               [[f"month {m}", fmt(d["GW Renewable (new)"], 1, True), fmt(d["GW Fossil (gas)"], 1, True)] for m, d in rule.items()]),
+        "## Median months from request to signed agreement by request year (regions with reliable agreement dates)",
+        table(["region"] + [str(y) for y in range(2012, 2022)],
+              [[r] + [f"{IXB['median_by_cohort'][r].get(str(y), float('nan')):.0f}" for y in range(2012, 2022)] for r in IXB["regions_used"]]),
         "## Why grid access dominates: current-law median months from request to operation (LBNL-calibrated)",
         table(["technology", "months"], ixrows),
     ])
