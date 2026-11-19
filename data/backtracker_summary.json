@@ -1,0 +1,151 @@
+{
+ "n_entries": 279,
+ "dates": [
+  "2025-01-09",
+  "2026-11-03"
+ ],
+ "by_tech": {
+  "wind": [
+   {
+    "date": "2025-01-20",
+    "title": "DOI Issues Secretarial Order to Halt Permitting of Wind Energy Projects"
+   },
+   {
+    "date": "2025-07-15",
+    "title": "DOI Imposes More Stringent Review Standards for Wind and Solar Projects"
+   },
+   {
+    "date": "2025-07-29",
+    "title": "DOI Ends \"Preferential\" Permitting for Wind and Solar"
+   },
+   {
+    "date": "2025-07-30",
+    "title": "BOEM Rescinds All Designated Wind Energy Areas on the Outer Continental Shelf"
+   },
+   {
+    "date": "2025-08-04",
+    "title": "DOI to Scrutinize Wind Energy Permitting Decisions for Compliance with Eagle Protection Laws"
+   },
+   {
+    "date": "2025-09-22",
+    "title": "Army Corps of Engineers Proposes Per Acre Efficiency Metrics in Energy Permitting, Prompting Challenges for Wind and Solar "
+   },
+   {
+    "date": "2025-12-22",
+    "title": "DOI Announces Pause of Leases for All Large Scale Offshore Wind"
+   }
+  ],
+  "solar": [
+   {
+    "date": "2025-03-14",
+    "title": "President Trump Issues Executive Order Rescinding Additional Biden-Era Presidential Actions"
+   },
+   {
+    "date": "2025-07-15",
+    "title": "DOI Imposes More Stringent Review Standards for Wind and Solar Projects"
+   },
+   {
+    "date": "2025-07-29",
+    "title": "DOI Ends \"Preferential\" Permitting for Wind and Solar"
+   },
+   {
+    "date": "2025-09-22",
+    "title": "Army Corps of Engineers Proposes Per Acre Efficiency Metrics in Energy Permitting, Prompting Challenges for Wind and Solar "
+   }
+  ],
+  "offshore wind": [
+   {
+    "date": "2025-01-20",
+    "title": "DOI Issues Secretarial Order to Halt Permitting of Wind Energy Projects"
+   },
+   {
+    "date": "2025-07-30",
+    "title": "BOEM Rescinds All Designated Wind Energy Areas on the Outer Continental Shelf"
+   },
+   {
+    "date": "2025-12-22",
+    "title": "DOI Announces Pause of Leases for All Large Scale Offshore Wind"
+   }
+  ],
+  "oil and gas": [
+   {
+    "date": "2025-01-21",
+    "title": "Department of Energy Restarts Review of LNG Export Applications"
+   },
+   {
+    "date": "2025-02-04",
+    "title": "House Republican Introduces Joint Resolution to Disapprove EPA Rule on Methane Emissions"
+   },
+   {
+    "date": "2025-02-04",
+    "title": "Senate Republican Introduces Joint Resolution to Disapprove EPA Rule on Methane Emissions"
+   },
+   {
+    "date": "2025-03-14",
+    "title": "President Trump Signs Joint Resolution to Disapprove EPA Rule on Methane Emissions"
+   },
+   {
+    "date": "2025-03-15",
+    "title": "President Trump Signs Congressional Review Act Resolution Loosening Regulation of Offshore Oil and Gas Development"
+   },
+   {
+    "date": "2025-06-13",
+    "title": "PHMSA Rescinds Guidance Requiring Plans for Mitigation of Vented and Fugitive Emissions"
+   },
+   {
+    "date": "2025-07-28",
+    "title": "DOI Rescinds Policy Documents Imposing Restrictions on Drilling in Alaska"
+   },
+   {
+    "date": "2025-08-01",
+    "title": "DOI Restricts Stipulations and Mitigation in Oil and Gas Drilling Leases"
+   },
+   {
+    "date": "2025-08-01",
+    "title": "DOI Removes Fees for Expressions of Interest for Oil and Gas Leases"
+   },
+   {
+    "date": "2025-08-01",
+    "title": "DOI Amends Regulations for Oil and Gas Drilling Permits Pursuant to OBBBA"
+   },
+   {
+    "date": "2025-11-17",
+    "title": "DOI Rescinds 2024 Rule on Alaska Petroleum Reserve"
+   },
+   {
+    "date": "2025-12-03",
+    "title": "DOE Releases Guidance on Gas-Electric Coordination, and Oil and Gas Infrastructure Permitting"
+   },
+   {
+    "date": "2026-01-12",
+    "title": "PHMSA Announces Limited Enforcement and Special Permit Guidance for Federal Pipelines"
+   },
+   {
+    "date": "2026-01-15",
+    "title": "EPA Proposes to Limit State and Tribal Authority for Reviewing Pipelines and Power Plants"
+   },
+   {
+    "date": "2026-01-27",
+    "title": "Forest Service Issues Final Rule Revising Process for Approving Oil and Gas Leasing on Federal Lands"
+   },
+   {
+    "date": "2026-05-01",
+    "title": "EPA Permits Routine Flaring at New Oil Wells Beyond Planned Phase-Out Deadline"
+   },
+   {
+    "date": "2026-09-08",
+    "title": "DOI Proposes Rule to Streamline Permitting for Oil & Gas in the National Petroleum Reserve in Alaska"
+   },
+   {
+    "date": "2026-10-15",
+    "title": "FERC Proposes Scaling Back Air-Quality Review of Natural Gas Projects"
+   }
+  ],
+  "coal": [
+   {
+    "date": "2025-06-16",
+    "title": "DOI Proposes Rescinding Coal Mining Oversight Regulations"
+   }
+  ]
+ }
+}

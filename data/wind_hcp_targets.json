@@ -1,0 +1,93 @@
+{
+ "n_hcp_documents": 18,
+ "matched_plants": 14,
+ "matched_GW": 2.5951,
+ "wind_GW_2015_25": 95.36959999999999,
+ "hcp_share_MW": 0.02721097708284401,
+ "plants": [
+  {
+   "Plant Name": "Fowler Ridge Wind Farm LLC",
+   "State": "IN",
+   "mw": 88.0,
+   "hcp": "Fowler_Ridge_Wind_Farm__Benton_County__Indiana"
+  },
+  {
+   "Plant Name": "Copenhagen Wind Farm",
+   "State": "NY",
+   "mw": 79.9,
+   "hcp": "Copenhagen_Wind_HCP"
+  },
+  {
+   "Plant Name": "Hoopeston Wind LLC",
+   "State": "IL",
+   "mw": 98.0,
+   "hcp": "Hoopeston_Wind__LLC"
+  },
+  {
+   "Plant Name": "Fowler Ridge IV Wind Farm LLC",
+   "State": "IN",
+   "mw": 150.0,
+   "hcp": "Fowler_Ridge_Wind_Farm__Benton_County__Indiana"
+  },
+  {
+   "Plant Name": "Green River Wind Farm",
+   "State": "IL",
+   "mw": 194.3,
+   "hcp": "Green_River_Wind_HCP"
+  },
+  {
+   "Plant Name": "Bluff Point Wind Facility",
+   "State": "IN",
+   "mw": 119.7,
+   "hcp": "BLUFF_POINT_WIND_ENERGY_CENTER_JAY_AND_RANDOLPH_COUNTIES__INDIANA_"
+  },
+  {
+   "Plant Name": "Hog Creek Wind Project",
+   "State": "OH",
+   "mw": 66.0,
+   "hcp": "Hog_Creek_Wind_Project__Hardin_County__Ohio"
+  },
+  {
+   "Plant Name": "High Prairie Wind Farm",
+   "State": "MO",
+   "mw": 400.0,
+   "hcp": "High_Prairie_Wind_Energy_Facility"
+  },
+  {
+   "Plant Name": "Headwaters Wind Farm II LLC",
+   "State": "IN",
+   "mw": 200.0,
+   "hcp": "Headwaters_II_Wind_HCP"
+  },
+  {
+   "Plant Name": "Jordan Creek Wind Farm, LLC",
+   "State": "IN",
+   "mw": 398.6,
+   "hcp": "Jordan_Creek_Wind_HCP_Draft"
+  },
+  {
+   "Plant Name": "Bitter Ridge Wind Farm, LLC",
+   "State": "IN",
+   "mw": 146.6,
+   "hcp": "Bitter_Ridge_Wind_HCP"
+  },
+  {
+   "Plant Name": "Crescent Wind Park",
+   "State": "MI",
+   "mw": 150.0,
+   "hcp": "Draft_Crescent_Wind_HCP"
+  },
+  {
+   "Plant Name": "Indiana Crossroads Wind Farm LLC",
+   "State": "IN",
+   "mw": 302.4,
+   "hcp": "Indiana_Crossroads_Wind_HCP"
+  },
+  {
+   "Plant Name": "Indiana Crossroads Wind Farm II",
+   "State": "IN",
+   "mw": 201.6,
+   "hcp": "Indiana_Crossroads_Wind_HCP"
+  }
+ ]
+}

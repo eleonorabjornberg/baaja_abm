@@ -98,9 +98,12 @@ TYPES["Transmission"] = dict(arr=2.0, mw=0, ix=False, completion_target=None, co
 TYPES["Hydro relicense"] = dict(arr=2.5, mw=50, ix=False, completion_target=None, cod_target=None, ix_med=0, ix_sigma=.5)  # [A]
 
 _n = NEXUS["types"]
+_WHCP = _load("wind_hcp_targets.json")["hcp_share_MW"]   # [D] wind HCPs (ESA s.10 permits with NEPA), none overlap other hooks
 for t, ty in TYPES.items():
     ty["nex"] = sum(_n[t]["combined_net"]) / 2 if t in _n else (0.6 if t == "Transmission" else 1.0)   # [D] / [A] transmission / statute hydro
     ty["nex_range"] = tuple(_n[t]["combined_net"]) if t in _n else ((0.4, 0.8) if t == "Transmission" else (1.0, 1.0))
+    if t == "Onshore wind":
+        ty["nex"] += _WHCP; ty["nex_range"] = tuple(x + _WHCP for x in ty["nex_range"])
     ty["eis_target"] = _ceq(t, "eis_per_year") or 0.0        # [D] CEQ final EISs/yr 2015-24
     m, n_all = _ceq(t, "median_months_noi_to_feis"), _ceq(t, "n_all") or 0
     ty["eis_med"] = m if (m and n_all >= 10) else _eis_all  # [D] CEQ by technology if n >= 10, else all EISs (37 mo)

@@ -58,7 +58,9 @@ def stats(x):
     win = x["Prev Agency on NEPA claim"].eq("Challenger")
     vac, novac = x["Remand W/ Vacatur"].eq("Yes"), x["Remand W/O Vacatur"].eq("Yes")
     s = x.days_to_litigation_start.dropna()
+    yr = pd.to_datetime(x["Challenge Filed Date"], errors="coerce").dt.year
     return dict(n=int(len(x)), n_district=int((~x["Court Line"].fillna("").str.contains("Appeals")).sum()),
+                cases_per_year_2012_21=float(yr.between(2012, 2021).sum() / 10),
                 challenger_win=float(win[x["Prev Agency on NEPA claim"].notna()].mean()),
                 injunction_share=float(x["Injunctive Relief"].eq("Yes").mean()),
                 vacatur_share_of_remands=float(vac.sum() / max((vac | novac).sum(), 1)), n_remands=int((vac | novac).sum()),

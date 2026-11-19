@@ -43,9 +43,10 @@ def test_calibration_matches_targets(cal):
 
 
 def test_nexus_shares_come_from_data():
+    from baaja.params import _WHCP
     for t in ("Gas", "Solar", "Onshore wind", "Storage", "Geothermal"):
         lo, hi = NEXUS["types"][t]["combined_net"]
-        assert TYPES[t]["nex"] == pytest.approx((lo + hi) / 2)
+        assert TYPES[t]["nex"] == pytest.approx((lo + hi) / 2 + (_WHCP if t == "Onshore wind" else 0))
     assert TYPES["Offshore wind"]["nex"] == 1.0
 
 
