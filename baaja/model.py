@@ -84,7 +84,7 @@ def simulate(p, seed, hostile_to):
         sig = np.where(kind == 0, 1.0, np.where(kind == 1, .6, .74))
         D = med * np.exp(sig * z_D)
         D = D + np.where((kind > 0) & (u_esa < p["esa_share"]), p["esa_months"], 0)
-        intake = p["intake_pub"] if ty["pub"] else p["intake_oth"]
+        intake = (p["intake_pub_2213"] if p["intake_pub_2213"] is not None else p["intake_pub"]) if ty["pub"] else p["intake_oth"]
         review_start = t0 + intake
         cap = np.where(kind == 1, 12 + 4, np.where(kind == 2, 24 + 4, np.inf))
         if p["ce_cap"]:
@@ -93,7 +93,7 @@ def simulate(p, seed, hostile_to):
         trunc = applies & (D > cap) & (kind > 0)
         cut_months = np.where(applies & (D > cap), D - cap, 0.0)
         D = np.where(applies, np.minimum(D, cap), D)
-        nonnepa = p["nonnepa_hydro"] if ty["nonnepa"] else 0.0
+        nonnepa = (p["nonnepa_hydro_1202"] if p["nonnepa_hydro_1202"] is not None else p["nonnepa_hydro"]) if ty["nonnepa"] else 0.0
         tDec = t0 + intake + D + nonnepa                         # permit decision, absent litigation
         # ---- sponsor withdrawal clock (drawn now; seeded projects are alive at month 0, memoryless) ----
         hz = p["hazard"] or {}

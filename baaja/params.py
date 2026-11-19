@@ -132,6 +132,7 @@ BASE = dict(T=T, turnovers=TURNOVERS, n_scale=1.0, seed_queue=True, arrivals=Non
             hazard=None, build=None, p_eis=None, nex_mult=1.0,
             ea_share_nonEIS=A["ea_share_nonEIS"], intake_pub=A["intake_pub"], intake_oth=A["intake_oth"],
             nonnepa_hydro=A["nonnepa_hydro"], esa_months=3.0, esa_share=0.25,
+            intake_pub_2213=None, nonnepa_hydro_1202=None,    # BAAJA overrides (None = current-law value applies)
             lit_ea=A["lit_ea"], lit_ce=A["lit_ce"], p_kill_vac=A["p_kill_vac"], remand_months=A["remand_months"],
             delay_weight=A["delay_weight"], halt_len=A["halt_len"], p_kill_halt=A["p_kill_halt"],
             halt_mult_other=A["halt_mult_other"],
@@ -144,7 +145,7 @@ BASE = dict(T=T, turnovers=TURNOVERS, n_scale=1.0, seed_queue=True, arrivals=Non
 
 LEVERS = {   # BAAJA, central values, grouped by simulation
     "permitting": dict(deadline_bind=A["deadline_bind"], ce_shift=A["ce_shift"], recond_ce=A["recond_ce"], geo_ce=A["geo_ce"],
-                       intake_pub=A["intake_pub_baaja"], nonnepa_hydro=A["nonnepa_hydro_baaja"], esa_months=2.0, ce_cap=12),
+                       intake_pub_2213=A["intake_pub_baaja"], nonnepa_hydro_1202=A["nonnepa_hydro_baaja"], esa_months=2.0, ce_cap=12),
     "litigation": dict(court="baaja", suit_payoff=A["suit_payoff"], lit_months=A["lit_months_baaja"]),
     "grid": dict(ix_cut=A["ix_2110"] + A["ix_2106"]),
     "certainty": dict(halt_mult=A["halt_mult_1401"]),

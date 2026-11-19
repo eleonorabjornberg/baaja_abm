@@ -24,34 +24,22 @@ capped and flagged as truncated.
 - Cost side: ~30-55% of federal-nexus reviews are cut short by the enforced deadlines, by ~30-45% of
   their normal length.
 
-## Status (Nov 2026 build-out)
-Done: package layout, tests, 90% intervals with paired runs (common random numbers), Sec.2110 sweep (#1),
-renewable vs fossil reporting, harm index (#3), charts and per-technology split (#6), Sec.2110 test (#7).
-See README for results and changes from v3.
+## Status (Nov 2026, v5)
+The model is rebuilt on data (see README data and assumption registers) and organised as five simulations
+(`baaja/sims/`, map in `docs/bill_question_map.md`). Results in `results/`, charts in `figures/`.
 
-## Known issues / next steps (original list)
-1. Energy-title gain (~60 GW over Division A) is driven mostly by the ASSUMED 10% interconnection speedup
-   (Sec.2110). Run a sensitivity sweep (0-30%).
-2. Federal-nexus shares, pathway mixes, arrival rates and project sizes are assumptions. Candidate
-   data: LBNL Queued Up data file (CC BY 4.0) for arrivals/sizes by technology; BLM/BOEM project lists for nexus.
-3. "Truncated review" has no quality/harm consequence beyond a higher court-loss probability. Decide what
-   harm metric (if any) to model.
-4. Agency staffing isn't endogenous in v3 (it was in v1). Consider merging v1's capacity queue back in.
-5. Sec.1401 effect is small in GW terms because halts only hit permitted-not-yet-online projects; check
-   whether it should also cover lease pauses.
-6. Add confidence intervals and a chart; split results by technology.
-7. A bug was fixed in the Sec.2110 speedup (it was measured from simulation start, not study start).
-   Write a test for it.
+Main findings: data-sized provisions add ~+14 GW by 2041 (renewables +9.9, gas +1.2, storage +1.3); grid access
+(Sec.2106) is unsized by the bill and dominates (each 5% study-time cut ~ +35-45 GW).
 
-## Sources used
-CEQ EIS Timelines reports (2020, 2025); RFF (Fraas et al.) on solar/wind NEPA timelines and litigation;
-Bennon & Wilson, NEPA Litigation Over Large Energy and Transport Infrastructure Projects, 53 ELR 10836 (2023);
-DOE NEPA metrics (EA durations); DOE WPTO hydropower licensing (7.6-yr relicensing); LBNL Queued Up
-2025/2026; 2025 offshore wind stop-work order coverage (CRS LSB11402, Axios, E&E News).
+## Next steps
+1. National EA/CE counts (BLM ePlanning) to replace `ea_share_nonEIS` and `lit_ea`.
+2. Measure current-law right-of-way intake time on federal land (biggest Sim 1 uncertainty).
+3. Recent storage completion (backcast underestimates storage by ~2/3).
+4. Onshore wind federal nexus: find the missing hooks (FWS specific eagle permits, HCPs, state-federal overlaps).
+5. Sim 5: a measured link from transmission sponsorship (Sec.2105) to generator completion, if one exists.
+6. Gas pipelines/LNG as a separate fossil sub-model (most fossil NEPA litigation).
+7. Gas arrivals trend (2025 requests ~2x the 2021-25 average).
 
-## Next phase (requested)
-Done: who sues (challenger agents, CEQ + Breakthrough data); LBNL data calibration (handoff #2: arrivals, sizes,
-interconnection, per-technology attrition, time to COD).
-To do: vertically integrated utility vs merchant decision control (LBNL `region`/`entity` separates ISO from
-non-ISO West/Southeast); asset lifetimes / retirements (EIA-860M is reachable from the cloud session); permit
-reconsideration; federal-nexus shares from BLM/BOEM lists; hybrid storage components.
+## History
+v3 (uploaded): assumed parameters. v4: LBNL calibration, challenger agents. v5: federal nexus, EIS counts, court
+parameters, seeded queue, backcast, five simulations.

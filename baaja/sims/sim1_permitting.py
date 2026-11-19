@@ -13,8 +13,8 @@ P = LEVERS["permitting"]
 ALONE = {
     "Sec.1106 deadlines": dict(deadline_bind=P["deadline_bind"]),
     "Sec.1105/1108 CE expansion + 1402(c) CE deadline": dict(ce_shift=P["ce_shift"], ce_cap=P["ce_cap"], deadline_bind=P["deadline_bind"]),
-    "Sec.2213 renewable rights-of-way": dict(intake_pub=P["intake_pub"]),
-    "Sec.1202 s.401 clock (hydro)": dict(nonnepa_hydro=P["nonnepa_hydro"]),
+    "Sec.2213 renewable rights-of-way": dict(intake_pub_2213=P["intake_pub_2213"]),
+    "Sec.1202 s.401 clock (hydro)": dict(nonnepa_hydro_1202=P["nonnepa_hydro_1202"]),
     "Sec.1302 ESA s.7 60 days": dict(esa_months=P["esa_months"]),
     "Sec.2102 reconductoring CE": dict(recond_ce=P["recond_ce"]),
     "Sec.2229 geothermal": dict(geo_ce=P["geo_ce"]),

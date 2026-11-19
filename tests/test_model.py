@@ -70,7 +70,7 @@ def test_deadlines_apply_only_to_reviews_starting_after_enactment(cal):
     rows = simulate(p, 5, POL)
     assert sum(r["trunc"].sum() for r in rows) > 0
     for r in rows:
-        intake = p["intake_pub"] if TYPES[r["type"]]["pub"] else p["intake_oth"]
+        intake = p["intake_pub_2213"] if TYPES[r["type"]]["pub"] else p["intake_oth"]
         assert not (r["trunc"] & (r["t0"] + intake < 0)).any(), r["type"]
 
 
