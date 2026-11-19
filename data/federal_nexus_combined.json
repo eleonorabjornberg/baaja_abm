@@ -1,0 +1,132 @@
+{
+ "meta": {
+  "definition": "Combined federal nexus of plants online 2015-2025, by technology (union of hooks that trigger project-level NEPA):\n  land / federal BA   EIA-860 plant point (or 1 km buffer) on federal surface land, or in WAPA/BPA/TVA/SPA\n  Corps individual    USACE individual permit within 2 km, decided -5..+1 years around first operation;\n                      net of a placebo (permits shifted 20 km)\n  RUS                 plant owned by a co-op that received USDA Rural Utilities Service electric loans/grants\n                      (USAspending export; lenders NRUCFC/CoBank excluded); co-op name match, so a lower bound\n  offshore wind       federal by statute\nAlso counts DOE EISs by topic (DOE EIS list export).",
+  "rus": {
+   "n_awards": 2610,
+   "years": [
+    "2007-05-17",
+    "2026-08-28"
+   ]
+  },
+  "note": "combined_net = share of MW with any hook, minus the Corps placebo rate; range = point vs 1 km buffer"
+ },
+ "types": {
+  "Gas": {
+   "plants": 461,
+   "GW": 96.3986,
+   "land_or_federal_BA": [
+    0.054614901046280744,
+    0.08170346872257479
+   ],
+   "corps_individual_raw": 0.37312056399159327,
+   "corps_placebo": 0.09212089179718377,
+   "corps_individual_net": 0.28099967219440947,
+   "rus_owned": 0.04306909021500311,
+   "combined_net": [
+    0.3229318164371682,
+    0.33558967661356076
+   ]
+  },
+  "Geothermal": {
+   "plants": 20,
+   "GW": 0.6593,
+   "land_or_federal_BA": [
+    0.508721371151221,
+    0.7733960260882755
+   ],
+   "corps_individual_raw": 0.0,
+   "corps_placebo": 0.0,
+   "corps_individual_net": 0.0,
+   "rus_owned": 0.005612012740785682,
+   "combined_net": [
+    0.5143333838920068,
+    0.7790080388290612
+   ]
+  },
+  "Offshore wind": {
+   "plants": 3,
+   "GW": 0.172,
+   "land_or_federal_BA": [
+    0.0,
+    0.0
+   ],
+   "corps_individual_raw": 0.0,
+   "corps_placebo": 0.0,
+   "corps_individual_net": 0.0,
+   "rus_owned": 0.0,
+   "combined_net": [
+    1.0,
+    1.0
+   ],
+   "note": "federal by statute (OCS)"
+  },
+  "Onshore wind": {
+   "plants": 595,
+   "GW": 95.36959999999999,
+   "land_or_federal_BA": [
+    0.042886831862564166,
+    0.06522518706170521
+   ],
+   "corps_individual_raw": 0.002436835217931081,
+   "corps_placebo": 0.00596573750964668,
+   "corps_individual_net": 0.0,
+   "rus_owned": 0.0,
+   "combined_net": [
+    0.042886831862564166,
+    0.06522518706170521
+   ]
+  },
+  "Solar": {
+   "plants": 6290,
+   "GW": 144.06390000000002,
+   "land_or_federal_BA": [
+    0.0844722376667576,
+    0.13394472869330898
+   ],
+   "corps_individual_raw": 0.0248105181103663,
+   "corps_placebo": 0.020677803391411724,
+   "corps_individual_net": 0.004132714718954576,
+   "rus_owned": 0.0039204825081092486,
+   "combined_net": [
+    0.08840712350561103,
+    0.13654895501232434
+   ]
+  },
+  "Storage": {
+   "plants": 941,
+   "GW": 43.5128,
+   "land_or_federal_BA": [
+    0.1164163188762847,
+    0.19990439594785903
+   ],
+   "corps_individual_raw": 0.06734799874979316,
+   "corps_placebo": 0.027345401812799916,
+   "corps_individual_net": 0.04000259693699325,
+   "rus_owned": 0.0014685333970693682,
+   "combined_net": [
+    0.15220176591715545,
+    0.2346464718427681
+   ]
+  }
+ },
+ "doe_eis_since_2015_by_topic": {
+  "Electric Transmission": 26,
+  "Liquefied Natural Gas": 22,
+  "Nuclear Energy": 9,
+  "Uncategorized": 6,
+  "Ecosystem Management": 5,
+  "DOE Site Operations": 5,
+  "Hydropower": 4,
+  "Waste Management": 3,
+  "Stockpile Stewardship": 3,
+  "Wind": 3,
+  "Remediation": 2,
+  "Coal": 2,
+  "Alternative Fuels": 1,
+  "Energy Efficiency": 1,
+  "Natural Gas": 1,
+  "Spent Nuclear Fuel": 1,
+  "Carbon Capture, Utilization, and Storage": 1,
+  "Advanced Batteries": 1
+ }
+}
