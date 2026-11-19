@@ -8,6 +8,7 @@ Definitions (Generation requests only; resource type = type_1, so hybrids count 
   completion       share of 2000-2020 requests now operational (LBNL's own completion metric)
   mw_built         mean mw_1 of operational projects queued 2010 or later (projects that complete are much smaller
                    than the average request, so GW = completed count x built size)
+  mw_built_recent  mean mw_1 of projects that reached operation 2022-2025 (sizes have grown; used for forward runs)
   ix_median, ix_logsd   interconnection request -> signed IA, months, requests queued 2015+ (median, sd of log)
   cod_median       interconnection request -> commercial operation, months, operational projects queued 2015-2018
                    (a cohort with >= 7 years to finish, which limits the bias toward fast projects)
@@ -34,7 +35,9 @@ def extract(path):
         d = mo(ia.q_date, ia.ia_date); d = d[d > 0]
         c = g[(g.q_status == "operational") & g.on_date.notna() & g.q_date.notna() & g.q_year.between(2015, 2018)]
         dc = mo(c.q_date, c.on_date); dc = dc[dc > 0]
-        out[t] = dict(arr_per_month=len(rec) / 60, completion=float((coh.q_status == "operational").mean()),
+        recent = g[(g.q_status == "operational") & g.on_date.dt.year.between(2022, 2025)]
+        out[t] = dict(arr_per_month=len(rec) / 60, mw_built_recent=float(recent.mw_1.mean()) if len(recent) else None,
+                      n_built_recent=int(len(recent)), completion=float((coh.q_status == "operational").mean()),
                       n_cohort=int(len(coh)), mw_built=float(op.mw_1.mean()), n_built=int(len(op)),
                       mw_requested_median=float(rec.mw_1.median()),
                       ix_median=float(d.median()), ix_logsd=float(np.log(d).std()), n_ix=int(len(d)),

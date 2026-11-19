@@ -6,6 +6,8 @@
  "types": {
   "Gas": {
    "arr_per_month": 12.533333333333333,
+   "mw_built_recent": 221.66075,
+   "n_built_recent": 80,
    "completion": 0.29292929292929293,
    "n_cohort": 2673,
    "mw_built": 169.7679978680011,
@@ -28,6 +30,8 @@
   },
   "Geothermal": {
    "arr_per_month": 1.0,
+   "mw_built_recent": null,
+   "n_built_recent": 0,
    "completion": 0.13675213675213677,
    "n_cohort": 117,
    "mw_built": 28.425,
@@ -50,6 +54,8 @@
   },
   "Offshore wind": {
    "arr_per_month": 1.7,
+   "mw_built_recent": null,
+   "n_built_recent": 0,
    "completion": 0.02608695652173913,
    "n_cohort": 115,
    "mw_built": 49.333333333333336,
@@ -72,6 +78,8 @@
   },
   "Onshore wind": {
    "arr_per_month": 17.65,
+   "mw_built_recent": 207.97625,
+   "n_built_recent": 88,
    "completion": 0.18808777429467086,
    "n_cohort": 5104,
    "mw_built": 144.50976890610673,
@@ -94,6 +102,8 @@
   },
   "Solar": {
    "arr_per_month": 126.36666666666666,
+   "mw_built_recent": 105.89589616252823,
+   "n_built_recent": 443,
    "completion": 0.12575463010334595,
    "n_cohort": 9773,
    "mw_built": 76.40256548531806,
@@ -116,6 +126,8 @@
   },
   "Storage": {
    "arr_per_month": 70.45,
+   "mw_built_recent": 93.95051351351353,
+   "n_built_recent": 74,
    "completion": 0.09052631578947369,
    "n_cohort": 1425,
    "mw_built": 73.79122981840335,

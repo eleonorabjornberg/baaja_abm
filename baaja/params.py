@@ -1,179 +1,152 @@
-"""Parameters, calibration notes and scenarios (moved unchanged from v3).
+"""v5 parameters: every value is [D] (from data, source given) or an entry in ASSUMPTIONS (low, central, high).
 
-Trial ABM v3: BAAJA (S.5653, 119th Congress) and the US electricity build-out, by technology,
-calibrated to published data where data exist.
-
-Agents: project sponsors (withdraw under commercial attrition and delay), challengers (sue),
-courts (decide, choose remedy), the executive (halts permits after a change of administration).
-Each project runs two gates in parallel: federal permitting (if it has a federal nexus) and
-grid interconnection (generation only). Construction starts when both are cleared.
-
-CALIBRATION  [D] = from data, [A] = assumption
-  EIS duration, current law   median 30 mo, sigma 0.74   [D] CEQ EIS Timelines 2025: median 2.4 yr NOI->FEIS
-                              (2021-24), 39% within 2 yr (the sigma reproduces ~38%); IQR spread from CEQ 2020
-                              (2.2-6.0 yr)
-      solar / onshore wind    median 26 / 43 mo          [D] RFF (Fraas et al.): solar 26, wind 43 mo average EIS
-  EA duration                 median 12 mo, sigma 0.6    [D] DOE: median EA 7-10 mo; 2015 mean 21 mo
-  CE duration                 median 4 mo, sigma 1.0     [D] Roosevelt/USFS data: CE median ~112 days, mean 209
-  Hydro relicensing           median 80 mo total         [D] DOE WPTO: relicensing averages 7.6 yr
-  Litigation, EIS projects    solar .45 wind .45 trans .31 gas .50 geo .33   [D] Bennon & Wilson 2023 (solar ~2/3,
-                              wind 38%, transmission 31%, pipelines 50%); RFF (solar ~1/3, wind ~1/2, geo 1 of 3)
-      offshore wind .6, hydro .2, storage .2   [A]
-  Litigation, EA / CE         .03 / .002                 [A] informed by Ruple (~0.22% of all NEPA decisions)
-  Interconnection             IR->IA median 40 mo        [D] LBNL Queued Up: IR->IA well over 3 yr; IR->COD ~55 mo
-  Queue completion            ~19% of projects           [D] LBNL Queued Up 2026: 19% of projects (13% of capacity)
-                              requested 2000-2020 reached COD -> baseline attrition hazard calibrated to this
-  Offshore wind halts         p=0.8 after a hostile turnover, ~8 mo, 25% killed   [D/A] 2025: stop-work orders on all
-                              five under-construction projects, several lifted by courts; permits remanded for others
-  Federal nexus shares, pathway mix, project sizes, arrival rates, construction times   [A]
-  Agency staffing is NOT modelled endogenously (v1 did that); durations are drawn from the data instead.
-
-BAAJA levers (bill section -> model)
-  Sec.1106  deadlines (EA 1 yr, EIS 2 yr) made enforceable via sponsor petition + 60-day order -> durations
-            capped at deadline + 4 mo; reviews cut short are flagged "truncated"
-  Sec.1108  adopt other agencies' CEs -> 10% of EA -> CE
-  Sec.1110  150-day limit + comment exhaustion + direct injury -> suit propensity x0.55 [A];
-            remand without vacatur -> suit payoff x0.6 [A], projects keep building (pause prob .5 -> .15 [A]);
-            courts of appeals original jurisdiction -> case length 24 -> 12 mo [A]; remand <= 180 days
-  Sec.1202  CWA s.401 certification capped at 1 yr -> hydro non-NEPA component 48 -> 36 mo [A]
-  Sec.1302  ESA s.7 consultation 90 -> 60 days
-  Sec.1401  no revocation/interference with issued permits -> halt prob x0.1 (residual) [A]
-  Sec.2102  CE for reconductoring in existing ROW -> 25% of transmission EA -> CE [A]
-  Sec.2110  FERC interconnection rule within 1 yr -> IX 10% faster from month 24 [A]
-  Sec.2213  renewable ROW application deadlines -> public-land intake 12 -> 4 mo [A]
-  Sec.2229  geothermal on leases not a major Federal action -> geothermal mostly CE
+Data files (data/*.json) are produced by the extractors in data/; see README for sources.
+Time: month 0 = Nov 2026 (forward runs) or Jan 2010 (backcast). Horizon T months.
 """
-T = 180                      # months simulated (Nov 2026 -> Nov 2041)
-TURNOVERS = [26, 74, 122, 170]   # Jan 2029, 2033, 2037, 2041
+import json as _json
+import os as _os
 
-# arr: projects/month; nex: share with federal nexus; path: [CE,EA,EIS] given nexus;
-# eis: EIS median months; lit: P(sued | EIS); halt: P(halted | hostile turnover, permitted & not online)
-TYPES = {
-  "Solar":          dict(arr=35,  mw=150, nex=.15, path=[.10,.60,.30], eis=26, lit=.45, halt=.05, build=18, ix=True,  pub=True,  nonnepa=0),
-  "Storage":        dict(arr=40,  mw=120, nex=.10, path=[.50,.45,.05], eis=30, lit=.20, halt=.01, build=12, ix=True,  pub=False, nonnepa=0),
-  "Onshore wind":   dict(arr=7,   mw=200, nex=.30, path=[.10,.50,.40], eis=43, lit=.45, halt=.10, build=24, ix=True,  pub=True,  nonnepa=0),
-  "Offshore wind":  dict(arr=.5,  mw=800, nex=1.0, path=[0,0,1],       eis=30, lit=.60, halt=.80, build=36, ix=True,  pub=False, nonnepa=0),
-  "Gas":            dict(arr=5,   mw=600, nex=.25, path=[.10,.60,.30], eis=30, lit=.50, halt=.03, build=30, ix=True,  pub=False, nonnepa=0),
-  "Geothermal":     dict(arr=1,   mw=40,  nex=.90, path=[.30,.60,.10], eis=30, lit=.33, halt=.01, build=30, ix=True,  pub=True,  nonnepa=0),
-  "Transmission":   dict(arr=2,   mw=0,   nex=.60, path=[.15,.45,.40], eis=36, lit=.31, halt=.03, build=36, ix=False, pub=False, nonnepa=0),
-  "Hydro relicense":dict(arr=2.5, mw=50,  nex=1.0, path=[0,.40,.60],   eis=30, lit=.20, halt=.01, build=0,  ix=False, pub=False, nonnepa=48),
-}
-GEN = [k for k, v in TYPES.items() if v["ix"]]
-TYPES_V3 = {k: dict(v) for k, v in TYPES.items()}     # v3 assumptions, kept for comparison
-
-# ---- data calibration (v4): LBNL Queued Up interconnection queue data through 2025 ----------------------
-# data/lbnl_targets.json is produced by data/extract_lbnl.py from the LBNL workbook. For each generation
-# technology it sets [D]: arrivals (requests/month 2021-25), built project size (mean MW of operational projects
-# queued 2010+), interconnection duration (IR -> IA median and log-sd, 2015+), and the current-law completion
-# target used to calibrate a technology-specific withdrawal hazard. A value is used only if it rests on >= 30
-# projects; otherwise the v3 assumption stays (offshore wind size: 3 built projects; geothermal IX: 3 IAs).
-import json as _json, os as _os
-LBNL = _json.load(open(_os.path.join(_os.path.dirname(__file__), "..", "data", "lbnl_targets.json")))
+_D = _os.path.join(_os.path.dirname(__file__), "..", "data")
+_load = lambda f: _json.load(open(_os.path.join(_D, f)))
+LBNL, ENGINE, NEXUS, CEQ, CASES = (_load("lbnl_targets.json"), _load("engine_inputs.json"),
+                                   _load("federal_nexus_combined.json"), _load("ceq_eis_targets.json"),
+                                   _load("nepa_case_targets.json"))
+FED = _load("federal_nexus_targets.json")
 MIN_N = 30
-for _t, _d in LBNL["types"].items():
-    ty = TYPES[_t]; ty["ix_med"], ty["ix_sigma"] = 40.0, 0.5           # v3 defaults
-    ty["arr"] = round(_d["arr_per_month"], 2)
-    if _d["n_built"] >= MIN_N:
-        ty["mw"] = round(_d["mw_built"])
-    if _d["n_ix"] >= MIN_N:
-        ty["ix_med"], ty["ix_sigma"] = round(_d["ix_median"], 1), round(_d["ix_logsd"], 2)
-    ty["completion_target"] = _d["completion"]
-    if _d["n_cod"] >= MIN_N:
-        ty["cod_target"] = _d["cod_median"]   # build months are calibrated so current-law median IR->COD matches
-for _t in TYPES:
-    TYPES[_t].setdefault("ix_med", 40.0); TYPES[_t].setdefault("ix_sigma", 0.5)
 
-BASE = dict(enforced=False, deadline={"EA": 12, "EIS": 24}, enf_lag=4, ce_shift=0.0, recond=0.0, geo_path=None,
-            intake_pub=12, intake_oth=3, esa=3, esa_share=.25, nonnepa_mult=1.0,
-            lit_ea=.03, lit_ce=.002, suit_mult=1.0, pause=.5, lit_med=24, p_loss=.25, trunc_loss_mult=1.6,
-            vacatur=True, remand=12, p_kill_vac=.2,
-            ix_med=40, ix_speedup=1.0, ix_rule_month=24, halt_mult=1.0, halt_len=8, p_kill_halt=.25, hazard=None, n_scale=1.0,
-            delay_weight=1.0,                       # weight of litigation/halt delay in the attrition wait (see README)
-            challenger_filter=None,
-            build=None,                             # dict type -> construction months; None = TYPES[...]["build"]                 # None = current law: no comment-exhaustion/standing filter
-            harm_w={"CE": 0.0, "EA": 0.3, "EIS": 1.0}, harm_mw_transmission=300)   # harm index weights [A]
-BAAJA = dict(enforced=True, ce_shift=.10, recond=.25, geo_path=[.85,.13,.02], intake_pub=4, esa=2, nonnepa_mult=.75,
-             # suit payoff x0.6 under remand-only; v3's x0.55 filter is now challenger-type-specific (CHALLENGER_FILTER)
-             suit_mult=.6, challenger_filter="BAAJA",
-             pause=.15, lit_med=12, vacatur=False, remand=6, ix_speedup=0.9, halt_mult=.1)
-SCEN = {
-  "Baseline (current law)": {},
-  "BAAJA (all levers)": BAAJA,
-  "BAAJA: NEPA + courts only (Div. A)": {k: v for k, v in BAAJA.items() if k not in ("recond","geo_path","intake_pub","ix_speedup","nonnepa_mult")},
-  "BAAJA without Sec.1401": dict(BAAJA, halt_mult=1.0),
+T = 180
+TURNOVERS = [26, 74, 122, 170]            # Jan 2029, 2033, 2037, 2041
+BACKCAST = dict(T=192, start_year=2010, turnovers=[84, 132, 180], politics=["renew", "fossil", "renew"])
+
+# ---- assumptions: (low, central, high, note). Everything not listed here is [D]. -----------------------------
+ASSUMPTIONS = {
+    # permitting
+    "ea_share_nonEIS":   (0.25, 0.50, 0.75, "share of non-EIS federal reviews that are EAs (rest CEs); no national EA/CE count"),
+    "intake_pub":        (6, 12, 18, "months from federal-land right-of-way application to start of review, current law"),
+    "intake_oth":        (1, 3, 6, "months from application to start of review, other federal nexus"),
+    "nonnepa_hydro":     (36, 48, 60, "hydro relicensing months outside NEPA (s.401 certification, license terms)"),
+    "lit_ea":            (0.0025, 0.005, 0.01, "P(sued | EA): EA/EIS suit ratio in case data x ~10,000 EAs/yr (CEQ estimate)"),
+    "lit_ce":            (0.0001, 0.0002, 0.0005, "P(sued | CE): same method, ~100,000 CEs/yr"),
+    "p_kill_vac":        (0.1, 0.2, 0.4, "P(project cancelled | permit vacated)"),
+    "remand_months":     (6, 12, 18, "delay after vacatur, current law"),
+    "delay_weight":      (0.0, 1.0, 1.0, "weight of litigation/halt delay in the sponsor's withdrawal clock"),
+    "halt_len":          (4, 8, 12, "months a halted project is stopped"),
+    "p_kill_halt":       (0.1, 0.25, 0.5, "P(cancelled | halted)"),
+    "halt_mult_other":   (0.5, 1.0, 2.0, "multiplier on halt probabilities for technologies other than offshore wind"),
+    # BAAJA levers whose size the text does not fix
+    "deadline_bind":     (0.25, 0.5, 1.0, "Sec.1106: share of over-deadline EA/EIS reviews actually cut to deadline + 4 months"),
+    "ce_shift":          (0.0, 0.10, 0.25, "Sec.1105/1108: share of EAs that become CEs"),
+    "recond_ce":         (0.10, 0.25, 0.50, "Sec.2102: extra share of transmission EAs that become CEs"),
+    "geo_ce":            (0.5, 0.85, 1.0, "Sec.2229: share of geothermal reviews that become non-major actions"),
+    "intake_pub_baaja":  (3, 4, 6, "Sec.2213: months to start of review on federal land (30-day completeness, 90-day NOI)"),
+    "nonnepa_hydro_baaja": (30, 36, 42, "Sec.1202: hydro months outside NEPA with the s.401 clock"),
+    "late_adapt":        (0.0, 0.5, 1.0, "Sec.1110/2201: share of would-be late filers who file within 150 days instead"),
+    "exhaust_injury":    (0.6, 0.8, 0.95, "Sec.1110: share of timely suits that pass comment exhaustion + direct injury"),
+    "suit_payoff":       (0.4, 0.6, 1.0, "Sec.1110: suits filed relative to current law when the only remedy is remand"),
+    "inj_nonNEPA":       (0.0, 0.3, 0.5, "Sec.1110: share of injunctions that rest on non-NEPA laws (still allowed)"),
+    "lit_months_baaja":  (8, 12, 16.4, "Sec.1110/2201: months in litigation with appeals-court original jurisdiction + expedited review"),
+    "halt_mult_1401":    (0.0, 0.1, 0.3, "Sec.1401: residual halt probability relative to current law"),
+    "ix_2110":           (0.0, 0.0, 0.05, "Sec.2110: interconnection study time cut (text sets no target)"),
+    "ix_2106":           (0.0, 0.0, 0.30, "Sec.2106: interconnection study time cut from consolidated planning (no data)"),
+    "ix_rule_month":     (24, 36, 48, "months until Sec.2106/2110 rules affect studies"),
+    "build_months":      (None, None, None, "post-IA months to operation: calibrated to LBNL time to COD, not assumed"),
 }
+A = {k: v[1] for k, v in ASSUMPTIONS.items()}   # central values
+
+# ---- technologies ---------------------------------------------------------------------------------------------
+_eis_all = CEQ["meta"]["all_eis_median_months"]
 
 
-# ---- renewable vs fossil reporting -------------------------------------------------------------------
-# Groups. Hydro relicensing keeps existing capacity online rather than adding new capacity, so it is
-# reported as "renewable (retained)" and kept out of new-build totals. Storage shifts energy, it does not
-# generate it, so it has no TWh.
-GROUPS = {
-    "Renewable (new)": ["Solar", "Onshore wind", "Offshore wind", "Geothermal"],
-    "Renewable (retained hydro)": ["Hydro relicense"],
-    "Fossil (gas)": ["Gas"],
-    "Storage": ["Storage"],
-}
-# Annual capacity factors, for turning GW into TWh/yr of new generation.
-#   solar .24, onshore wind .34, gas .56, geothermal .70, hydro .36   [D] EIA Electric Power Monthly,
-#   2023-24 US fleet averages (gas = combined cycle, matching the 600 MW project size)
-#   offshore wind .42                                                  [A] NREL ATB, no mature US fleet yet
-CF = {"Solar": .24, "Onshore wind": .34, "Offshore wind": .42, "Gas": .56, "Geothermal": .70,
-      "Hydro relicense": .36, "Storage": 0.0, "Transmission": 0.0}
+def _ceq(t, key):
+    v = CEQ["types"].get(t)
+    return v[key] if v else None
 
-# Political paths for the executive-halt agent (which side each of the 4 administrations is hostile to).
-POLITICS = {
-    "random (default)": None,                       # drawn per run, same draws across scenarios
-    "always hostile to renewables": ["renew"] * 4,
-    "always hostile to fossil": ["fossil"] * 4,
-}
 
-# Lever decomposition for the renewable vs fossil question: each provision alone, and full BAAJA minus each.
-LEVER_KEYS = {
-    "Sec.1106 enforceable deadlines": ["enforced"],
-    "Sec.1108/2102 CE adoption + reconductoring": ["ce_shift", "recond"],
-    "Sec.1110 judicial review": ["suit_mult", "challenger_filter", "pause", "lit_med", "vacatur", "remand"],
-    "Sec.1202/1302 CWA 401 + ESA clocks": ["nonnepa_mult", "esa"],
-    "Sec.1401 permit certainty": ["halt_mult"],
-    "Sec.2110 interconnection rule": ["ix_speedup"],
-    "Sec.2213 renewable ROW deadlines": ["intake_pub"],
-    "Sec.2229 geothermal CE": ["geo_path"],
-}
+TYPES = {}
+for t, d in LBNL["types"].items():
+    TYPES[t] = dict(arr=d["arr_per_month"],
+                    mw=round(d["mw_built_recent"]) if d.get("n_built_recent", 0) >= MIN_N else (round(d["mw_built"]) if d["n_built"] >= MIN_N else None),
+                    ix_med=d["ix_median"] if d["n_ix"] >= MIN_N else 40.0, ix_sigma=d["ix_logsd"] if d["n_ix"] >= MIN_N else 0.5,
+                    completion_target=d["completion"], cod_target=d["cod_median"] if d["n_cod"] >= MIN_N else None, ix=True)
+TYPES["Offshore wind"]["mw"] = 800        # [A] 3 built projects only; current BOEM projects are 700-1,100 MW
+TYPES["Geothermal"]["mw"] = 40            # [A] 10 built projects
+# storage includes battery components of hybrid requests [D] LBNL (54.9 requests/month, 117 MW built)
+_h = ENGINE["lbnl"]["hybrid_storage"]; _s = TYPES["Storage"]
+_s["mw"] = round((_s["arr"] * _s["mw"] + _h["req_per_month_2021_25"] * _h["mw_built_mean"]) / (_s["arr"] + _h["req_per_month_2021_25"]))
+_s["arr"] += _h["req_per_month_2021_25"]
+TYPES["Transmission"] = dict(arr=2.0, mw=0, ix=False, completion_target=None, cod_target=None, ix_med=0, ix_sigma=.5)  # [A] arrivals
+TYPES["Hydro relicense"] = dict(arr=2.5, mw=50, ix=False, completion_target=None, cod_target=None, ix_med=0, ix_sigma=.5)  # [A]
 
-# ---- challengers: who sues ---------------------------------------------------------------------------
-# Five challenger types. Each lawsuit has a lead challenger drawn from a technology-specific mix; the type sets
-# how BAAJA's Sec.1110 filters (150-day limitation, comment exhaustion, direct-injury standing) bite and how
-# often the challenger wins.
+_n = NEXUS["types"]
+for t, ty in TYPES.items():
+    ty["nex"] = sum(_n[t]["combined_net"]) / 2 if t in _n else (0.6 if t == "Transmission" else 1.0)   # [D] / [A] transmission / statute hydro
+    ty["nex_range"] = tuple(_n[t]["combined_net"]) if t in _n else ((0.4, 0.8) if t == "Transmission" else (1.0, 1.0))
+    ty["eis_target"] = _ceq(t, "eis_per_year") or 0.0        # [D] CEQ final EISs/yr 2015-24
+    m, n_all = _ceq(t, "median_months_noi_to_feis"), _ceq(t, "n_all") or 0
+    ty["eis_med"] = m if (m and n_all >= 10) else _eis_all  # [D] CEQ by technology if n >= 10, else all EISs (37 mo)
+    ty["ea_med"] = 12.0                                     # [D] DOE EA median
+    ty["pub"] = t in ("Solar", "Onshore wind", "Geothermal")  # rights-of-way on federal land (Sec.2213 eligible)
+    ty["nonnepa"] = t == "Hydro relicense"
+# gas: federal nexus is mostly Corps individual permits (28 of 33 points), each with a Corps EA [D]
+TYPES["Gas"]["ea_share_nonEIS"] = min(1.0, _n["Gas"]["corps_individual_net"] / TYPES["Gas"]["nex"])
+TYPES["Gas"]["ea_med"] = ENGINE["corps"]["standard_permit"]["median_months"] + 2   # [D] 5.7 mo notice->decision, +2 pre-notice [A]
+
+# EIS litigation rates [D] Bennon & Wilson 2023 / RFF (solar ~2/3, wind .38, transmission .31, pipelines .50, geo 1/3)
+LIT_EIS = {"Solar": .45, "Onshore wind": .40, "Offshore wind": .60, "Gas": .50, "Geothermal": .33, "Transmission": .31,
+           "Hydro relicense": .20, "Storage": .20}   # offshore wind, hydro, storage [A]
+for t in TYPES:
+    TYPES[t]["lit_eis"] = LIT_EIS[t]
+
+# ---- courts [D] nepa_case_targets.json (1,821 NEPA cases 2001-22) ---------------------------------------------
 CHALLENGERS = ["National NGO", "Local group / residents", "Tribe", "State / local government", "Business"]
+COURT_GROUP = {"Solar": "Renewable", "Onshore wind": "Renewable", "Offshore wind": "Renewable", "Geothermal": "Renewable",
+               "Storage": "Renewable", "Gas": "Fossil infrastructure", "Transmission": "Transmission", "Hydro relicense": "Hydro"}
+_g = CASES["by_group"]
+CHALLENGER_MIX = {t: [_g[COURT_GROUP[t]]["lead_mix"][c] for c in CHALLENGERS] for t in TYPES}
+for t, m in CHALLENGER_MIX.items():          # renormalise (unmapped lead types dropped)
+    s = sum(m); CHALLENGER_MIX[t] = [x / s for x in m]
+WIN = {t: _g[COURT_GROUP[t]]["challenger_win"] for t in TYPES}                    # P(challenger wins NEPA claim)
+WIN_REL = [CASES["by_lead_challenger"][c]["win_rel"] for c in CHALLENGERS]
+LATE_SHARE = [CASES["by_lead_challenger"][c]["share_filed_after_150_days"] for c in CHALLENGERS]
+INJ = CASES["energy"]["injunction_share"]                  # 9.5% of energy cases
+VAC = CASES["energy"]["vacatur_share_of_remands"]          # 69% of energy remands are with vacatur
+LIT_MONTHS = ENGINE["cases"]["months_in_litigation"]["district_energy"]["median_months"]   # 12.8
+TRUNC_LOSS = 1.6   # [A] relative odds that a truncated review loses in court (no data)
 
-# Lead-challenger mix by technology (shares sum to 1).
-#   Anchors [D]: CEQ NEPA Litigation Surveys 2001-13 (all NEPA cases, n=3,650 plaintiff entries): public-interest
-#   groups 52.5%, individuals/citizen associations 18.5%, business 6.7%, local gov 5.1%, tribes 3.2%, states 2.9%,
-#   property owners 2.6%, multiple 8.5%. Breakthrough Institute 2024 (387 appeals 2013-22): NGOs in 72% of cases;
-#   top-10 national NGOs in 35%; fossil-infrastructure appeals led by Sierra Club + regional riverkeepers + tribes
-#   (Standing Rock); clean-energy appeals more localized (local coalitions, Pit River Tribe), national NGOs a
-#   smaller share. Technology-specific splits are [A] built on these anchors plus case examples:
-#   offshore wind - fishing industry (RODA, Seafreeze) and shore-town/resident groups; geothermal - tribes (Pit River,
-#   Fallon Paiute-Shoshone); hydro relicensing - American Rivers and Klamath Basin tribes; transmission - landowners.
-CHALLENGER_MIX = {
-    "Solar":           [.25, .45, .10, .10, .10],
-    "Storage":         [.20, .50, .05, .15, .10],
-    "Onshore wind":    [.25, .45, .10, .12, .08],
-    "Offshore wind":   [.10, .40, .05, .10, .35],
-    "Gas":             [.45, .30, .10, .08, .07],
-    "Geothermal":      [.20, .30, .40, .05, .05],
-    "Transmission":    [.25, .45, .05, .15, .10],
-    "Hydro relicense": [.35, .20, .25, .15, .05],
+# ---- executive halts: P(halted | hostile turnover, permitted, not online) -------------------------------------
+HALT = {"Offshore wind": .8,   # [D] 2025: stop-work orders on all five projects under construction
+        "Solar": .05, "Onshore wind": .10, "Storage": .01, "Gas": .03, "Transmission": .03, "Geothermal": 0, "Hydro relicense": 0}  # [A]
+RENEWABLE_SIDE = ("Solar", "Onshore wind", "Offshore wind", "Storage", "Transmission")
+
+# ---- reporting ------------------------------------------------------------------------------------------------
+GROUPS = {"Renewable (new)": ["Solar", "Onshore wind", "Offshore wind", "Geothermal"],
+          "Renewable (retained hydro)": ["Hydro relicense"], "Fossil (gas)": ["Gas"], "Storage": ["Storage"]}
+CF = {"Solar": .24, "Onshore wind": .34, "Offshore wind": .42, "Gas": .56, "Geothermal": .70,   # [D] EIA EPM 2023-24;
+      "Hydro relicense": .36, "Storage": 0.0, "Transmission": 0.0}                              # offshore [A] NREL ATB
+GEN = [t for t, v in TYPES.items() if v["ix"]]
+POLITICS = {"random (default)": None, "always hostile to renewables": ["renew"] * 4, "always hostile to fossil": ["fossil"] * 4}
+UTILITY_OWNED = {t: FED["types"][t]["utility_owned_share_MW"] for t in GEN}   # [D] EIA-860, new MW 2015-25
+
+# ---- scenarios -------------------------------------------------------------------------------------------------
+BASE = dict(T=T, turnovers=TURNOVERS, n_scale=1.0, seed_queue=True, arrivals=None, start_year=2026,
+            hazard=None, build=None, p_eis=None, nex_mult=1.0,
+            ea_share_nonEIS=A["ea_share_nonEIS"], intake_pub=A["intake_pub"], intake_oth=A["intake_oth"],
+            nonnepa_hydro=A["nonnepa_hydro"], esa_months=3.0, esa_share=0.25,
+            lit_ea=A["lit_ea"], lit_ce=A["lit_ce"], p_kill_vac=A["p_kill_vac"], remand_months=A["remand_months"],
+            delay_weight=A["delay_weight"], halt_len=A["halt_len"], p_kill_halt=A["p_kill_halt"],
+            halt_mult_other=A["halt_mult_other"],
+            # current law: no BAAJA levers
+            deadline_bind=0.0, ce_shift=0.0, recond_ce=0.0, geo_ce=0.0, ce_cap=None,
+            court="current", late_adapt=A["late_adapt"], exhaust_injury=A["exhaust_injury"], suit_payoff=1.0,
+            inj_nonNEPA=A["inj_nonNEPA"], lit_months=LIT_MONTHS, halt_mult=1.0,
+            ix_cut=0.0, ix_rule_month=A["ix_rule_month"],
+            harm_w={"CE": 0.0, "EA": 0.3, "EIS": 1.0}, harm_mw_transmission=300)
+
+LEVERS = {   # BAAJA, central values, grouped by simulation
+    "permitting": dict(deadline_bind=A["deadline_bind"], ce_shift=A["ce_shift"], recond_ce=A["recond_ce"], geo_ce=A["geo_ce"],
+                       intake_pub=A["intake_pub_baaja"], nonnepa_hydro=A["nonnepa_hydro_baaja"], esa_months=2.0, ce_cap=12),
+    "litigation": dict(court="baaja", suit_payoff=A["suit_payoff"], lit_months=A["lit_months_baaja"]),
+    "grid": dict(ix_cut=A["ix_2110"] + A["ix_2106"]),
+    "certainty": dict(halt_mult=A["halt_mult_1401"]),
 }
-# Sec.1110 filter: share of would-be suits by each type that survive the 150-day limitation, comment exhaustion
-# and direct-injury standing [A]. Reasoning: national NGOs comment on every major EIS and have legal staff, but
-#   associational standing through distant members is what a direct-injury test narrows; local groups and
-#   residents have direct injury but often miss formal comment periods and a 150-day clock; tribes, states and
-#   local governments have sovereign/proprietary injury and participate in consultation; businesses (competitors,
-#   fishing) face zone-of-interests limits. Chosen so the technology-weighted mean is ~0.55, v3's single factor.
-CHALLENGER_FILTER = {"BAAJA": [.55, .45, .75, .80, .50]}
-# Relative probability that a challenger wins, by type [D]: Breakthrough 2024 appeal success rates divided by the
-# all-plaintiff rate (20.4%): top-10 national NGOs 26% -> 1.27; local groups = mix of regional NGOs (22.2%) and
-# individuals (11.3%) -> 0.87; tribal governments 31.0% -> 1.52; state (20.0%) and local gov (18.8%) -> 0.94;
-# companies (8.7%) and industry associations (21.1%) -> 0.69. Multiplies p_loss (P agency loses).
-CHALLENGER_WIN_REL = [1.27, 0.87, 1.52, 0.94, 0.69]
+BAAJA = {k: v for d in LEVERS.values() for k, v in d.items()}

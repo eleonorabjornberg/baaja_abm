@@ -1,40 +1,42 @@
-"""Monte Carlo experiments: scenarios with intervals, paired differences, sweeps, renewable/fossil split."""
+"""Monte Carlo harness: paired scenarios (same seeds and political draws), 90% intervals, sweeps, backcast."""
 import numpy as np
 
 from .model import simulate, summarize
-from .params import BASE, CF, GROUPS, TURNOVERS, TYPES
+from .params import ASSUMPTIONS, BACKCAST, BASE, CF, ENGINE, GROUPS, TYPES
 
-METRICS = ["completion_rate", "GW_online", "projects_online", "median_months_to_COD", "suits", "halted",
-           "truncated_share", "mean_review_cut", "harm"]
-
-
-def politics_draw(s, fixed=None):
-    if fixed is not None:
-        return list(fixed)
-    return list(np.random.default_rng(1000 + s).choice(["renew", "fossil"], len(TURNOVERS)))
+METRICS = ["completion_rate", "GW_online", "projects_online", "median_months_to_COD", "decisions_per_year", "EIS_per_year",
+           "EA_per_year", "suits", "suits_per_year", "vacated", "halted", "halted_GW", "killed_by_courts_or_halts",
+           "permitted_share", "median_months_to_permit", "truncated_share", "harm"]
 
 
-def run_scenario(over, n_runs, hazard, politics=None, build=None):
-    """List of per-run summaries. Seeds and political draws are shared across scenarios (paired runs)."""
-    p = dict(BASE); p.update(over); p["hazard"] = hazard
-    if build is not None:
-        p["build"] = build
-    return [summarize(simulate(p, s, politics_draw(s, politics)), p) for s in range(n_runs)]
+def politics_draw(s, n, fixed=None):
+    return list(fixed) if fixed is not None else list(np.random.default_rng(1000 + s).choice(["renew", "fossil"], n))
+
+
+def params(over=None, cal=None):
+    p = dict(BASE)
+    if cal:
+        p.update(cal)
+    p.update(over or {})
+    return p
+
+
+def run_scenario(over, n_runs, cal, politics=None):
+    p = params(over, cal)
+    return [summarize(simulate(p, s, politics_draw(s, len(p["turnovers"]), politics)), p) for s in range(n_runs)]
 
 
 def totals(run):
-    """Per-run headline numbers, including the renewable vs fossil split."""
     gw = {t: run[t]["GW_online"] for t in TYPES}
-    twh = {t: gw[t] * CF[t] * 8.766 for t in gw}                      # GW x CF x 8766 h / 1000
-    out = {"GW_total": sum(gw.values()),
-           "harm_total": sum(run[t]["harm"] for t in TYPES),
-           "suits_total": sum(run[t]["suits"] for t in TYPES),
-           "transmission_online": run["Transmission"]["projects_online"]}
+    twh = {t: gw[t] * CF[t] * 8.766 for t in gw}
+    out = {"GW_total": sum(gw.values()), "harm_total": sum(run[t]["harm"] for t in TYPES),
+           "suits_total": sum(run[t]["suits"] for t in TYPES), "EIS_per_year_total": sum(run[t]["EIS_per_year"] for t in TYPES),
+           "halted_GW_total": sum(run[t]["halted_GW"] for t in TYPES)}
     for g, members in GROUPS.items():
         out[f"GW {g}"] = sum(gw[t] for t in members)
         out[f"TWh {g}"] = sum(twh[t] for t in members)
-    new_ren, gas = out["TWh Renewable (new)"], out["TWh Fossil (gas)"]
-    out["renewable share of new TWh"] = new_ren / (new_ren + gas)
+    r, gs = out["TWh Renewable (new)"], out["TWh Fossil (gas)"]
+    out["renewable share of new TWh"] = r / (r + gs) if r + gs else np.nan
     for g, v in run["_groups"].items():
         for m, x in v.items():
             out[f"{m} | {g}"] = x
@@ -43,28 +45,58 @@ def totals(run):
 
 def band(xs, lo=5, hi=95):
     xs = np.asarray(xs, float)
+    if np.all(np.isnan(xs)):
+        return dict(mean=np.nan, p5=np.nan, p95=np.nan)
     return dict(mean=float(np.nanmean(xs)), p5=float(np.nanpercentile(xs, lo)), p95=float(np.nanpercentile(xs, hi)))
 
 
 def aggregate(runs, base_runs=None):
-    """Mean and 90% interval for every per-technology metric and every total; if base_runs is given, also the
-    paired difference vs that scenario (same seeds, so the interval reflects the policy, not seed noise)."""
     res = {"by_type": {t: {m: band([r[t][m] for r in runs]) for m in METRICS} for t in TYPES}}
     tot = [totals(r) for r in runs]
     res["totals"] = {k: band([x[k] for x in tot]) for k in tot[0]}
     if base_runs is not None:
         bt = [totals(r) for r in base_runs]
         res["diff_vs_baseline"] = {k: band([a[k] - b[k] for a, b in zip(tot, bt)]) for k in tot[0]}
-        res["diff_by_type_GW"] = {t: band([a[t]["GW_online"] - b[t]["GW_online"] for a, b in zip(runs, base_runs)])
-                                  for t in TYPES}
+        res["diff_by_type"] = {t: {m: band([a[t][m] - b[t][m] for a, b in zip(runs, base_runs)]) for m in ("GW_online", "suits", "median_months_to_permit")}
+                               for t in TYPES}
     return res
 
 
-def sweep(base_over, key, values, n_runs, hazard, base_runs, build=None):
-    """Re-run `base_over` with `key` set to each value; return headline totals and paired gain vs baseline."""
-    out = []
-    for v in values:
-        runs = run_scenario(dict(base_over, **{key: v}), n_runs, hazard, build=build)
-        a = aggregate(runs, base_runs)
-        out.append(dict(value=v, totals=a["totals"], diff=a["diff_vs_baseline"]))
+def compare(scenarios, n_runs, cal, politics=None, base_key=None):
+    """{name: overrides} -> {name: aggregate}, all paired against the first (or base_key) scenario."""
+    raw = {k: run_scenario(o, n_runs, cal, politics) for k, o in scenarios.items()}
+    b = raw[base_key or next(iter(raw))]
+    return {k: aggregate(r, None if r is b else b) for k, r in raw.items()}
+
+
+def assumption_sweep(levers, keys, n_runs, cal, base_runs, base=None):
+    """For each assumption key: BAAJA (levers) at the low and high end of its range, everything else central.
+    Returns {key: {low: diff totals, high: diff totals}} vs current law."""
+    out = {}
+    for k in keys:
+        lo, _, hi, note = ASSUMPTIONS[k]
+        o = {}
+        for lab, v in (("low", lo), ("high", hi)):
+            over = dict(levers); over.update(base or {})
+            over[_lever_key(k)] = v
+            o[lab] = dict(value=v, diff=aggregate(run_scenario(over, n_runs, cal), base_runs)["diff_vs_baseline"])
+        o["note"] = note
+        out[k] = o
     return out
+
+
+def _lever_key(k):
+    return {"ix_2106": "ix_cut", "ix_2110": "ix_cut", "halt_mult_1401": "halt_mult", "intake_pub_baaja": "intake_pub",
+            "nonnepa_hydro_baaja": "nonnepa_hydro", "lit_months_baaja": "lit_months"}.get(k, k)
+
+
+def backcast(cal, n_runs=10):
+    """Current law, Jan 2010 - Dec 2025, with LBNL requests by year, no seeded queue; GW online per year by type."""
+    arr = {t: dict(v) for t, v in ((t, {int(y): n for y, n in d.items()}) for t, d in ENGINE["lbnl"]["arrivals_by_year"].items())}
+    hyb = {int(y): n for y, n in ENGINE["lbnl"]["hybrid_storage"]["arrivals_by_year"].items()}
+    arr["Storage"] = {y: arr["Storage"].get(y, 0) + hyb.get(y, 0) for y in set(arr["Storage"]) | set(hyb)}
+    p = params(dict(T=BACKCAST["T"], turnovers=BACKCAST["turnovers"], arrivals=arr, start_year=BACKCAST["start_year"],
+                    seed_queue=False), cal)
+    runs = [summarize(simulate(p, s, BACKCAST["politics"]), p)["_online_by_year"] for s in range(n_runs)]
+    years = list(range(BACKCAST["start_year"], BACKCAST["start_year"] + int(np.ceil(BACKCAST["T"] / 12))))
+    return {t: dict(zip(years, np.mean([r[t] for r in runs], axis=0).tolist())) for t in TYPES}
