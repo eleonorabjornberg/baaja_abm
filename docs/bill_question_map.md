@@ -1,10 +1,12 @@
-# Research questions -> BAAJA sections -> model -> data
+# Simulations: research question -> BAAJA sections -> model -> data
+
+Each research question is one simulation. "Section" below always means a section of the bill.
 
 Scope: US electricity, renewables vs fossil (gas generation; pipelines/LNG only as the fossil litigation comparison).
 Bill text: S.5653 as introduced (GovInfo BILLS-119s5653is). Section numbers below are the bill's. Status: **in model**,
 **partial**, or **not yet**.
 
-## 1. How long do renewable vs fossil build-outs take?
+## Simulation 1 (Build-out time): How long do renewable vs fossil build-outs take?
 
 | Section | What it does (from the text) | Model | Data |
 |---|---|---|---|
@@ -23,14 +25,14 @@ Bill text: S.5653 as introduced (GovInfo BILLS-119s5653is). Section numbers belo
 | 2231-2233 | hydro: license conditions limited to project effects; maintenance without prior approval | partly (hydro relicensing) | |
 | 2251-2252 | offshore wind: "unreasonable interference" standard; offshore transmission | not yet | |
 
-## 2. How many projects get permitted?
+## Simulation 2 (Permitting outcomes): How many projects get permitted?
 
 | Section | What it does | Model | Data |
 |---|---|---|---|
 | 1106, 1402(c), 1403 | deadlines and petition rights (above) | permitted share is reported but currently counts projects that already withdrew (to fix) | CEQ EIS counts; federal nexus shares (`data/federal_nexus_targets.json`) |
 | 1402(a)-(d) | applicants may sue over a "pattern of disparate treatment" of a project type vs the prior 5 years | not yet; relevant to renewable vs fossil because either side can be the disfavored type under a given administration | |
 
-## 3. How much are projects sued, and by whom?
+## Simulation 3 (Litigation): How much are projects sued, and by whom?
 
 | Section | What it does | Model | Data |
 |---|---|---|---|
@@ -39,7 +41,7 @@ Bill text: S.5653 as introduced (GovInfo BILLS-119s5653is). Section numbers belo
 | 1205, 1305 | 150-day limits for s.404 program approvals and ESA biological opinions (D.C. Circuit) | not yet | |
 | — (outside the bill) | state-court and administrative litigation | not in model | Sabin: ~80% of litigated renewable projects were in state/administrative venues, which BAAJA does not reach |
 
-## 4. Do vertically integrated utilities shift decision control?
+## Simulation 4 (Utility decision control): Do vertically integrated utilities shift decision control?
 
 | Section | What it does | Model | Data |
 |---|---|---|---|
@@ -51,7 +53,7 @@ Bill text: S.5653 as introduced (GovInfo BILLS-119s5653is). Section numbers belo
 | 2112 | power marketing administration staffing | not yet | |
 |  |  |  | EIA-860 ownership: 51% of new gas MW utility-owned vs 16-21% solar/wind |
 
-## 5. How long do plants stay in use?
+## Simulation 5 (Plant lifetimes): How long do plants stay in use?
 
 | Section | What it does | Model | Data |
 |---|---|---|---|
@@ -62,7 +64,7 @@ Bill text: S.5653 as introduced (GovInfo BILLS-119s5653is). Section numbers belo
 
 The bill has no direct retirement provision; lifetime effects would come through permit terms and operating-permit certainty. This question may have a small answer.
 
-## 6. How many permits are reconsidered?
+## Simulation 6 (Permit reconsideration): How many permits are reconsidered?
 
 | Section | What it does | Model | Data |
 |---|---|---|---|
