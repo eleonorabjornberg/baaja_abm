@@ -16,6 +16,17 @@ Federal review applies only to projects with a federal nexus (data: land, federa
 | only Sec.2102 reconductoring CE | +0.0 [+0.0, +0.0] | +0.0 [+0.0, +0.0] | +0.0 [+0.0, +0.0] | +0.00 pts |
 | only Sec.2229 geothermal | +0.3 [+0.1, +0.4] | +0.0 [+0.0, +0.0] | +0.0 [+0.0, +0.0] | +0.03 pts |
 
+## Same comparison if 2025's request mix continues (regime "2025")
+
+| scenario | renewable GW | gas GW | storage GW | renewable share of new TWh |
+|---|---|---|---|---|
+| Current law | 582 [568, 599] | 301 [289, 313] | 229 [221, 237] | 48.9% |
+| Permitting provisions (central) | +5.0 [+3.9, +6.6] | +2.1 [+1.1, +3.3] | +0.1 [+0.0, +0.3] | +0.07 pts |
+
+## Check against BLM solar right-of-way outcomes (MLRS)
+
+9.6% of resolved BLM solar development grant applications were authorized (n=741; the rest closed). Model, current law: 10.2% of solar projects with a federal nexus reach operation (all solar: 12.7%). MLRS has no filing dates, so right-of-way intake time is still an assumption.
+
 ## Process, renewable vs gas (projects requested 2026-31; federal-nexus projects for permits)
 
 | group | months to permit, law | BAAJA | months to COD, law | BAAJA | permitted (of decided) | decisions |
@@ -48,4 +59,3 @@ Federal review applies only to projects with a federal nexus (data: land, federa
 | ea_share_nonEIS (current law) | 0.32 / 0.67 | +5.8 / +6.7 | +1.0 / +1.0 | +25.4 / +25.4 | share of non-EIS federal reviews that are EAs (rest CEs/DNAs) [D: BLM ePlanning; central = actions naming >= 20 MW (n=49), low = all energy actions, high = central + 95% binomial margin] |
 | geo_ce | 0.5 / 1.0 | +6.4 / +6.4 | +1.0 / +1.0 | +26.1 / +25.8 | Sec.2229: share of geothermal reviews that become non-major actions |
 | delay_weight (current law) | 0.0 / 1.0 | +6.5 / +6.4 | +1.0 / +1.0 | +25.8 / +25.8 | weight of litigation/halt delay in the sponsor's withdrawal clock |
-| gas_arr_mult (current law) | 1.0 / 2.13 | +6.4 / +6.5 | +1.0 / +2.2 | +25.8 / +25.5 | gas requests relative to the 2021-25 mean [D: high = 2025 rate; EIA-860M planned gas 29 GW (Dec 2021) -> 71 GW (Sep 2026)] |

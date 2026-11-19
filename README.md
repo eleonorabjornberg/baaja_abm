@@ -24,8 +24,8 @@ Renewables are 65% of new-build generation.
 
 **Everything in the bill that the data can size** (Simulations 1, 2, 4 together, central values): **+12 GW**
 [+9, +14]: renewables +8.2 GW, gas +1.2 GW, storage +0.4 GW. That is about 1% more capacity than current law.
-The renewable share of new generation rises by +0.2 points. If gas requests stay at their 2025 rate (2.1x the
-2021-25 mean; EIA-860M planned gas 29 -> 71 GW since 2021), the gas gain doubles to +2.2 GW.
+The renewable share of new generation rises by +0.2 points. If 2025's request mix continues (see the regime table
+below), the gas gain doubles to +2.4 GW and the renewable gain falls to +5.9 GW.
 
 1. **Permitting (Sim 1)** gives most of that: renewables +6.4 GW [+4.6, +8.4], gas +1.0 GW.
    - The largest single provision is **Sec.2213** (federal-land rights-of-way deadlines): +4.9 GW, all renewable.
@@ -65,6 +65,22 @@ The renewable share of new generation rises by +0.2 points. If gas requests stay
    technology), split across ISO and non-ISO regions in proportion to where projects are. Transmission sponsorship
    (Sec.2105 no right of first refusal) has no measured link to generator completion and is listed, not simulated.
 
+**Does the 2025-26 build-out have to continue? (regime comparison)** 2025 requests broke from 2021-25: gas x2.1 and
+geothermal x2.2 (firm power for data centers), solar x0.65, storage x0.69, offshore wind x0.10. That mixes data-center
+demand with federal policy changes, and the data can't separate them. Rather than assume either, every simulation is
+also run with each technology at its 2025 request rate, and BAAJA is compared with current law within each regime.
+
+| | 2021-25 requests (central) | 2025 requests continue |
+|---|---|---|
+| Current law, GW by 2041: renewables / gas / storage | 658 / 175 / 287 | 582 / 301 / 229 |
+| Renewable share of new generation | 65% | 49% |
+| BAAJA, data-sized provisions: renewables / gas / storage | +8.2 / +1.2 / +0.4 | +5.9 / +2.4 / +0.2 |
+| BAAJA + 10% interconnection cut: renewables / gas / storage | +52 / +9 / +23 | +37 / +20 / +16 |
+| Suits cut by the court provisions (current law level) | -96 (136) | -72 (102) |
+
+So the size of BAAJA's effect barely depends on the regime, but its renewable-vs-gas split does: in the 2025 regime the
+bill's gain tilts about 2.5:1 toward renewables instead of 7:1, and gas gains twice as much.
+
 **Bottom line for renewables vs gas.** The provisions that data can size favour renewables (about 6:1 in GW), mainly
 through federal-land rights-of-way and the court changes that hit local opposition. But they are small next to
 interconnection. Whether BAAJA is a +12 GW bill or a several-hundred-GW bill depends on what FERC does under
@@ -89,6 +105,7 @@ low. Calibration fits LBNL completion and time to operation by technology, and C
 | adaptation to a 150-day limit | FHWA/FTA highway/transit suits (150-180 day limit) vs other NEPA suits, case-level export | `extract_limitation_experiment.py` |
 | interconnection bracket for Sec.2106 | LBNL request -> agreement times, ERCOT vs CAISO/MISO | `extract_interconnection_benchmark.py` |
 | late-stage completion, planned pipeline | EIA-860M Dec 2021 and Sep 2026 | `extract_eia860m.py` |
+| BLM solar right-of-way outcomes (check) | BLM MLRS solar development grants (741 cases): 9.6% of resolved applications authorized vs 10.2% model completion for federal-nexus solar | `extract_mlrs.py` |
 | wind habitat conservation plans | Dryad doi:10.5061/dryad.59zw3r2kf file list x EIA-860 | `extract_wind_hcp.py` |
 | federal actions against wind/solar 2025-26 | Sabin Climate Backtracker | `extract_backtracker.py` |
 | state vs federal venue of renewable opposition | Sabin Center 2026 contested projects and restrictions | `extract_permits_opposition.py` |

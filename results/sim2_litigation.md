@@ -10,6 +10,14 @@ Suits are drawn only for projects with a federal decision that are still alive a
 | Court provisions only (Sec.1110/2201) | +0.8 [+0.1, +1.7] | +0.0 [+0.0, +0.2] | +0.2 [+0.0, +0.4] | +0.03 pts |
 | All data-based provisions | +8.2 [+6.0, +10.3] | +1.2 [+0.4, +2.0] | +0.4 [+0.0, +0.7] | +0.17 pts |
 
+## Same comparison if 2025's request mix continues (regime "2025")
+
+| scenario | renewable GW | gas GW | storage GW | renewable share of new TWh |
+|---|---|---|---|---|
+| Current law | 582 [568, 599] | 301 [289, 313] | 229 [221, 237] | 48.9% |
+| Court provisions only (Sec.1110/2201) | +0.4 [+0.0, +1.1] | +0.1 [+0.0, +0.2] | +0.1 [+0.0, +0.3] | +0.02 pts |
+| All data-based provisions | +5.9 [+4.4, +8.1] | +2.4 [+1.3, +3.6] | +0.2 [+0.0, +0.5] | +0.10 pts |
+
 ## Who sues: suits 2026-41 by lead challenger (current law / court provisions / all provisions)
 
 | group | challenger | law | courts only | all | challenger win rate (law) |

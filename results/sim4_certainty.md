@@ -10,6 +10,14 @@ Executive halts hit permitted projects that are not yet online after a change of
 | always hostile to renewables | 11.2 | 13.3 | 1.2 | +1.9 [+0.4, +3.8] | +0.0 [+0.0, +0.0] | +0.1 [+0.0, +0.3] |
 | always hostile to fossil | 1.0 | 1.0 | 0.1 | +0.0 [+0.0, +0.0] | +0.2 [+0.0, +0.4] | +0.0 [+0.0, +0.0] |
 
+## Same comparison if 2025's request mix continues (regime "2025")
+
+| scenario | renewable GW | gas GW | storage GW | renewable share of new TWh |
+|---|---|---|---|---|
+| Current law | 582 [568, 599] | 301 [289, 313] | 229 [221, 237] | 48.9% |
+| BAAJA | +5.9 [+4.4, +8.1] | +2.4 [+1.3, +3.6] | +0.2 [+0.0, +0.5] | +0.10 pts |
+| BAAJA without Sec.1401 | +5.5 [+4.2, +7.2] | +2.2 [+1.1, +3.3] | +0.2 [+0.0, +0.4] | +0.10 pts |
+
 ## Projects halted and cancelled, by technology (random politics; law vs BAAJA)
 
 | technology | halted, law | halted, BAAJA | cancelled (courts or halts) |

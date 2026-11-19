@@ -13,6 +13,14 @@ All data-based BAAJA provisions are on in every row; only the interconnection st
 | 30% | +284.7 [+273.3, +297.4] | +169.9 [+161.0, +178.1] | +29.8 [+26.0, +34.2] | +83.3 [+78.1, +88.7] | +1.63 |
 | 42% | +453.9 [+439.6, +468.6] | +271.7 [+260.9, +281.2] | +45.1 [+39.7, +50.4] | +135.4 [+128.9, +141.1] | +2.58 |
 
+## Same comparison if 2025's request mix continues (regime "2025")
+
+| scenario | renewable GW | gas GW | storage GW | renewable share of new TWh |
+|---|---|---|---|---|
+| Current law | 582 [568, 599] | 301 [289, 313] | 229 [221, 237] | 48.9% |
+| BAAJA, 0% cut | +5.9 [+4.4, +8.1] | +2.4 [+1.3, +3.6] | +0.2 [+0.0, +0.5] | +0.10 pts |
+| BAAJA, 10% cut | +37.2 [+33.5, +40.1] | +20.0 [+16.0, +23.8] | +15.5 [+13.4, +17.5] | -0.00 pts |
+
 ## Timing of the rules (10% cut)
 
 | rules affect studies from | renewable GW | gas GW |
