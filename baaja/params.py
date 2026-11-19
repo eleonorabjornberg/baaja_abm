@@ -12,6 +12,7 @@ LBNL, ENGINE, NEXUS, CEQ, CASES = (_load("lbnl_targets.json"), _load("engine_inp
                                    _load("federal_nexus_combined.json"), _load("ceq_eis_targets.json"),
                                    _load("nepa_case_targets.json"))
 FED = _load("federal_nexus_targets.json")
+LIMIT = _load("limitation_experiment.json")["late_adapt"]   # [D] highway/transit 150-180 day limit vs other NEPA suits
 MIN_N = 30
 
 T = 180
@@ -40,7 +41,10 @@ ASSUMPTIONS = {
     "geo_ce":            (0.5, 0.85, 1.0, "Sec.2229: share of geothermal reviews that become non-major actions"),
     "intake_pub_baaja":  (3, 4, 6, "Sec.2213: months to start of review on federal land (30-day completeness, 90-day NOI)"),
     "nonnepa_hydro_baaja": (30, 36, 42, "Sec.1202: hydro months outside NEPA with the s.401 clock"),
-    "late_adapt":        (0.0, 0.5, 1.0, "Sec.1110/2201: share of would-be late filers who file within 150 days instead"),
+    "late_adapt":        (round(LIMIT["low"], 2), round(LIMIT["central"], 2), LIMIT["high"],
+                          "Sec.1110/2201: share of would-be late filers who file within 150 days instead [D: FHWA/FTA "
+                          "limitation natural experiment, data/limitation_experiment.json; high end = all late highway "
+                          "suits lacked a notice]"),
     "exhaust_injury":    (0.6, 0.8, 0.95, "Sec.1110: share of timely suits that pass comment exhaustion + direct injury"),
     "suit_payoff":       (0.4, 0.6, 1.0, "Sec.1110: suits filed relative to current law when the only remedy is remand"),
     "inj_nonNEPA":       (0.0, 0.3, 0.5, "Sec.1110: share of injunctions that rest on non-NEPA laws (still allowed)"),

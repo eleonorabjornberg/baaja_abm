@@ -122,3 +122,9 @@ def test_simulation_runs(mod, cal, tmp_path):
     m = importlib.import_module(f"baaja.sims.{mod}")
     md, data = m.run(2, cal, str(tmp_path), str(tmp_path))
     assert md.startswith("# Simulation") and (tmp_path / f"{mod}.md").exists()
+
+
+def test_late_adapt_comes_from_limitation_experiment():
+    from baaja.params import ASSUMPTIONS, LIMIT
+    lo, c, hi, _ = ASSUMPTIONS["late_adapt"]
+    assert lo == pytest.approx(LIMIT["low"], abs=0.01) and c == pytest.approx(LIMIT["central"], abs=0.01) and lo < c < hi
