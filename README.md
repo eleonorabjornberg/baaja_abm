@@ -78,7 +78,7 @@ also run with each technology at its 2025 request rate, and BAAJA is compared wi
 | BAAJA + 10% interconnection cut: renewables / gas / storage | +52 / +9 / +23 | +37 / +20 / +16 |
 | Suits cut by the court provisions (current law level) | -96 (136) | -72 (102) |
 
-So the size of BAAJA's effect barely depends on the regime, but its renewable-vs-gas split does: in the 2025 regime the
+So the size of BAAJA's effect changes little with the regime (about 10-15% smaller in total), but its renewable-vs-gas split does change: in the 2025 regime the
 bill's gain tilts about 2.5:1 toward renewables instead of 7:1, and gas gains twice as much.
 
 **Bottom line for renewables vs gas.** The provisions that data can size favour renewables (about 6:1 in GW), mainly
