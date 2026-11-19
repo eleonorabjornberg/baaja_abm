@@ -1,0 +1,13 @@
+{
+ "_note": "Federal hooks not captured by data/federal_nexus_targets.json (land + federal balancing authority). Only hooks that trigger a PROJECT-LEVEL NEPA review matter for BAAJA's NEPA/court levers; general and nationwide permits are covered by programmatic NEPA reviews.",
+ "eagle_general_permits_wind": {"active_aug_2026": 224, "project_level_nepa": false,
+   "source": "FWS, current eagle take general permits, 8 Aug 2026 (fws.gov/sites/default/files/documents/2026-08/current-eagle-take-gps-8-aug-2026.pdf); covered by the 2024 eagle rule programmatic EA"},
+ "eagle_specific_permits_wind": {"count": "dozens (not counted)", "project_level_nepa": true,
+   "source": "FWS project pages (each with an EA, e.g. Elkhorn Valley, Biglow Canyon); count not compiled"},
+ "esa_hcp_wind": {"count_through_2022": 25, "project_level_nepa": true,
+   "source": "Dryad doi:10.5061/dryad.59zw3r2kf (wind-bat HCPs and costs)"},
+ "army_corps_404": {"count": null, "project_level_nepa": "individual permits only; NWP 51 (land-based renewables) and NWP 12 (utility lines) are programmatic",
+   "source": "USACE ORM public portal (permits.ops.usace.army.mil/orm-public) report download, not retrieved"},
+ "doe_loans": {"count": null, "project_level_nepa": true, "source": "DOE LPO/EDF portfolio page is script-rendered; not retrieved"},
+ "rus_financing": {"count": null, "project_level_nepa": true, "source": "USDA RUS electric program pages returned 403 from this environment"}
+}
