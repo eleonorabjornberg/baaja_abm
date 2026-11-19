@@ -19,25 +19,26 @@ Each one maps a research question to bill sections (`docs/bill_question_map.md`)
 
 ## Results
 
-**Current law.** About 1,066 GW of new capacity online by Nov 2041: renewables 658 GW, gas 175 GW, storage 218 GW (plus retained hydro).
+**Current law.** About 1,135 GW of new capacity online by Nov 2041: renewables 658 GW, gas 175 GW, storage 287 GW (plus retained hydro).
 Renewables are 65% of new-build generation.
 
-**Everything in the bill that the data can size** (Simulations 1, 2, 4 together, central values): **+11 GW**
-[+8, +13]: renewables +7.7 GW, gas +1.2 GW, storage +0.3 GW. That is about 1% more capacity than current law.
-The renewable share of new generation rises by +0.2 points.
+**Everything in the bill that the data can size** (Simulations 1, 2, 4 together, central values): **+12 GW**
+[+9, +14]: renewables +8.2 GW, gas +1.2 GW, storage +0.4 GW. That is about 1% more capacity than current law.
+The renewable share of new generation rises by +0.2 points. If gas requests stay at their 2025 rate (2.1x the
+2021-25 mean; EIA-860M planned gas 29 -> 71 GW since 2021), the gas gain doubles to +2.2 GW.
 
-1. **Permitting (Sim 1)** gives most of that: renewables +5.9 GW [+4.3, +7.9], gas +1.0 GW.
-   - The largest single provision is **Sec.2213** (federal-land rights-of-way deadlines): +4.5 GW, all renewable.
+1. **Permitting (Sim 1)** gives most of that: renewables +6.4 GW [+4.6, +8.4], gas +1.0 GW.
+   - The largest single provision is **Sec.2213** (federal-land rights-of-way deadlines): +4.9 GW, all renewable.
      It is also the most uncertain, because current-law right-of-way processing time isn't measured (BLM's NEPA
-     start date comes after the application): across 6-18 months the renewable gain runs +2.3 to +11.1 GW.
+     start date comes after the application): across 6-18 months the renewable gain runs +2.5 to +11.9 GW.
    - BLM ePlanning shows its energy reviews are quicker than assumed before: EAs take ~6 months for solar, wind and
      geothermal and CEs under 2; 53% of non-EIS project approvals are EAs.
    - Median months to a federal permit: **renewables 15 -> 7**, **gas 9.6 -> 9.1**. Months from request to operation
      barely move (renewables 61 -> 61, gas 37 -> 37): interconnection is the binding gate.
    - Gas has more federal exposure than wind or solar (~33% of new gas MW has a federal hook, mostly Army Corps
      individual permits, vs ~5% wind and ~11% solar), but its reviews are short Corps EAs, so deadlines barely bind.
-2. **Litigation (Sim 2)**: the court provisions cut suits by about 70% (125 -> 36 over 15 years; a cut of 64-105
-   across the assumption ranges), but add only +0.7 GW, because only ~9.5% of energy suits ever win an injunction.
+2. **Litigation (Sim 2)**: the court provisions cut suits by about 70% (136 -> 39 over 15 years; a cut of 70-111
+   across the assumption ranges), but add only +0.8 GW, because only ~9.5% of energy suits ever win an injunction.
    - Suit rates for energy EAs and CEs come from district-court suits per BLM + DOE review, 2012-21: about 3.6% of
      renewable EAs and 6.5% of transmission EAs are sued (central, after a 0.75 scale for missing agencies), far above
      the all-sector NEPA rate.
@@ -45,20 +46,20 @@ The renewable share of new generation rises by +0.2 points.
      a 150-180 day limit since 2005, and those suits bunch just inside it. 27% are filed more than 240 days after the
      decision vs 45% of other NEPA suits, so ~39% of would-be late filers file in time (range 26-100%).
    - Renewables are sued mostly by **local groups and residents** (about 70% of renewable suits). They lose the most
-     under the 150-day limit and comment-exhaustion rule (37 -> 11 suits).
+     under the 150-day limit and comment-exhaustion rule (38 -> 11 suits).
    - Vacatur disappears (it is 69% of remands today); cancellations by courts fall modestly.
    - Outside the bill's reach: ~80% of litigated renewable projects in the Sabin database were fought in state courts
      or administrative venues.
 3. **Grid access (Sim 3)** dominates everything else, but the bill fixes no size. Sec.2110 only requires a rulemaking
    on computing/AI queue practices; Sec.2106 requires consolidated planning with published interconnection locations
    and fixed costs. Every 5% cut in interconnection study time adds about 35-45 GW by 2041 (renewables ~2/3). At 10%:
-   +79 GW total, +51 renewable, +9 gas, +17 storage.
+   +85 GW total, +52 renewable, +9 gas, +23 storage.
    - The data bracket the effect but can't point to a value. Floor: past queue reforms show no measured shortening
      (MISO's request-to-agreement times rose from ~33 to 45-51 months for 2017-21 requests). Ceiling: ERCOT's pace,
-     23 vs 40 months in CAISO/MISO (2015-19 requests), a 42% cut, worth **+426 GW** (renewables +271, gas +45,
-     storage +108). Reaching it would also need energy-only interconnection, which the bill does not mandate.
-4. **Permit certainty (Sec.1401, Sim 4)**: halted GW falls from ~6 to ~0.6. That is worth +0.8 GW of renewables in a
-   random political future and +1.8 GW if every administration is hostile to renewables; for gas, +0.1-0.2 GW.
+     23 vs 40 months in CAISO/MISO (2015-19 requests), a 42% cut, worth **+454 GW** (renewables +272, gas +45,
+     storage +135). Reaching it would also need energy-only interconnection, which the bill does not mandate.
+4. **Permit certainty (Sec.1401, Sim 4)**: halted GW falls from ~6 to ~0.7. That is worth +0.9 GW of renewables in a
+   random political future and +1.9 GW if every administration is hostile to renewables; for gas, +0.1-0.2 GW.
    Offshore wind carries most of the risk (anchored on the 2025 stop-work orders).
 5. **Decision control (Sim 5)**: about 80% of the gain goes to merchant-owned capacity (EIA-860 ownership by
    technology), split across ISO and non-ISO regions in proportion to where projects are. Transmission sponsorship
@@ -66,14 +67,15 @@ The renewable share of new generation rises by +0.2 points.
 
 **Bottom line for renewables vs gas.** The provisions that data can size favour renewables (about 6:1 in GW), mainly
 through federal-land rights-of-way and the court changes that hit local opposition. But they are small next to
-interconnection. Whether BAAJA is a +11 GW bill or a several-hundred-GW bill depends on what FERC does under
+interconnection. Whether BAAJA is a +12 GW bill or a several-hundred-GW bill depends on what FERC does under
 Sec.2106: the data bracket it between no change and ERCOT's pace, but nothing measured picks a point inside.
 
 ## Validation
 Backcast, current law, Jan 2010 to Dec 2025, with LBNL requests by year (`results/backcast.md`). Cumulative 2018-25
-additions, model vs EIA-860: onshore wind 0.99, gas 0.82, solar 0.81, **storage 0.37** (storage completion is
-calibrated to the 2000-20 queue cohort, when few batteries finished; recent storage completes more, so storage
-GW are underestimated). Calibration fits LBNL completion and time to operation by technology, and CEQ EIS counts
+additions, model vs EIA-860: onshore wind 0.99, gas 0.82, solar 0.81, **storage 0.53**. Storage completion is set from
+EIA-860M (storage planned in Dec 2021 completes 1.07x as often as solar by Sep 2026) rather than LBNL's 2000-20
+cohort; the remaining gap is likely batteries added at existing plants outside the queue, so storage GW are still
+low. Calibration fits LBNL completion and time to operation by technology, and CEQ EIS counts
 (`results/calibration.json`).
 
 ## Data register ([D])
@@ -86,6 +88,9 @@ GW are underestimated). Calibration fits LBNL completion and time to operation b
 | Corps standard-permit processing time | USACE ORM final individual permits | `extract_engine_inputs.py` |
 | adaptation to a 150-day limit | FHWA/FTA highway/transit suits (150-180 day limit) vs other NEPA suits, case-level export | `extract_limitation_experiment.py` |
 | interconnection bracket for Sec.2106 | LBNL request -> agreement times, ERCOT vs CAISO/MISO | `extract_interconnection_benchmark.py` |
+| late-stage completion, planned pipeline | EIA-860M Dec 2021 and Sep 2026 | `extract_eia860m.py` |
+| wind habitat conservation plans | Dryad doi:10.5061/dryad.59zw3r2kf file list x EIA-860 | `extract_wind_hcp.py` |
+| federal actions against wind/solar 2025-26 | Sabin Climate Backtracker | `extract_backtracker.py` |
 | state vs federal venue of renewable opposition | Sabin Center 2026 contested projects and restrictions | `extract_permits_opposition.py` |
 | BLM energy NEPA actions: review type, durations, suit rates (with the case data) | BLM ePlanning export (2,594 actions) | `extract_blm_eplanning.py` |
 | DOE EAs and EISs | DOE NEPA document lists | `extract_permits_opposition.py`, `combine_federal_hooks.py` |
@@ -131,11 +136,11 @@ geothermal (40 MW) project sizes; EIS litigation rates for offshore wind, hydro 
 of a truncated review (1.6); halt probabilities other than offshore wind.
 
 ## Known limits
-- **Onshore wind's federal nexus is a lower bound.** Even if every wind review were an EIS, the model only just
-  reproduces CEQ's ~1 wind EIS a year, so the true share with a federal hook is probably higher than 4-7%.
+- **Onshore wind's federal nexus is a lower bound.** With wind habitat conservation plans added (+2.7 points), it is
+  7-9%; FWS publishes no list of specific eagle permits, so the true share is somewhat higher.
 - **EA/CE data are BLM and DOE only.** Corps, USFS and FWS reviews are missing, so EA/CE suit rates are scaled down by a range.
-- **Storage is underestimated** (backcast ratio 0.37).
-- **Gas pipelines and LNG are outside the model**, though much fossil NEPA litigation happens there.
+- **Storage is underestimated** (backcast ratio 0.53; storage completion is now set from EIA-860M late-stage data).
+- **Gas pipelines and LNG are not simulated**; Sim 2 compares their litigation (10 NEPA cases a year vs 4 for renewables) from data.
 - **No prices, demand or emissions feedback**; arrivals stay at the 2021-25 average (gas requests are rising fast).
 - **Transmission has no MW in the model**, so transmission provisions affect only transmission projects' own timing.
 

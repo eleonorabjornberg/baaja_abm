@@ -28,17 +28,17 @@ capped and flagged as truncated.
 The model is rebuilt on data (see README data and assumption registers) and organised as five simulations
 (`baaja/sims/`, map in `docs/bill_question_map.md`). Results in `results/`, charts in `figures/`.
 
-Main findings: data-sized provisions add ~+11 GW by 2041 (renewables +7.7, gas +1.2, storage +0.3); grid access
+Main findings: data-sized provisions add ~+12 GW by 2041 (renewables +8.2, gas +1.2, storage +0.4); grid access
 (Sec.2106) is unsized by the bill and dominates (each 5% study-time cut ~ +35-45 GW).
 
 ## Next steps
 1. Done: BLM ePlanning (EA share, durations, suit rates), FHWA/FTA limitation experiment, ERCOT interconnection bracket.
 2. Measure current-law right-of-way intake time on federal land (biggest Sim 1 uncertainty).
-3. Recent storage completion (backcast underestimates storage by ~2/3).
-4. Onshore wind federal nexus: find the missing hooks (FWS specific eagle permits, HCPs, state-federal overlaps).
+3. Done: storage completion from EIA-860M (backcast 0.37 -> 0.53).
+4. Partly done: wind HCPs added (+2.7 pts). Still missing: FWS specific eagle permits (no public list).
 5. Sim 5: a measured link from transmission sponsorship (Sec.2105) to generator completion, if one exists.
-6. Gas pipelines/LNG as a separate fossil sub-model (most fossil NEPA litigation).
-7. Gas arrivals trend (2025 requests ~2x the 2021-25 average).
+6. Pipelines/LNG: litigation comparison in Sim 2; a full sub-model would need FERC certificate dates.
+7. Done: gas arrivals sensitivity (2025 rate 2.13x). Still needed from user: BLM MLRS right-of-way application dates; list of federal actions against permitted projects 2017-26.
 
 ## History
 v3 (uploaded): assumed parameters. v4: LBNL calibration, challenger agents. v5: federal nexus, EIS counts, court
