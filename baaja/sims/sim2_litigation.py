@@ -8,7 +8,7 @@ import os
 from .. import experiments as ex
 from .. import plots
 from ..params import A, BAAJA, CASES, CEQ, CHALLENGERS, LATE_SHARE, LEVERS, _load
-from . import G3, fmt, headline, save, sweep_table, table
+from . import regime_block, G3, fmt, headline, save, sweep_table, table
 
 L = LEVERS["litigation"]
 SWEEP = ["late_adapt", "exhaust_injury", "suit_payoff", "inj_nonNEPA", "lit_months_baaja", "lit_data_mult", "lit_ea", "p_kill_vac", "remand_months"]
@@ -43,11 +43,13 @@ def run(n_runs, cal, res_dir, fig_dir):
     pl = CEQ["types"].get("Gas pipeline/LNG (not modelled)", {})
     s = _load("permits_opposition_targets.json")["sabin"]["contested_by_type"]
     sab = [[t, v["contested"], v["litigated"], v["federal_venue"], v["state_or_admin_only"], v["canceled"]] for t, v in s.items()]
+    reg_md, reg_res = regime_block(scen, n_runs, cal)
     md = "\n\n".join([
         "# Simulation 2: litigation",
         "Suits are drawn only for projects with a federal decision that are still alive at that decision. Challenger mix, win "
         "rates, injunction and vacatur rates, filing delays and case length come from 1,821 NEPA cases (2001-22).",
         "## Outcome vs current law (GW)", headline(res, scen),
+        reg_md,
         "## Who sues: suits 2026-41 by lead challenger (current law / court provisions / all provisions)",
         table(["group", "challenger", "law", "courts only", "all", "challenger win rate (law)"], rows),
         "## By technology: suits per year, permits vacated, projects cancelled by courts or halts (law -> court provisions)",
@@ -69,6 +71,6 @@ def run(n_runs, cal, res_dir, fig_dir):
                        | {g + ", BAAJA courts": [c[f"suits: {ch} | {g}"] for ch in CHALLENGERS] for g in ("Renewable (new)", "Fossil (gas)")},
                        os.path.join(fig_dir, "sim2_who_sues.png"), "Sim 2: suits 2026-41 by lead challenger", "suits",
                        colors=["#9ddcc4", "#f5b79c", "#1baf7a", "#eb6834"], fmt="{:.0f}")
-    data = dict(scenarios=res, sweep=sw, sabin=s)
+    data = dict(regime_2025=reg_res, scenarios=res, sweep=sw, sabin=s)
     save("sim2_litigation", data, md, res_dir)
     return md, data

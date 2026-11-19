@@ -8,7 +8,7 @@ import os
 from .. import experiments as ex
 from .. import plots
 from ..params import BAAJA, IXB
-from . import G3, fmt, headline, save, table
+from . import regime_block, G3, fmt, headline, save, table
 
 CUTS = [0.0, 0.05, 0.10, 0.20, 0.30, round(IXB["ercot_gap_cut"], 2)]   # last = ERCOT-pace ceiling [D]
 
@@ -28,6 +28,7 @@ def run(n_runs, cal, res_dir, fig_dir):
             + [f"{100*a['diff_vs_baseline']['renewable share of new TWh']['mean']:+.2f}"] for c, a in out]
     b = ex.aggregate(base)["by_type"]
     ixrows = [[t, f"{b[t]['median_months_to_COD']['mean']:.0f}"] for t in ("Solar", "Onshore wind", "Offshore wind", "Gas", "Storage", "Geothermal")]
+    reg_md, reg_res = regime_block({"Current law": {}, "BAAJA, 0% cut": BAAJA, "BAAJA, 10% cut": dict(BAAJA, ix_cut=0.10)}, n_runs, cal)
     md = "\n\n".join([
         "# Simulation 3: grid access",
         "All data-based BAAJA provisions are on in every row; only the interconnection study-time cut varies. "
@@ -38,6 +39,7 @@ def run(n_runs, cal, res_dir, fig_dir):
         "The cut applies to study months after the rules take effect (central month 36 = late 2029).",
         "## GW gained vs current law by interconnection cut",
         table(["study-time cut", "total GW", "renewable GW", "gas GW", "storage GW", "renewable share pts"], rows),
+        reg_md,
         "## Timing of the rules (10% cut)",
         table(["rules affect studies from", "renewable GW", "gas GW"],
               [[f"month {m}", fmt(d["GW Renewable (new)"], 1, True), fmt(d["GW Fossil (gas)"], 1, True)] for m, d in rule.items()]),
@@ -49,6 +51,6 @@ def run(n_runs, cal, res_dir, fig_dir):
     ])
     plots.sweep([100 * c for c in CUTS], lines, os.path.join(fig_dir, "sim3_grid_sweep.png"),
                 "Sim 3: GW gained vs interconnection study-time cut (all other provisions on)", "study-time cut (%)", "GW vs current law")
-    data = dict(cuts=CUTS, results={str(c): a for c, a in out}, rule_timing={str(k): v for k, v in rule.items()})
+    data = dict(regime_2025=reg_res, cuts=CUTS, results={str(c): a for c, a in out}, rule_timing={str(k): v for k, v in rule.items()})
     save("sim3_grid", data, md, res_dir)
     return md, data

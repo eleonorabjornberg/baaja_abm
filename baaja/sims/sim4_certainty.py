@@ -9,7 +9,7 @@ import os
 from .. import experiments as ex
 from .. import plots
 from ..params import BAAJA, ENGINE, POLITICS
-from . import G3, fmt, save, sweep_table, table
+from . import regime_block, G3, fmt, save, sweep_table, table
 
 SWEEP = ["halt_mult_1401", "halt_mult_other", "p_kill_halt", "halt_len"]
 
@@ -34,6 +34,7 @@ def run(n_runs, cal, res_dir, fig_dir):
             for t in ab["by_type"] if ab["by_type"][t]["halted"]["mean"] > 0]
     ra = ENGINE["eia860"]["retirement_age"]
     life = [[t, f"{v['median_age']:.0f}", f"{v['mw_weighted_mean_age']:.0f}", f"{v['retired_since_2015_GW']:.1f}"] for t, v in ra.items()]
+    reg_md, reg_res = regime_block({"Current law": {}, "BAAJA": BAAJA, "BAAJA without Sec.1401": no1401}, n_runs, cal)
     md = "\n\n".join([
         "# Simulation 4: permit certainty across administrations",
         "Executive halts hit permitted projects that are not yet online after a change of administration hostile to their "
@@ -41,6 +42,7 @@ def run(n_runs, cal, res_dir, fig_dir):
         "Sec.1401 leaves a residual (central 10%) for its exceptions.",
         "## Halted GW by political path, and what Sec.1401 adds (BAAJA with vs without Sec.1401)",
         table(["political path", "halted GW, law", "BAAJA w/o 1401", "BAAJA"] + [f"1401 gain: {g}" for g in G3], rows),
+        reg_md,
         "## Projects halted and cancelled, by technology (random politics; law vs BAAJA)",
         table(["technology", "halted, law", "halted, BAAJA", "cancelled (courts or halts)"], tech),
         "## Plant lifetimes (EIA-860 retired generators)",
@@ -54,6 +56,6 @@ def run(n_runs, cal, res_dir, fig_dir):
                                         "BAAJA without 1401": [halted[p]["no1401"] for p in POLITICS],
                                         "BAAJA": [halted[p]["baaja"] for p in POLITICS]},
                        os.path.join(fig_dir, "sim4_halted_GW.png"), "Sim 4: GW halted after hostile turnovers", "GW halted", fmt="{:.1f}")
-    data = dict(halted=halted, sweep=sw, lifetimes=ra)
+    data = dict(regime_2025=reg_res, halted=halted, sweep=sw, lifetimes=ra)
     save("sim4_certainty", data, md, res_dir)
     return md, data

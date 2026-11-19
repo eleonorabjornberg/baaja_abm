@@ -143,3 +143,13 @@ def test_storage_completion_target_uses_eia860m_late_stage_ratio():
     from baaja.params import E860M
     assert TYPES["Storage"]["completion_target"] == pytest.approx(TYPES["Solar"]["completion_target"] * E860M["storage_vs_solar"])
     assert TYPES["Storage"]["completion_target"] > TYPES["Storage"]["completion_target_lbnl_2000_20"]
+
+
+def test_regimes_match_lbnl_2025_request_rates(cal):
+    from baaja.params import REGIMES
+    a = ENGINE["lbnl"]["arrivals_by_year"]["Gas"]
+    assert REGIMES["2025"]["Gas"] == pytest.approx(a["2025"] / (sum(a[str(y)] for y in range(2021, 2026)) / 5))
+    p = P(cal); q = P(cal, regime="2021-25")
+    assert summarize(simulate(p, 11, POL), p)["Solar"] == summarize(simulate(q, 11, POL), q)["Solar"]
+    r = P(cal, regime="2025")
+    assert summarize(simulate(r, 11, POL), r)["Gas"]["n"] > 1.5 * summarize(simulate(p, 11, POL), p)["Gas"]["n"]

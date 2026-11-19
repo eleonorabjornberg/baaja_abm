@@ -43,8 +43,6 @@ ASSUMPTIONS = {
     "p_kill_halt":       (0.1, 0.25, 0.5, "P(cancelled | halted)"),
     "halt_mult_other":   (0.5, 1.0, 2.0, "multiplier on halt probabilities for technologies other than offshore wind"),
     # BAAJA levers whose size the text does not fix
-    "gas_arr_mult":      (1.0, 1.0, round(_GAS2025, 2), "gas requests relative to the 2021-25 mean [D: high = 2025 rate; "
-                          "EIA-860M planned gas 29 GW (Dec 2021) -> 71 GW (Sep 2026)]"),
     "deadline_bind":     (0.25, 0.5, 1.0, "Sec.1106: share of over-deadline EA/EIS reviews actually cut to deadline + 4 months"),
     "ce_shift":          (0.0, 0.10, 0.25, "Sec.1105/1108: share of EAs that become CEs"),
     "recond_ce":         (0.10, 0.25, 0.50, "Sec.2102: extra share of transmission EAs that become CEs"),
@@ -94,6 +92,17 @@ _s["arr"] += _h["req_per_month_2021_25"]
 # 2026) is 1.07x solar's, so storage's target = solar's LBNL completion x that ratio [D]
 TYPES["Storage"]["completion_target_lbnl_2000_20"] = TYPES["Storage"]["completion_target"]
 TYPES["Storage"]["completion_target"] = TYPES["Solar"]["completion_target"] * E860M["storage_vs_solar"]
+# ---- demand/policy regimes: requests per technology relative to the 2021-25 mean [D] LBNL ----------------------
+# "2025": each technology at its 2025 request rate. 2025 mixes data-center demand (gas x2.1, geothermal x2.2) with
+# federal policy (tax-credit phase-outs, actions against wind/solar: solar x0.65, offshore wind x0.1); the data
+# cannot separate the two. Transmission and hydro relicensing have no request data and stay at 1.
+def _ratio2025(t):
+    a = ENGINE["lbnl"]["arrivals_by_year"][t]
+    return a["2025"] / (sum(a[str(y)] for y in range(2021, 2026)) / 5)
+_hy = ENGINE["lbnl"]["hybrid_storage"]["arrivals_by_year"]
+_st = ENGINE["lbnl"]["arrivals_by_year"]["Storage"]
+REGIMES = {"2021-25": {}, "2025": {t: _ratio2025(t) for t in ("Gas", "Geothermal", "Offshore wind", "Onshore wind", "Solar")}}
+REGIMES["2025"]["Storage"] = (_st["2025"] + _hy["2025"]) / (sum(_st[str(y)] + _hy[str(y)] for y in range(2021, 2026)) / 5)
 TYPES["Transmission"] = dict(arr=2.0, mw=0, ix=False, completion_target=None, cod_target=None, ix_med=0, ix_sigma=.5)  # [A] arrivals
 TYPES["Hydro relicense"] = dict(arr=2.5, mw=50, ix=False, completion_target=None, cod_target=None, ix_med=0, ix_sigma=.5)  # [A]
 
@@ -159,7 +168,7 @@ UTILITY_OWNED = {t: FED["types"][t]["utility_owned_share_MW"] for t in GEN}   # 
 BASE = dict(T=T, turnovers=TURNOVERS, n_scale=1.0, seed_queue=True, arrivals=None, start_year=2026,
             hazard=None, build=None, p_eis=None, nex_mult=1.0,
             ea_share_nonEIS=A["ea_share_nonEIS"], intake_pub=A["intake_pub"], intake_oth=A["intake_oth"],
-            nonnepa_hydro=A["nonnepa_hydro"], esa_months=3.0, esa_share=0.25, gas_arr_mult=A["gas_arr_mult"],
+            nonnepa_hydro=A["nonnepa_hydro"], esa_months=3.0, esa_share=0.25, regime="2021-25",
             intake_pub_2213=None, nonnepa_hydro_1202=None,    # BAAJA overrides (None = current-law value applies)
             lit_ea=A["lit_ea"], lit_ce=A["lit_ce"], lit_data_mult=A["lit_data_mult"], p_kill_vac=A["p_kill_vac"], remand_months=A["remand_months"],
             delay_weight=A["delay_weight"], halt_len=A["halt_len"], p_kill_halt=A["p_kill_halt"],

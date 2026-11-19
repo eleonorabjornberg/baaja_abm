@@ -8,7 +8,7 @@ from statistics import NormalDist
 
 import numpy as np
 
-from .params import (CHALLENGER_MIX, CHALLENGERS, COURT_GROUP, ENGINE, GROUPS, HALT, INJ, LATE_SHARE,
+from .params import (REGIMES, CHALLENGER_MIX, CHALLENGERS, COURT_GROUP, ENGINE, GROUPS, HALT, INJ, LATE_SHARE,
                      RENEWABLE_SIDE, TRUNC_LOSS, TYPES, VAC, WIN, WIN_REL)
 
 KIND = np.array(["CE", "EA", "EIS"])
@@ -42,7 +42,7 @@ def seeded_queue(name, rng, n_scale):
 
 def arrival_times(name, ty, p, rng):
     if p["arrivals"] is None:
-        n = rng.poisson(ty["arr"] * (p["gas_arr_mult"] if name == "Gas" else 1.0) * p["T"] * p["n_scale"])
+        n = rng.poisson(ty["arr"] * REGIMES[p["regime"]].get(name, 1.0) * p["T"] * p["n_scale"])
         return rng.uniform(0, p["T"], n)
     per_year = p["arrivals"].get(name, {})                     # backcast: requests by calendar year
     out = []
@@ -174,6 +174,7 @@ def summarize(rows, p):
         yrs = T / 12 * p["n_scale"]                         # per-year counts are per full-size population
         s = dict(n=float(new.sum()), n_seeded=float(r["seeded"].sum()),
                  completion_rate=float(r["done"][coh].mean()) if coh.any() else np.nan,
+                 completion_rate_nexus=float(r["done"][coh & r["nexus"]].mean()) if (coh & r["nexus"]).any() else np.nan,
                  GW_online=float(online.sum() * r["mw"] / 1000), projects_online=float(online.sum()),
                  median_months_to_COD=float(np.median(r["wait"][r["done"] & coh])) if (r["done"] & coh).any() else np.nan,
                  decisions_per_year=float(dec.sum() / yrs),

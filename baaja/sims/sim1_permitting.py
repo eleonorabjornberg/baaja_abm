@@ -6,8 +6,8 @@ import os
 
 from .. import experiments as ex
 from .. import plots
-from ..params import BASE, LEVERS
-from . import G3, fmt, headline, save, sweep_table, table
+from ..params import BASE, LEVERS, _load
+from . import regime_block, G3, fmt, headline, save, sweep_table, table
 
 P = LEVERS["permitting"]
 ALONE = {
@@ -19,7 +19,7 @@ ALONE = {
     "Sec.2102 reconductoring CE": dict(recond_ce=P["recond_ce"]),
     "Sec.2229 geothermal": dict(geo_ce=P["geo_ce"]),
 }
-SWEEP = ["deadline_bind", "ce_shift", "intake_pub_baaja", "intake_pub", "ea_share_nonEIS", "geo_ce", "delay_weight", "gas_arr_mult"]
+SWEEP = ["deadline_bind", "ce_shift", "intake_pub_baaja", "intake_pub", "ea_share_nonEIS", "geo_ce", "delay_weight"]
 
 
 def run(n_runs, cal, res_dir, fig_dir):
@@ -40,11 +40,19 @@ def run(n_runs, cal, res_dir, fig_dir):
     tech = [[t, f"{bt[t]['decisions_per_year']['mean']:.1f}", f"{bt[t]['EIS_per_year']['mean']:.1f} -> {zt[t]['EIS_per_year']['mean']:.1f}",
              f"{100*zt[t]['truncated_share']['mean']:.0f}%", fmt(res['Permitting provisions (central)']['diff_by_type'][t]['median_months_to_permit'], 1, True),
              fmt(res['Permitting provisions (central)']['diff_by_type'][t]['GW_online'], 1, True)] for t in bt]
+    reg_md, reg_res = regime_block({"Current law": {}, "Permitting provisions (central)": P}, n_runs, cal)
     md = "\n\n".join([
         "# Simulation 1: permitting and build-out time",
         "Federal review applies only to projects with a federal nexus (data: land, federal balancing areas, Corps individual "
         "permits, RUS), and only projects still alive at the decision count. GW = online by Nov 2041.",
         "## Outcome vs current law (GW)", headline(res, scen),
+        reg_md,
+        "## Check against BLM solar right-of-way outcomes (MLRS)",
+        f"{100*_load('mlrs_targets.json')['granted_share_of_resolved']:.1f}% of resolved BLM solar development grant applications "
+        f"were authorized (n={_load('mlrs_targets.json')['n']}; the rest closed). Model, current law: "
+        f"{100*res['Current law']['by_type']['Solar']['completion_rate_nexus']['mean']:.1f}% of solar projects with a federal "
+        f"nexus reach operation (all solar: {100*res['Current law']['by_type']['Solar']['completion_rate']['mean']:.1f}%). "
+        "MLRS has no filing dates, so right-of-way intake time is still an assumption.",
         "## Process, renewable vs gas (projects requested 2026-31; federal-nexus projects for permits)",
         table(["group", "months to permit, law", "BAAJA", "months to COD, law", "BAAJA", "permitted (of decided)", "decisions"], proc),
         "## By technology (permitting provisions, central)",
@@ -57,6 +65,6 @@ def run(n_runs, cal, res_dir, fig_dir):
     c = res["Permitting provisions (central)"]["diff_vs_baseline"]["GW Renewable (new)"]["mean"]
     plots.tornado([(k, sw[k]["low"]["diff"]["GW Renewable (new)"]["mean"], sw[k]["high"]["diff"]["GW Renewable (new)"]["mean"]) for k in SWEEP],
                   c, os.path.join(fig_dir, "sim1_tornado_renewable_GW.png"), "Sim 1: renewable GW gain vs assumption", "GW gained vs current law")
-    data = dict(scenarios=res, sweep=sw)
+    data = dict(regime_2025=reg_res, scenarios=res, sweep=sw)
     save("sim1_permitting", data, md, res_dir)
     return md, data

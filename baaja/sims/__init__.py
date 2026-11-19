@@ -40,6 +40,13 @@ def headline(res, scen):
     return table(["scenario", "renewable GW", "gas GW", "storage GW", "renewable share of new TWh"], rows)
 
 
+def regime_block(scen, n_runs, cal, title="Same comparison if 2025's request mix continues (regime \"2025\")"):
+    """Re-run `scen` (first entry = current law) with every technology at its 2025 request rate, paired within that
+    regime, so the bill's effect is shown separately from the regime change."""
+    res = ex.compare({k: dict(v, regime="2025") for k, v in scen.items()}, n_runs, cal)
+    return f"## {title}\n\n" + headline(res, list(scen)), res
+
+
 def sweep_table(sw, keys, extra=("suits_total", "suits")):
     """Each assumption at the low / high end: renewable and gas GW gain, plus one extra total (default: suits)."""
     rows = []
