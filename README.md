@@ -110,7 +110,7 @@ low. Calibration fits LBNL completion and time to operation by technology, and C
 | interconnection bracket for Sec.2106 | LBNL request -> agreement times, ERCOT vs CAISO/MISO | `extract_interconnection_benchmark.py` |
 | late-stage completion, planned pipeline | EIA-860M Dec 2021 and Sep 2026 | `extract_eia860m.py` |
 | right-of-way intake time (filing -> NEPA notice) | BLM MLRS solar development grants with filing dates (459 cases; 60 clean base cases) | `extract_mlrs_filing.py` |
-| BLM solar right-of-way outcomes (check) | BLM MLRS solar development grants (741 cases): 9.6% of resolved applications authorized vs 10.2% model completion for federal-nexus solar | `extract_mlrs.py` |
+| BLM solar right-of-way outcomes (check) | BLM MLRS solar development grants (741 cases): 9.6% of resolved applications authorized vs 8.7% model completion for federal-nexus solar | `extract_mlrs.py` |
 | wind habitat conservation plans | Dryad doi:10.5061/dryad.59zw3r2kf file list x EIA-860 | `extract_wind_hcp.py` |
 | federal actions against wind/solar 2025-26 | Sabin Climate Backtracker | `extract_backtracker.py` |
 | state vs federal venue of renewable opposition | Sabin Center 2026 contested projects and restrictions | `extract_permits_opposition.py` |
