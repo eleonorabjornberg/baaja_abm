@@ -6,28 +6,28 @@ Executive halts hit permitted projects that are not yet online after a change of
 
 | political path | halted GW, law | BAAJA w/o 1401 | BAAJA | 1401 gain: Renewable (new) | 1401 gain: Fossil (gas) | 1401 gain: Storage |
 |---|---|---|---|---|---|---|
-| random (default) | 6.1 | 7.1 | 0.7 | +0.9 [+0.0, +2.7] | +0.1 [+0.0, +0.4] | +0.0 [+0.0, +0.2] |
-| always hostile to renewables | 11.2 | 13.3 | 1.2 | +1.9 [+0.4, +3.8] | +0.0 [+0.0, +0.0] | +0.1 [+0.0, +0.3] |
-| always hostile to fossil | 1.0 | 1.0 | 0.1 | +0.0 [+0.0, +0.0] | +0.2 [+0.0, +0.4] | +0.0 [+0.0, +0.0] |
+| random (default) | 5.3 | 6.4 | 0.7 | +0.7 [+0.0, +2.0] | +0.1 [+0.0, +0.4] | +0.0 [+0.0, +0.2] |
+| always hostile to renewables | 9.8 | 11.8 | 1.2 | +1.4 [+0.2, +2.5] | +0.0 [+0.0, +0.0] | +0.1 [+0.0, +0.2] |
+| always hostile to fossil | 0.9 | 0.9 | 0.1 | +0.0 [+0.0, +0.0] | +0.2 [+0.0, +0.4] | +0.0 [+0.0, +0.0] |
 
 ## Same comparison if 2025's request mix continues (regime "2025")
 
 | scenario | renewable GW | gas GW | storage GW | renewable share of new TWh |
 |---|---|---|---|---|
-| Current law | 582 [568, 599] | 301 [289, 313] | 229 [221, 237] | 48.9% |
-| BAAJA | +5.9 [+4.4, +8.1] | +2.4 [+1.3, +3.6] | +0.2 [+0.0, +0.5] | +0.10 pts |
-| BAAJA without Sec.1401 | +5.5 [+4.2, +7.2] | +2.2 [+1.1, +3.3] | +0.2 [+0.0, +0.4] | +0.10 pts |
+| Current law | 582 [565, 601] | 306 [294, 319] | 227 [220, 234] | 48.5% |
+| BAAJA | +7.7 [+6.2, +9.6] | +2.5 [+1.3, +3.6] | +0.2 [+0.0, +0.5] | +0.17 pts |
+| BAAJA without Sec.1401 | +7.4 [+5.9, +9.3] | +2.3 [+1.3, +3.3] | +0.2 [+0.0, +0.4] | +0.17 pts |
 
 ## Projects halted and cancelled, by technology (random politics; law vs BAAJA)
 
 | technology | halted, law | halted, BAAJA | cancelled (courts or halts) |
 |---|---|---|---|
-| Gas | 2.2 | 0.3 | 0.6 -> 0.1 |
-| Offshore wind | 5.7 | 0.6 | 1.7 -> 0.1 |
-| Onshore wind | 0.9 | 0.1 | 0.5 -> 0.0 |
-| Solar | 6.1 | 1.0 | 2.3 -> 0.2 |
-| Storage | 2.5 | 0.2 | 2.4 -> 0.1 |
-| Transmission | 2.2 | 0.3 | 1.9 -> 0.1 |
+| Gas | 1.9 | 0.2 | 0.5 -> 0.1 |
+| Offshore wind | 4.5 | 0.6 | 1.4 -> 0.1 |
+| Onshore wind | 1.2 | 0.1 | 0.6 -> 0.1 |
+| Solar | 7.1 | 1.2 | 2.8 -> 0.2 |
+| Storage | 2.5 | 0.2 | 2.2 -> 0.0 |
+| Transmission | 2.2 | 0.2 | 1.7 -> 0.1 |
 
 ## Plant lifetimes (EIA-860 retired generators)
 
@@ -47,7 +47,7 @@ Plants built from 2026 do not reach retirement age before 2041, so lifetimes do 
 
 | assumption | low / high | renewable GW gain | gas GW gain | halted GW change | what it is |
 |---|---|---|---|---|---|
-| halt_mult_1401 | 0.0 / 0.3 | +8.3 / +8.0 | +1.2 / +1.2 | -6.1 / -4.0 | Sec.1401: residual halt probability relative to current law |
-| halt_mult_other (current law) | 0.5 / 2.0 | +8.1 / +8.3 | +1.2 / +1.3 | -4.8 / -7.0 | multiplier on halt probabilities for technologies other than offshore wind |
-| p_kill_halt (current law) | 0.1 / 0.5 | +8.0 / +8.5 | +1.2 / +1.2 | -5.5 / -5.5 | P(cancelled | halted) |
-| halt_len (current law) | 4 / 12 | +8.0 / +8.3 | +1.2 / +1.2 | -5.5 / -5.5 | months a halted project is stopped |
+| halt_mult_1401 | 0.0 / 0.3 | +11.2 / +11.0 | +1.2 / +1.2 | -5.3 / -3.3 | Sec.1401: residual halt probability relative to current law |
+| halt_mult_other (current law) | 0.5 / 2.0 | +11.1 / +11.3 | +1.2 / +1.4 | -3.8 / -6.1 | multiplier on halt probabilities for technologies other than offshore wind |
+| p_kill_halt (current law) | 0.1 / 0.5 | +11.0 / +11.4 | +1.2 / +1.3 | -4.6 / -4.6 | P(cancelled | halted) |
+| halt_len (current law) | 4 / 12 | +11.0 / +11.3 | +1.2 / +1.3 | -4.6 / -4.6 | months a halted project is stopped |

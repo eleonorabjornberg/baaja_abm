@@ -19,26 +19,30 @@ Each one maps a research question to bill sections (`docs/bill_question_map.md`)
 
 ## Results
 
-**Current law.** About 1,135 GW of new capacity online by Nov 2041: renewables 658 GW, gas 175 GW, storage 287 GW (plus retained hydro).
-Renewables are 65% of new-build generation.
+**Current law.** About 1,135 GW of new capacity online by Nov 2041: renewables 657 GW, gas 178 GW, storage 285 GW (plus retained hydro).
+Renewables are 64% of new-build generation.
 
-**Everything in the bill that the data can size** (Simulations 1, 2, 4 together, central values): **+12 GW**
-[+9, +14]: renewables +8.2 GW, gas +1.2 GW, storage +0.4 GW. That is about 1% more capacity than current law.
-The renewable share of new generation rises by +0.2 points. If 2025's request mix continues (see the regime table
-below), the gas gain doubles to +2.4 GW and the renewable gain falls to +5.9 GW.
+**Everything in the bill that the data can size** (Simulations 1, 2, 4 together, central values): **+15 GW**
+[+12, +17]: renewables +11.2 GW, gas +1.2 GW, storage +0.4 GW (plus retained hydro). That is about 1.3% more
+capacity than current law. The renewable share of new generation rises by +0.3 points. If 2025's request mix
+continues (see the regime table below), the gas gain doubles to +2.5 GW and the renewable gain falls to +7.7 GW.
 
-1. **Permitting (Sim 1)** gives most of that: renewables +6.4 GW [+4.6, +8.4], gas +1.0 GW.
-   - The largest single provision is **Sec.2213** (federal-land rights-of-way deadlines): +4.9 GW, all renewable.
-     It is also the most uncertain, because current-law right-of-way processing time isn't measured (BLM's NEPA
-     start date comes after the application): across 6-18 months the renewable gain runs +2.5 to +11.9 GW.
+1. **Permitting (Sim 1)** gives most of that: renewables +9.6 GW [+7.8, +11.7], gas +1.1 GW.
+   - The largest single provision is **Sec.2213** (federal-land rights-of-way deadlines): +7.9 GW, all renewable.
+     Current-law intake is now measured from BLM MLRS filing dates: filing to NEPA notice takes a median 10.5
+     months (n=60; 90% CI 8.3-16.0), with a long tail (a quarter take over two years), which is what the 2213
+     deadlines cut. Across the CI the renewable gain runs +8.2 to +12.2 GW. Intake has shortened: 14.4 months for
+     2010-18 filings, 9.4 for 2019-26.
+   - Check: 9.6% of resolved BLM solar applications were authorized (MLRS); the model has 8.7% of federal-nexus solar
+     projects reaching operation.
    - BLM ePlanning shows its energy reviews are quicker than assumed before: EAs take ~6 months for solar, wind and
      geothermal and CEs under 2; 53% of non-EIS project approvals are EAs.
-   - Median months to a federal permit: **renewables 15 -> 7**, **gas 9.6 -> 9.1**. Months from request to operation
+   - Median months to a federal permit: **renewables 9.3 -> 6.5**, **gas 9.6 -> 9.1**. Months from request to operation
      barely move (renewables 61 -> 61, gas 37 -> 37): interconnection is the binding gate.
    - Gas has more federal exposure than wind or solar (~33% of new gas MW has a federal hook, mostly Army Corps
      individual permits, vs ~5% wind and ~11% solar), but its reviews are short Corps EAs, so deadlines barely bind.
-2. **Litigation (Sim 2)**: the court provisions cut suits by about 70% (136 -> 39 over 15 years; a cut of 70-111
-   across the assumption ranges), but add only +0.8 GW, because only ~9.5% of energy suits ever win an injunction.
+2. **Litigation (Sim 2)**: the court provisions cut suits by about 70% (134 -> 40 over 15 years; a cut of 67-107
+   across the assumption ranges), but add only +0.7 GW, because only ~9.5% of energy suits ever win an injunction.
    - Suit rates for energy EAs and CEs come from district-court suits per BLM + DOE review, 2012-21: about 3.6% of
      renewable EAs and 6.5% of transmission EAs are sued (central, after a 0.75 scale for missing agencies), far above
      the all-sector NEPA rate.
@@ -53,13 +57,13 @@ below), the gas gain doubles to +2.4 GW and the renewable gain falls to +5.9 GW.
 3. **Grid access (Sim 3)** dominates everything else, but the bill fixes no size. Sec.2110 only requires a rulemaking
    on computing/AI queue practices; Sec.2106 requires consolidated planning with published interconnection locations
    and fixed costs. Every 5% cut in interconnection study time adds about 35-45 GW by 2041 (renewables ~2/3). At 10%:
-   +85 GW total, +52 renewable, +9 gas, +23 storage.
+   +88 GW total, +55 renewable, +9 gas, +22 storage.
    - The data bracket the effect but can't point to a value. Floor: past queue reforms show no measured shortening
      (MISO's request-to-agreement times rose from ~33 to 45-51 months for 2017-21 requests). Ceiling: ERCOT's pace,
-     23 vs 40 months in CAISO/MISO (2015-19 requests), a 42% cut, worth **+454 GW** (renewables +272, gas +45,
-     storage +135). Reaching it would also need energy-only interconnection, which the bill does not mandate.
-4. **Permit certainty (Sec.1401, Sim 4)**: halted GW falls from ~6 to ~0.7. That is worth +0.9 GW of renewables in a
-   random political future and +1.9 GW if every administration is hostile to renewables; for gas, +0.1-0.2 GW.
+     23 vs 40 months in CAISO/MISO (2015-19 requests), a 42% cut, worth **+456 GW** (renewables +275, gas +45,
+     storage +134). Reaching it would also need energy-only interconnection, which the bill does not mandate.
+4. **Permit certainty (Sec.1401, Sim 4)**: halted GW falls from ~5 to ~0.7. That is worth +0.7 GW of renewables in a
+   random political future and +1.4 GW if every administration is hostile to renewables; for gas, +0.1-0.2 GW.
    Offshore wind carries most of the risk (anchored on the 2025 stop-work orders).
 5. **Decision control (Sim 5)**: about 80% of the gain goes to merchant-owned capacity (EIA-860 ownership by
    technology), split across ISO and non-ISO regions in proportion to where projects are. Transmission sponsorship
@@ -72,23 +76,23 @@ also run with each technology at its 2025 request rate, and BAAJA is compared wi
 
 | | 2021-25 requests (central) | 2025 requests continue |
 |---|---|---|
-| Current law, GW by 2041: renewables / gas / storage | 658 / 175 / 287 | 582 / 301 / 229 |
-| Renewable share of new generation | 65% | 49% |
-| BAAJA, data-sized provisions: renewables / gas / storage | +8.2 / +1.2 / +0.4 | +5.9 / +2.4 / +0.2 |
-| BAAJA + 10% interconnection cut: renewables / gas / storage | +52 / +9 / +23 | +37 / +20 / +16 |
-| Suits cut by the court provisions (current law level) | -96 (136) | -72 (102) |
+| Current law, GW by 2041: renewables / gas / storage | 657 / 178 / 285 | 582 / 306 / 227 |
+| Renewable share of new generation | 64% | 49% |
+| BAAJA, data-sized provisions: renewables / gas / storage | +11.2 / +1.2 / +0.4 | +7.7 / +2.5 / +0.2 |
+| BAAJA + 10% interconnection cut: renewables / gas / storage | +55 / +9 / +22 | +39 / +20 / +15 |
+| Suits cut by the court provisions (current law level) | -94 (134) | -73 (104) |
 
-So the size of BAAJA's effect changes little with the regime (about 10-15% smaller in total), but its renewable-vs-gas split does change: in the 2025 regime the
-bill's gain tilts about 2.5:1 toward renewables instead of 7:1, and gas gains twice as much.
+So the size of BAAJA's effect changes little with the regime (about 20% smaller in total), but its renewable-vs-gas split does change: in the 2025 regime the
+bill's gain tilts about 3:1 toward renewables instead of 9:1, and gas gains twice as much.
 
-**Bottom line for renewables vs gas.** The provisions that data can size favour renewables (about 6:1 in GW), mainly
+**Bottom line for renewables vs gas.** The provisions that data can size favour renewables (about 9:1 in GW), mainly
 through federal-land rights-of-way and the court changes that hit local opposition. But they are small next to
-interconnection. Whether BAAJA is a +12 GW bill or a several-hundred-GW bill depends on what FERC does under
+interconnection. Whether BAAJA is a +15 GW bill or a several-hundred-GW bill depends on what FERC does under
 Sec.2106: the data bracket it between no change and ERCOT's pace, but nothing measured picks a point inside.
 
 ## Validation
 Backcast, current law, Jan 2010 to Dec 2025, with LBNL requests by year (`results/backcast.md`). Cumulative 2018-25
-additions, model vs EIA-860: onshore wind 0.99, gas 0.82, solar 0.81, **storage 0.53**. Storage completion is set from
+additions, model vs EIA-860: onshore wind 1.02, gas 0.83, solar 0.80, **storage 0.54**. Storage completion is set from
 EIA-860M (storage planned in Dec 2021 completes 1.07x as often as solar by Sep 2026) rather than LBNL's 2000-20
 cohort; the remaining gap is likely batteries added at existing plants outside the queue, so storage GW are still
 low. Calibration fits LBNL completion and time to operation by technology, and CEQ EIS counts
@@ -105,6 +109,7 @@ low. Calibration fits LBNL completion and time to operation by technology, and C
 | adaptation to a 150-day limit | FHWA/FTA highway/transit suits (150-180 day limit) vs other NEPA suits, case-level export | `extract_limitation_experiment.py` |
 | interconnection bracket for Sec.2106 | LBNL request -> agreement times, ERCOT vs CAISO/MISO | `extract_interconnection_benchmark.py` |
 | late-stage completion, planned pipeline | EIA-860M Dec 2021 and Sep 2026 | `extract_eia860m.py` |
+| right-of-way intake time (filing -> NEPA notice) | BLM MLRS solar development grants with filing dates (459 cases; 60 clean base cases) | `extract_mlrs_filing.py` |
 | BLM solar right-of-way outcomes (check) | BLM MLRS solar development grants (741 cases): 9.6% of resolved applications authorized vs 10.2% model completion for federal-nexus solar | `extract_mlrs.py` |
 | wind habitat conservation plans | Dryad doi:10.5061/dryad.59zw3r2kf file list x EIA-860 | `extract_wind_hcp.py` |
 | federal actions against wind/solar 2025-26 | Sabin Climate Backtracker | `extract_backtracker.py` |
@@ -123,7 +128,7 @@ the JSON summaries in `data/` from them.
 | key | low | central | high | what it is |
 |---|---|---|---|---|
 | `ea_share_nonEIS` | 0.32 | 0.53 | 0.67 | share of non-EIS reviews that are EAs. **From data**: BLM ePlanning (central: actions naming >= 20 MW; low: all energy actions) |
-| `intake_pub` | 6 | 12 | 18 | months from federal-land right-of-way application to start of review, current law |
+| `intake_pub` | 8.3 | 10.5 | 16.0 | median months from federal-land right-of-way filing to NEPA notice, current law. **From data**: BLM MLRS filing dates (n=60), range = 90% CI of the median; projects draw around it (log-sd 1.39) |
 | `intake_oth` | 1 | 3 | 6 | months from application to start of review, other federal nexus |
 | `nonnepa_hydro` | 36 | 48 | 60 | hydro relicensing months outside NEPA |
 | `lit_ea` | 0.0025 | 0.005 | 0.01 | P(sued given EA) for gas and hydro only: all-sector case data x ~10,000 EAs/yr (CEQ estimate) |
@@ -156,7 +161,7 @@ of a truncated review (1.6); halt probabilities other than offshore wind.
 - **Onshore wind's federal nexus is a lower bound.** With wind habitat conservation plans added (+2.7 points), it is
   7-9%; FWS publishes no list of specific eagle permits, so the true share is somewhat higher.
 - **EA/CE data are BLM and DOE only.** Corps, USFS and FWS reviews are missing, so EA/CE suit rates are scaled down by a range.
-- **Storage is underestimated** (backcast ratio 0.53; storage completion is now set from EIA-860M late-stage data).
+- **Storage is underestimated** (backcast ratio 0.54; storage completion is now set from EIA-860M late-stage data).
 - **Gas pipelines and LNG are not simulated**; Sim 2 compares their litigation (10 NEPA cases a year vs 4 for renewables) from data.
 - **No prices, demand or emissions feedback**; arrivals stay at the 2021-25 average (gas requests are rising fast).
 - **Transmission has no MW in the model**, so transmission provisions affect only transmission projects' own timing.

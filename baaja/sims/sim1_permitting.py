@@ -52,7 +52,10 @@ def run(n_runs, cal, res_dir, fig_dir):
         f"were authorized (n={_load('mlrs_targets.json')['n']}; the rest closed). Model, current law: "
         f"{100*res['Current law']['by_type']['Solar']['completion_rate_nexus']['mean']:.1f}% of solar projects with a federal "
         f"nexus reach operation (all solar: {100*res['Current law']['by_type']['Solar']['completion_rate']['mean']:.1f}%). "
-        "MLRS has no filing dates, so right-of-way intake time is still an assumption.",
+        f"Intake (filing -> NEPA notice) is measured from MLRS filing dates: median {_load('mlrs_filing_targets.json')['intake_months']['median']:.1f} "
+        f"months (n={_load('mlrs_filing_targets.json')['intake_months']['n']}; 2010-18 filings "
+        f"{_load('mlrs_filing_targets.json')['intake_by_period']['filed 2010-18']['median']:.1f}, 2019-26 "
+        f"{_load('mlrs_filing_targets.json')['intake_by_period']['filed 2019-26']['median']:.1f}); each project draws from that spread.",
         "## Process, renewable vs gas (projects requested 2026-31; federal-nexus projects for permits)",
         table(["group", "months to permit, law", "BAAJA", "months to COD, law", "BAAJA", "permitted (of decided)", "decisions"], proc),
         "## By technology (permitting provisions, central)",
