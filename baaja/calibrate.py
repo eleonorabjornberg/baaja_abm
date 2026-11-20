@@ -33,7 +33,7 @@ def _bisect(p0, key, targets, metric, lo, hi, seeds, iters, increasing):
     return {t: (lo[t] + hi[t]) / 2 for t in targets}
 
 
-def calibrate(rounds=2, seeds=tuple(range(7, 15)), n_scale=1.0, base=None):
+def calibrate(rounds=2, seeds=tuple(range(7, 23)), n_scale=1.0, base=None):
     p = dict(base or BASE, n_scale=n_scale, seed_queue=False)
     p["hazard"] = {t: 0.05 for t in GEN}; p["build"] = {}; p["p_eis"] = {t: 0.05 for t in TYPES}
     comp = {t: TYPES[t]["completion_target"] for t in GEN}

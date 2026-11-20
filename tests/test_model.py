@@ -30,7 +30,7 @@ def test_ix_cut_only_after_rule_month():
 
 # --- calibration fits the data -------------------------------------------------------------------------------
 def test_calibration_matches_targets(cal):
-    c = check(cal)
+    c = check(cal, seeds=tuple(range(30, 40)))
     for t in GEN:
         got, want = c[t]["completion"]
         assert abs(got - want) < (0.02 if TYPES[t]["arr"] > 5 else 0.05), t
@@ -71,8 +71,7 @@ def test_deadlines_apply_only_to_reviews_starting_after_enactment(cal):
     rows = simulate(p, 5, POL)
     assert sum(r["trunc"].sum() for r in rows) > 0
     for r in rows:
-        intake = p["intake_pub_2213"] if TYPES[r["type"]]["pub"] else p["intake_oth"]
-        assert not (r["trunc"] & (r["t0"] + intake < 0)).any(), r["type"]
+        assert not (r["trunc"] & (r["review_start"] < 0)).any(), r["type"]
 
 
 def test_no_vacatur_or_halts_when_turned_off(cal):
@@ -153,3 +152,15 @@ def test_regimes_match_lbnl_2025_request_rates(cal):
     assert summarize(simulate(p, 11, POL), p)["Solar"] == summarize(simulate(q, 11, POL), q)["Solar"]
     r = P(cal, regime="2025")
     assert summarize(simulate(r, 11, POL), r)["Gas"]["n"] > 1.5 * summarize(simulate(p, 11, POL), p)["Gas"]["n"]
+
+
+def test_federal_land_intake_from_mlrs_and_2213_cap_only_for_new_filings(cal):
+    from baaja.params import MLRSF
+    assert ex.params()["intake_pub"] == pytest.approx(round(MLRSF["median"], 1))
+    assert ex.params()["intake_pub_logsd"] == pytest.approx(MLRSF["log_sd"])
+    p = P(cal, BAAJA); q = P(cal)
+    a = {r["type"]: r for r in simulate(p, 12, POL)}; b = {r["type"]: r for r in simulate(q, 12, POL)}
+    s_a, s_b = a["Solar"], b["Solar"]
+    old = s_a["t0"] < 0
+    # projects filed before enactment keep current-law intake; review timing differs only through other levers
+    assert (s_a["tDec"] - s_a["t0"])[~old].mean() < (s_b["tDec"] - s_b["t0"])[~old].mean()

@@ -67,6 +67,7 @@ def simulate(p, seed, hostile_to):
         age0 = np.where(seeded, -t0, 0.0)                       # months already in the queue at month 0
         # ---- draws (all unconditional) ----
         u_nex, u_kind, z_D, u_esa, u_trunc = (rng.random(n), rng.random(n), rng.normal(0, 1, n), rng.random(n), rng.random(n))
+        z_in = rng.normal(0, 1, n)                              # federal-land intake draw [D: MLRS spread]
         who = rng.choice(len(CHALLENGERS), n, p=CHALLENGER_MIX[name])
         u_sue, u_late, u_ex, z_L, u_inj, u_lose, u_vac, u_kill = (rng.random(n) for _ in range(8))
         u_ix, u_w, u_mkt = rng.random(n), rng.random(n), rng.random(n)
@@ -84,7 +85,12 @@ def simulate(p, seed, hostile_to):
         sig = np.where(kind == 0, 1.0, np.where(kind == 1, .6, .74))
         D = med * np.exp(sig * z_D)
         D = D + np.where((kind > 0) & (u_esa < p["esa_share"]), p["esa_months"], 0)
-        intake = (p["intake_pub_2213"] if p["intake_pub_2213"] is not None else p["intake_pub"]) if ty["pub"] else p["intake_oth"]
+        if ty["pub"]:                                           # filing -> NEPA notice, lognormal around the MLRS median
+            intake = p["intake_pub"] * np.exp(p["intake_pub_logsd"] * z_in)
+            if p["intake_pub_2213"] is not None:                # Sec.2213 deadlines cap new applications
+                intake = np.where(t0 >= 0, np.minimum(intake, p["intake_pub_2213"]), intake)
+        else:
+            intake = np.full(n, float(p["intake_oth"]))
         review_start = t0 + intake
         cap = np.where(kind == 1, 12 + 4, np.where(kind == 2, 24 + 4, np.inf))
         if p["ce_cap"]:
@@ -152,7 +158,8 @@ def simulate(p, seed, hostile_to):
         rows.append(dict(type=name, t0=t0, seeded=seeded, nexus=nexus, kind=kind, decided=decided, tDec=tDec,
                          sued=sued, who=np.where(sued, who, -1), lost=lost, vacated=vacated, paused=paused,
                          trunc=trunc, cut_months=cut_months, halted=halted, killed=killed, done=done,
-                         tPermit=tPermit, tCOD=tCOD, wait=tCOD - t0, mw=ty["mw"], T=T, mkt=mkt))
+                         tPermit=tPermit, tCOD=tCOD, wait=tCOD - t0, mw=ty["mw"], T=T, mkt=mkt,
+                         review_start=review_start))
     return rows
 
 

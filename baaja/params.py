@@ -16,6 +16,7 @@ LIMIT = _load("limitation_experiment.json")["late_adapt"]   # [D] highway/transi
 IXB = _load("interconnection_benchmark.json")              # [D] ERCOT vs CAISO/MISO request -> IA times
 BLM = _load("blm_eplanning_targets.json")                  # [D] BLM ePlanning energy NEPA register
 E860M = _load("eia860m_targets.json")                      # [D] EIA-860M late-stage completion, planned pipeline
+MLRSF = _load("mlrs_filing_targets.json")["intake_months"]  # [D] BLM MLRS solar ROW filing -> notice
 _GAS2025 = ENGINE["lbnl"]["arrivals_by_year"]["Gas"]["2025"] / 12 / LBNL["types"]["Gas"]["arr_per_month"]
 MIN_N = 30
 
@@ -29,7 +30,10 @@ ASSUMPTIONS = {
     "ea_share_nonEIS":   (round(BLM["ea_share_nonEIS"]["all"], 2), round(BLM["ea_share_nonEIS"]["project"], 2), 0.67,
                           "share of non-EIS federal reviews that are EAs (rest CEs/DNAs) [D: BLM ePlanning; central = actions "
                           "naming >= 20 MW (n=49), low = all energy actions, high = central + 95% binomial margin]"),
-    "intake_pub":        (6, 12, 18, "months from federal-land right-of-way application to start of review, current law"),
+    "intake_pub":        (round(MLRSF["median_ci90"][0], 1), round(MLRSF["median"], 1), round(MLRSF["median_ci90"][1], 1),
+                          "median months from federal-land right-of-way filing to the NEPA notice, current law [D: BLM "
+                          "MLRS solar grants, n=60; range = 90% bootstrap CI of the median; each project draws its own "
+                          "intake around this median with the observed log-sd]"),
     "intake_oth":        (1, 3, 6, "months from application to start of review, other federal nexus"),
     "nonnepa_hydro":     (36, 48, 60, "hydro relicensing months outside NEPA (s.401 certification, license terms)"),
     "lit_ea":            (0.0025, 0.005, 0.01, "P(sued | EA) for gas and hydro: all-sector case data x ~10,000 EAs/yr (CEQ estimate)"),
@@ -168,6 +172,7 @@ UTILITY_OWNED = {t: FED["types"][t]["utility_owned_share_MW"] for t in GEN}   # 
 BASE = dict(T=T, turnovers=TURNOVERS, n_scale=1.0, seed_queue=True, arrivals=None, start_year=2026,
             hazard=None, build=None, p_eis=None, nex_mult=1.0,
             ea_share_nonEIS=A["ea_share_nonEIS"], intake_pub=A["intake_pub"], intake_oth=A["intake_oth"],
+            intake_pub_logsd=MLRSF["log_sd"],
             nonnepa_hydro=A["nonnepa_hydro"], esa_months=3.0, esa_share=0.25, regime="2021-25",
             intake_pub_2213=None, nonnepa_hydro_1202=None,    # BAAJA overrides (None = current-law value applies)
             lit_ea=A["lit_ea"], lit_ce=A["lit_ce"], lit_data_mult=A["lit_data_mult"], p_kill_vac=A["p_kill_vac"], remand_months=A["remand_months"],

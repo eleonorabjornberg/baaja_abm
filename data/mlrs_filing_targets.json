@@ -1,0 +1,41 @@
+{
+ "cleaning_steps": {
+  "all cases": 459,
+  "base cases": 293,
+  "with a valid notice (observed filing)": 60
+ },
+ "bulk_notice_dates": [
+  "2022-05-16",
+  "2022-07-27",
+  "2025-12-19"
+ ],
+ "intake_months": {
+  "n": 60,
+  "median": 10.512483574244413,
+  "log_sd": 1.3940510002265796,
+  "p25": 3.1373193166885676,
+  "p75": 23.858409986859396,
+  "median_ci90": [
+   8.278580814717477,
+   16.003613666228663
+  ]
+ },
+ "intake_months_incl_estimated": {
+  "n": 61,
+  "median": 9.756898817345597
+ },
+ "intake_by_period": {
+  "filed 2010-18": {
+   "n": 19,
+   "median": 14.421813403416557
+  },
+  "filed 2019-26": {
+   "n": 41,
+   "median": 9.362680683311432
+  }
+ },
+ "filed_to_decision_months": 10.348226018396845,
+ "filed_to_grant_km_median_months": 110.84099868593955,
+ "n_granted": 24,
+ "n_cases_for_km": 274
+}
