@@ -2,11 +2,12 @@
 
 Agent-based model of what the **Bipartisan American Affordability and Jobs Act of 2026 (BAAJA)**, introduced as S.5653 and
 passed by the Senate on 19 Nov 2026 as a substitute to H.R. 2347, would do to
-the US electricity build-out, **renewables vs gas**, through Nov 2041. Personal experiment, not peer reviewed.
+US electricity supply through Nov 2041: what gets built (**renewables vs gas**), and whether each region keeps enough
+firm capacity to meet peak demand. Personal experiment, not peer reviewed.
 Parameters come from data wherever data exist; the rest are listed below as assumptions with ranges, and each
 simulation shows how its result moves across those ranges.
 
-## The five simulations
+## The six simulations
 Each one maps a research question to bill sections (`docs/bill_question_map.md`), runs paired against current law
 (same seeds and political draws), and reports renewable vs gas. Numbers: mean [5th, 95th percentile] over 100 runs.
 
@@ -17,29 +18,30 @@ Each one maps a research question to bill sections (`docs/bill_question_map.md`)
 | 3 | Grid access | 2106, 2110 | `results/sim3_grid.md` |
 | 4 | Permit certainty across administrations | 1401, 1402, (1203, 1204 permit terms) | `results/sim4_certainty.md` |
 | 5 | Utility vs merchant decision control | 2104-2108 | `results/sim5_decision_control.md` |
+| 6 | Supply and resource adequacy by region and year | all of the above | `results/sim6_supply.md` |
 
 ## Results
 
-Numbers updated 23 Nov 2026 for the Senate-passed text (see `docs/bill_question_map.md`) and the Phase 0 fixes in
-`HANDOFF.md`. Intervals are still seed noise at central assumption values; joint parameter uncertainty comes in Phase 3.
+Numbers updated 23 Nov 2026 for the Senate-passed text (see `docs/bill_question_map.md`) and Phases 0-1 in
+`HANDOFF.md`. Intervals in Sims 1-6 are seed noise at central assumption values; `results/uncertainty.md` draws every
+assumption range at once (below).
 
-**Current law.** About 1,135 GW of new capacity online by Nov 2041: renewables 657 GW, gas 178 GW, storage 285 GW (plus
+**Current law.** About 1,105 GW of new capacity online by Nov 2041: renewables 657 GW, gas 178 GW, storage 255 GW (plus
 retained hydro). Renewables are 64% of new-build generation.
 
 **Everything in the bill that the data can size** (Sims 1, 2, 4 together, central values): **+10 GW** [+8, +12]:
-renewables +6.7 GW, gas +1.2 GW, storage +0.4 GW (plus retained hydro). That is under 1% more capacity than current
-law, about 5.6:1 renewables to gas. If 2025's request mix continues, renewables +4.6 GW and gas +2.4 GW (about 2:1).
+renewables +6.6 GW, gas +1.0 GW, storage +0.3 GW (plus retained hydro). That is under 1% more capacity than current
+law, about 6:1 renewables to gas. Across all assumption ranges at once: **+10 GW [+6, +16]**. If 2025's request mix continues, renewables +4.6 GW and gas +2.4 GW (about 2:1).
 
 Change from the 20 Nov version (+15 GW, renewables +11.2): Sec.2213's deadlines are no longer assumed always met
 (-3.9 GW renewables), and the Senate-passed Sec.1401 protects permits less (-0.4 GW).
 
-1. **Permitting (Sim 1)**: renewables +5.6 GW [+3.9, +7.4], gas +1.1 GW.
-   - The largest single provision is still **Sec.2213** (federal-land rights-of-way deadlines): **+4.0 GW**, all
-     renewable. Its 30- and 90-day clocks have no enforcement (no sponsor petition or court order, unlike Sec.1106),
+1. **Permitting (Sim 1)**: renewables +5.4 GW [+3.9, +7.1], gas +1.0 GW.
+   - The largest single provision is still **Sec.2213** (federal-land rights-of-way deadlines), all renewable (+3.9 GW). Its 30- and 90-day clocks have no enforcement (no sponsor petition or court order, unlike Sec.1106),
      so the share of applications where they are met is a range, 25-100% (central 50%), giving +3.5 to +9.6 GW.
      Current-law intake is measured from BLM MLRS filing dates: filing to NEPA notice takes a median 10.5 months
      (n=60; 90% CI 8.3-16.0), with a long tail (a quarter take over two years).
-   - Check: 9.6% of resolved BLM solar applications were authorized (MLRS); the model has 8.7% of federal-nexus solar
+   - Check: 9.6% of resolved BLM solar applications were authorized (MLRS); the model has 8.9% of federal-nexus solar
      projects reaching operation.
    - Median months to a federal permit: **renewables 9.3 -> 7.2**, gas 9.6 -> 9.1. Months from request to operation
      barely move (renewables 61 -> 61, gas 37 -> 37): interconnection is the binding gate.
@@ -56,13 +58,12 @@ Change from the 20 Nov version (+15 GW, renewables +11.2): Sec.2213's deadlines 
    - Outside the bill's reach: ~80% of litigated renewable projects in the Sabin database were fought in state courts
      or administrative venues.
 3. **Grid access (Sim 3)** still dominates everything else, but the bill fixes no size. In the Senate-passed text
-   **Sec.2106 applies only to RTOs/ISOs** ("Transmission Organizations"), so the Southeast and most of the West are
-   outside it, and FERC may find existing processes already compliant (2106(d)). Every 5% cut in ISO-market study
-   time adds about 25 GW by 2041 at small cuts, rising to about 45 GW per 5% near the ceiling. At 10%: +59 GW total, +34 renewable, +5 gas, +18 storage.
+   **Sec.2106 applies only to RTOs/ISOs** ("Transmission Organizations"), so ERCOT (outside FERC's reach), the
+   Southeast and most of the West are outside it, and FERC may find existing processes already compliant (2106(d)).
+   At a 10% cut in RTO study time: +41 GW total (renewables +27, gas +4, storage +8).
    - The data bracket the effect but can't point to a value. Floor: past queue reforms show no measured shortening.
-     Ceiling: ERCOT's pace, a 42% cut, worth **+303 GW** (renewables +173, gas +23, storage +106).
-   - ERCOT is counted as an ISO market here although FERC's rules do not reach it, so these GW are somewhat
-     overstated until the regional version (Phase 1) separates it.
+     Ceiling: ERCOT's pace, a 42% cut, worth **+209 GW** (renewables +135, gas +17, storage +55). Down from +303 GW
+     in Phase 0, because ERCOT's own projects no longer count as covered.
 4. **Permit certainty (Sec.1401, Sim 4)**: the passed text adds an exception for action "taken pursuant to any
    applicable law or regulation", which could cover stop-work orders like 2025's. With a residual halt risk of 50%
    (range 10-100%), halted GW fall from ~5 to ~3, worth +0.3 GW of renewables in a random political future and
@@ -78,25 +79,46 @@ technology at its 2025 request rate.
 
 | | 2021-25 requests (central) | 2025 requests continue |
 |---|---|---|
-| Current law, GW by 2041: renewables / gas / storage | 657 / 178 / 285 | 582 / 306 / 227 |
+| Current law, GW by 2041: renewables / gas / storage | 657 / 178 / 255 | 583 / 305 / 203 |
 | Renewable share of new generation | 64% | 49% |
-| BAAJA, data-sized provisions: renewables / gas / storage | +6.7 / +1.2 / +0.4 | +4.6 / +2.4 / +0.2 |
-| BAAJA + 10% Sec.2106 cut (ISO markets): renewables / gas / storage | +34 / +5 / +18 | +24 / +11 / +12 |
+| BAAJA, data-sized provisions: renewables / gas / storage | +6.6 / +1.0 / +0.3 | +4.5 / +2.3 / +0.2 |
+| BAAJA + 10% Sec.2106 cut (FERC RTOs): renewables / gas / storage | +27 / +4 / +8 | +19 / +9 / +6 |
 
 **Bottom line for renewables vs gas.** The provisions the data can size favour renewables (about 5:1 in GW), mainly
 through federal-land rights-of-way and the court changes that hit local opposition, but they are small: about +10 GW
-on 1,135. Whether BAAJA matters for supply depends on what FERC does under Sec.2106 in RTO/ISO markets: the data
-bracket it between no change and ERCOT's pace (+303 GW), and nothing measured picks a point inside. Phase 2 replaces
+on 1,105. Whether BAAJA matters for supply depends on what FERC does under Sec.2106 in RTO/ISO markets: the data
+bracket it between no change and ERCOT's pace (+209 GW), and nothing measured picks a point inside. Phase 2 replaces
 this dial with an agent-based queue so the bill's actual mechanisms (fixed fees, single decision point, withdrawal
 penalties) can be sized.
 
+6. **Supply and adequacy (Sim 6, Phase 1)**. The model's additions are placed in the nine LBNL regions and added to
+   the EIA-860 fleet less retirements, against NERC's 2025 peak-demand forecast and reference margin levels.
+   - **Current law: the national shortfall below planning reserve margins grows from 8 GW (2027) to 68 GW (2035) and
+     129 GW (2041).** Almost all of it is **PJM** (63 GW in 2035, below its reference margin from about 2028, because
+     NERC's PJM margin rises to 35% as more of its supply is wind, solar and batteries) and later **CAISO** (5 GW in
+     2035). ERCOT, the West, the Southeast and SPP stay well above their margins.
+   - **BAAJA's data-sized provisions cut the 2035 shortfall by 0.3 GW** (0.6 GW in 2041). A 10% Sec.2106 cut takes off
+     2.1 GW (5.3 in 2041); ERCOT's pace takes off 11.5 GW (28 in 2041), mostly in PJM and CAISO.
+   - What moves the shortfall most is outside the bill: demand growth (28-120 GW in 2035 across 0.5-1.5x NERC's
+     growth) and how far the capacity credit of wind, solar and batteries falls (51-91 GW).
+   - Check: with the fleet put on NERC's existing-certain basis for 2026 (a per-region factor, 0.77-1.13), the model's
+     margins follow NERC's anticipated margins where NERC counts the same resources; CAISO sits lower because NERC
+     counts its Tier 1 batteries and uses a wider California area.
+   - Without feedback from scarcity to new requests (Phase 2), surpluses are not self-correcting (ERCOT 80% in 2035)
+     and shortfalls are not filled by new entry, so the shortfall is an upper bound on what current law delivers.
+
+**All assumption ranges at once (`results/uncertainty.md`).** 400 Latin-hypercube samples, each paired. Data-sized
+provisions: **+10 GW [+6, +16]**, 2035 shortfall -0.3 GW [-0.7, -0.0]. Sec.2213's compliance range explains about half of
+the variance in GW. Drawing the two interconnection dials across their ranges as well: +35 GW [+8, +188], and
+Sec.2106's dial explains 81% of the variance. Current-law shortfall in 2035: 66 GW [26, 124].
+
 ## Validation
 Backcast, current law, Jan 2010 to Dec 2025, with LBNL requests by year (`results/backcast.md`). Cumulative 2018-25
-additions, model vs EIA-860: onshore wind 1.02, gas 0.83, solar 0.80, **storage 0.54**. Storage completion is set from
-EIA-860M (storage planned in Dec 2021 completes 1.07x as often as solar by Sep 2026) rather than LBNL's 2000-20
-cohort; the remaining gap is likely batteries added at existing plants outside the queue, so storage GW are still
-low. Calibration fits LBNL completion and time to operation by technology, and CEQ EIS counts
-(`results/calibration.json`).
+additions, model vs EIA-860: onshore wind 1.02, **storage 1.14** (was 0.54), gas 0.84, solar 0.80. Two Phase 1 changes
+fixed storage: the seeded queue's projects with signed agreements now finish on the measured agreement-to-operation time
+(29 months for batteries, LBNL 2022-25) rather than a fitted 62 months, and storage completion is LBNL's own (9.1%).
+Model year 1 (Nov 2026-Oct 2027) matches EIA-860's 2024-25 average additions by technology (a calibrated window for
+seeded projects already overdue). Regional withdrawal hazards fit LBNL completion by region (`results/calibration.json`).
 
 ## Data register ([D])
 | What | Source | Extractor -> file |
@@ -119,7 +141,12 @@ low. Calibration fits LBNL completion and time to operation by technology, and C
 | EIS litigation rates by sector | Bennon & Wilson 2023 (53 ELR 10836); RFF | `params.LIT_EIS` |
 | retirement ages, annual additions, ownership | EIA-860 2025 | `extract_engine_inputs.py`, `extract_federal_nexus.py` |
 | capacity factors | EIA Electric Power Monthly; NREL ATB (offshore wind) | `params.CF` |
-| bill text | GovInfo BILLS-119s5653is | `docs/bill_question_map.md` |
+| bill text | GovInfo BILLS-119s5653is; Senate-passed substitute KAT26804 V62 | `docs/bill_question_map.md` |
+| regions: request shares, completion by region, time since signed IA, IA -> operation | LBNL Queued Up through 2025 | `extract_regions.py` -> `region_targets.json` |
+| existing fleet, announced retirements, vintages, capacity factors | EIA-860 2025, EIA-860M Sep 2026, EIA-923 2025 | `extract_fleet.py` -> `fleet_targets.json` |
+| peak demand, firm transfers, existing-certain capacity, reference margins | NERC 2025 Long-Term Reliability Assessment | `extract_demand.py` -> `demand_targets.json` |
+| capacity credit of wind, solar, storage | NERC 2025 LTRA (2026); PJM preliminary ELCC class ratings DY2028-42 (2041) | `supply.ONPEAK_2026`, `ONPEAK_2041_PJM` |
+| first-year additions (seeded queue timing) | EIA-860 2024-25 additions | `calibrate.overdue_targets` |
 
 Raw files supplied by you (LBNL, USACE, NEPA cases, Sabin, DOE, RUS) are not committed; the extractors regenerate
 the JSON summaries in `data/` from them.
@@ -153,6 +180,10 @@ the JSON summaries in `data/` from them.
 | `halt_mult_1401` | 0.1 | 0.5 | 1.0 | Sec.1401: residual halt probability; the passed text exempts action "pursuant to any applicable law or regulation" |
 | `ix_2110`, `ix_2106` | 0, 0 | 0, 0 | 0.05, 0.42 | interconnection study-time cuts; 2110 all providers, 2106 RTO/ISO markets only. Sec.2106 ceiling **from data**: ERCOT's pace vs CAISO/MISO (`data/interconnection_benchmark.json`); Sim 3 sweeps 0-42% |
 | `ix_rule_month` | 24 | 36 | 48 | months until the rules affect studies |
+| `ret_hazard_old` | 0.01 | 0.03 | 0.06 | Supply: annual retirement probability of coal, gas, oil units past the median retirement age (ages from EIA-860) with no announced date |
+| `ret_announced` | 0.6 | 1.0 | 1.0 | Supply: share of announced retirements that happen on schedule (low = delays like the 2025 DOE 202(c) orders) |
+| `elcc_decline` | 0 | 0.5 | 1 | Supply: how far wind, solar, storage capacity credit falls by 2041, from NERC 2025 national values (0) to PJM's 2041/42 ratings (1) |
+| `demand_growth_mult` | 0.5 | 1.0 | 1.5 | Supply: multiplier on NERC's forecast demand growth |
 
 Other assumptions without a range: transmission and hydro-relicensing arrival rates; offshore wind (800 MW) and
 geothermal (40 MW) project sizes; EIS litigation rates for offshore wind, hydro and storage; relative court-loss odds
@@ -164,18 +195,24 @@ of a truncated review (1.6); halt probabilities other than offshore wind.
 - **EA/CE data are BLM and DOE only.** Corps, USFS and FWS reviews are missing, so EA/CE suit rates are scaled down by a range.
 - **Storage is underestimated** (backcast ratio 0.54; storage completion is now set from EIA-860M late-stage data).
 - **Gas pipelines and LNG are not simulated**; Sim 2 compares their litigation (10 NEPA cases a year vs 4 for renewables) from data.
-- **No prices, demand or emissions feedback**; arrivals stay at the 2021-25 average (gas requests are rising fast).
+- **No prices or emissions; no feedback from scarcity to new requests** (Phase 2); arrivals stay at the 2021-25 average
+  (or 2025's mix). Demand is NERC's forecast, not modelled.
+- **Supply is capacity accounting, not dispatch**: firm capacity at on-peak shares against NERC's reference margins; no
+  hourly reliability model, no imports beyond NERC's firm transfers.
+- **Regions are LBNL's nine**, matched to NERC assessment areas; CAISO and the West differ most from NERC's areas.
 - **Transmission has no MW in the model**, so transmission provisions affect only transmission projects' own timing.
 
 ## Run
 ```bash
 pip install -r requirements.txt
-python run.py --all --runs 100    # ~10 min: calibrate, backcast, five simulations -> results/, figures/
+python run.py --all --runs 100    # calibrate, backcast, six simulations -> results/, figures/
+python run.py --uncertainty 400   # all assumption ranges at once -> results/uncertainty.md
 python run.py --sim 3 --runs 50   # one simulation, reusing results/calibration.json
 python -m pytest -q
 ```
 
 ## Layout
 `baaja/params.py` parameters, data hooks, assumption register · `baaja/model.py` engine · `baaja/calibrate.py` ·
-`baaja/experiments.py` paired runs, sweeps, backcast · `baaja/sims/` the five simulations · `baaja/plots.py` ·
+`baaja/experiments.py` paired runs, sweeps, backcast · `baaja/supply.py` fleet, demand, adequacy · `baaja/uncertainty.py`
+joint sampling · `baaja/sims/` the six simulations · `baaja/plots.py` ·
 `data/` extractors and JSON targets · `docs/bill_question_map.md` · `legacy/` v1 and the original v3.
