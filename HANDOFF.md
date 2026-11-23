@@ -114,7 +114,24 @@ whenever `grid_cal` exists.
 - Tests: `tests/test_phase3.py` (two-piece clock, region by request year, court baseline, backcast identities, joint
   sample reproducible, joint interval no narrower than seed-only); `tests/test_grid.py` updated for the backcast fit.
 
-PHASE3_RESULTS
+**Phase 3 results.**
+- Sim 7 with the refitted agents (100 paired runs): current law 910 GW new by 2041 (exogenous 1,105); BAAJA +32 GW
+  [+14, +53] (renewables +19, gas +8, storage +3.5); without Sec.2106 +9.8 (exogenous +9.7); Sec.2106 alone +22
+  [+3, +41]; every RTO adopting +52; Sec.2109 about +5.5; a 25% Sec.2110 gain +13 more. MISO +12, PJM +7, CAISO +2.
+  Shortfall below reference margins, current law: 71 GW in 2035, 137 in 2041 (almost all PJM); BAAJA cuts it by 1.8 GW
+  in 2035 and 5.1 in 2041. Ranges: `adopt_2106` +10 to +52, `q_min_2106` +35 to +6, `kappa` current law 743-965 GW.
+  `lag_2106` has no effect on GW (+27 at both ends): the hold only delays when a decided withdrawal is recorded.
+- Joint uncertainty (400 samples per row): data-sized provisions +9.8 GW [+6.0, +15.2]; with the grid dials
+  +34 [+8, +190]; with the grid agents and all their assumptions +31 [+7, +77], 2035 shortfall -1.5 [-7.9, -0.1].
+  Largest variance shares: `comply_2213` 46% (data-sized); `ix_2106` 76% (dials); `q_min_2106` 19% and `adopt_2106`
+  17% (agents). The court-baseline range explains about 1%.
+- Court baseline (Sim 2): with NEPA remedies x0.5-0.7 and suits x0.6-1.0, the court provisions are worth +0.2 to
+  +0.5 GW (central +0.9) and all data-sized provisions +9.0 to +9.3 (central +9.7).
+- Backcast 2018-25, model / EIA-860: exogenous solar 0.82, wind 1.00, gas 0.84, storage 1.08; agents 0.67, 0.81, 0.80,
+  0.42. Regional weighted mean absolute log error 0.42 (exogenous) and 0.51 (agents). Withdrawal timing of 2015-19
+  requests fits LBNL by region at 12-36 months (agents); 2020-23 holdout mixed.
+- With the agents, current-law suits 2026-41 are 185 (exogenous 119): more requests stay alive to a federal decision.
+  BAAJA's cut in suits is therefore larger in agents runs (-137 vs -81 for all data-sized provisions in Sim 2).
 
 ## Known issues carried forward
 - Grid agents: completed projects take too long from request to operation (a longer wait does not raise withdrawal,
