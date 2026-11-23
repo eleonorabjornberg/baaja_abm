@@ -14,6 +14,40 @@ L = LEVERS["litigation"]
 SWEEP = ["late_adapt", "exhaust_injury", "suit_payoff", "inj_nonNEPA", "lit_months_baaja", "lit_data_mult", "lit_ea", "p_kill_vac", "remand_months"]
 
 
+# court baseline after Seven County (May 2025): challengers' NEPA win/injunction/vacatur rates and suit filing relative
+# to the 2001-22 cases, applied to current law and BAAJA alike. No 2023-26 case data: an assumption range.
+COURT_ERA = [("2001-22 case rates (central)", 1.0, 1.0), ("NEPA remedies x0.7", 0.7, 1.0),
+             ("NEPA remedies x0.7, suits x0.8", 0.7, 0.8), ("NEPA remedies x0.5, suits x0.6", 0.5, 0.6)]
+
+
+def court_era(n_runs, cal, law_central):
+    """BAAJA's court provisions and the whole data-sized bill, each paired against current law under the same court
+    baseline; plus how much the court baseline alone moves current law."""
+    rows, out = [], {}
+    for lab, w, f in COURT_ERA:
+        base = dict(nepa_win_mult=w, nepa_suit_mult=f)
+        raw = {k: ex.run_scenario(o, n_runs, cal) for k, o in
+               (("law", base), ("courts", {**base, **L}), ("all", {**base, **BAAJA}))}
+        law, crt, al = ex.aggregate(raw["law"], law_central), ex.aggregate(raw["courts"], raw["law"]), ex.aggregate(raw["all"], raw["law"])
+        out[lab] = dict(nepa_win_mult=w, nepa_suit_mult=f, law_vs_central_law=law["diff_vs_baseline"],
+                        law=law["totals"], courts=crt["diff_vs_baseline"], all=al["diff_vs_baseline"], courts_totals=crt["totals"])
+        rows.append([lab, f"{law['totals']['suits_total']['mean']:.0f} -> {crt['totals']['suits_total']['mean']:.0f}",
+                     fmt(law["diff_vs_baseline"]["GW_total"], 1, True), fmt(crt["diff_vs_baseline"]["GW_total"], 1, True),
+                     fmt(al["diff_vs_baseline"]["GW_total"], 1, True)])
+    md = "\n\n".join([
+        "## Court baseline after Seven County (2025)",
+        "In *Seven County Infrastructure Coalition v. Eagle County* (May 2025) the Supreme Court told lower courts to "
+        "defer to agencies on the scope of NEPA review and said a flawed review need not void the project approval. "
+        "The case rates in this model are from 2001-22. No 2023-26 case data were available, so the later baseline is an "
+        "assumption range: challengers' NEPA win, injunction and vacatur rates scaled down, and in two rows fewer suits "
+        "filed as well. The same scaling applies under current law and BAAJA, so each row pairs the bill against the "
+        "same court baseline. BAAJA's remaining injunctions rest on non-NEPA laws and are not scaled.",
+        table(["court baseline", "suits 2026-41, law -> court provisions", "current law: GW vs 2001-22 baseline",
+               "court provisions (Sec.1110/2201): GW vs law", "all data-sized provisions: GW vs law"], rows),
+    ])
+    return md, out
+
+
 def run(n_runs, cal, res_dir, fig_dir):
     scen = {"Current law": {}, "Court provisions only (Sec.1110/2201)": L, "All data-based provisions": BAAJA}
     raw = {k: ex.run_scenario(o, n_runs, cal) for k, o in scen.items()}
@@ -44,6 +78,7 @@ def run(n_runs, cal, res_dir, fig_dir):
     s = _load("permits_opposition_targets.json")["sabin"]["contested_by_type"]
     sab = [[t, v["contested"], v["litigated"], v["federal_venue"], v["state_or_admin_only"], v["canceled"]] for t, v in s.items()]
     reg_md, reg_res = regime_block(scen, n_runs, cal)
+    era_md, era = court_era(n_runs, cal, raw["Current law"])
     md = "\n\n".join([
         "# Simulation 2: litigation",
         "Suits are drawn only for projects with a federal decision that are still alive at that decision. Challenger mix, win "
@@ -65,12 +100,13 @@ def run(n_runs, cal, res_dir, fig_dir):
                "suits kept under BAAJA (central)"], side),
         "## Litigation BAAJA does not reach: Sabin Center contested renewable projects (2026 database)",
         table(["type", "contested", "litigated", "federal venue", "state / administrative only", "cancelled"], sab),
+        era_md,
         "## Sensitivity (court provisions; other values central)", sweep_table(sw, SWEEP),
     ])
     plots.grouped_bars(CHALLENGERS, {g + ", law": [b[f"suits: {ch} | {g}"] for ch in CHALLENGERS] for g in ("Renewable (new)", "Fossil (gas)")}
                        | {g + ", BAAJA courts": [c[f"suits: {ch} | {g}"] for ch in CHALLENGERS] for g in ("Renewable (new)", "Fossil (gas)")},
                        os.path.join(fig_dir, "sim2_who_sues.png"), "Sim 2: suits 2026-41 by lead challenger", "suits",
                        colors=["#9ddcc4", "#f5b79c", "#1baf7a", "#eb6834"], fmt="{:.0f}")
-    data = dict(regime_2025=reg_res, scenarios=res, sweep=sw, sabin=s)
+    data = dict(regime_2025=reg_res, scenarios=res, sweep=sw, sabin=s, court_era=era)
     save("sim2_litigation", data, md, res_dir)
     return md, data

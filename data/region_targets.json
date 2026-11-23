@@ -110,6 +110,189 @@
    },
    "ia_months_median": {
     "MISO": 33.6892247043364
+   },
+   "requests_by_year": {
+    "2008": {
+     "CAISO": 40,
+     "ISO-NE": 12,
+     "MISO": 5,
+     "NYISO": 6,
+     "PJM": 55,
+     "SPP": 10,
+     "Southeast": 26,
+     "West": 54
+    },
+    "2009": {
+     "CAISO": 5,
+     "ISO-NE": 5,
+     "MISO": 3,
+     "NYISO": 2,
+     "PJM": 19,
+     "SPP": 7,
+     "Southeast": 5,
+     "West": 13
+    },
+    "2010": {
+     "CAISO": 8,
+     "ISO-NE": 7,
+     "MISO": 10,
+     "PJM": 32,
+     "SPP": 7,
+     "Southeast": 13,
+     "West": 17
+    },
+    "2011": {
+     "CAISO": 7,
+     "ERCOT": 1,
+     "ISO-NE": 5,
+     "MISO": 7,
+     "NYISO": 2,
+     "PJM": 55,
+     "SPP": 8,
+     "Southeast": 19,
+     "West": 22
+    },
+    "2012": {
+     "CAISO": 16,
+     "ISO-NE": 5,
+     "MISO": 7,
+     "NYISO": 5,
+     "PJM": 55,
+     "SPP": 17,
+     "Southeast": 5,
+     "West": 25
+    },
+    "2013": {
+     "CAISO": 21,
+     "ERCOT": 1,
+     "ISO-NE": 6,
+     "MISO": 12,
+     "NYISO": 4,
+     "PJM": 59,
+     "SPP": 6,
+     "Southeast": 6,
+     "West": 7
+    },
+    "2014": {
+     "CAISO": 16,
+     "ERCOT": 3,
+     "ISO-NE": 19,
+     "MISO": 49,
+     "NYISO": 11,
+     "PJM": 52,
+     "SPP": 9,
+     "Southeast": 6,
+     "West": 16
+    },
+    "2015": {
+     "CAISO": 7,
+     "ERCOT": 4,
+     "ISO-NE": 27,
+     "MISO": 22,
+     "NYISO": 9,
+     "PJM": 97,
+     "SPP": 7,
+     "Southeast": 9,
+     "West": 5
+    },
+    "2016": {
+     "CAISO": 1,
+     "ERCOT": 3,
+     "ISO-NE": 9,
+     "MISO": 12,
+     "NYISO": 2,
+     "PJM": 74,
+     "SPP": 7,
+     "Southeast": 9,
+     "West": 6
+    },
+    "2017": {
+     "CAISO": 4,
+     "ERCOT": 3,
+     "ISO-NE": 4,
+     "MISO": 12,
+     "NYISO": 5,
+     "PJM": 56,
+     "SPP": 3,
+     "Southeast": 9,
+     "West": 17
+    },
+    "2018": {
+     "CAISO": 1,
+     "ERCOT": 16,
+     "ISO-NE": 5,
+     "MISO": 6,
+     "NYISO": 5,
+     "PJM": 39,
+     "SPP": 2,
+     "Southeast": 9,
+     "West": 11
+    },
+    "2019": {
+     "ERCOT": 17,
+     "ISO-NE": 6,
+     "MISO": 14,
+     "NYISO": 1,
+     "PJM": 34,
+     "SPP": 6,
+     "Southeast": 24,
+     "West": 4
+    },
+    "2020": {
+     "CAISO": 5,
+     "ERCOT": 14,
+     "ISO-NE": 8,
+     "MISO": 5,
+     "PJM": 15,
+     "SPP": 28,
+     "Southeast": 27,
+     "West": 14
+    },
+    "2021": {
+     "CAISO": 2,
+     "ERCOT": 16,
+     "ISO-NE": 2,
+     "MISO": 5,
+     "PJM": 4,
+     "SPP": 3,
+     "Southeast": 9,
+     "West": 14
+    },
+    "2022": {
+     "ERCOT": 10,
+     "MISO": 20,
+     "PJM": 6,
+     "SPP": 1,
+     "Southeast": 13,
+     "West": 24
+    },
+    "2023": {
+     "CAISO": 8,
+     "ERCOT": 15,
+     "ISO-NE": 1,
+     "MISO": 1,
+     "PJM": 1,
+     "SPP": 12,
+     "Southeast": 57,
+     "West": 22
+    },
+    "2024": {
+     "ERCOT": 30,
+     "ISO-NE": 1,
+     "MISO": 37,
+     "NYISO": 2,
+     "SPP": 19,
+     "Southeast": 61,
+     "West": 36
+    },
+    "2025": {
+     "ERCOT": 35,
+     "MISO": 70,
+     "PJM": 26,
+     "SPP": 48,
+     "Southeast": 102,
+     "West": 39
+    }
    }
   },
   "Geothermal": {
@@ -160,7 +343,70 @@
     "MISO": 1,
     "West": 84
    },
-   "ia_months_median": {}
+   "ia_months_median": {},
+   "requests_by_year": {
+    "2008": {
+     "CAISO": 10,
+     "West": 11
+    },
+    "2009": {
+     "West": 6
+    },
+    "2010": {
+     "CAISO": 4,
+     "West": 9
+    },
+    "2011": {
+     "CAISO": 6,
+     "West": 2
+    },
+    "2012": {
+     "CAISO": 1,
+     "West": 8
+    },
+    "2013": {
+     "West": 3
+    },
+    "2014": {
+     "CAISO": 1,
+     "West": 3
+    },
+    "2015": {
+     "CAISO": 2,
+     "West": 3
+    },
+    "2016": {
+     "West": 6
+    },
+    "2017": {
+     "West": 6
+    },
+    "2018": {
+     "West": 3
+    },
+    "2019": {
+     "West": 4
+    },
+    "2020": {
+     "West": 6
+    },
+    "2021": {
+     "CAISO": 3,
+     "West": 11
+    },
+    "2022": {
+     "West": 3
+    },
+    "2023": {
+     "West": 7
+    },
+    "2024": {
+     "West": 10
+    },
+    "2025": {
+     "West": 26
+    }
+   }
   },
   "Offshore wind": {
    "new_share": {
@@ -210,7 +456,81 @@
     "NYISO": 26,
     "PJM": 56
    },
-   "ia_months_median": {}
+   "ia_months_median": {},
+   "requests_by_year": {
+    "2008": {
+     "PJM": 6
+    },
+    "2009": {
+     "NYISO": 1
+    },
+    "2010": {
+     "PJM": 2
+    },
+    "2011": {
+     "NYISO": 1,
+     "PJM": 4
+    },
+    "2013": {
+     "ISO-NE": 1,
+     "PJM": 2
+    },
+    "2014": {
+     "ISO-NE": 1
+    },
+    "2015": {
+     "PJM": 2
+    },
+    "2016": {
+     "ISO-NE": 2
+    },
+    "2017": {
+     "ISO-NE": 5,
+     "NYISO": 1,
+     "PJM": 1
+    },
+    "2018": {
+     "CAISO": 2,
+     "ISO-NE": 7,
+     "NYISO": 5,
+     "PJM": 15
+    },
+    "2019": {
+     "CAISO": 2,
+     "ISO-NE": 7,
+     "NYISO": 3,
+     "PJM": 11
+    },
+    "2020": {
+     "CAISO": 3,
+     "ISO-NE": 3,
+     "NYISO": 14,
+     "PJM": 5
+    },
+    "2021": {
+     "CAISO": 3,
+     "ISO-NE": 8,
+     "NYISO": 10,
+     "PJM": 10
+    },
+    "2022": {
+     "ISO-NE": 4,
+     "NYISO": 33,
+     "PJM": 6
+    },
+    "2023": {
+     "ISO-NE": 3,
+     "NYISO": 5,
+     "PJM": 2
+    },
+    "2024": {
+     "ISO-NE": 3,
+     "NYISO": 13
+    },
+    "2025": {
+     "PJM": 2
+    }
+   }
   },
   "Onshore wind": {
    "new_share": {
@@ -299,6 +619,197 @@
     "ERCOT": 23.242444152431013,
     "MISO": 38.86333771353482,
     "West": 33.54139290407359
+   },
+   "requests_by_year": {
+    "2008": {
+     "CAISO": 9,
+     "ISO-NE": 15,
+     "MISO": 150,
+     "NYISO": 17,
+     "PJM": 68,
+     "SPP": 124,
+     "Southeast": 2,
+     "West": 190
+    },
+    "2009": {
+     "CAISO": 5,
+     "ERCOT": 5,
+     "ISO-NE": 11,
+     "MISO": 105,
+     "NYISO": 6,
+     "PJM": 37,
+     "SPP": 66,
+     "Southeast": 3,
+     "West": 139
+    },
+    "2010": {
+     "CAISO": 12,
+     "ERCOT": 4,
+     "ISO-NE": 12,
+     "MISO": 61,
+     "NYISO": 4,
+     "PJM": 55,
+     "SPP": 53,
+     "Southeast": 1,
+     "West": 125
+    },
+    "2011": {
+     "CAISO": 18,
+     "ERCOT": 2,
+     "ISO-NE": 9,
+     "MISO": 44,
+     "NYISO": 6,
+     "PJM": 24,
+     "SPP": 50,
+     "Southeast": 3,
+     "West": 65
+    },
+    "2012": {
+     "CAISO": 4,
+     "ERCOT": 2,
+     "ISO-NE": 10,
+     "MISO": 18,
+     "NYISO": 12,
+     "PJM": 17,
+     "SPP": 25,
+     "Southeast": 5,
+     "West": 54
+    },
+    "2013": {
+     "CAISO": 4,
+     "ERCOT": 11,
+     "ISO-NE": 7,
+     "MISO": 39,
+     "NYISO": 6,
+     "PJM": 14,
+     "SPP": 33,
+     "Southeast": 3,
+     "West": 32
+    },
+    "2014": {
+     "CAISO": 3,
+     "ERCOT": 5,
+     "ISO-NE": 16,
+     "MISO": 25,
+     "NYISO": 5,
+     "PJM": 15,
+     "SPP": 46,
+     "Southeast": 5,
+     "West": 22
+    },
+    "2015": {
+     "CAISO": 4,
+     "ERCOT": 16,
+     "ISO-NE": 12,
+     "MISO": 57,
+     "NYISO": 12,
+     "PJM": 12,
+     "SPP": 71,
+     "Southeast": 2,
+     "West": 33
+    },
+    "2016": {
+     "CAISO": 8,
+     "ERCOT": 20,
+     "ISO-NE": 4,
+     "MISO": 115,
+     "NYISO": 11,
+     "PJM": 27,
+     "SPP": 139,
+     "Southeast": 8,
+     "West": 41
+    },
+    "2017": {
+     "CAISO": 10,
+     "ERCOT": 47,
+     "ISO-NE": 11,
+     "MISO": 77,
+     "NYISO": 5,
+     "PJM": 20,
+     "SPP": 111,
+     "Southeast": 3,
+     "West": 90
+    },
+    "2018": {
+     "CAISO": 8,
+     "ERCOT": 42,
+     "ISO-NE": 15,
+     "MISO": 67,
+     "NYISO": 10,
+     "PJM": 42,
+     "SPP": 40,
+     "Southeast": 4,
+     "West": 53
+    },
+    "2019": {
+     "CAISO": 10,
+     "ERCOT": 27,
+     "MISO": 36,
+     "NYISO": 7,
+     "PJM": 20,
+     "SPP": 6,
+     "Southeast": 2,
+     "West": 40
+    },
+    "2020": {
+     "CAISO": 11,
+     "ERCOT": 8,
+     "ISO-NE": 2,
+     "MISO": 46,
+     "NYISO": 3,
+     "PJM": 20,
+     "SPP": 15,
+     "Southeast": 2,
+     "West": 21
+    },
+    "2021": {
+     "CAISO": 9,
+     "ERCOT": 14,
+     "ISO-NE": 1,
+     "MISO": 44,
+     "NYISO": 8,
+     "PJM": 9,
+     "SPP": 22,
+     "Southeast": 1,
+     "West": 52
+    },
+    "2022": {
+     "ERCOT": 14,
+     "ISO-NE": 3,
+     "MISO": 84,
+     "NYISO": 4,
+     "PJM": 14,
+     "SPP": 17,
+     "Southeast": 2,
+     "West": 72
+    },
+    "2023": {
+     "CAISO": 2,
+     "ERCOT": 31,
+     "ISO-NE": 3,
+     "MISO": 1,
+     "NYISO": 12,
+     "PJM": 8,
+     "SPP": 92,
+     "Southeast": 3,
+     "West": 119
+    },
+    "2024": {
+     "ERCOT": 34,
+     "ISO-NE": 1,
+     "MISO": 104,
+     "NYISO": 29,
+     "SPP": 11,
+     "Southeast": 3,
+     "West": 35
+    },
+    "2025": {
+     "ERCOT": 39,
+     "MISO": 59,
+     "PJM": 4,
+     "SPP": 64,
+     "West": 35
+    }
    }
   },
   "Solar": {
@@ -393,6 +904,187 @@
     "PJM": 40.62089356110381,
     "Southeast": 21.156373193166885,
     "West": 31.274638633377133
+   },
+   "requests_by_year": {
+    "2008": {
+     "CAISO": 118,
+     "NYISO": 1,
+     "PJM": 6,
+     "SPP": 2,
+     "West": 49
+    },
+    "2009": {
+     "CAISO": 52,
+     "NYISO": 2,
+     "PJM": 67,
+     "SPP": 1,
+     "Southeast": 1,
+     "West": 74
+    },
+    "2010": {
+     "CAISO": 185,
+     "ERCOT": 1,
+     "ISO-NE": 1,
+     "MISO": 1,
+     "PJM": 307,
+     "SPP": 3,
+     "Southeast": 1,
+     "West": 163
+    },
+    "2011": {
+     "CAISO": 173,
+     "ISO-NE": 4,
+     "MISO": 4,
+     "PJM": 229,
+     "SPP": 1,
+     "Southeast": 4,
+     "West": 80
+    },
+    "2012": {
+     "CAISO": 42,
+     "ISO-NE": 2,
+     "NYISO": 1,
+     "PJM": 38,
+     "SPP": 2,
+     "Southeast": 16,
+     "West": 47
+    },
+    "2013": {
+     "CAISO": 33,
+     "ERCOT": 4,
+     "MISO": 4,
+     "PJM": 25,
+     "SPP": 3,
+     "Southeast": 46,
+     "West": 124
+    },
+    "2014": {
+     "CAISO": 37,
+     "ERCOT": 7,
+     "MISO": 25,
+     "NYISO": 22,
+     "PJM": 66,
+     "SPP": 19,
+     "Southeast": 64,
+     "West": 172
+    },
+    "2015": {
+     "CAISO": 62,
+     "ERCOT": 11,
+     "ISO-NE": 20,
+     "MISO": 19,
+     "NYISO": 7,
+     "PJM": 114,
+     "SPP": 21,
+     "Southeast": 42,
+     "West": 212
+    },
+    "2016": {
+     "CAISO": 93,
+     "ERCOT": 23,
+     "ISO-NE": 9,
+     "MISO": 95,
+     "NYISO": 31,
+     "PJM": 251,
+     "SPP": 28,
+     "Southeast": 228,
+     "West": 270
+    },
+    "2017": {
+     "CAISO": 59,
+     "ERCOT": 63,
+     "ISO-NE": 29,
+     "MISO": 99,
+     "NYISO": 61,
+     "PJM": 252,
+     "SPP": 109,
+     "Southeast": 295,
+     "West": 263
+    },
+    "2018": {
+     "CAISO": 49,
+     "ERCOT": 87,
+     "ISO-NE": 80,
+     "MISO": 152,
+     "NYISO": 66,
+     "PJM": 279,
+     "SPP": 59,
+     "Southeast": 285,
+     "West": 299
+    },
+    "2019": {
+     "CAISO": 77,
+     "ERCOT": 125,
+     "ISO-NE": 69,
+     "MISO": 206,
+     "NYISO": 57,
+     "PJM": 492,
+     "SPP": 40,
+     "Southeast": 225,
+     "West": 229
+    },
+    "2020": {
+     "CAISO": 74,
+     "ERCOT": 106,
+     "ISO-NE": 108,
+     "MISO": 208,
+     "NYISO": 63,
+     "PJM": 713,
+     "SPP": 44,
+     "Southeast": 215,
+     "West": 192
+    },
+    "2021": {
+     "CAISO": 127,
+     "ERCOT": 122,
+     "ISO-NE": 59,
+     "MISO": 252,
+     "NYISO": 65,
+     "PJM": 643,
+     "SPP": 58,
+     "Southeast": 156,
+     "West": 374
+    },
+    "2022": {
+     "ERCOT": 120,
+     "ISO-NE": 53,
+     "MISO": 646,
+     "NYISO": 47,
+     "PJM": 322,
+     "SPP": 57,
+     "Southeast": 319,
+     "West": 465
+    },
+    "2023": {
+     "CAISO": 123,
+     "ERCOT": 123,
+     "ISO-NE": 38,
+     "MISO": 17,
+     "NYISO": 31,
+     "PJM": 119,
+     "SPP": 180,
+     "Southeast": 447,
+     "West": 491
+    },
+    "2024": {
+     "ERCOT": 139,
+     "ISO-NE": 33,
+     "MISO": 373,
+     "NYISO": 115,
+     "PJM": 1,
+     "SPP": 44,
+     "Southeast": 228,
+     "West": 202
+    },
+    "2025": {
+     "ERCOT": 117,
+     "MISO": 185,
+     "NYISO": 13,
+     "PJM": 257,
+     "SPP": 129,
+     "Southeast": 107,
+     "West": 185
+    }
    }
   },
   "Storage": {
@@ -481,6 +1173,149 @@
    "ia_months_median": {
     "CAISO": 38.929040735873855,
     "NYISO": 38.17345597897503
+   },
+   "requests_by_year": {
+    "2008": {
+     "NYISO": 4,
+     "PJM": 7
+    },
+    "2009": {
+     "PJM": 2
+    },
+    "2010": {
+     "PJM": 6
+    },
+    "2011": {
+     "PJM": 4
+    },
+    "2012": {
+     "PJM": 11,
+     "West": 2
+    },
+    "2013": {
+     "PJM": 21,
+     "West": 2
+    },
+    "2014": {
+     "CAISO": 28,
+     "MISO": 1,
+     "PJM": 21,
+     "West": 3
+    },
+    "2015": {
+     "CAISO": 48,
+     "ISO-NE": 1,
+     "MISO": 3,
+     "NYISO": 8,
+     "PJM": 62,
+     "SPP": 3,
+     "Southeast": 1,
+     "West": 4
+    },
+    "2016": {
+     "CAISO": 21,
+     "MISO": 2,
+     "NYISO": 2,
+     "PJM": 22,
+     "SPP": 1,
+     "West": 6
+    },
+    "2017": {
+     "CAISO": 17,
+     "ERCOT": 1,
+     "ISO-NE": 4,
+     "MISO": 2,
+     "NYISO": 3,
+     "PJM": 6,
+     "SPP": 16,
+     "Southeast": 1,
+     "West": 13
+    },
+    "2018": {
+     "CAISO": 35,
+     "ERCOT": 3,
+     "ISO-NE": 7,
+     "MISO": 13,
+     "NYISO": 28,
+     "PJM": 42,
+     "SPP": 33,
+     "West": 40
+    },
+    "2019": {
+     "CAISO": 48,
+     "ERCOT": 20,
+     "ISO-NE": 12,
+     "MISO": 43,
+     "NYISO": 96,
+     "PJM": 96,
+     "SPP": 27,
+     "Southeast": 19,
+     "West": 58
+    },
+    "2020": {
+     "CAISO": 58,
+     "ERCOT": 46,
+     "ISO-NE": 13,
+     "MISO": 29,
+     "NYISO": 64,
+     "PJM": 162,
+     "SPP": 12,
+     "Southeast": 19,
+     "West": 43
+    },
+    "2021": {
+     "CAISO": 216,
+     "ERCOT": 108,
+     "ISO-NE": 34,
+     "MISO": 96,
+     "NYISO": 76,
+     "PJM": 192,
+     "SPP": 23,
+     "Southeast": 22,
+     "West": 113
+    },
+    "2022": {
+     "CAISO": 2,
+     "ERCOT": 179,
+     "ISO-NE": 46,
+     "MISO": 226,
+     "NYISO": 81,
+     "PJM": 133,
+     "SPP": 21,
+     "Southeast": 23,
+     "West": 219
+    },
+    "2023": {
+     "CAISO": 154,
+     "ERCOT": 224,
+     "ISO-NE": 77,
+     "MISO": 4,
+     "NYISO": 90,
+     "PJM": 37,
+     "SPP": 107,
+     "Southeast": 62,
+     "West": 163
+    },
+    "2024": {
+     "ERCOT": 254,
+     "ISO-NE": 74,
+     "MISO": 164,
+     "NYISO": 223,
+     "PJM": 1,
+     "SPP": 14,
+     "Southeast": 59,
+     "West": 115
+    },
+    "2025": {
+     "ERCOT": 171,
+     "ISO-NE": 1,
+     "MISO": 124,
+     "NYISO": 3,
+     "PJM": 90,
+     "SPP": 87,
+     "Southeast": 48,
+     "West": 71
+    }
    }
   }
  }

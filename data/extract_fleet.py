@@ -80,6 +80,12 @@ def run(d860, f860m, f923):
     un = g[g.ret.isna() & g.opy.notna()]
     unannounced = {r: {k: {int(y): float(v) for y, v in d.groupby("opy").mw.sum().items()} for k, d in un[un.region == r].groupby("group")}
                    for r in regions}
+    # additions by operating year, 2010-2025, all units operable at end-2025, NAMEPLATE MW like the model's requests and
+    # the national series (eia860_additions.json); regional backcast check. Units added and already retired by end-2025
+    # are missing, which is negligible for new wind, solar, storage and gas.
+    ad = g[g.opy.between(2010, 2025)].assign(mw=lambda d: pd.to_numeric(d["Nameplate Capacity (MW)"], errors="coerce").fillna(0))
+    additions = {r: {k: {int(y): float(v) for y, v in d.groupby("opy").mw.sum().items()} for k, d in ad[ad.region == r].groupby("group")}
+                 for r in regions}
     # capacity factors from EIA-923
     e = pd.read_excel(f923, "Page 1 Generation and Fuel Data", header=5)
     e.columns = [c.replace("\n", " ") for c in e.columns]
@@ -100,7 +106,8 @@ def run(d860, f860m, f923):
                           "(generation)", units="MW net summer capacity", retirement_updates_from_860m=n_upd,
                           regions=regions, groups=groups,
                           national_cf={k: float(v) for k, v in nat.items()}),
-                capacity=cap, retirements=ret, unannounced_by_vintage=unannounced, capacity_factor=cf)
+                capacity=cap, retirements=ret, unannounced_by_vintage=unannounced, additions_by_year=additions,
+                capacity_factor=cf)
 
 
 if __name__ == "__main__":

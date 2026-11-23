@@ -34,6 +34,11 @@ def _region_share(t):
 
 
 REGION_SHARE = {t: _region_share(t) for t in RGN["types"]}
+# requests by request year and region (backcast only) [D]: {type: {year: (region indices, cumulative shares)}}
+REGION_BY_YEAR = {t: {int(y): ([REGIONS.index(r) for r in c], [sum(list(c.values())[:i + 1]) / sum(c.values()) for i in range(len(c))])
+                      for y, c in v.get("requests_by_year", {}).items() if sum(c.values()) > 0}
+                  for t, v in RGN["types"].items()}
+NON_ISO_IDX = [REGIONS.index(r) for r in RGN["meta"]["regions_non_iso"]]
 SINCE_IA = {t: v["since_ia_quantiles"] for t, v in RGN["types"].items() if v.get("since_ia_quantiles")}   # [D]
 IA_TO_COD = {t: v["ia_to_cod_median_recent"] for t, v in RGN["types"].items() if v.get("ia_to_cod_median_recent")}  # [D]
 _GAS2025 = ENGINE["lbnl"]["arrivals_by_year"]["Gas"]["2025"] / 12 / LBNL["types"]["Gas"]["arr_per_month"]
@@ -82,6 +87,13 @@ ASSUMPTIONS = {
     "exhaust_injury":    (0.6, 0.8, 0.95, "Sec.1110: share of timely suits that pass comment exhaustion + direct injury"),
     "suit_payoff":       (0.4, 0.6, 1.0, "Sec.1110: suits filed relative to current law when the only remedy is remand"),
     "inj_nonNEPA":       (0.0, 0.3, 0.5, "Sec.1110: share of injunctions that rest on non-NEPA laws (still allowed)"),
+    "nepa_win_mult":     (0.5, 1.0, 1.0, "court baseline after Seven County Infrastructure Coalition v. Eagle County (U.S., May "
+                          "2025), which told courts to defer to agencies on NEPA scope and said a flawed review need not "
+                          "void the project approval: challengers' NEPA win, injunction and vacatur rates relative to the "
+                          "2001-22 cases [central = data; low = halved; no 2023-26 case data, so an assumption range]. "
+                          "Applies under current law and BAAJA alike (BAAJA's injunctions rest on non-NEPA laws, unscaled)"),
+    "nepa_suit_mult":    (0.6, 1.0, 1.0, "court baseline after Seven County: NEPA suits filed relative to 2001-22 rates, "
+                          "law and BAAJA alike [A; low = filing falls with challengers' odds]"),
     "lit_months_baaja":  (8, 12, 16.4, "Sec.1110/2201: months in litigation with appeals-court original jurisdiction + expedited review"),
     "halt_mult_1401":    (0.1, 0.5, 1.0, "Sec.1401: residual halt probability relative to current law. The Senate-passed "
                           "text adds exception (F), action 'taken pursuant to any applicable law or regulation', which "
@@ -229,7 +241,7 @@ GRID_BILL = {
     "hosting_2109":       (0.0, 0.1, 0.3, "Sec.2109: extra hosting room per transmission project (advanced "
                            "transmission technologies)"),
 }
-GRID_BASE = dict(grid="exogenous", grid_cal=None, entry_max=2.0, scarcity_ahead=48,
+GRID_BASE = dict(grid="exogenous", grid_cal=None, region_by_year=False, entry_max=2.0, scarcity_ahead=48,
                  **{k: v[1] for k, v in GRID_LAW.items()},
                  grid_2106=False, grid_2110=0.0, grid_2109=0.0,
                  **{k: v[1] for k, v in GRID_BILL.items() if k not in ("g_2110", "hosting_2109")})
@@ -251,6 +263,7 @@ BASE = dict(T=T, turnovers=TURNOVERS, n_scale=1.0, seed_queue=True, arrivals=Non
             deadline_bind=0.0, ce_shift=0.0, recond_ce=0.0, geo_ce=0.0, ce_cap=None,
             court="current", late_adapt=A["late_adapt"], exhaust_injury=A["exhaust_injury"], suit_payoff=1.0,
             inj_nonNEPA=A["inj_nonNEPA"], lit_months=LIT_MONTHS, halt_mult=1.0,
+            nepa_win_mult=A["nepa_win_mult"], nepa_suit_mult=A["nepa_suit_mult"],   # court baseline (Seven County)
             overdue_months=12.0, overdue=None,          # overdue: calibrated per technology
             ix_cut=0.0, ix_cut_rto=0.0, ix_rule_month=A["ix_rule_month"],   # all providers / RTO-ISO only
             harm_w={"CE": 0.0, "EA": 0.3, "EIS": 1.0}, harm_mw_transmission=300, **GRID_BASE)

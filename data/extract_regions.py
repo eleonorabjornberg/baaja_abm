@@ -12,6 +12,7 @@ LBNL's nine regions: seven ISO/RTO markets (CAISO, ERCOT, ISO-NE, MISO, NYISO, P
   since_ia_quantiles         months from signed IA to 31 Dec 2025 for active/suspended requests with an IA, at
                              quantiles 0, 0.05, ..., 1: how far into construction the seeded queue already is
   ia_to_cod_median_recent    signed IA -> commercial operation, months, projects reaching operation 2022-25
+  requests_by_year[year][region]  number of requests by request year (2008-25), for the regional backcast
 """
 import json, os, sys
 
@@ -55,7 +56,9 @@ def run(path):
                       ia_to_cod_median_recent=float(i2c.median()) if len(i2c) >= 20 else None, n_ia_to_cod=int(len(i2c)),
                       since_ia_quantiles=qs, n_since_ia=int(len(since)),
                       n_cohort={r: int(len(c)) for r, c in coh.groupby("region")},
-                      ia_months_median={r: float(c.mo_ia.median()) for r, c in ia.groupby("region") if len(c) >= 20})
+                      ia_months_median={r: float(c.mo_ia.median()) for r, c in ia.groupby("region") if len(c) >= 20},
+                      requests_by_year={str(int(y)): {r: int(n) for r, n in c.groupby("region").size().items()}
+                                        for y, c in g[g.q_year.between(2008, 2025)].groupby("q_year")})
     return dict(meta=dict(source="LBNL Queued Up, interconnection queue data through 2025 (CC BY 4.0)",
                           regions_iso=ISO, regions_non_iso=NON,
                           ferc_rto=[r for r in ISO if r != "ERCOT"],

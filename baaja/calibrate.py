@@ -168,15 +168,15 @@ def check(cal, seeds=(20, 21, 22), n_scale=1.0):
     return out
 
 
-def _completion_cells(rows, keys):
-    """Completion of requests made in the first five years, by 'type|region' or 'type|*rest' (regions without a
+def _completion_cells(rows, keys, window=(0, 60)):
+    """Completion of requests made in `window` (months; default the first five years), by 'type|region' or 'type|*rest' (regions without a
     regional target), from simulate() rows."""
     from .params import REGIONS
     out = {}
     by = {r["type"]: r for r in rows}
     for k in keys:
         t, reg = k.split("|")
-        r = by[t]; coh = ~r["seeded"] & (r["t0"] < 60)
+        r = by[t]; coh = ~r["seeded"] & (r["t0"] >= window[0]) & (r["t0"] < window[1])
         if reg.startswith("*"):
             excl = [REGIONS.index(x) for x in reg[1:].split(",") if x]
             sel = coh & ~np.isin(r["region"], excl)
@@ -186,26 +186,39 @@ def _completion_cells(rows, keys):
     return out
 
 
-def calibrate_grid(cal, seeds=tuple(range(7, 15)), iters=14, passes=2, operators=None, wd_month=24):
-    """Grid agents (Phase 2), current law, end-2025 queue seeded.
+def calibrate_grid(cal, seeds=tuple(range(7, 15)), iters=14, passes=3, operators=None):
+    """Grid agents, current law, fitted in the 2010-25 backcast so that model and data cohorts share an era (the
+    Phase 2 fit used 2026-30 model cohorts against 2015-19 data and missed the timing; Phase 3 backcast).
     (1) Grid operators fitted to LBNL request -> agreement times (grid.fit_operators).
-    (2) Withdrawal in two parts. (a) Background: a regional hazard from request to construction start, fitted so the
-    share of requests withdrawn within `wd_month` months matches LBNL's 2015-19 cohorts [D]. (b) At study results:
-    a developer leaves when the allocated cost exceeds its value. Value is LBNL's P(complete | cost) fit [D] scaled
-    by a factor per technology and region, fitted so completion of new requests matches calibrate_regions' targets
-    [D] (LBNL: over 90% of withdrawals come before an agreement). Regions without a regional completion target share
-    the technology's pooled target. The two are fitted in alternating passes (log value multiplier in [-5, 5]).
-    (3) First-year timing of the seeded queue refitted (calibrate_overdue) with the agents on."""
-    from .grid import fit_operators, withdrawal_curve_data, withdrawal_curve_model
-    from .params import REGIONS
+    (2) Withdrawal in two parts. (a) Background: a regional hazard from request to construction start, one rate for a
+    request's first 12 months and one after, fitted so the shares of 2015-19 requests withdrawn within 12 and 60
+    months match LBNL [D] (24 and 36 months are left out of the fit as a check). (b) At study results: a developer
+    leaves when the allocated cost exceeds its value. Value is LBNL's P(complete | cost) fit [D] scaled by a factor
+    per technology and region, fitted so completion of 2010-19 requests by end-2025 matches calibrate_regions'
+    targets [D] (LBNL 2000-20 cohorts, still-active requests counted as not complete in both). Regions without a
+    regional completion target share the technology's pooled target. (a) and (b) are fitted in alternating passes.
+    (3) P(EIS | federal review) refitted in forward runs so decided EISs per year match CEQ 2015-24 [D] with the
+    agents on: the agents withdraw later than the exogenous model's constant hazard, so more requests survive to a
+    federal decision, and the exogenous fit would overcount EISs.
+    (4) First-year timing of the seeded queue refitted (calibrate_overdue) with the agents on.
+    EIA-860 additions are not used anywhere in the fit (validation.report compares them)."""
+    from .grid import H_SPLIT, WD_COHORTS, fit_operators, withdrawal_curve_data
+    from .params import BACKCAST, REGIONS
+    from .validation import backcast_params, withdrawal_by_region
     ops = operators or fit_operators()
     targets = regional_targets()
     for t in GEN:
         have = [k.split("|")[1] for k in targets if k.startswith(t + "|")]
         if len(have) < len(REGIONS):                            # pooled cell only if some region has no target
             targets[f"{t}|*" + ",".join(have)] = TYPES[t]["completion_target"]
-    wd_t = {r: v[wd_month] for r, v in withdrawal_curve_data().items()}
-    p = dict(BASE, **cal); p["grid"] = "agents"
+    wdd = withdrawal_curve_data()
+    m1, m2 = H_SPLIT, 60
+    w1 = {r: v[m1] for r, v in wdd.items()}; w2 = {r: v[m2] for r, v in wdd.items()}
+    pb = backcast_params(cal, "agents")
+    y0 = BACKCAST["start_year"]
+    coh = ((WD_COHORTS[0] - y0) * 12, (WD_COHORTS[1] + 1 - y0) * 12)
+    comp_win = (0, (WD_COHORTS[1] + 1 - y0) * 12)              # 2010-19 requests, completion by end-2025
+    pf = dict(BASE, **cal); pf["grid"] = "agents"               # forward runs (EIS refit)
 
     def vmult(x):
         v = {}
@@ -217,26 +230,46 @@ def calibrate_grid(cal, seeds=tuple(range(7, 15)), iters=14, passes=2, operators
     def run(gc, ss):
         got, wd = [], []
         for s in ss:
-            rows = simulate(dict(p, grid_cal=gc), s, POL)
-            got.append(_completion_cells(rows, targets)); wd.append(withdrawal_curve_model(rows))
+            rows = simulate(dict(pb, grid_cal=gc), s, BACKCAST["politics"])
+            got.append(_completion_cells(rows, targets, comp_win)); wd.append(withdrawal_by_region(rows, coh))
         return got, wd
-    x = {k: 0.0 for k in targets}; y = {r: 0.01 for r in wd_t}
-    for rnd in range(passes):                      # alternate: background hazard, then values (each bisected afresh)
-        plo = {r: 1e-4 for r in wd_t}; phi = {r: 0.2 for r in wd_t}
+
+    def wdm(wd, r, m):
+        return np.nanmean([w.get(r, {}).get(m, np.nan) for w in wd])
+    eis_t = {t: TYPES[t]["eis_target"] for t in GEN if TYPES[t]["ix"]}
+    pe = {t: cal["p_eis"].get(t, 0.0) for t in eis_t}
+
+    def fit_eis(gc):
+        lo = {t: 0.0 for t in eis_t}; hi = {t: 1.0 for t in eis_t}
         for _ in range(iters):
-            y = {r: (plo[r] + phi[r]) / 2 for r in wd_t}
-            _, wd = run(dict(operators=ops, value_mult=vmult(x), h_pre=y), seeds)
-            for r in wd_t:
-                m = np.nanmean([w.get(r, {}).get(wd_month, np.nan) for w in wd])
-                if np.isnan(m) or m < wd_t[r]:
-                    plo[r] = y[r]
+            z = {t: (lo[t] + hi[t]) / 2 for t in eis_t}
+            r = [summarize(simulate(dict(pf, grid_cal=dict(gc, p_eis=z)), s, POL), pf) for s in seeds]
+            for t in eis_t:
+                if np.nanmean([q[t]["EIS_per_year"] for q in r]) < eis_t[t]:
+                    lo[t] = z[t]
                 else:
-                    phi[r] = y[r]
-        y = {r: (plo[r] + phi[r]) / 2 for r in wd_t}
+                    hi[t] = z[t]
+        return {t: (lo[t] + hi[t]) / 2 for t in eis_t}
+    x = {k: 0.0 for k in targets}; h1 = {r: 0.02 for r in wdd}; h2 = {r: 0.005 for r in wdd}
+    hp = lambda: {r: [h1[r], h2[r]] for r in wdd}
+    for rnd in range(passes):                      # alternate: background hazards, then values (each bisected afresh)
+        for which, tgt, m in (("h1", w1, m1), ("h2", w2, m2)):
+            lo = {r: 0.0 for r in wdd}; hi = {r: 0.2 for r in wdd}
+            for _ in range(iters):
+                z = {r: (lo[r] + hi[r]) / 2 for r in wdd}
+                (h1 if which == "h1" else h2).update(z)
+                _, wd = run(dict(operators=ops, value_mult=vmult(x), h_pre=hp()), seeds)
+                for r in wdd:
+                    v = wdm(wd, r, m)
+                    if np.isnan(v) or v < tgt[r]:
+                        lo[r] = z[r]
+                    else:
+                        hi[r] = z[r]
+            (h1 if which == "h1" else h2).update({r: (lo[r] + hi[r]) / 2 for r in wdd})
         lo = {k: -5.0 for k in targets}; hi = {k: 5.0 for k in targets}
         for _ in range(iters):
             x = {k: (lo[k] + hi[k]) / 2 for k in targets}
-            got, _ = run(dict(operators=ops, value_mult=vmult(x), h_pre=y), seeds)
+            got, _ = run(dict(operators=ops, value_mult=vmult(x), h_pre=hp()), seeds)
             for k in targets:
                 m = np.nanmean([g[k] for g in got])
                 if np.isnan(m) or m > targets[k]:
@@ -244,10 +277,14 @@ def calibrate_grid(cal, seeds=tuple(range(7, 15)), iters=14, passes=2, operators
                 else:
                     lo[k] = x[k]
         x = {k: (lo[k] + hi[k]) / 2 for k in targets}
-    gc = dict(operators=ops, value_mult=vmult(x), h_pre=y)
+    gc = dict(operators=ops, value_mult=vmult(x), h_pre=hp())
+    gc["p_eis"] = fit_eis(gc)
     got, wd = run(gc, tuple(range(20, 30)))                 # check on 10 seeds not used in the fit
+    chk = [summarize(simulate(dict(pf, grid_cal=gc), s, POL), pf) for s in range(20, 30)]
+    eis_fit = {t: (float(np.nanmean([q[t]["EIS_per_year"] for q in chk])), eis_t[t]) for t in eis_t}
     fit = {k: (float(np.nanmean([g[k] for g in got])), targets[k]) for k in targets}
-    wfit = {r: (float(np.nanmean([w.get(r, {}).get(wd_month, np.nan) for w in wd])), wd_t[r]) for r in wd_t}
+    wfit = {r: {m: (float(wdm(wd, r, m)), v[m]) for m in v} for r, v in wdd.items()}
     od, od_t = calibrate_overdue(dict(cal, grid_cal=gc), base=dict(grid="agents"))
     gc["overdue"] = od["overdue"]
-    return gc, dict(completion=fit, withdrawn_by_month=wfit, wd_month=wd_month, first_year_targets=od_t, regions=REGIONS)
+    return gc, dict(completion=fit, withdrawn_by_month=wfit, fitted_months=[m1, m2], eis_per_year=eis_fit,
+                    first_year_targets=od_t, regions=REGIONS, setting="backcast 2010-25")

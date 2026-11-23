@@ -1,6 +1,7 @@
 """Run the BAAJA simulations.
 
   python run.py --all --runs 100          # calibrate, backcast, all seven simulations
+  python run.py --backcast                # backcast 2010-25 by region (reuses results/calibration.json)
   python run.py --recalibrate-grid --sim 7 # refit only the grid agents (Phase 2), then Sim 7
   python run.py --sim 2 --runs 50         # one simulation (reuses results/calibration.json if present)
   python run.py --uncertainty 400         # joint uncertainty over all assumption ranges (reuses calibration)
@@ -10,7 +11,7 @@ import argparse
 import json
 import os
 
-from baaja import experiments as ex
+from baaja import validation
 from baaja.calibrate import calibrate, calibrate_grid, calibrate_overdue, calibrate_regions, check
 from baaja.sims import sim1_permitting, sim2_litigation, sim3_grid, sim4_certainty, sim5_decision_control, sim6_supply
 from baaja.sims import sim7_grid_agents
@@ -25,6 +26,7 @@ ap.add_argument("--all", action="store_true")
 ap.add_argument("--recalibrate", action="store_true")
 ap.add_argument("--recalibrate-grid", action="store_true", help="refit only the grid agents (keeps the rest)")
 ap.add_argument("--uncertainty", type=int, default=0, help="joint-uncertainty samples (0 = skip)")
+ap.add_argument("--backcast", action="store_true", help="backcast 2010-25 by region, both grid models (in --all)")
 a = ap.parse_args()
 os.makedirs("results", exist_ok=True); os.makedirs("figures", exist_ok=True)
 
@@ -37,15 +39,8 @@ if a.recalibrate or a.all or not os.path.exists(cal_path):
     cal["grid_cal"], grid_fit = calibrate_grid(cal)  # grid agents (Phase 2)
     json.dump(dict(calibration=cal, fit=fit, regional_targets=reg_targets, first_year_targets=od_targets, grid_fit=grid_fit),
               open(cal_path, "w"), indent=1, default=float)
-    eia = json.load(open("data/eia860_additions.json"))
-    b = ex.backcast(cal, 10)
-    rows = []
-    for t in ("Solar", "Onshore wind", "Gas", "Storage"):
-        m = sum(b[t][y] for y in range(2018, 2026)); x = sum(eia[t][str(y)] for y in range(2018, 2026)) / 1000
-        rows.append([t, f"{m:.1f}", f"{x:.1f}", f"{m/x:.2f}", " ".join(f"{b[t][y]:.0f}/{eia[t][str(y)]/1000:.0f}" for y in range(2018, 2026))])
-    open("results/backcast.md", "w").write("# Backcast 2010-2025, current law, vs EIA-860 additions\n\n" + table(
-        ["technology", "model GW 2018-25", "EIA-860 GW 2018-25", "ratio", "by year 2018..2025 (model/EIA)"], rows) + "\n")
-    print(open("results/backcast.md").read())
+    md, _ = validation.report(cal, "results", 10)     # backcast 2010-25, both grid models, vs EIA-860 and LBNL
+    print(md.split("\n## By region")[0])
 else:
     saved = json.load(open(cal_path)); cal = saved["calibration"]
     if a.recalibrate_grid or not (cal.get("grid_cal") or {}).get("operators"):
@@ -53,6 +48,10 @@ else:
         cal["grid_cal"], saved["grid_fit"] = calibrate_grid(cal)
         saved["calibration"] = cal
         json.dump(saved, open(cal_path, "w"), indent=1, default=float)
+
+if a.backcast and not a.all:
+    md, _ = validation.report(cal, "results", 10)
+    print(md.split("\n## By region")[0])
 
 for k in (sorted(SIMS) if a.all else (a.sim or [])):
     md, _ = SIMS[k].run(a.runs, cal, "results", "figures")

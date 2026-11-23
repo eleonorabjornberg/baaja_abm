@@ -8,7 +8,7 @@ from statistics import NormalDist
 
 import numpy as np
 
-from .params import (REGIMES, REGIONS, REGION_SHARE, RTO_IDX, SINCE_IA, IA_TO_COD, CHALLENGER_MIX, CHALLENGERS, COURT_GROUP, ENGINE, GROUPS, HALT, INJ, LATE_SHARE,
+from .params import (REGIMES, REGIONS, REGION_SHARE, REGION_BY_YEAR, NON_ISO_IDX, RTO_IDX, SINCE_IA, IA_TO_COD, CHALLENGER_MIX, CHALLENGERS, COURT_GROUP, ENGINE, GROUPS, HALT, INJ, LATE_SHARE,
                      RENEWABLE_SIDE, TRUNC_LOSS, TYPES, VAC, WIN, WIN_REL)
 
 KIND = np.array(["CE", "EA", "EIS"])
@@ -73,7 +73,12 @@ def _pre(name, ty, p, rng, side, side_reg):
     u_ix, u_w, u_mkt = rng.random(n), rng.random(n), rng.random(n)
     mk = ENGINE["lbnl"]["by_market"].get(name)
     mkt = (u_mkt < mk["non-ISO"]["arrivals_share_2021_25"]).astype(int) if mk else np.zeros(n, int)   # 1 = non-ISO
-    reg = draw_region(name, mkt, seeded, side_reg.random(n))  # index into REGIONS, within the drawn market
+    u_reg = side_reg.random(n)
+    if p.get("region_by_year") and REGION_BY_YEAR.get(name):  # backcast: region from that year's LBNL requests [D]
+        reg = draw_region_by_year(name, p["start_year"] + np.floor(t0 / 12).astype(int), u_reg)
+        mkt = np.isin(reg, NON_ISO_IDX).astype(int)
+    else:
+        reg = draw_region(name, mkt, seeded, u_reg)        # index into REGIONS, within the drawn market
     # ---- federal review ----
     nexus = u_nex < min(1.0, ty["nex"] * p["nex_mult"])
     p_eis = (p["p_eis"] or {}).get(name, 0.0)
@@ -155,14 +160,15 @@ def _post(s, p, hostile_to):
     if p["court"] == "baaja":
         timely = s["u_late"] >= np.array(LATE_SHARE)[who] * (1 - p["late_adapt"])
         passes = timely & (s["u_ex"] < p["exhaust_injury"])
-        sued = decided & (s["u_sue"] < lit_p * p["suit_payoff"]) & passes
+        sued = decided & (s["u_sue"] < lit_p * p["suit_payoff"] * p.get("nepa_suit_mult", 1.0)) & passes
         inj = INJ * p["inj_nonNEPA"]; vac_share = 0.0
     else:
-        sued = decided & (s["u_sue"] < lit_p)
-        inj = INJ; vac_share = VAC
+        dm = p.get("nepa_win_mult", 1.0)                    # court baseline after Seven County (2025): NEPA remedies
+        sued = decided & (s["u_sue"] < lit_p * p.get("nepa_suit_mult", 1.0))
+        inj = INJ * dm; vac_share = VAC * dm
     L = p["lit_months"] * np.exp(.5 * s["z_L"])
     paused = sued & (s["u_inj"] < inj)
-    p_win = WIN[name] * np.array(WIN_REL)[who] * np.where(trunc, TRUNC_LOSS, 1.0)
+    p_win = WIN[name] * np.array(WIN_REL)[who] * np.where(trunc, TRUNC_LOSS, 1.0) * p.get("nepa_win_mult", 1.0)
     lost = sued & (s["u_lose"] < np.minimum(p_win, 1))
     vacated = lost & (s["u_vac"] < vac_share)
     delay = np.where(paused, L, 0.0) + np.where(vacated, p["remand_months"], 0.0)
@@ -200,10 +206,10 @@ def _post(s, p, hostile_to):
                sued=sued, who=np.where(sued, who, -1), lost=lost, vacated=vacated, paused=paused,
                trunc=trunc, cut_months=s["cut_months"], halted=halted, killed=killed, done=done,
                tPermit=tPermit, tCOD=tCOD, wait=tCOD - t0, mw=ty["mw"], T=T, mkt=s["mkt"],
-               review_start=s["review_start"], region=s["region"])
+               review_start=s["review_start"], region=s["region"], W=W)
     if g is not None:
         row.update(entered=g["entered"], cost=g["cost"], planned=g["planned"], tIA=np.where(ia_done, 0.0, g["tIA"]),
-                   gwd=gwd, cand=s["cand"], W=W)
+                   gwd=gwd, cand=s["cand"])
     return row
 
 
@@ -214,7 +220,11 @@ def simulate(p, seed, hostile_to):
     side_reg = np.random.default_rng([seed, 104729])        # region draws (Phase 1), own stream
     if p.get("grid", "exogenous") == "agents":                  # background withdrawal and first-year timing
         gc = p.get("grid_cal") or {}                            # refitted with the grid agents on
-        p = dict(p, hazard=gc.get("hazard") or p["hazard"], overdue=gc.get("overdue") or p.get("overdue"))
+        p = dict(p, hazard=gc.get("hazard") or p["hazard"], overdue=gc.get("overdue") or p.get("overdue"),
+                 p_eis={**(p["p_eis"] or {}), **(gc.get("p_eis") or {})},
+                 # signed IA -> operation is measured (LBNL 2022-25) rather than fitted: with the agents, the time
+                 # to an agreement comes out of the queue, so the exogenous model's fitted build time does not apply
+                 build={**(p["build"] or {}), **{t: IA_TO_COD[t] for t in IA_TO_COD}})
     states = [_pre(name, ty, p, rng, side, side_reg) for name, ty in TYPES.items()]
     if p.get("grid", "exogenous") == "agents":
         from .grid import run_agents
@@ -284,6 +294,19 @@ def draw_region(name, mkt, seeded, u):
             if idx.any():
                 regs, cum = sh[kind][m]
                 out[idx] = np.array(regs)[np.minimum(np.searchsorted(cum, u[idx], side="right"), len(regs) - 1)]
+    return out
+
+
+def draw_region_by_year(name, years, u):
+    """Region of each request from LBNL's requests by region in its request year (nearest year with data)."""
+    tab = REGION_BY_YEAR[name]
+    ys = np.array(sorted(tab))
+    out = np.empty(len(u), int)
+    near = ys[np.abs(ys[None, :] - np.asarray(years)[:, None]).argmin(axis=1)] if len(u) else ys[:0]
+    for y in np.unique(near):
+        idx = near == y
+        regs, cum = tab[int(y)]
+        out[idx] = np.array(regs)[np.minimum(np.searchsorted(cum, u[idx], side="right"), len(regs) - 1)]
     return out
 
 

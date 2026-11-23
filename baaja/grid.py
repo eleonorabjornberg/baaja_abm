@@ -178,8 +178,9 @@ def withdrawal_curve_model(rows, months=WD_MONTHS, window=(0, 60)):
     """Same share in a model run: new requests made in `window` (months from Dec 2025), any withdrawal."""
     G = [r for r in rows if "gwd" in r]
     cat = lambda k: np.concatenate([np.broadcast_to(r[k], r["t0"].shape) for r in G])
-    t0, W, gwd, reg, seeded, wait = cat("t0"), cat("W"), cat("gwd"), cat("region"), cat("seeded"), cat("wait")
-    tw = np.minimum(np.where(W < wait, W, np.inf), gwd - t0)
+    t0, W, gwd, reg, seeded = cat("t0"), cat("W"), cat("gwd"), cat("region"), cat("seeded")
+    wdn = ~cat("done") & ~cat("killed")                    # withdrew (by the clock or at a study result)
+    tw = np.where(wdn, np.minimum(W, gwd - t0), np.inf)
     sel = ~seeded & (t0 >= window[0]) & (t0 < window[1])
     out = {}
     for k, r in enumerate(REGIONS):
@@ -314,13 +315,25 @@ def run_agents(states, p, seed, hostile_to):
     return states
 
 
+H_SPLIT = 12          # months: the background hazard has one rate in a request's first year and another after it
+
+
+def pre_clock(Ew, h):
+    """Months from request to a background withdrawal, from the unit exponential draw Ew (common random numbers).
+    h is one monthly hazard, or [first year, after] (LBNL: withdrawals bunch in a request's first year [D])."""
+    if np.isscalar(h):
+        return np.ceil(Ew / -np.log1p(-h))
+    a1, a2 = -np.log1p(-h[0]), -np.log1p(-h[1])
+    return np.where(Ew <= H_SPLIT * a1, np.ceil(Ew / a1), H_SPLIT + np.ceil((Ew - H_SPLIT * a1) / a2))
+
+
 def _region(r, idx, F, out, p, op, U, onpk, ctx, tx, u_adopt, T, T_ext, backcast, h_pre=None):
     t0, seeded, ia_done = F["t0"][idx], F["seeded"][idx], F["ia_done"][idx]
     # withdrawal for reasons other than study results: a regional hazard until construction starts (the same unit draw
     # as the exogenous clock). Requests already holding an agreement at end-2025 keep the exogenous clock.
     W = F["W"][idx]
     if h_pre is not None:
-        W = np.where(ia_done, W, np.ceil(F["Ew"][idx] / -np.log1p(-h_pre)) + F["age0"][idx])   # months from request
+        W = np.where(ia_done, W, pre_clock(F["Ew"][idx], h_pre) + F["age0"][idx])   # months from request
     mw, cand, tDec, build = F["mw"][idx], F["cand"][idx], F["tDec"][idx], F["build"][idx]
     n = len(idx)
     entered = seeded.copy(); started = seeded & ia_done
@@ -438,7 +451,7 @@ def _region(r, idx, F, out, p, op, U, onpk, ctx, tx, u_adopt, T, T_ext, backcast
             if hi > newpos:
                 ii = newo[newpos:hi]; newpos = hi
                 sc = scar(t) - s0
-                mult = (Wref / Wpub) ** p["entry_wait_elast"] * np.exp(beta * sc)
+                mult = (Wref / Wpub) ** (0.0 if backcast else p["entry_wait_elast"]) * np.exp(beta * sc)   # backcast: requests as recorded
                 mult = min(max(mult, 0.2), p["entry_max"])
                 ok = np.where(cand[ii], uacc[ii] < (mult - 1) / max(p["entry_max"] - 1, 1e-9), uacc[ii] < min(mult, 1.0))
                 if adopt and t >= rule:

@@ -70,7 +70,7 @@ def compare(scenarios, n_runs, cal, politics=None, base_key=None):
 
 
 LAW_KEYS = {"ea_share_nonEIS", "intake_pub", "intake_oth", "nonnepa_hydro", "lit_ea", "lit_ce", "lit_data_mult", "p_kill_vac", "remand_months",
-            "delay_weight", "halt_len", "p_kill_halt", "halt_mult_other"}   # describe current law: vary in both runs
+            "delay_weight", "halt_len", "p_kill_halt", "halt_mult_other", "nepa_win_mult", "nepa_suit_mult"}   # describe current law: vary in both runs
 
 
 def assumption_sweep(levers, keys, n_runs, cal, base_runs, base=None):
