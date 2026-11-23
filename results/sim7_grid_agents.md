@@ -22,6 +22,27 @@ Sims 1-6 draw each request's study time; here it comes out of the queue. The age
 | exogenous study times (Sims 1-6) | 1105 [1083, 1127] | +9.7 [+7.8, +11.5] | +6.6 [+4.7, +8.2] | +1.0 [+0.4, +1.6] | +0.3 [+0.1, +0.6] |
 | grid agents (this simulation) | 945 [928, 964] | +31.2 [+14.0, +47.4] | +17.7 [+8.6, +27.8] | +9.2 [+1.1, +17.8] | +2.5 [-0.0, +5.1] |
 
+### Current law: capacity shortfall below reference margins
+
+With grid agents, developers respond to their region's projected shortfall, so surpluses and shortfalls are no longer fixed by the 2021-25 request mix, but fewer projects get through the queue overall.
+
+| grid model | shortfall GW 2027 | shortfall GW 2035 | shortfall GW 2041 | regions below reference margin, 2035 |
+|---|---|---|---|---|
+| exogenous study times (Sims 1-6) | 8 [7, 9] | 68 [65, 71] | 129 [126, 133] | 2.2 [2.0, 3.0] |
+| grid agents (this simulation) | 8 [7, 9] | 74 [71, 77] | 137 [134, 140] | 2.9 [2.0, 3.0] |
+
+| region | reserve margin 2035: exogenous / agents | shortfall GW 2035: exogenous / agents |
+|---|---|---|
+| CAISO | 12% / 11% | 4.6 / 5.0 |
+| ERCOT | 80% / 70% | 0.0 / 0.0 |
+| ISO-NE | 15% / 10% | 0.1 / 0.7 |
+| MISO | 17% / 13% | 0.0 / 0.0 |
+| NYISO | 27% / 22% | 0.0 / 0.0 |
+| PJM | 3% / 1% | 63.2 / 67.9 |
+| SPP | 30% / 29% | 0.0 / 0.0 |
+| Southeast | 30% / 30% | 0.0 / 0.0 |
+| West | 54% / 45% | 0.0 / 0.0 |
+
 ## By region (requests made 2026-30; mean across runs)
 
 | region | law: requests/yr | law: months to agreement | law: share signed | law: withdrawn at results | law: GW online 2041 | BAAJA: requests/yr | BAAJA: months | BAAJA: share signed | BAAJA: GW | 2106 everywhere: GW |
@@ -44,15 +65,15 @@ Fitted on 2010-19 cohorts; 2020-24 cohorts are a holdout. Error: mean squared lo
 
 | region | operator | cluster months / mode | min study months | fit error 2010-19 | holdout error 2020-24 | fit cohorts: model/data median months | holdout cohorts: model/data |
 |---|---|---|---|---|---|---|---|
-| CAISO | own fit | 12/serial | 33 | 0.05 | 0.04 |  | 2020: 38/44; 2021: 39/50 |
-| ERCOT | own fit | 1/parallel | 27 | 0.09 | 0.07 |  | 2020: 23/21; 2021: 26/24; 2022: 22/21; 2023: 20/18; 2024: 15/15 |
-| ISO-NE | pooled (MISO+CAISO) | 12/serial | 24 | 0.06 | 0.26 |  | 2020: 59/31 |
-| MISO | own fit | 12/serial | 15 | 0.05 | 0.08 |  | 2020: 45/51; 2021: 45/48 |
-| NYISO | pooled (MISO+CAISO) | 12/serial | 24 | 0.05 | 0.13 |  | - |
-| PJM | pooled (MISO+CAISO) | 12/serial | 24 | 0.29 | 0.24 |  | - |
+| CAISO | own fit | 12/serial | 33 | 0.05 | 0.04 | 2010: 42/35; 2014: 45/42; 2017: 39/44; 2019: 43/35 | 2020: 38/44; 2021: 39/50 |
+| ERCOT | own fit | 1/parallel | 27 | 0.09 | 0.07 | 2014: 26/31; 2017: 24/20; 2019: 26/20 | 2020: 23/21; 2021: 26/24; 2022: 22/21; 2023: 20/18; 2024: 15/15 |
+| ISO-NE | pooled (MISO+CAISO) | 12/serial | 24 | 0.06 | 0.26 | 2014: 31/17; 2019: 48/33 | 2020: 59/31 |
+| MISO | own fit | 12/serial | 15 | 0.05 | 0.08 | 2010: 25/21; 2014: 23/20; 2017: 36/33; 2019: 44/45 | 2020: 45/51; 2021: 45/48 |
+| NYISO | pooled (MISO+CAISO) | 12/serial | 24 | 0.05 | 0.13 | 2017: 41/42; 2019: 57/40 | - |
+| PJM | pooled (MISO+CAISO) | 12/serial | 24 | 0.29 | 0.24 | 2014: 27/36; 2017: 31/44; 2019: 35/26 | - |
 | SPP | pooled (MISO+CAISO) | 12/serial | 24 | 0.70 | 0.56 |  | - |
 | Southeast | pooled (MISO+CAISO) | 12/serial | 24 | 0.52 | 0.00 |  | - |
-| West | pooled (MISO+CAISO) | 12/serial | 24 | 0.72 | 0.46 |  | 2020: 49/22; 2021: 50/22 |
+| West | pooled (MISO+CAISO) | 12/serial | 24 | 0.72 | 0.46 | 2010: 36/12; 2014: 31/12; 2017: 43/27; 2019: 50/27 | 2020: 49/22; 2021: 50/22 |
 
 ### Developers: share of requests withdrawn by months after request (2015-19 cohorts vs model 2026-30)
 
@@ -69,6 +90,8 @@ Fitted at 24 months (one pre-agreement hazard per region); 12, 36 and 60 months 
 | SPP | 0.05 / 0.14 | 0.25 / 0.23 | 0.83 / 0.27 | 0.94 / 0.58 |
 | Southeast | 0.24 / 0.46 | 0.58 / 0.58 | 0.85 / 0.61 | 0.92 / 0.71 |
 | West | 0.11 / 0.09 | 0.24 / 0.24 | 0.69 / 0.42 | 0.88 / 0.68 |
+
+The checks fail after 24 months: in the model almost every request that will withdraw has done so by 36-60 months, at its study result, while in the data a fifth to a third of 2015-19 requests were still active after five years and withdrew later, often after signing an agreement. Completion still matches (below), so the model front-loads withdrawal rather than over-counting it. This is the clearest misfit of the grid agents: the model has no late withdrawals, so it cannot show what Sec.2106(a)(3)'s single decision point and withdrawal penalties would do to them, and that part of the section is likely understated.
 
 | region | pre-agreement withdrawal hazard, %/month |
 |---|---|
@@ -87,40 +110,40 @@ Fitted at 24 months (one pre-agreement hazard per region); 12, 36 and 60 months 
 One scale per technology and region, fitted so completion of new requests matches the regional LBNL targets. Values below 1 mean fewer requests complete than LBNL's cost-completion relation alone implies.
 
 | technology | region | value scale (fitted to completion) |
-|---|---|
-| Gas | 1.00 |
-| Gas|ERCOT | 0.29 |
-| Gas|MISO | 2.45 |
-| Gas|SPP | 1.00 |
-| Gas|Southeast | 2.29 |
-| Gas|West | 1.87 |
-| Geothermal | 4.96 |
-| Geothermal|West | 0.68 |
-| Offshore wind | 0.10 |
-| Onshore wind | 0.39 |
-| Onshore wind|ERCOT | 0.12 |
-| Onshore wind|MISO | 0.73 |
-| Onshore wind|NYISO | 1.15 |
-| Onshore wind|SPP | 0.32 |
-| Onshore wind|West | 0.90 |
-| Solar|CAISO | 1.66 |
-| Solar|ERCOT | 0.10 |
-| Solar|ISO-NE | 0.66 |
-| Solar|MISO | 0.27 |
-| Solar|NYISO | 0.29 |
-| Solar|PJM | 0.19 |
-| Solar|SPP | 0.06 |
-| Solar|Southeast | 0.78 |
-| Solar|West | 0.69 |
-| Storage|CAISO | 0.79 |
-| Storage|ERCOT | 0.04 |
-| Storage|ISO-NE | 0.19 |
-| Storage|MISO | 0.04 |
-| Storage|NYISO | 0.11 |
-| Storage|PJM | 0.10 |
-| Storage|SPP | 0.03 |
-| Storage|Southeast | 1.55 |
-| Storage|West | 0.95 |
+|---|---|---|
+| Gas | all (pooled) | 1.00 |
+| Gas | ERCOT | 0.29 |
+| Gas | MISO | 2.45 |
+| Gas | SPP | 1.00 |
+| Gas | Southeast | 2.29 |
+| Gas | West | 1.87 |
+| Geothermal | all (pooled) | 4.96 |
+| Geothermal | West | 0.68 |
+| Offshore wind | all (pooled) | 0.10 |
+| Onshore wind | all (pooled) | 0.39 |
+| Onshore wind | ERCOT | 0.12 |
+| Onshore wind | MISO | 0.73 |
+| Onshore wind | NYISO | 1.15 |
+| Onshore wind | SPP | 0.32 |
+| Onshore wind | West | 0.90 |
+| Solar | CAISO | 1.66 |
+| Solar | ERCOT | 0.10 |
+| Solar | ISO-NE | 0.66 |
+| Solar | MISO | 0.27 |
+| Solar | NYISO | 0.29 |
+| Solar | PJM | 0.19 |
+| Solar | SPP | 0.06 |
+| Solar | Southeast | 0.78 |
+| Solar | West | 0.69 |
+| Storage | CAISO | 0.79 |
+| Storage | ERCOT | 0.04 |
+| Storage | ISO-NE | 0.19 |
+| Storage | MISO | 0.04 |
+| Storage | NYISO | 0.11 |
+| Storage | PJM | 0.10 |
+| Storage | SPP | 0.03 |
+| Storage | Southeast | 1.55 |
+| Storage | West | 0.95 |
 
 ### Time from request to operation, completed projects
 
@@ -144,7 +167,7 @@ LBNL counts requests resolved by 2024 (completed vs withdrawn); the model counts
 | 50-100 | 0.14 | 0.59 | 365 |
 | 100-200 | 0.08 | 0.42 | 297 |
 | 200-400 | 0.04 | 0.18 | 225 |
-| 400-1000000000.0 | 0.01 | 0.07 | 306 |
+| 400+ | 0.01 | 0.07 | 306 |
 
 ## Sensitivity: grid assumptions at the low and high end of their ranges (20 paired runs each)
 

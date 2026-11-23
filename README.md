@@ -87,7 +87,8 @@ technology at its 2025 request rate.
 
 **Bottom line for renewables vs gas.** The provisions the data can size favour renewables (about 5:1 in GW), mainly
 through federal-land rights-of-way and the court changes that hit local opposition, but they are small: about +10 GW
-on 1,105. Whether BAAJA matters for supply depends on what FERC does under Sec.2106 in RTO/ISO markets: the data
+on 1,105. Sim 7's grid agents put the bill as a whole at +31 GW [+14, +47] (about 2:1), with Sec.2106 the largest
+part and RTO adoption the largest uncertainty. Whether BAAJA matters for supply depends on what FERC does under Sec.2106 in RTO/ISO markets: the data
 bracket it between no change and ERCOT's pace (+209 GW), and nothing measured picks a point inside. Sim 7 replaces
 this dial with an agent-based queue that sizes the bill's actual mechanisms (below).
 
@@ -123,7 +124,9 @@ this dial with an agent-based queue that sizes the bill's actual mechanisms (bel
    - Sec.2109's hosting room adds about +5 GW; a 25% Sec.2110 throughput gain would add another +17 GW.
    - Most of the gain is in **MISO** (+12 GW; +22 GW if every RTO adopts), then PJM (+5) and SPP (+3).
    - **Adequacy**: BAAJA cuts the 2035 national shortfall by 1.5 GW [0.1, 3.1] (3.8 GW in 2041); 2.5 GW if every RTO
-     adopts. ADEQUACY_LEVELS
+     adopts. With agents, the current-law shortfall is **74 GW in 2035** (68 with the exogenous grid) and
+     137 GW in 2041, still almost all PJM (68 GW in 2035). Scarcity pulls in some entry but does not close it:
+     fewer projects clear the queue overall, and ERCOT (70% margin) and the West (45%) keep large surpluses.
    - The current-law level is uncertain: the growth of upgrade cost with capacity signed (`kappa`, from LBNL cost data)
      moves current-law GW from 761 to 1,007; strict entry rules under 2106(a)(3) (`q_min_2106` 0.5) would cut the gain
      to +6 GW, because they also keep out requests that would have finished.

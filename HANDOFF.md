@@ -84,7 +84,13 @@ the calibrated permitting and court pipeline; rebuild grid access as interacting
   ERCOT/Southeast/West alone, throughput shortens waits, congestion raises withdrawal, operator fit and holdout,
   calibration tolerances).
 
-PHASE2_RESULTS
+**Phase 2 results** (`results/sim7_grid_agents.md`, 100 paired runs). Grid agents, current law: 945 GW new by 2041
+(exogenous 1,105). BAAJA +31 GW [+14, +47] (renewables +18, gas +9, storage +2.5); without Sec.2106 +10.5 (matches
+the exogenous +9.7); Sec.2106 alone +20 [+3, +36]; every RTO adopting +50; Sec.2109 about +5; a 25% Sec.2110 gain
++17 more. Most of the gain is in MISO. Shortfall below reference margins, current law: 74 GW in 2035 (exogenous 68),
+almost all PJM; BAAJA cuts it by 1.5 GW (2.5 if every RTO adopts). Largest ranges: `adopt_2106` (+11 to +50),
+`q_min_2106` (+34 to +6), `kappa` (current law 761-1,007 GW). `run.py --uncertainty N` adds a grid-agents sample
+whenever `grid_cal` exists.
 
 ## Known issues carried forward
 - Grid agents: completed projects take 14-21 months longer from request to operation than LBNL's medians (a longer
