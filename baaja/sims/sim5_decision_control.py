@@ -25,7 +25,7 @@ def _by_market(agg, t, m, key="by_type"):
 def run(n_runs, cal, res_dir, fig_dir):
     calm, targets = calibrate_markets(cal)
     base = ex.run_scenario({}, n_runs, calm)
-    scen = {"BAAJA (data-based)": BAAJA, "BAAJA + Sec.2106 at 15%": dict(BAAJA, ix_cut=0.15)}
+    scen = {"BAAJA (data-based)": BAAJA, "BAAJA + Sec.2106 at 15%": dict(BAAJA, ix_cut_rto=0.15)}
     res = {}
     for k, o in scen.items():
         z = ex.run_scenario(o, n_runs, calm)

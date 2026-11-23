@@ -64,11 +64,15 @@ ASSUMPTIONS = {
     "suit_payoff":       (0.4, 0.6, 1.0, "Sec.1110: suits filed relative to current law when the only remedy is remand"),
     "inj_nonNEPA":       (0.0, 0.3, 0.5, "Sec.1110: share of injunctions that rest on non-NEPA laws (still allowed)"),
     "lit_months_baaja":  (8, 12, 16.4, "Sec.1110/2201: months in litigation with appeals-court original jurisdiction + expedited review"),
-    "halt_mult_1401":    (0.0, 0.1, 0.3, "Sec.1401: residual halt probability relative to current law"),
+    "halt_mult_1401":    (0.1, 0.5, 1.0, "Sec.1401: residual halt probability relative to current law. The Senate-passed "
+                          "text adds exception (F), action 'taken pursuant to any applicable law or regulation', which "
+                          "could cover stop-work orders like 2025's (issued under existing regulations); high = the "
+                          "exception swallows the rule, low = courts read it narrowly"),
     "ix_2110":           (0.0, 0.0, 0.05, "Sec.2110: interconnection study time cut (text sets no target)"),
     "ix_2106":           (0.0, 0.0, round(IXB["ercot_gap_cut"], 2),
-                          "Sec.2106: interconnection study time cut from consolidated planning [floor: no measured effect of "
-                          "past reforms; ceiling: ERCOT's pace, data/interconnection_benchmark.json]"),
+                          "Sec.2106: interconnection study time cut from consolidated planning, Transmission Organizations "
+                          "(RTO/ISO markets) only [floor: no measured effect of past reforms, and FERC may find existing "
+                          "processes compliant (2106(d)); ceiling: ERCOT's pace, data/interconnection_benchmark.json]"),
     "ix_rule_month":     (24, 36, 48, "months until Sec.2106/2110 rules affect studies"),
     "build_months":      (None, None, None, "post-IA months to operation: calibrated to LBNL time to COD, not assumed"),
 }
@@ -186,14 +190,14 @@ BASE = dict(T=T, turnovers=TURNOVERS, n_scale=1.0, seed_queue=True, arrivals=Non
             deadline_bind=0.0, ce_shift=0.0, recond_ce=0.0, geo_ce=0.0, ce_cap=None,
             court="current", late_adapt=A["late_adapt"], exhaust_injury=A["exhaust_injury"], suit_payoff=1.0,
             inj_nonNEPA=A["inj_nonNEPA"], lit_months=LIT_MONTHS, halt_mult=1.0,
-            ix_cut=0.0, ix_rule_month=A["ix_rule_month"],
+            ix_cut=0.0, ix_cut_rto=0.0, ix_rule_month=A["ix_rule_month"],   # all providers / RTO-ISO only
             harm_w={"CE": 0.0, "EA": 0.3, "EIS": 1.0}, harm_mw_transmission=300)
 
 LEVERS = {   # BAAJA, central values, grouped by simulation
     "permitting": dict(deadline_bind=A["deadline_bind"], ce_shift=A["ce_shift"], recond_ce=A["recond_ce"], geo_ce=A["geo_ce"],
                        intake_pub_2213=A["intake_pub_baaja"], nonnepa_hydro_1202=A["nonnepa_hydro_baaja"], esa_months=2.0, ce_cap=12),
     "litigation": dict(court="baaja", suit_payoff=A["suit_payoff"], lit_months=A["lit_months_baaja"]),
-    "grid": dict(ix_cut=A["ix_2110"] + A["ix_2106"]),
+    "grid": dict(ix_cut=A["ix_2110"], ix_cut_rto=A["ix_2106"]),
     "certainty": dict(halt_mult=A["halt_mult_1401"]),
 }
 BAAJA = {k: v for d in LEVERS.values() for k, v in d.items()}

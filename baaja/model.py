@@ -20,9 +20,9 @@ MONTHS_BEFORE_START = 10          # end-2025 queue snapshot -> Nov 2026 start
 
 def ix_cut(IX, t0, cut, rule_month):
     """Interconnection rules (Sec.2106/2110) shorten only the study months that fall after `rule_month`, counted
-    from each project's own request date t0."""
+    from each project's own request date t0. `cut` may be a scalar or one value per project."""
     IX = np.asarray(IX, float)
-    if cut == 0:
+    if np.all(np.asarray(cut) == 0):
         return IX
     after = np.clip(np.minimum(IX, t0 + IX - rule_month), 0, None)
     return IX - after * cut
@@ -137,7 +137,10 @@ def simulate(p, seed, hostile_to):
             u = np.where(seeded & ~ia_done, lo + u_ix * (1 - lo), u_ix)
             IX = np.exp(mu + s * _inv(u))
             IX = np.where(ia_done, age0, IX)
-            IX = ix_cut(IX, t0, p["ix_cut"], p["ix_rule_month"])
+            # Sec.2110 (all public-utility transmission providers) + Sec.2106 (Transmission Organizations only:
+            # RTO/ISO markets, mkt == 0, in the Senate-passed text)
+            cut = p["ix_cut"] + np.where(mkt == 0, p["ix_cut_rto"], 0.0)
+            IX = ix_cut(IX, t0, cut, p["ix_rule_month"])
         else:
             IX = np.zeros(n)
         tStart = np.maximum(tPermit, t0 + IX)

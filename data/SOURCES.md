@@ -31,8 +31,10 @@ publisher has revised it.
 | Bennon & Wilson (2023), 53 ELR 10836; RFF | paper | - | - | literature value | `params.LIT_EIS` |
 | EIA Electric Power Monthly capacity factors; NREL ATB (offshore wind) | tables | https://www.eia.gov/electricity/monthly/ | - | literature value | `params.CF` |
 | S.5653 as introduced (30 Sep 2026) | `BILLS-119s5653is.htm` | https://www.govinfo.gov/content/pkg/BILLS-119s5653is/html/BILLS-119s5653is.htm | 23 Nov 2026 | Download, `422863b1a4c35847d0f585f502cdf77150eacf940cff305b0f1fd08e8ed7cdfe` | `docs/bill_question_map.md` |
+| Senate-passed substitute to H.R. 2347 (KAT26804 V62; passed 19 Nov 2026) | `KAT26804_V62.pdf` | https://www.energy.senate.gov/wp-content/uploads/2026/11/KAT26804_V62.pdf | 23 Nov 2026 | Download, `4ce3b2f06e8be69695fe6fc34b5784f0e4d451ec033f0405ce587167f3799857` | `docs/bill_question_map.md`; text via `pdftotext -layout` |
+| Manager's substitute as released 7 Nov 2026 (KAT26764) | `ANS_HR2347_2026-11-07.pdf` | https://www.epw.senate.gov/wp-content/uploads/media/doc/11.7.26%20ANS%20to%20H.R.%202347.pdf | 23 Nov 2026 | Download, `17a0efcf8d0cd5e952287b996e5390dae4f196a31d4d0e89951ca996ab10c7eb` | reference |
 
 ## Access from the cloud environment (23 Nov 2026)
-- Reachable: eia.gov file downloads, govinfo.gov, nerc.com.
+- Reachable: eia.gov file downloads, govinfo.gov, nerc.com, energy.senate.gov, epw.senate.gov.
 - Refused automated requests (HTTP 403): emp.lbl.gov, congress.gov (site and API), ferc.gov.
 - api.eia.gov needs a free API key.

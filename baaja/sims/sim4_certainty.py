@@ -1,6 +1,7 @@
 """Simulation 4: permit certainty across administrations (and operating permits / lifetimes).
-Bill: Sec.1401 (no revoking, suspending or interfering with permits in effect on/after 16 Sep 2026 for non-federal
-sponsors, except court order, breach, fraud, urgent new harm or sponsor request; agency bears a clear-and-convincing
+Bill: Sec.1401 (Senate-passed text: no revoking, suspending or interfering with permits in effect on/after 6 Nov 2026
+for non-federal sponsors, except court order, breach, fraud, urgent new harm, sponsor request, or (new in the passed
+text) action "taken pursuant to any applicable law or regulation"; agency bears a clear-and-convincing
 burden; sponsor recovers delay costs and 25-50% of project costs), Sec.1402 (suits over disparate treatment of a
 project type), Sec.1110(c)(6) (remanded authorizations stay in effect), Sec.1203/1204 (NPDES and nationwide permit
 terms 5 -> 10 years)."""
@@ -39,7 +40,9 @@ def run(n_runs, cal, res_dir, fig_dir):
         "# Simulation 4: permit certainty across administrations",
         "Executive halts hit permitted projects that are not yet online after a change of administration hostile to their "
         "side. Offshore wind's halt probability is anchored on the 2025 stop-work orders; other technologies are ranges. "
-        "Sec.1401 leaves a residual (central 10%) for its exceptions.",
+        "Sec.1401 leaves a residual halt probability for its exceptions: central 50%, range 10-100%, because the Senate-passed "
+        "text adds an exception for action 'taken pursuant to any applicable law or regulation', which could cover stop-work "
+        "orders like 2025's.",
         "## Halted GW by political path, and what Sec.1401 adds (BAAJA with vs without Sec.1401)",
         table(["political path", "halted GW, law", "BAAJA w/o 1401", "BAAJA"] + [f"1401 gain: {g}" for g in G3], rows),
         reg_md,

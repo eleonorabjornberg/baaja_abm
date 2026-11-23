@@ -1,8 +1,26 @@
 # Five simulations: BAAJA sections -> model -> data
 
-Scope: US electricity, renewables vs gas. "Section" always means a section of S.5653 as introduced (GovInfo
-BILLS-119s5653is). Model code: `baaja/sims/simN_*.py`; results: `results/simN_*.md`. Status: **modelled** (with data
-or an assumption range), **listed** (in the bill, not simulated, reason given).
+**Bill version.** The model follows the **Senate-passed text**: the amendment in the nature of a substitute to H.R. 2347
+offered by Sens. Capito, Lee, Whitehouse and Heinrich (Senate file KAT26804 V62), which carries BAAJA as Divisions A and
+B. The Senate passed it on 19 Nov 2026, 62-33, per the Environment and Public Works and Energy and Natural Resources
+committee press releases; it now goes to the House. Not yet checked on congress.gov, which refuses automated requests.
+The introduced bill was S.5653 (30 Sep 2026); section numbers below are the same in both unless noted. Scope: US
+electricity, renewables vs gas. Model code: `baaja/sims/simN_*.py`; results: `results/simN_*.md`. Status: **modelled**
+(with data or an assumption range), **listed** (in the bill, not simulated, reason given).
+
+## What the substitute changed that matters for the model (S.5653 as introduced -> Senate-passed text)
+
+| Section | Change | Model consequence |
+|---|---|---|
+| 2106 | applies to each **Transmission Organization** (RTO/ISO) instead of each transmission planning region; fee is "subregional" instead of "zonal"; adds storage and transmission-service locations, a co-optimization aim, and 2106(d): FERC may find existing processes compliant | Sec.2106 cut now applies to ISO-market projects only (`ix_cut_rto`); 2106(d) strengthens the 0% floor. ERCOT is still counted as ISO until Phase 1 regions separate it |
+| 1401 | permits in effect on/after **6 Nov 2026** (was 16 Sep); new exception (F): action "taken pursuant to any applicable law or regulation"; "materially" added to amend/alter | `halt_mult_1401` range 0.1 / 0.5 / 1.0 (was 0 / 0.1 / 0.3) |
+| 2213 | unchanged: 30-day completeness, 90-day NOI if an EIS is needed, decision or deferral within 30 days; still no enforcement | `comply_2213` 0.25 / 0.5 / 1.0 |
+| 2101 | offshore transmission removed from FERC backstop eligibility; "just and reasonable rates" added as a criterion | Phase 2 |
+| 2102 | adjacent area capped at a quarter mile; grid-enhancing technologies added | Phase 2 |
+| 1134 (new) | FAST-41 claims limited to 150 days (was 2 years) | with Sec.1110/2201 |
+| 1501-1504 (new) | NRC licensing without hearings unless requested; uranium enrichment licensing; deadlines; NRC pay | listed (no nuclear in the model; none reaches operation by 2041 through the queue data) |
+| 2115-2118 (new) | NGA civil-penalty review; RTO governance under FERC; Data Center Community Assistance Program | listed |
+| 1309, 1601-1602, 2261, 3001 (new) | state wildlife plans; wildfire emissions; brownfields; DOE nuclear announcements; tax exclusion (Division C) | out of scope |
 
 ## Simulation 1: permitting and build-out time (`sim1_permitting.py`)
 
@@ -32,7 +50,7 @@ or an assumption range), **listed** (in the bill, not simulated, reason given).
 
 | Section | What it does | Model | Data |
 |---|---|---|---|
-| 2106 | FERC rule within 18 months: consolidated interconnection + regional planning, published locations with fixed per-MW cost | modelled as a sweep: study-time cut 0-42% from month 36 (rule timing 24-48); floor = no measured effect of past reforms, ceiling = ERCOT's pace | LBNL request -> agreement times by region (`data/interconnection_benchmark.json`) |
+| 2106 | FERC rule within 18 months: each RTO/ISO files consolidated interconnection + regional planning within 2 years; published locations with an upfront, fixed, subregional per-MW fee | modelled as a sweep on ISO-market projects: study-time cut 0-42% from month 36 (rule timing 24-48); floor = no measured effect of past reforms, ceiling = ERCOT's pace | LBNL request -> agreement times by region (`data/interconnection_benchmark.json`) |
 | 2110 | FERC rulemaking on computing/AI queue practices; no target | central 0%, range 0-5% | |
 | 2101-2103 | transmission permitting, DOE congestion study, planning | listed | |
 
@@ -40,7 +58,7 @@ or an assumption range), **listed** (in the bill, not simulated, reason given).
 
 | Section | What it does | Model | Data |
 |---|---|---|---|
-| 1401 | no revoking or interfering with permits in effect on/after 16 Sep 2026 (exceptions: court order, breach, fraud, urgent new harm, sponsor request); agency burden; sponsor recovers 25-50% of costs | modelled: residual halt probability (0-0.3) on permitted, not-yet-online projects, by political path | 2025 offshore wind stop-work orders |
+| 1401 | no revoking or interfering with permits in effect on/after 6 Nov 2026 (exceptions: court order, breach, fraud, urgent new harm, sponsor request, any applicable law or regulation); agency burden | modelled: residual halt probability (0.1-1.0, central 0.5) on permitted, not-yet-online projects, by political path | 2025 offshore wind stop-work orders |
 | 1402(a)-(d) | suits over disparate treatment of a project type | folded into the 1401 residual | |
 | 1110(c)(6) | remanded permits stay in effect | in Sim 2 (no vacatur) | |
 | 1203, 1204 | NPDES and nationwide permit terms 5 -> 10 years | listed: affect existing plants' renewals; plants built 2026+ do not retire before 2041 | EIA-860 retirement ages (gas ~45 yr, wind ~21) |
@@ -61,7 +79,9 @@ or an assumption range), **listed** (in the bill, not simulated, reason given).
 - Neutral on paper: 1106, 1110, 1401, 2106, 2110, 2201. They differ by technology through the data: federal nexus
   (gas ~33% via Corps permits vs wind ~5%), who sues (local groups for renewables), and interconnection time.
 
-## Every section of S.5653 (introduced text, 30 Sep 2026): status in the model
+## Every section: status in the model
+
+Sections as introduced; the substitute's additions and changes are in the table at the top.
 
 **M** modelled (lever in `baaja/params.py`), **L** listed (affects electricity supply, not simulated; reason given),
 **O** out of scope (no plausible effect on electricity supply by 2041, or not electricity). *Phase* = where the

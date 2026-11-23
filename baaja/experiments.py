@@ -90,7 +90,7 @@ def assumption_sweep(levers, keys, n_runs, cal, base_runs, base=None):
 
 
 def _lever_key(k):
-    return {"ix_2106": "ix_cut", "ix_2110": "ix_cut", "halt_mult_1401": "halt_mult", "intake_pub_baaja": "intake_pub_2213",
+    return {"ix_2106": "ix_cut_rto", "ix_2110": "ix_cut", "halt_mult_1401": "halt_mult", "intake_pub_baaja": "intake_pub_2213",
             "nonnepa_hydro_baaja": "nonnepa_hydro_1202", "lit_months_baaja": "lit_months"}.get(k, k)
 
 

@@ -195,3 +195,13 @@ def test_market_targets_average_to_pooled_target():
         k = TYPES[t]["completion_target"] * (1 - miss) / den
         w = sum(v["arrivals_share_2021_25"] * v["completion"] * k for v in ok.values()) + miss * TYPES[t]["completion_target"]
         assert w == pytest.approx(TYPES[t]["completion_target"]), t
+
+
+def test_2106_cut_applies_only_to_iso_market_projects(cal):
+    p = P(cal, dict(BAAJA, ix_cut=0.0, ix_cut_rto=0.4, ix_rule_month=0)); q = P(cal, dict(BAAJA, ix_cut=0.0, ix_cut_rto=0.0))
+    a = {r["type"]: r for r in simulate(p, 15, POL)}; b = {r["type"]: r for r in simulate(q, 15, POL)}
+    s, z = a["Solar"], b["Solar"]
+    non_iso = s["mkt"] == 1
+    assert np.array_equal(s["tCOD"][non_iso], z["tCOD"][non_iso])           # non-ISO untouched
+    assert (s["tCOD"][~non_iso] <= z["tCOD"][~non_iso] + 1e-9).all()
+    assert (s["tCOD"][~non_iso] < z["tCOD"][~non_iso] - 1e-9).any()
