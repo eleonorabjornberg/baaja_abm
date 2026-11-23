@@ -70,6 +70,17 @@ Pipelines and LNG are not a generation technology in the model, but they carry m
 | Transmission | 14 | 11 | 3 | 8 | 0 |
 | Wind | 215 | 111 | 24 | 87 | 90 |
 
+## Court baseline after Seven County (2025)
+
+In *Seven County Infrastructure Coalition v. Eagle County* (May 2025) the Supreme Court told lower courts to defer to agencies on the scope of NEPA review and said a flawed review need not void the project approval. The case rates in this model are from 2001-22. No 2023-26 case data were available, so the later baseline is an assumption range: challengers' NEPA win, injunction and vacatur rates scaled down, and in two rows fewer suits filed as well. The same scaling applies under current law and BAAJA, so each row pairs the bill against the same court baseline. BAAJA's remaining injunctions rest on non-NEPA laws and are not scaled.
+
+| court baseline | suits 2026-41, law -> court provisions | current law: GW vs 2001-22 baseline | court provisions (Sec.1110/2201): GW vs law | all data-sized provisions: GW vs law |
+|---|---|---|---|---|
+| 2001-22 case rates (central) | 119 -> 35 | +0.0 [+0.0, +0.0] | +0.9 [+0.3, +2.0] | +9.7 [+7.8, +11.5] |
+| NEPA remedies x0.7 | 119 -> 35 | +0.4 [+0.0, +1.3] | +0.5 [+0.0, +1.3] | +9.3 [+7.2, +11.2] |
+| NEPA remedies x0.7, suits x0.8 | 95 -> 28 | +0.5 [+0.0, +1.5] | +0.4 [+0.0, +1.0] | +9.2 [+7.2, +11.0] |
+| NEPA remedies x0.5, suits x0.6 | 72 -> 21 | +0.7 [+0.1, +1.8] | +0.2 [+0.0, +0.8] | +9.0 [+7.1, +10.7] |
+
 ## Sensitivity (court provisions; other values central)
 
 | assumption | low / high | renewable GW gain | gas GW gain | suits change | what it is |

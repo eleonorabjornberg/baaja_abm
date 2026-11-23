@@ -261,15 +261,14 @@ def run(n_runs, cal, res_dir, fig_dir, sweep_runs=None):
         "the joint MISO+CAISO fit.",
         t_ops,
         "### Developers: share of requests withdrawn by months after request (2015-19 cohorts vs model 2026-30)",
-        "Fitted at 24 months (one pre-agreement hazard per region); 12, 36 and 60 months are checks. Data counts still-"
-        "active requests as not withdrawn.",
+        "Withdrawal is fitted in the 2010-25 backcast, where model and data cohorts are the same requests (Phase 3; "
+        "results/backcast.md): a first-year hazard, a later hazard and a hold after an adverse study result, by region, "
+        "to LBNL's 12-, 36- and 60-month shares; 24 months is a check. This table shows the forward 2026-30 cohorts under "
+        "current law next to the 2015-19 data for comparison only: the queue they face is different, so they need not match. "
+        "In CAISO, ISO-NE, MISO and NYISO the fitted hold reaches its 20-year bound: developers with an adverse result stay "
+        "in the queue past 2025, and the data cannot tell a long hold from never withdrawing. Sec.2106(a)(3)'s single "
+        "decision point and withdrawal penalties shorten the hold (lag_2106).",
         t_wd,
-        "The checks fail after 24 months: in the model almost every request that will withdraw has done so by 36-60 "
-        "months, at its study result, while in the data a fifth to a third of 2015-19 requests were still active after "
-        "five years and withdrew later, often after signing an agreement. Completion still matches (below), so the "
-        "model front-loads withdrawal rather than over-counting it. This is the clearest misfit of the grid agents: the "
-        "model has no late withdrawals, so it cannot show what Sec.2106(a)(3)'s single decision point and withdrawal "
-        "penalties would do to them, and that part of the section is likely understated.",
         t_hz,
         "### Developers: value relative to LBNL's P(complete | cost) fit",
         "One scale per technology and region, fitted so completion of new requests matches the regional LBNL targets. "
