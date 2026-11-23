@@ -57,6 +57,11 @@ def grid_stats(rows, window=WINDOW):
     return out
 
 
+def _bin(b):
+    lo, hi = b.split("-")
+    return f"{lo}+" if float(hi) >= 1e8 else b
+
+
 def cost_completion(rows):
     """Completion by allocated cost bin ($/kW), new requests that received a study result, ISO regions."""
     G = [r for r in rows if "gwd" in r]
@@ -125,6 +130,24 @@ def run(n_runs, cal, res_dir, fig_dir, sweep_runs=None):
                     fmt(res["BAAJA"]["diff_vs_baseline"]["GW_total"], 1, True)]
                    + [fmt(res["BAAJA"]["diff_vs_baseline"][f"GW {g}"], 1, True) for g in G3]])
 
+    # ---- current-law adequacy: exogenous study times vs grid agents (scarcity feedback on) ----
+    sups_x, nat_x = summarize_scenarios({"law": raw_exo["Current law (exogenous grid)"]}, sa)
+    k27 = sp.YEARS.index(2027)
+    adq = {}
+    for name, sv, nv in (("exogenous study times (Sims 1-6)", sups_x["law"], nat_x["law"]),
+                         ("grid agents (this simulation)", sups["Current law"], lawn)):
+        adq[name] = dict(national={y: ex.band(nv["shortfall"][:, k] / 1000) for y, k in ((2027, k27), (2035, k35), (2041, k41))},
+                         below_2035=ex.band(nv["regions_below_rml"][:, k35]),
+                         region_2035={r: float(np.mean([x["shortfall"][i, k35] for x in sv]) / 1000) for i, r in enumerate(REGIONS)},
+                         margin_2035={r: float(np.mean([x["reserve_margin"][i, k35] for x in sv])) for i, r in enumerate(REGIONS)})
+    t_adq = table(["grid model", "shortfall GW 2027", "shortfall GW 2035", "shortfall GW 2041", "regions below reference margin, 2035"],
+                  [[n, fmt(a["national"][2027], 0), fmt(a["national"][2035], 0), fmt(a["national"][2041], 0), fmt(a["below_2035"], 1)]
+                   for n, a in adq.items()])
+    ax, aa = adq["exogenous study times (Sims 1-6)"], adq["grid agents (this simulation)"]
+    t_adr = table(["region", "reserve margin 2035: exogenous / agents", "shortfall GW 2035: exogenous / agents"],
+                  [[r, f"{100 * ax['margin_2035'][r]:.0f}% / {100 * aa['margin_2035'][r]:.0f}%",
+                    f"{ax['region_2035'][r]:.1f} / {aa['region_2035'][r]:.1f}"] for r in REGIONS])
+
     # ---- by region ----
     L, B = gst["Current law"], gst["BAAJA"]
     A1 = gst["BAAJA, Sec.2106 adopted by every RTO"]
@@ -149,7 +172,7 @@ def run(n_runs, cal, res_dir, fig_dir, sweep_runs=None):
         ho = "; ".join(f"{y}: {v['model_median']:.0f}/{v['data_median']:.0f}" for y, v in o["holdout"].items()
                        if v["model_median"] is not None and v["data_median"] is not None)
         fy = "; ".join(f"{y}: {v['model_median']:.0f}/{v['data_median']:.0f}" for y, v in o["fit"].items()
-                       if y in ("2010", "2014", "2017", "2019") and v["model_median"] is not None and v["data_median"] is not None)
+                       if str(y) in ("2010", "2014", "2017", "2019") and v["model_median"] is not None and v["data_median"] is not None)
         vrows.append([r, "own fit" if o["fitted"] else "pooled (MISO+CAISO)", f"{o['C']}/{'serial' if o['serial'] else 'parallel'}",
                       o["d"], f"{o['fit_error']:.2f}", f"{o['holdout_error']:.2f}", fy, ho or "-"])
     t_ops = table(["region", "operator", "cluster months / mode", "min study months", "fit error 2010-19", "holdout error 2020-24",
@@ -165,15 +188,16 @@ def run(n_runs, cal, res_dir, fig_dir, sweep_runs=None):
     vb = gr.GT["value"]["ISO"]["completion_by_cost_bin"]
     cc = {b: np.nanmean([x["cost"][b] for x in xtra]) for b in vb}
     t_cost = table(["allocated cost $/kW", "model: share completing", "LBNL: share completing (resolved requests)", "LBNL n"],
-                   [[b, f"{cc[b]:.2f}", f"{v[0]:.2f}" if v[0] is not None else "-", v[1]] for b, v in vb.items()])
+                   [[_bin(b), f"{cc[b]:.2f}", f"{v[0]:.2f}" if v[0] is not None else "-", v[1]] for b, v in vb.items()])
     gc = cal["grid_cal"]
     t_cod = table(["technology", "LBNL median months request -> operation (completed)", "exogenous grid (model)", "grid agents (model)"],
                   [[t, f"{TYPES[t]['cod_target']:.0f}" if TYPES[t]["cod_target"] else "-",
                     f"{res_exo['Current law (exogenous grid)']['by_type'][t]['median_months_to_COD']['mean']:.0f}",
                     f"{res['Current law']['by_type'][t]['median_months_to_COD']['mean']:.0f}"]
                    for t in ("Solar", "Onshore wind", "Gas", "Storage")])
-    t_vm = table(["technology | region", "value scale (fitted to completion)"],
-                 [[k, f"{v:.2f}"] for k, v in sorted((gc.get("value_mult") or {}).items())])
+    t_vm = table(["technology", "region", "value scale (fitted to completion)"],
+                 [[*(k.split("|") if "|" in k else (k, "all (pooled)")), f"{v:.2f}"]
+                  for k, v in sorted((gc.get("value_mult") or {}).items())])
     t_hz = table(["region", "pre-agreement withdrawal hazard, %/month"],
                  [[r, f"{100 * v:.2f}"] for r, v in (gc.get("h_pre") or {}).items()])
 
@@ -221,6 +245,11 @@ def run(n_runs, cal, res_dir, fig_dir, sweep_runs=None):
         "Sims 1-6 draw each request's study time; here it comes out of the queue. The agents' current law is lower "
         "because study results now remove projects whose upgrade costs exceed their value, on top of the fitted hazards.",
         t_cmp,
+        "### Current law: capacity shortfall below reference margins",
+        "With grid agents, developers respond to their region's projected shortfall, so surpluses and shortfalls are no "
+        "longer fixed by the 2021-25 request mix, but fewer projects get through the queue overall.",
+        t_adq,
+        t_adr,
         "## By region (requests made 2026-30; mean across runs)",
         t_reg,
         "## Validation",
@@ -233,6 +262,12 @@ def run(n_runs, cal, res_dir, fig_dir, sweep_runs=None):
         "Fitted at 24 months (one pre-agreement hazard per region); 12, 36 and 60 months are checks. Data counts still-"
         "active requests as not withdrawn.",
         t_wd,
+        "The checks fail after 24 months: in the model almost every request that will withdraw has done so by 36-60 "
+        "months, at its study result, while in the data a fifth to a third of 2015-19 requests were still active after "
+        "five years and withdrew later, often after signing an agreement. Completion still matches (below), so the "
+        "model front-loads withdrawal rather than over-counting it. This is the clearest misfit of the grid agents: the "
+        "model has no late withdrawals, so it cannot show what Sec.2106(a)(3)'s single decision point and withdrawal "
+        "penalties would do to them, and that part of the section is likely understated.",
         t_hz,
         "### Developers: value relative to LBNL's P(complete | cost) fit",
         "One scale per technology and region, fitted so completion of new requests matches the regional LBNL targets. "
@@ -256,7 +291,7 @@ def run(n_runs, cal, res_dir, fig_dir, sweep_runs=None):
                 operators={r: {k: v for k, v in o.items()} for r, o in ops.items()},
                 withdrawal={"data": wdd, "model": {r: {m: float(np.nanmean([x["wd"].get(r, {}).get(m, np.nan) for x in xtra]))
                                                        for m in gr.WD_MONTHS} for r in REGIONS}},
-                cost_completion={"model": cc, "data": vb}, sensitivity=sdata,
+                cost_completion={"model": cc, "data": vb}, sensitivity=sdata, adequacy_current_law=adq,
                 supply={k: {"firm_2035": ex.band((nat[k]["firm"] - lawn["firm"])[:, k35] / 1000),
                             "shortfall_2035": ex.band((nat[k]["shortfall"] - lawn["shortfall"])[:, k35] / 1000)}
                         for k in list(scen)[1:]})

@@ -245,7 +245,7 @@ def calibrate_grid(cal, seeds=tuple(range(7, 15)), iters=14, passes=2, operators
                     lo[k] = x[k]
         x = {k: (lo[k] + hi[k]) / 2 for k in targets}
     gc = dict(operators=ops, value_mult=vmult(x), h_pre=y)
-    got, wd = run(gc, (20, 21, 22))
+    got, wd = run(gc, tuple(range(20, 30)))                 # check on 10 seeds not used in the fit
     fit = {k: (float(np.nanmean([g[k] for g in got])), targets[k]) for k in targets}
     wfit = {r: (float(np.nanmean([w.get(r, {}).get(wd_month, np.nan) for w in wd])), wd_t[r]) for r in wd_t}
     od, od_t = calibrate_overdue(dict(cal, grid_cal=gc), base=dict(grid="agents"))

@@ -23,7 +23,7 @@ Each one maps a research question to bill sections (`docs/bill_question_map.md`)
 
 ## Results
 
-Numbers updated 23 Nov 2026 for the Senate-passed text (see `docs/bill_question_map.md`) and Phases 0-1 in
+Numbers updated 23 Nov 2026 for the Senate-passed text (see `docs/bill_question_map.md`) and Phases 0-2 in
 `HANDOFF.md`. Intervals in Sims 1-6 are seed noise at central assumption values; `results/uncertainty.md` draws every
 assumption range at once (below).
 
@@ -88,9 +88,8 @@ technology at its 2025 request rate.
 **Bottom line for renewables vs gas.** The provisions the data can size favour renewables (about 5:1 in GW), mainly
 through federal-land rights-of-way and the court changes that hit local opposition, but they are small: about +10 GW
 on 1,105. Whether BAAJA matters for supply depends on what FERC does under Sec.2106 in RTO/ISO markets: the data
-bracket it between no change and ERCOT's pace (+209 GW), and nothing measured picks a point inside. Phase 2 replaces
-this dial with an agent-based queue so the bill's actual mechanisms (fixed fees, single decision point, withdrawal
-penalties) can be sized.
+bracket it between no change and ERCOT's pace (+209 GW), and nothing measured picks a point inside. Sim 7 replaces
+this dial with an agent-based queue that sizes the bill's actual mechanisms (below).
 
 6. **Supply and adequacy (Sim 6, Phase 1)**. The model's additions are placed in the nine LBNL regions and added to
    the EIA-860 fleet less retirements, against NERC's 2025 peak-demand forecast and reference margin levels.
@@ -107,6 +106,30 @@ penalties) can be sized.
      counts its Tier 1 batteries and uses a wider California area.
    - Without feedback from scarcity to new requests (Phase 2), surpluses are not self-correcting (ERCOT 80% in 2035)
      and shortfalls are not filled by new entry, so the shortfall is an upper bound on what current law delivers.
+
+7. **Grid access as interacting agents (Sim 7, Phase 2)**. Each region's grid operator studies requests in clusters
+   (ERCOT one by one) at a throughput fitted to LBNL request -> agreement times (2010-19 cohorts; 2020-24 held out);
+   developers enter on the published wait and their region's projected shortfall, and leave at study results when the
+   allocated upgrade cost exceeds their value. Sec.2106 is published locations with a fixed fee and a single decision
+   point with non-refundable security, in RTOs that change their process (drawn per RTO, 2106(d)); Sec.2109 adds
+   hosting room per transmission line; Sec.2110 is a throughput gain the bill does not size (central 0).
+   - **BAAJA as a whole: +31 GW [+14, +47] by 2041** (renewables +18, gas +9, storage +2.5), against +10 GW with the
+     exogenous grid. About 2:1 renewables to gas, because Sec.2106 helps gas far more than the permitting provisions
+     do (gas is +8 of Sec.2106's +20 GW; the mechanism behind that is not yet broken down).
+   - **Sec.2106 alone: +20 GW [+3, +36]**; if every RTO changes its process, BAAJA gives +50 GW [+43, +55]. Whether
+     RTOs adopt (`adopt_2106`) moves the result from +11 to +50 GW, the largest single range. Read structurally,
+     Sec.2106 is worth far less than the ERCOT-pace ceiling of Sim 3 (+209 GW): fewer speculative requests enter
+     (MISO -15%), waits fall by 1-2.5 months and the signed share rises 1.5-3 points, which is not a 42% cut in study time.
+   - Sec.2109's hosting room adds about +5 GW; a 25% Sec.2110 throughput gain would add another +17 GW.
+   - Most of the gain is in **MISO** (+12 GW; +22 GW if every RTO adopts), then PJM (+5) and SPP (+3).
+   - **Adequacy**: BAAJA cuts the 2035 national shortfall by 1.5 GW [0.1, 3.1] (3.8 GW in 2041); 2.5 GW if every RTO
+     adopts. ADEQUACY_LEVELS
+   - The current-law level is uncertain: the growth of upgrade cost with capacity signed (`kappa`, from LBNL cost data)
+     moves current-law GW from 761 to 1,007; strict entry rules under 2106(a)(3) (`q_min_2106` 0.5) would cut the gain
+     to +6 GW, because they also keep out requests that would have finished.
+   - Fit: request -> agreement times by cohort fit MISO, CAISO and ERCOT well, including the 2020-21 holdouts (MISO
+     45 vs 51 and 45 vs 48 months; ERCOT within 2 months every year); regions without their own data fit poorly.
+     Withdrawal by month 24 matches LBNL in 8 of 9 regions, but the model front-loads withdrawal (see known limits).
 
 **All assumption ranges at once (`results/uncertainty.md`).** 400 Latin-hypercube samples, each paired. Data-sized
 provisions: **+10 GW [+6, +16]**, 2035 shortfall -0.3 GW [-0.7, -0.0]. Sec.2213's compliance range explains about half of
