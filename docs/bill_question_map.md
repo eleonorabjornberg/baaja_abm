@@ -60,3 +60,57 @@ or an assumption range), **listed** (in the bill, not simulated, reason given).
 - Gas-relevant: 1203 (NPDES term), 1204 (s.404), 2108 (dispatchable access).
 - Neutral on paper: 1106, 1110, 1401, 2106, 2110, 2201. They differ by technology through the data: federal nexus
   (gas ~33% via Corps permits vs wind ~5%), who sues (local groups for renewables), and interconnection time.
+
+## Every section of S.5653 (introduced text, 30 Sep 2026): status in the model
+
+**M** modelled (lever in `baaja/params.py`), **L** listed (affects electricity supply, not simulated; reason given),
+**O** out of scope (no plausible effect on electricity supply by 2041, or not electricity). *Phase* = where the
+course-forward plan (Nov 2026) picks it up.
+
+| Section | Heading (short) | Status | Note |
+|---|---|---|---|
+| 1101-1104 | NEPA purposes, definitions, procedures, cooperation | O | 1102 adds exclusions from "major Federal action" (incl. FPA s.216A(b) transmission activities, geothermal observation tests) - folded into 2102/2229 levers |
+| 1105 | Level of review | M | `ce_shift` |
+| 1106 | Timely and unified reviews (deadlines, sponsor petition, court order within 120 days) | M | `deadline_bind` |
+| 1107 | Programmatic documents | L | no measure of reuse |
+| 1108 | CEs used by other agencies | M | `ce_shift` |
+| 1109 | Applications: completeness notice within 60 days | L | candidate lever on `intake_oth` (non-federal-land nexus); Phase 0 follow-up |
+| 1110 | Judicial review (150 days, remand without vacatur) | M | Sim 2 |
+| 1121 | CEQ | O | |
+| 1131-1133 | Permitting tracker, improvement fund | O | |
+| 1201 | Water quality criteria | O | |
+| 1202 | s.401 certification timeline | M | hydro relicensing only; transmission/pipeline 401 clocks listed |
+| 1203 | NPDES term 5 -> 10 years | L | existing plants' renewals; Phase 1 fleet could carry it |
+| 1204 | s.404 veto window, nationwide permits | L | |
+| 1205 | Judicial review timeline (s.404) | L | |
+| 1301-1302 | ESA s.7 consultation 90 -> 60 days | M | `esa_months` |
+| 1303-1308 | ESA right-of-way, state assumption, listings, funds | O | |
+| 1401 | Maintaining permits for non-Federal sponsors | M | Sim 4 |
+| 1402 | Fairness for specific project types | M | folded into 1401 residual |
+| 1403 | Avoiding unreasonable delays (1 year, applicant can sue) | M | `ce_cap` |
+| 2101 | Transmission permitting: FERC backstop siting, >= 230 kV | L -> Phase 2 | transmission gets MW and hosting room in Phase 2 |
+| 2102 | Reconductoring in existing rights-of-way | M (timing only) | `recond_ce`; MW effect in Phase 2 |
+| 2103 | DOE congestion study; regional/interregional planning | L -> Phase 2 | planning ahead of requests |
+| 2104 | Local transmission planning oversight | L | no measured link to generation |
+| 2105 | No federal ROFR | L | no measured link to generation |
+| 2106 | Consolidated interconnection + planning: rule in 18 months, filings in 2 years; fixed zonal per-MW cost; single decision point; non-refundable security; withdrawal penalties | M (dial) -> Phase 2 | Sim 3 sweep now; structural in Phase 2 |
+| 2107 | Ratepayer protection: computational loads pay transmission costs | L | demand side; Phase 1 demand scenarios |
+| 2108 | Behind-the-meter dispatchable resources: market access | L | outside the interconnection queue |
+| 2109 | Advanced transmission technologies (presumption of prudence) | L -> Phase 2 | hosting room per transmission project |
+| 2110 | AI/automation in queue processing: rulemaking within 1 year | M | `ix_2110`; Phase 2 throughput |
+| 2111 | Grid data access | L | |
+| 2112-2113, 2115 | PMAs, FERC fees, conforming | O | |
+| 2114 | Data on computational loads (EIA-861) | O | |
+| 2201 | Accelerating claims: 150 days for energy authorizations | M | with 1110 |
+| 2211 | Oil and gas drilling permits on non-Federal land | O | upstream gas supply, not power plants |
+| 2212 | Rights-of-way across Indian land | L | |
+| 2213 | Renewable rights-of-way: 30-day completeness, 90-day NOI if EIS, decision or deferral in 30 days; low-disturbance CEs | M | `intake_pub_baaja`, `comply_2213` (no enforcement mechanism in the section) |
+| 2214 | CEs for grid projects and storage on disturbed land | L -> Phase 2 | storage CE; transmission timing |
+| 2215 | Hardrock mill sites | O | |
+| 2221-2228 | Geothermal leasing, royalties, permits, pending suits | L | annual lease sales (2223) could raise geothermal requests; no data on elasticity |
+| 2229 | Geothermal NEPA review | M | `geo_ce` |
+| 2231-2234 | Hydropower barriers, license conditions, maintenance, micro-hydrokinetic | L | |
+| 2241-2243 | FERC staffing, NW council, FERC safety | L | FERC staffing may matter for Phase 2 throughput |
+| 2251 | Offshore energy: "unreasonable interference" standard | L | |
+| 2252 | Offshore energy transmission | L | |
+| 2301-2302 | Historic preservation | O | |

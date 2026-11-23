@@ -54,6 +54,8 @@ def arrival_times(name, ty, p, rng):
 
 def simulate(p, seed, hostile_to):
     rng = np.random.default_rng(seed)
+    # side stream for draws added after v5: keeps the main stream (and so every earlier draw) unchanged
+    side = np.random.default_rng([seed, 7919])
     T = p["T"]
     rows = []
     for name, ty in TYPES.items():
@@ -68,6 +70,7 @@ def simulate(p, seed, hostile_to):
         # ---- draws (all unconditional) ----
         u_nex, u_kind, z_D, u_esa, u_trunc = (rng.random(n), rng.random(n), rng.normal(0, 1, n), rng.random(n), rng.random(n))
         z_in = rng.normal(0, 1, n)                              # federal-land intake draw [D: MLRS spread]
+        u_2213 = side.random(n)                                 # Sec.2213 deadline met for this application?
         who = rng.choice(len(CHALLENGERS), n, p=CHALLENGER_MIX[name])
         u_sue, u_late, u_ex, z_L, u_inj, u_lose, u_vac, u_kill = (rng.random(n) for _ in range(8))
         u_ix, u_w, u_mkt = rng.random(n), rng.random(n), rng.random(n)
@@ -87,8 +90,9 @@ def simulate(p, seed, hostile_to):
         D = D + np.where((kind > 0) & (u_esa < p["esa_share"]), p["esa_months"], 0)
         if ty["pub"]:                                           # filing -> NEPA notice, lognormal around the MLRS median
             intake = p["intake_pub"] * np.exp(p["intake_pub_logsd"] * z_in)
-            if p["intake_pub_2213"] is not None:                # Sec.2213 deadlines cap new applications
-                intake = np.where(t0 >= 0, np.minimum(intake, p["intake_pub_2213"]), intake)
+            if p["intake_pub_2213"] is not None:                # Sec.2213 deadlines cap new applications,
+                met = (t0 >= 0) & (u_2213 < p["comply_2213"])  # where the agency meets them (no enforcement)
+                intake = np.where(met, np.minimum(intake, p["intake_pub_2213"]), intake)
         else:
             intake = np.full(n, float(p["intake_oth"]))
         review_start = t0 + intake

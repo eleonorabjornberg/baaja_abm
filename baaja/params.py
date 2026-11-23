@@ -52,6 +52,9 @@ ASSUMPTIONS = {
     "recond_ce":         (0.10, 0.25, 0.50, "Sec.2102: extra share of transmission EAs that become CEs"),
     "geo_ce":            (0.5, 0.85, 1.0, "Sec.2229: share of geothermal reviews that become non-major actions"),
     "intake_pub_baaja":  (3, 4, 6, "Sec.2213: months to start of review on federal land (30-day completeness, 90-day NOI)"),
+    "comply_2213":       (0.25, 0.5, 1.0, "Sec.2213: share of new federal-land applications whose intake deadlines are met. "
+                          "Same range as Sec.1106 (deadline_bind); 2213 has no sponsor petition or court order to enforce it, "
+                          "so its compliance is not assumed higher than 1106's"),
     "nonnepa_hydro_baaja": (30, 36, 42, "Sec.1202: hydro months outside NEPA with the s.401 clock"),
     "late_adapt":        (round(LIMIT["low"], 2), round(LIMIT["central"], 2), LIMIT["high"],
                           "Sec.1110/2201: share of would-be late filers who file within 150 days instead [D: FHWA/FTA "
@@ -175,6 +178,7 @@ BASE = dict(T=T, turnovers=TURNOVERS, n_scale=1.0, seed_queue=True, arrivals=Non
             intake_pub_logsd=MLRSF["log_sd"],
             nonnepa_hydro=A["nonnepa_hydro"], esa_months=3.0, esa_share=0.25, regime="2021-25",
             intake_pub_2213=None, nonnepa_hydro_1202=None,    # BAAJA overrides (None = current-law value applies)
+            comply_2213=A["comply_2213"],                     # only matters when intake_pub_2213 is set
             lit_ea=A["lit_ea"], lit_ce=A["lit_ce"], lit_data_mult=A["lit_data_mult"], p_kill_vac=A["p_kill_vac"], remand_months=A["remand_months"],
             delay_weight=A["delay_weight"], halt_len=A["halt_len"], p_kill_halt=A["p_kill_halt"],
             halt_mult_other=A["halt_mult_other"],

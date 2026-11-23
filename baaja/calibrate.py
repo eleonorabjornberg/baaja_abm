@@ -48,15 +48,20 @@ def calibrate(rounds=2, seeds=tuple(range(7, 23)), n_scale=1.0, base=None):
 
 
 def calibrate_markets(cal, seeds=(7, 8, 9), n_scale=0.5):
-    """Sim 5: separate withdrawal hazards for ISO and non-ISO regions, fitted to LBNL completion by market [D]
-    (2000-20 cohort, cells with >= 30 projects); build and p_eis kept from the pooled calibration."""
+    """Sim 5: separate withdrawal hazards for ISO and non-ISO regions; build and p_eis kept from the pooled calibration.
+    Targets keep the ratio between markets in LBNL completion [D] (2000-20 cohort, cells with >= 30 projects), scaled
+    so that, weighted by 2021-25 request shares, they equal the pooled target used by every other simulation. Without
+    the scaling the 2000-20 market mix and today's differ, and Sim 5's current law would not match Sims 1-4."""
     from .params import ENGINE
     targets = {}
     for t in GEN:
-        for m in ("ISO", "non-ISO"):
-            v = ENGINE["lbnl"]["by_market"][t][m]
-            if v["n_cohort"] >= 30 and v["completion"] is not None:
-                targets[f"{t}|{m}"] = v["completion"]
+        bm, pooled = ENGINE["lbnl"]["by_market"][t], TYPES[t]["completion_target"]
+        ok = {m: bm[m] for m in ("ISO", "non-ISO") if bm[m]["n_cohort"] >= 30 and bm[m]["completion"] is not None}
+        s_missing = sum(bm[m]["arrivals_share_2021_25"] for m in ("ISO", "non-ISO") if m not in ok)
+        denom = sum(v["arrivals_share_2021_25"] * v["completion"] for v in ok.values())
+        k = pooled * (1 - s_missing) / denom if denom > 0 else 1.0
+        for m, v in ok.items():
+            targets[f"{t}|{m}"] = min(v["completion"] * k, 0.99)
     p = dict(BASE, n_scale=n_scale, seed_queue=False, **cal)
     p["hazard"] = dict(cal["hazard"])
     lo = {k: 1e-4 for k in targets}; hi = {k: 0.5 for k in targets}

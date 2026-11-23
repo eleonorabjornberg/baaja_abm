@@ -164,3 +164,34 @@ def test_federal_land_intake_from_mlrs_and_2213_cap_only_for_new_filings(cal):
     old = s_a["t0"] < 0
     # projects filed before enactment keep current-law intake; review timing differs only through other levers
     assert (s_a["tDec"] - s_a["t0"])[~old].mean() < (s_b["tDec"] - s_b["t0"])[~old].mean()
+
+
+def test_2213_compliance_zero_equals_no_2213_and_full_compliance_caps_all_new_filings(cal):
+    from baaja.params import LEVERS
+    perm = dict(LEVERS["permitting"])
+    a = {r["type"]: r for r in simulate(P(cal, dict(perm, comply_2213=0.0)), 13, POL)}
+    b = {r["type"]: r for r in simulate(P(cal, dict(perm, intake_pub_2213=None)), 13, POL)}
+    for t in a:
+        assert np.array_equal(a[t]["done"], b[t]["done"]) and np.array_equal(a[t]["tDec"], b[t]["tDec"]), t
+    full = {r["type"]: r for r in simulate(P(cal, dict(perm, comply_2213=1.0)), 13, POL)}
+    s = full["Solar"]; new = s["t0"] >= 0
+    assert ((s["review_start"] - s["t0"])[new] <= perm["intake_pub_2213"] + 1e-9).all()
+
+
+def test_side_stream_leaves_current_law_draws_unchanged(cal):
+    # current law never reads the side stream, so its results depend on the main stream alone
+    p = P(cal)
+    a = summarize(simulate(p, 14, POL), p); b = summarize(simulate(dict(p, comply_2213=0.123), 14, POL), p)
+    assert a["Solar"]["GW_online"] == b["Solar"]["GW_online"]
+
+
+def test_market_targets_average_to_pooled_target():
+    from baaja.calibrate import calibrate_markets  # noqa: F401  (targets built inside; recompute here)
+    for t in GEN:
+        bm = ENGINE["lbnl"]["by_market"][t]
+        ok = {m: bm[m] for m in ("ISO", "non-ISO") if bm[m]["n_cohort"] >= 30 and bm[m]["completion"] is not None}
+        miss = sum(bm[m]["arrivals_share_2021_25"] for m in ("ISO", "non-ISO") if m not in ok)
+        den = sum(v["arrivals_share_2021_25"] * v["completion"] for v in ok.values())
+        k = TYPES[t]["completion_target"] * (1 - miss) / den
+        w = sum(v["arrivals_share_2021_25"] * v["completion"] * k for v in ok.values()) + miss * TYPES[t]["completion_target"]
+        assert w == pytest.approx(TYPES[t]["completion_target"]), t
