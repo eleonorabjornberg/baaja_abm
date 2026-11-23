@@ -59,7 +59,7 @@ electricity, renewables vs gas. Model code: `baaja/sims/simN_*.py`; results: `re
 | Section | What it does | Model (grid agents) | Data |
 |---|---|---|---|
 | 2106(a)(2) | published locations with an upfront, fixed per-MW fee | in RTOs that change their process (`adopt_2106`, drawn per RTO), a share of requests (`planned_share_2106`) use a published location: fixed fee, no cost shock, no re-study | LBNL network-upgrade cost by region |
-| 2106(a)(3) | single decision point, non-refundable security, withdrawal penalties | one decision at the first study result; requests below a minimum chance of success (`q_min_2106`) do not enter | LBNL P(complete given cost) |
+| 2106(a)(3) | single decision point, non-refundable security, withdrawal penalties | one decision at the first study result; requests below a minimum chance of success (`q_min_2106`) do not enter; after an adverse result, developers hold their position for a shorter time (`lag_2106`, 0-1 of the current-law hold fitted in the 2010-25 backcast) | LBNL P(complete given cost) |
 | 2106(d) | FERC may find existing processes compliant | `adopt_2106` 0-1 (central 0.5) | |
 | 2110 | FERC rulemaking on queue automation | study throughput x (1 + `g_2110`), central 0 (not sized), high 25%; not ERCOT | |
 | 2109 | advanced transmission technologies | extra hosting per line finished after the rule (`hosting_2109`, 0-30%) | |
@@ -139,7 +139,7 @@ course-forward plan (Nov 2026) picks it up.
 | 2103 | DOE congestion study; regional/interregional planning | L | no measured link from a study to MW built |
 | 2104 | Local transmission planning oversight | L | no measured link to generation |
 | 2105 | No federal ROFR | L | no measured link to generation |
-| 2106 | Consolidated interconnection + planning: rule in 18 months, filings in 2 years; fixed zonal per-MW cost; single decision point; non-refundable security; withdrawal penalties | M | dial in Sims 3 and 6; structural in Sim 7 (`grid_2106`, `adopt_2106`, `planned_share_2106`, `q_min_2106`, `fee_mult_2106`) |
+| 2106 | Consolidated interconnection + planning: rule in 18 months, filings in 2 years; fixed zonal per-MW cost; single decision point; non-refundable security; withdrawal penalties | M | dial in Sims 3 and 6; structural in Sim 7 (`grid_2106`, `adopt_2106`, `planned_share_2106`, `q_min_2106`, `lag_2106`, `fee_mult_2106`) |
 | 2107 | Ratepayer protection: computational loads pay transmission costs | L | demand side; Phase 1 demand scenarios |
 | 2108 | Behind-the-meter dispatchable resources: market access | L | outside the interconnection queue |
 | 2109 | Advanced transmission technologies (presumption of prudence) | M (Sim 7) | `hosting_2109`: extra hosting per line |
