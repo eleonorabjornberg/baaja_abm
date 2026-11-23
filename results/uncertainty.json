@@ -302,5 +302,168 @@
    "elcc_decline",
    "demand_growth_mult"
   ]
+ },
+ "grid agents (Phase 2), their assumptions drawn": {
+  "bands": {
+   "GW total": {
+    "mean": 36.35960500000001,
+    "p5": 7.142600000000001,
+    "p50": 32.520000000000024,
+    "p95": 81.02499999999992
+   },
+   "GW Renewable (new)": {
+    "mean": 20.373805000000004,
+    "p5": 3.6331999999999915,
+    "p50": 17.889999999999986,
+    "p95": 49.059300000000015
+   },
+   "GW Fossil (gas)": {
+    "mean": 10.23198,
+    "p5": 0.8880000000000052,
+    "p50": 8.991,
+    "p95": 23.121299999999962
+   },
+   "GW Storage": {
+    "mean": 3.9928200000000005,
+    "p5": -1.773200000000001,
+    "p50": 3.484000000000009,
+    "p95": 11.138400000000003
+   },
+   "suits": {
+    "mean": -162.49,
+    "p5": -230.05,
+    "p50": -166.0,
+    "p95": -96.0
+   },
+   "firm change GW 2035": {
+    "mean": 8.43796551079472,
+    "p5": 1.1944679943023249,
+    "p50": 7.5020877233094065,
+    "p95": 18.81380004584495
+   },
+   "shortfall change GW 2035": {
+    "mean": -1.9927044618097776,
+    "p5": -7.038176937896544,
+    "p50": -1.0426908583179828,
+    "p95": -0.08074459078771092
+   },
+   "shortfall change GW 2041": {
+    "mean": -5.720124630628564,
+    "p5": -17.32415333520991,
+    "p50": -3.648022242325838,
+    "p95": -0.03152407716881285
+   },
+   "law shortfall GW 2035": {
+    "mean": 77.69232512069588,
+    "p5": 34.17754438177577,
+    "p50": 74.12173128711329,
+    "p95": 134.28754667842455
+   }
+  },
+  "variance": {
+   "GW total": {
+    "r2": 0.6681727240916666,
+    "top": [
+     [
+      "adopt_2106",
+      0.17158030947498634
+     ],
+     [
+      "q_min_2106",
+      0.16064531641700067
+     ],
+     [
+      "g_2110",
+      0.09879604678915269
+     ],
+     [
+      "hosting_2109",
+      0.04853917167076435
+     ],
+     [
+      "tx_hosting_gw",
+      0.03775683204518569
+     ],
+     [
+      "kappa",
+      0.028590315885894866
+     ]
+    ]
+   },
+   "shortfall change GW 2035": {
+    "r2": 0.5731306726075818,
+    "top": [
+     [
+      "adopt_2106",
+      0.23547876482825336
+     ],
+     [
+      "demand_growth_mult",
+      0.12367519381840045
+     ],
+     [
+      "elcc_decline",
+      0.05027148612910619
+     ],
+     [
+      "q_min_2106",
+      0.0284644368622288
+     ],
+     [
+      "restudy_months",
+      0.0256759740561771
+     ],
+     [
+      "g_2110",
+      0.017370788397465548
+     ]
+    ]
+   }
+  },
+  "keys": [
+   "ea_share_nonEIS",
+   "intake_pub",
+   "intake_oth",
+   "nonnepa_hydro",
+   "lit_ea",
+   "lit_ce",
+   "lit_data_mult",
+   "p_kill_vac",
+   "remand_months",
+   "delay_weight",
+   "halt_len",
+   "p_kill_halt",
+   "halt_mult_other",
+   "deadline_bind",
+   "ce_shift",
+   "recond_ce",
+   "geo_ce",
+   "intake_pub_baaja",
+   "comply_2213",
+   "nonnepa_hydro_baaja",
+   "late_adapt",
+   "exhaust_injury",
+   "suit_payoff",
+   "inj_nonNEPA",
+   "lit_months_baaja",
+   "halt_mult_1401",
+   "ix_rule_month",
+   "entry_wait_elast",
+   "scarcity_beta",
+   "kappa",
+   "restudy_rho",
+   "restudy_months",
+   "tx_hosting_gw",
+   "adopt_2106",
+   "planned_share_2106",
+   "q_min_2106",
+   "fee_mult_2106",
+   "g_2110",
+   "hosting_2109",
+   "ret_hazard_old",
+   "ret_announced",
+   "elcc_decline",
+   "demand_growth_mult"
+  ]
  }
 }

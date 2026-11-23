@@ -4,10 +4,10 @@ Personal research project (not thesis work), aimed at a policy brief or paper: h
 Affordability and Jobs Act of 2026 (BAAJA, introduced 30 Sep 2026, passed by the Senate 19 Nov 2026), would change US electricity supply.
 
 ## State (23 Nov 2026)
-- Branch `claude/vibrant-carson-9aw3xo` carries all work (v5 from `claude/epic-carson-9rxakw`, plus Phases 0-2 below).
+- Branch `claude/vibrant-carson-9aw3xo` carries all work (v5 from `claude/epic-carson-9rxakw`, plus Phases 0-3 below).
 - `README.md` has the current results, data register and assumption register. `docs/bill_question_map.md` maps every
   bill section to the model (modelled / listed / out of scope). `data/SOURCES.md` lists every raw source.
-- Run: `pip install -r requirements.txt`, `python -m pytest -q`, `python run.py --all --runs 100`, `python run.py --uncertainty 400`.
+- Run: `pip install -r requirements.txt`, `python -m pytest -q`, `python run.py --all --runs 100`, `python run.py --uncertainty 400`, `python run.py --backcast`.
 
 ## Plan (agreed 23 Nov 2026)
 Headline result: **net supply and adequacy by region and year**. Architecture: **agents where it matters**: keep
@@ -18,7 +18,7 @@ the calibrated permitting and court pipeline; rebuild grid access as interacting
 | 0 | Re-verify; Sec.2213 compliance range; Sim 5 common baseline; CI; sources register; full bill map | done (see below) |
 | 1 | Supply accounting: 9 LBNL regions, EIA-860 fleet and retirements, NERC demand, firm capacity, reserve margins | done (see below) |
 | 2 | Grid access as agents: regional grid operators with study throughput and hosting room; developers who enter, stay or withdraw; transmission adds MW; Sec.2106/2103/2110/2101/2102/2109/2214 as mechanisms | done (see below) |
-| 3 | Joint uncertainty (Latin hypercube over all ranges), variance decomposition, regional backcast, post-2025 court scenario | harness done (`baaja/uncertainty.py`) |
+| 3 | Joint uncertainty (Latin hypercube over all ranges), variance decomposition, regional backcast, post-2025 court scenario | done (see below) |
 | 4 | ODD model description, brief, figures | |
 
 ## Phase 0 changes
@@ -92,16 +92,44 @@ almost all PJM; BAAJA cuts it by 1.5 GW (2.5 if every RTO adopts). Largest range
 `q_min_2106` (+34 to +6), `kappa` (current law 761-1,007 GW). `run.py --uncertainty N` adds a grid-agents sample
 whenever `grid_cal` exists.
 
+## Phase 3 changes
+- **Regional backcast** (`baaja/validation.py`, `run.py --backcast`, also in `--all`; `results/backcast.md|json`):
+  Jan 2010 - Dec 2025 under current law, both grid models, against EIA-860 additions 2018-25 nationally and by region
+  and technology (new `additions_by_year` in `data/fleet_targets.json`, nameplate MW), and against LBNL withdrawal
+  timing of the same request cohorts (2015-19), plus a 2020-23 holdout. Each backcast request's region is drawn from
+  LBNL's requests by region in its own request year (new `requests_by_year` in `data/region_targets.json`;
+  `region_by_year=True`; forward runs keep 2021-25 shares).
+- **Grid agents refitted in the backcast** (`calibrate.calibrate_grid`), so model and data cohorts are the same
+  requests; the Phase 2 fit used 2026-30 model cohorts against 2015-19 data and front-loaded withdrawal (almost all of
+  it at study results by 36 months). Withdrawal now has three parts, each fitted by region: a first-year background
+  hazard (12-month share), a later background hazard (36-month share), and a hold after an adverse study result
+  (exponential, regional mean; 60-month share). 24 months is a check. Value scales still fitted to completion (now of
+  2010-19 requests by end-2025). Construction time with agents is LBNL's measured agreement -> operation time instead
+  of the exogenous model's fitted build time. P(EIS | federal review) is refitted with the agents on (they keep more
+  requests alive to a federal decision). Sec.2106(a)(3) shortens the hold (`lag_2106`, 0-1, central 0.5).
+- **Court baseline after *Seven County*** (May 2025): `nepa_win_mult` (challengers' NEPA win, injunction and vacatur
+  rates; 0.5-1.0, central 1.0 = 2001-22 data) and `nepa_suit_mult` (suits filed; 0.6-1.0), applied to current law and
+  BAAJA alike (BAAJA's remaining injunctions rest on non-NEPA laws and are not scaled). No 2023-26 case data, so an
+  assumption range. Sim 2 has a new section; both are in the joint-uncertainty draws.
+- Tests: `tests/test_phase3.py` (two-piece clock, region by request year, court baseline, backcast identities, joint
+  sample reproducible, joint interval no narrower than seed-only); `tests/test_grid.py` updated for the backcast fit.
+
+PHASE3_RESULTS
+
 ## Known issues carried forward
-- Grid agents: completed projects take 14-21 months longer from request to operation than LBNL's medians (a longer
-  wait does not raise withdrawal, so no selection for short waits); MISO waits (27-35 months) shorter than recent
-  cohorts (45-50); ERCOT's early withdrawal twice the data's; SPP and West use pooled operator settings that fit
-  poorly. Current-law GW by 2041 is lower with agents than with the exogenous grid.
-- Simulation intervals are seed noise at central values; `results/uncertainty.md` has the joint ranges.
+- Grid agents: completed projects take too long from request to operation (a longer wait does not raise withdrawal,
+  so no selection for short waits). In the backcast, 2020-22 storage and solar requests take 62-66 months to operate
+  (exogenous model 39-60), so the agents build only 0.42 (storage), 0.67 (solar) and 0.81 (wind) of EIA-860's
+  2018-25 additions, most of the gap in CAISO and ERCOT; near-term current-law build with agents is conservative.
+  In CAISO, ISO-NE, MISO and NYISO the fitted hold after an adverse result reaches its 20-year bound (the data cannot
+  tell a long hold from never withdrawing); MISO's 60-month share stays high (0.75 vs 0.62). The 2020-23 withdrawal
+  holdout is mixed by region (PJM and CAISO withdraw less early in the data than the model; SPP, West and NYISO more).
+  SPP and West use pooled operator settings. ERCOT's LBNL withdrawal shares are probably too low (thin early data).
+- Simulation intervals in Sims 1-7 are seed noise at central values; `results/uncertainty.md` has the joint ranges.
 - Completion targets treat still-active 2000-20 requests as failures; interconnection times come only from projects
   that signed agreements (Phase 2 calibration with survival methods).
 - Sims 1-6 have no feedback from scarcity to entry; only Sim 7's agents do.
-- Court parameters from 2001-22 cases, before *Seven County Infrastructure Coalition v. Eagle County* (2025).
+- Court parameters from 2001-22 cases; the post-*Seven County* baseline is an assumption range (no 2023-26 case data).
 - Bill version: Senate-passed text, read from the Senate PDF; congress.gov status not yet confirmed (site refuses automated requests). The House may change it.
 
 ## Data access from the cloud environment

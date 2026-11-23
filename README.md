@@ -48,8 +48,12 @@ Change from the 20 Nov version (+15 GW, renewables +11.2): Sec.2213's deadlines 
      barely move (renewables 61 -> 61, gas 37 -> 37): interconnection is the binding gate.
    - Gas has more federal exposure than wind or solar (~33% of new gas MW has a federal hook, mostly Army Corps
      individual permits, vs ~5% wind and ~11% solar), but its reviews are short Corps EAs, so deadlines barely bind.
-2. **Litigation (Sim 2)**: the court provisions cut suits by about 70% (134 -> 40 over 15 years), but add only
-   +0.7 GW, because only ~9.5% of energy suits ever win an injunction.
+2. **Litigation (Sim 2)**: the court provisions cut suits by about 70% (119 -> 35 over 15 years, all technologies), but
+   add only +0.9 GW (renewables +0.7), because only ~9.5% of energy suits ever win an injunction.
+   - **Courts after *Seven County* (May 2025)**, an assumption range because no case data after 2022 were available:
+     if challengers' NEPA remedies fall by 30-50% and suits by 20-40%, the court provisions are worth +0.2 to +0.5 GW
+     instead of +0.9, and all data-sized provisions +9.0 to +9.3 GW instead of +9.7 (same seeds; both runs on the same
+     court baseline). Current law itself gains only +0.4 to +0.7 GW from the more deferential courts.
    - Suit rates for energy EAs and CEs come from district-court suits per BLM + DOE review, 2012-21.
    - How challengers respond to the 150-day limit comes from a natural experiment: highway/transit approvals have had
      a 150-180 day limit since 2005, and those suits bunch just inside it; ~39% of would-be late filers file in time
@@ -140,12 +144,30 @@ the variance in GW. Drawing the two interconnection dials across their ranges as
 Sec.2106's dial explains 81% of the variance. Current-law shortfall in 2035: 66 GW [26, 124].
 
 ## Validation
-Backcast, current law, Jan 2010 to Dec 2025, with LBNL requests by year (`results/backcast.md`). Cumulative 2018-25
-additions, model vs EIA-860: onshore wind 1.02, **storage 1.14** (was 0.54), gas 0.84, solar 0.80. Two Phase 1 changes
-fixed storage: the seeded queue's projects with signed agreements now finish on the measured agreement-to-operation time
-(29 months for batteries, LBNL 2022-25) rather than a fitted 62 months, and storage completion is LBNL's own (9.1%).
-Model year 1 (Nov 2026-Oct 2027) matches EIA-860's 2024-25 average additions by technology (a calibrated window for
-seeded projects already overdue). Regional withdrawal hazards fit LBNL completion by region (`results/calibration.json`).
+Backcast, current law, Jan 2010 to Dec 2025, with LBNL requests by year and each request's region drawn from LBNL's
+requests by region in its request year (`results/backcast.md`, `python run.py --backcast`). Both grid models are run
+on the same requests; EIA-860 additions by region use nameplate capacity (regions sum to the national total within 2%).
+
+| 2018-25 additions, model / EIA-860 | solar | onshore wind | gas | storage |
+|---|---|---|---|---|
+| Exogenous grid (Sims 1-6) | 0.82 | 1.00 | 0.84 | 1.08 |
+| Grid agents (Sim 7) | 0.67 | 0.81 | 0.80 | 0.42 |
+
+- **By region** the error is larger than nationally: weighted mean absolute log ratio across regions 0.42 (exogenous)
+  and 0.51 (agents). Both models put too little solar and storage in ERCOT and CAISO and too much in PJM, ISO-NE and
+  NYISO, because regions are drawn from where requests were made, not where projects finished; the Southeast's
+  gas is about a third of EIA's 16 GW (not yet explained; utility-built plants may be under-counted in the queue data).
+- **The agents' storage and solar shortfall** is timing: 2020-22 storage and solar requests take 62-66 months from
+  request to operation in the agents (39-60 with the exogenous grid), so many finish after 2025. Most of the gap is
+  in CAISO and ERCOT and is the same gap as "completed projects are not selected for short waits" (known limits).
+- **Withdrawal timing of 2015-19 requests** (fitted at 12, 36 and 60 months): the agents match LBNL by region within
+  0.03 at 12 and 36 months, and within 0.05 at 24 months (not fitted). At 60 months MISO is 0.75 vs 0.62 even with its
+  hold at the bound. The exogenous model withdraws about 65% of requests by month 12 everywhere (data 9-58%).
+- **Holdout (2020-23 requests, used in no fit)** is mixed: the agents withdraw too fast in CAISO (0.59 vs 0.12 by month
+  12) and too slowly in SPP (0.13 vs 0.30).
+- Model year 1 (Nov 2026-Oct 2027) matches EIA-860's 2024-25 average additions by technology (a calibrated window for
+  seeded projects already overdue). Request -> agreement times are fitted to LBNL 2010-19 cohorts and checked on 2020-21
+  (Sim 7).
 
 ## Data register ([D])
 | What | Source | Extractor -> file |
@@ -204,6 +226,8 @@ the JSON summaries in `data/` from them.
 | `exhaust_injury` | 0.6 | 0.8 | 0.95 | Sec.1110: timely suits passing comment exhaustion + direct injury |
 | `suit_payoff` | 0.4 | 0.6 | 1.0 | Sec.1110: suits filed when the only remedy is remand, relative to now |
 | `inj_nonNEPA` | 0 | 0.3 | 0.5 | Sec.1110: injunctions resting on non-NEPA laws (still allowed) |
+| `nepa_win_mult` | 0.5 | 1.0 | 1.0 | court baseline after *Seven County* (May 2025): challengers' NEPA win, injunction and vacatur rates relative to 2001-22, in both runs |
+| `nepa_suit_mult` | 0.6 | 1.0 | 1.0 | court baseline after *Seven County*: NEPA suits filed relative to 2001-22, in both runs |
 | `lit_months_baaja` | 8 | 12 | 16.4 | Sec.1110/2201: months in litigation under appeals-court jurisdiction |
 | `halt_mult_1401` | 0.1 | 0.5 | 1.0 | Sec.1401: residual halt probability; the passed text exempts action "pursuant to any applicable law or regulation" |
 | `ix_2110`, `ix_2106` | 0, 0 | 0, 0 | 0.05, 0.42 | interconnection study-time cuts; 2110 all providers, 2106 RTO/ISO markets only. Sec.2106 ceiling **from data**: ERCOT's pace vs CAISO/MISO (`data/interconnection_benchmark.json`); Sim 3 sweeps 0-42% |
@@ -220,6 +244,7 @@ the JSON summaries in `data/` from them.
 | `adopt_2106` | 0 | 0.5 | 1.0 | Sec.2106(d): chance that an RTO's process changes rather than being found compliant, drawn per RTO |
 | `planned_share_2106` | 0.25 | 0.5 | 0.9 | Sec.2106(a)(2): share of requests able to use a published location |
 | `q_min_2106` | 0.1 | 0.25 | 0.5 | Sec.2106(a)(3): lowest chance of completing at which a request still enters, given non-refundable security |
+| `lag_2106` | 0 | 0.5 | 1.0 | Sec.2106(a)(3): how long a developer holds its queue position after an adverse study result, relative to current law (withdrawal penalties shorten it; 0 = leaves at once) |
 | `fee_mult_2106` | 0.8 | 1.0 | 1.5 | Sec.2106(a)(2): fixed fee as a multiple of the region's median upgrade cost |
 | `g_2110` | 0 | 0 | 0.25 | Sec.2110: study throughput gain (the bill sets no target) |
 | `hosting_2109` | 0 | 0.1 | 0.3 | Sec.2109: extra hosting room per transmission project |
@@ -232,7 +257,8 @@ of a truncated review (1.6); halt probabilities other than offshore wind.
 - **Onshore wind's federal nexus is a lower bound.** With wind habitat conservation plans added (+2.7 points), it is
   7-9%; FWS publishes no list of specific eagle permits, so the true share is somewhat higher.
 - **EA/CE data are BLM and DOE only.** Corps, USFS and FWS reviews are missing, so EA/CE suit rates are scaled down by a range.
-- **Storage backcast runs high** (1.14 of EIA-860 2018-25 additions, after Phase 1 fixed the earlier 0.54).
+- **Backcast fit is national, not regional** (Validation): regional additions miss by about 40-50% on average, and the
+  grid agents' 2018-25 storage is 0.42 of EIA's.
 - **Gas pipelines and LNG are not simulated**; Sim 2 compares their litigation (10 NEPA cases a year vs 4 for renewables) from data.
 - **No prices or emissions.** In Sims 1-6 arrivals stay at the 2021-25 average (or 2025's mix); only Sim 7's grid
   agents let new requests respond to waits and regional scarcity. Demand is NERC's forecast, not modelled.
@@ -241,13 +267,17 @@ of a truncated review (1.6); halt probabilities other than offshore wind.
 - **Regions are LBNL's nine**, matched to NERC assessment areas; CAISO and the West differ most from NERC's areas.
 - **Transmission MW enter only through Sim 7's grid agents** (hosting room per finished project, an assumption range);
   Sims 1-6 keep the earlier treatment, where transmission provisions change only transmission projects' own timing.
-- **Grid agents, fit gaps** (`results/sim7_grid_agents.md`, validation section):
-  - completed projects take longer from request to operation than LBNL's medians (about 14-21 months), because a
-    longer wait does not raise withdrawal in the model, so completed projects are not selected for short waits;
+- **Grid agents, fit gaps** (`results/sim7_grid_agents.md`, `results/backcast.md`):
+  - completed projects take longer from request to operation than LBNL's medians, because a longer wait does not
+    raise withdrawal in the model, so completed projects are not selected for short waits; in the backcast this
+    pushes 2020-22 storage and solar past 2025;
+  - withdrawal timing is fitted in the backcast with a first-year and a later background hazard and a hold after an
+    adverse study result; the hold sits at its 20-year bound in CAISO, ISO-NE, MISO and NYISO, i.e. those requests
+    stay in the queue rather than withdraw, and MISO still withdraws too much by month 60;
   - MISO's modelled wait to agreement (about 27-35 months) is shorter than recent cohorts (45-50);
-  - ERCOT withdraws twice as fast in the first two years as the data (0.34 vs 0.17 by month 24), from study results
-    rather than the background hazard, which sits at its floor;
   - SPP and the West have no queue data of their own and use pooled operator settings that fit poorly.
+- **Courts after *Seven County* (May 2025)** are an assumption range (`nepa_win_mult`, `nepa_suit_mult`): no
+  case data after 2022 were available.
 
 ## Run
 ```bash
@@ -255,12 +285,13 @@ pip install -r requirements.txt
 python run.py --all --runs 100    # calibrate, backcast, seven simulations -> results/, figures/
 python run.py --recalibrate-grid --sim 7 --runs 100   # refit the grid agents only, then Sim 7
 python run.py --uncertainty 400   # all assumption ranges at once -> results/uncertainty.md
+python run.py --backcast          # 2010-25 backcast, both grid models -> results/backcast.md
 python run.py --sim 3 --runs 50   # one simulation, reusing results/calibration.json
 python -m pytest -q
 ```
 
 ## Layout
 `baaja/params.py` parameters, data hooks, assumption register · `baaja/model.py` engine · `baaja/calibrate.py` ·
-`baaja/experiments.py` paired runs, sweeps, backcast · `baaja/supply.py` fleet, demand, adequacy · `baaja/uncertainty.py`
+`baaja/experiments.py` paired runs, sweeps · `baaja/validation.py` 2010-25 backcast by region · `baaja/supply.py` fleet, demand, adequacy · `baaja/uncertainty.py`
 joint sampling · `baaja/grid.py` grid operators and developers (Phase 2) · `baaja/sims/` the seven simulations · `baaja/plots.py` ·
 `data/` extractors and JSON targets · `docs/bill_question_map.md` · `legacy/` v1 and the original v3.
