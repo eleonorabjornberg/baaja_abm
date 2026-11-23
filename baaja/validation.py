@@ -16,6 +16,7 @@ from .sims import table
 TECH = {"Solar": ["Solar"], "Onshore wind": ["Onshore wind"], "Gas": ["Gas CC", "Gas CT", "Gas ST"], "Storage": ["Storage"]}
 YEARS = range(2018, 2026)
 MODES = ("exogenous", "agents")
+HOLDOUT, HOLD_MONTHS = (2020, 2023), (12, 24)          # later request cohorts, in no fit; observable to 24 months
 
 
 def _arrivals():
@@ -47,19 +48,23 @@ def backcast(cal, grid, n_runs=10):
     p = backcast_params(cal, grid)
     y0 = BACKCAST["start_year"]
     coh = ((gr.WD_COHORTS[0] - y0) * 12, (gr.WD_COHORTS[1] + 1 - y0) * 12)
-    nat, reg, wd = [], [], []
+    hold = ((HOLDOUT[0] - y0) * 12, (HOLDOUT[1] + 1 - y0) * 12)
+    nat, reg, wd, wh = [], [], [], []
     for s in range(n_runs):
         rows = simulate(p, s, BACKCAST["politics"])
         nat.append(summarize(rows, p)["_online_by_year"])
         reg.append(online_by_region_year(rows))
         wd.append(withdrawal_by_region(rows, coh))
+        wh.append(withdrawal_by_region(rows, hold, HOLD_MONTHS))
     yrs = [y0 + i for i in range(int(np.ceil(BACKCAST["T"] / 12)))]
     k = [yrs.index(y) for y in YEARS]
     out = dict(national={t: dict(zip(yrs, np.mean([r[t] for r in nat], axis=0).tolist())) for t in TECH},
                region={t: {REGIONS[i]: float(np.mean([np.array(r[t][i])[k].sum() for r in reg])) for i in range(len(REGIONS))}
                        for t in TECH},
                withdrawal={rg: {m: float(np.nanmean([w.get(rg, {}).get(m, np.nan) for w in wd])) for m in gr.WD_MONTHS}
-                           for rg in REGIONS})
+                           for rg in REGIONS},
+               withdrawal_holdout={rg: {m: float(np.nanmean([w.get(rg, {}).get(m, np.nan) for w in wh])) for m in HOLD_MONTHS}
+                                   for rg in REGIONS})
     return out
 
 
@@ -120,12 +125,19 @@ def report(cal, res_dir, n_runs=10):
         rows.append([r] + [" / ".join(f"{B[m]['withdrawal'][r][mo]:.2f}" for m in MODES) + f" / {wdd[r][mo]:.2f}"
                            for mo in gr.WD_MONTHS])
     t_wd = table(["region"] + [f"withdrawn by {mo} months (exogenous / agents / LBNL)" for mo in gr.WD_MONTHS], rows)
+    wdh = gr.withdrawal_curve_data(HOLD_MONTHS, HOLDOUT)
+    rows = [[r] + [" / ".join(f"{B[m]['withdrawal_holdout'][r][mo]:.2f}" for m in MODES) + f" / {wdh[r][mo]:.2f}"
+                   for mo in HOLD_MONTHS] for r in REGIONS if r in wdh]
+    t_wh = table(["region"] + [f"withdrawn by {mo} months (exogenous / agents / LBNL)" for mo in HOLD_MONTHS], rows)
     md = "\n\n".join([
         "# Backcast 2010-2025, current law, vs EIA-860 additions and LBNL withdrawal timing",
         __doc__.replace("\n", " "),
-        f"Means over {n_runs} runs per grid model. The exogenous grid's study times and both models' hazards were fitted "
-        "to LBNL completion and timing; nothing here is fitted to EIA-860 additions except the first forward year, which "
-        "this backcast does not use.",
+        f"Means over {n_runs} runs per grid model. What was fitted to what: the exogenous model's withdrawal hazards to "
+        "LBNL completion, in forward runs. The grid agents' operators to LBNL request-to-agreement times (2010-19 "
+        "cohorts), and, in this backcast, their background withdrawal hazards to the shares of 2015-19 requests "
+        "withdrawn within 12 and 60 months and their value scales to completion of 2010-19 requests (LBNL). Not fitted, "
+        "so checks: EIA-860 additions nationally and by region, the 24- and 36-month withdrawal shares, and the "
+        f"{HOLDOUT[0]}-{HOLDOUT[1]} cohorts.",
         "## National additions 2018-25",
         t_nat,
         "## By region, 2018-25",
@@ -139,8 +151,10 @@ def report(cal, res_dir, n_runs=10):
         "hold few withdrawn requests (under 25 solar requests a year before 2016), so its LBNL withdrawal shares are "
         "probably too low.",
         t_wd,
+        f"### Holdout: {HOLDOUT[0]}-{HOLDOUT[1]} requests (used in no fit)",
+        t_wh,
     ])
     open(os.path.join(res_dir, "backcast.md"), "w").write(md + "\n")
-    json.dump(dict(model=B, eia=E, lbnl_withdrawal=wdd, regional_error=rerr), open(os.path.join(res_dir, "backcast.json"), "w"),
+    json.dump(dict(model=B, eia=E, lbnl_withdrawal=wdd, lbnl_withdrawal_holdout=wdh, regional_error=rerr), open(os.path.join(res_dir, "backcast.json"), "w"),
               indent=1, default=float)
     return md, B
