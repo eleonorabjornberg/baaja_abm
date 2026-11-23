@@ -8,7 +8,7 @@ Suits are drawn only for projects with a federal decision that are still alive a
 |---|---|---|---|---|
 | Current law | 657 [642, 670] | 178 [169, 187] | 285 [276, 293] | 64.3% |
 | Court provisions only (Sec.1110/2201) | +0.7 [+0.1, +1.8] | +0.0 [+0.0, +0.2] | +0.2 [+0.0, +0.5] | +0.03 pts |
-| All data-based provisions | +11.2 [+9.1, +14.1] | +1.2 [+0.4, +2.0] | +0.4 [+0.0, +0.8] | +0.26 pts |
+| All data-based provisions | +6.7 [+5.2, +8.6] | +1.2 [+0.4, +2.0] | +0.4 [+0.0, +0.7] | +0.12 pts |
 
 ## Same comparison if 2025's request mix continues (regime "2025")
 
@@ -16,17 +16,17 @@ Suits are drawn only for projects with a federal decision that are still alive a
 |---|---|---|---|---|
 | Current law | 582 [565, 601] | 306 [294, 319] | 227 [220, 234] | 48.5% |
 | Court provisions only (Sec.1110/2201) | +0.4 [+0.0, +1.0] | +0.0 [+0.0, +0.2] | +0.1 [+0.0, +0.3] | +0.02 pts |
-| All data-based provisions | +7.7 [+6.2, +9.6] | +2.5 [+1.3, +3.6] | +0.2 [+0.0, +0.5] | +0.17 pts |
+| All data-based provisions | +4.6 [+3.3, +6.4] | +2.4 [+1.3, +3.3] | +0.2 [+0.0, +0.4] | +0.04 pts |
 
 ## Who sues: suits 2026-41 by lead challenger (current law / court provisions / all provisions)
 
 | group | challenger | law | courts only | all | challenger win rate (law) |
 |---|---|---|---|---|---|
-| Renewable (new) | National NGO | 2.2 | 0.8 | 1.1 | 34% |
-| Renewable (new) | Local group / residents | 37.0 | 11.0 | 16.4 | 23% |
-| Renewable (new) | Tribe | 6.0 | 1.7 | 2.5 | 19% |
-| Renewable (new) | State / local government | 1.2 | 0.3 | 0.5 | 31% |
-| Renewable (new) | Business | 6.0 | 1.5 | 2.4 | 16% |
+| Renewable (new) | National NGO | 2.2 | 0.8 | 0.9 | 34% |
+| Renewable (new) | Local group / residents | 37.0 | 11.0 | 13.7 | 23% |
+| Renewable (new) | Tribe | 6.0 | 1.7 | 2.1 | 19% |
+| Renewable (new) | State / local government | 1.2 | 0.3 | 0.4 | 31% |
+| Renewable (new) | Business | 6.0 | 1.5 | 1.9 | 16% |
 | Fossil (gas) | National NGO | 0.4 | 0.1 | 0.1 | 48% |
 | Fossil (gas) | Local group / residents | 0.5 | 0.1 | 0.1 | 28% |
 | Fossil (gas) | Tribe | 0.2 | 0.1 | 0.1 | 31% |

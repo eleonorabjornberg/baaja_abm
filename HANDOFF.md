@@ -28,6 +28,12 @@ the calibrated permitting and court pipeline; rebuild grid access as interacting
 - **Sim 5 baseline**: ISO / non-ISO completion targets keep LBNL's ratio between markets but are scaled to the pooled
   target, so Sim 5's current law matches Sims 1-4.
 - CI (`.github/workflows/tests.yml`), `data/SOURCES.md`, every bill section classified in the bill map.
+- **Bill version**: the model now follows the Senate-passed text (substitute to H.R. 2347, KAT26804 V62, passed
+  19 Nov 2026, 62-33 per committee press releases). Sec.2106 covers RTOs/ISOs only (`ix_cut_rto`); Sec.1401 gains
+  an exception for action "pursuant to any applicable law or regulation" (`halt_mult_1401` 0.1 / 0.5 / 1.0).
+- Before any change, all five simulations and the backcast reproduced the committed 20 Nov results exactly.
+- Headline: data-sized provisions **+10 GW** by 2041 (renewables +6.7, gas +1.2, storage +0.4), down from +15;
+  Sec.2106 ceiling +303 GW (was +456).
 
 ## Known issues carried forward
 - Not yet agent-based: projects are independent draws; interconnection is an exogenous time draw and Sec.2106 a dial.
@@ -37,7 +43,7 @@ the calibrated permitting and court pipeline; rebuild grid access as interacting
   that signed agreements (Phase 2 calibration with survival methods).
 - Storage backcast 0.54 of EIA additions.
 - Court parameters from 2001-22 cases, before *Seven County Infrastructure Coalition v. Eagle County* (2025).
-- Bill version: model follows the introduced text; a manager's amendment (7 Nov 2026, per C2ES) is not yet on GovInfo.
+- Bill version: Senate-passed text, read from the Senate PDF; congress.gov status not yet confirmed (site refuses automated requests). The House may change it.
 
 ## Data access from the cloud environment
 eia.gov file downloads, govinfo.gov and nerc.com work. emp.lbl.gov, congress.gov and ferc.gov refuse automated
