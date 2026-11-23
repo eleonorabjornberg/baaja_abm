@@ -236,6 +236,9 @@ GRID_BILL = {
     "planned_share_2106": (0.25, 0.5, 0.9, "Sec.2106(a)(2): share of requests able to use a published location"),
     "q_min_2106":         (0.1, 0.25, 0.5, "Sec.2106(a)(3): lowest chance of completing (cost below value) at which a "
                            "request still enters, given non-refundable security and penalties"),
+    "lag_2106":           (0.0, 0.5, 1.0, "Sec.2106(a)(3): months a developer holds its queue position after an "
+                           "adverse study result, relative to current law, with a single decision point and withdrawal "
+                           "penalties (0 = leaves at once)"),
     "fee_mult_2106":      (0.8, 1.0, 1.5, "Sec.2106(a)(2): fixed fee as a multiple of the region's median upgrade cost"),
     "g_2110":             (0.0, 0.0, 0.25, "Sec.2110: study throughput gain (rulemaking with no target)"),
     "hosting_2109":       (0.0, 0.1, 0.3, "Sec.2109: extra hosting room per transmission project (advanced "

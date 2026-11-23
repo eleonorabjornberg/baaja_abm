@@ -198,8 +198,10 @@ def run(n_runs, cal, res_dir, fig_dir, sweep_runs=None):
     t_vm = table(["technology", "region", "value scale (fitted to completion)"],
                  [[*(k.split("|") if "|" in k else (k, "all (pooled)")), f"{v:.2f}"]
                   for k, v in sorted((gc.get("value_mult") or {}).items())])
-    t_hz = table(["region", "background withdrawal hazard, %/month: first 12 months", "after 12 months, to construction"],
-                 [[r, *(f"{100 * x:.2f}" for x in (v if np.ndim(v) else (v, v)))] for r, v in (gc.get("h_pre") or {}).items()])
+    t_hz = table(["region", "background withdrawal hazard, %/month: first 12 months", "after 12 months, to construction",
+                  "mean hold after an adverse study result, months"],
+                 [[r, *(f"{100 * x:.2f}" for x in (v if np.ndim(v) else (v, v))),
+                   f"{(gc.get('exit_lag') or {}).get(r, 0.0):.0f}"] for r, v in (gc.get("h_pre") or {}).items()])
 
     # ---- sensitivity: grid assumptions (current law and bill design), paired ----
     ns = sweep_runs or max(n_runs // 5, 10)

@@ -191,12 +191,14 @@ def calibrate_grid(cal, seeds=tuple(range(7, 15)), iters=14, passes=3, operators
     Phase 2 fit used 2026-30 model cohorts against 2015-19 data and missed the timing; Phase 3 backcast).
     (1) Grid operators fitted to LBNL request -> agreement times (grid.fit_operators).
     (2) Withdrawal in two parts. (a) Background: a regional hazard from request to construction start, one rate for a
-    request's first 12 months and one after, fitted so the shares of 2015-19 requests withdrawn within 12 and 60
-    months match LBNL [D] (24 and 36 months are left out of the fit as a check). (b) At study results: a developer
-    leaves when the allocated cost exceeds its value. Value is LBNL's P(complete | cost) fit [D] scaled by a factor
-    per technology and region, fitted so completion of 2010-19 requests by end-2025 matches calibrate_regions'
-    targets [D] (LBNL 2000-20 cohorts, still-active requests counted as not complete in both). Regions without a
-    regional completion target share the technology's pooled target. (a) and (b) are fitted in alternating passes.
+    request's first 12 months and one after. (b) At study results: a developer is done when the allocated cost exceeds
+    its value, and withdraws after holding its position a while (exponential, regional mean). By region, the
+    first-year hazard, the later hazard and the mean hold are fitted so the shares of 2015-19 requests withdrawn
+    within 12, 36 and 60 months match LBNL [D] (24 months is left out of the fit as a check). Value is LBNL's
+    P(complete | cost) fit [D] scaled by a factor per technology and region, fitted so completion of 2010-19
+    requests by end-2025 matches calibrate_regions' targets [D] (LBNL 2000-20 cohorts, still-active requests counted
+    as not complete in both). Regions without a regional completion target share the technology's pooled target.
+    Timing and values are fitted in alternating passes.
     (3) P(EIS | federal review) refitted in forward runs so decided EISs per year match CEQ 2015-24 [D] with the
     agents on: the agents withdraw later than the exogenous model's constant hazard, so more requests survive to a
     federal decision, and the exogenous fit would overcount EISs.
@@ -212,8 +214,8 @@ def calibrate_grid(cal, seeds=tuple(range(7, 15)), iters=14, passes=3, operators
         if len(have) < len(REGIONS):                            # pooled cell only if some region has no target
             targets[f"{t}|*" + ",".join(have)] = TYPES[t]["completion_target"]
     wdd = withdrawal_curve_data()
-    m1, m2 = H_SPLIT, 60
-    w1 = {r: v[m1] for r, v in wdd.items()}; w2 = {r: v[m2] for r, v in wdd.items()}
+    m1, m2, m3 = H_SPLIT, 60, 36
+    w1, w2, w3 = ({r: v[m] for r, v in wdd.items()} for m in (m1, m2, m3))
     pb = backcast_params(cal, "agents")
     y0 = BACKCAST["start_year"]
     coh = ((WD_COHORTS[0] - y0) * 12, (WD_COHORTS[1] + 1 - y0) * 12)
@@ -250,26 +252,29 @@ def calibrate_grid(cal, seeds=tuple(range(7, 15)), iters=14, passes=3, operators
                 else:
                     hi[t] = z[t]
         return {t: (lo[t] + hi[t]) / 2 for t in eis_t}
-    x = {k: 0.0 for k in targets}; h1 = {r: 0.02 for r in wdd}; h2 = {r: 0.005 for r in wdd}
+    x = {k: 0.0 for k in targets}; h1 = {r: 0.02 for r in wdd}; h2 = {r: 0.0 for r in wdd}; lg = {r: 0.0 for r in wdd}
     hp = lambda: {r: [h1[r], h2[r]] for r in wdd}
-    for rnd in range(passes):                      # alternate: background hazards, then values (each bisected afresh)
-        for which, tgt, m in (("h1", w1, m1), ("h2", w2, m2)):
-            lo = {r: 0.0 for r in wdd}; hi = {r: 0.2 for r in wdd}
+    cur = lambda: dict(operators=ops, value_mult=vmult(x), h_pre=hp(), exit_lag=dict(lg))
+    # each piece is bisected toward its target: (name, dict, LBNL target, month, upper bound, raising it raises the share)
+    pieces = (("first-year hazard", h1, w1, m1, 0.2, True), ("hold after an adverse result", lg, w2, m2, 240.0, False),
+              ("later hazard", h2, w3, m3, 0.05, True))
+    for rnd in range(passes):                      # alternate: withdrawal timing, then values (each bisected afresh)
+        for _, d, tgt, m, top, up in pieces:
+            lo = {r: 0.0 for r in wdd}; hi = {r: top for r in wdd}
             for _ in range(iters):
-                z = {r: (lo[r] + hi[r]) / 2 for r in wdd}
-                (h1 if which == "h1" else h2).update(z)
-                _, wd = run(dict(operators=ops, value_mult=vmult(x), h_pre=hp()), seeds)
+                d.update({r: (lo[r] + hi[r]) / 2 for r in wdd})
+                _, wd = run(cur(), seeds)
                 for r in wdd:
                     v = wdm(wd, r, m)
-                    if np.isnan(v) or v < tgt[r]:
-                        lo[r] = z[r]
+                    if np.isnan(v) or (v < tgt[r]) == up:
+                        lo[r] = d[r]
                     else:
-                        hi[r] = z[r]
-            (h1 if which == "h1" else h2).update({r: (lo[r] + hi[r]) / 2 for r in wdd})
+                        hi[r] = d[r]
+            d.update({r: (lo[r] + hi[r]) / 2 for r in wdd})
         lo = {k: -5.0 for k in targets}; hi = {k: 5.0 for k in targets}
         for _ in range(iters):
             x = {k: (lo[k] + hi[k]) / 2 for k in targets}
-            got, _ = run(dict(operators=ops, value_mult=vmult(x), h_pre=hp()), seeds)
+            got, _ = run(cur(), seeds)
             for k in targets:
                 m = np.nanmean([g[k] for g in got])
                 if np.isnan(m) or m > targets[k]:
@@ -277,7 +282,7 @@ def calibrate_grid(cal, seeds=tuple(range(7, 15)), iters=14, passes=3, operators
                 else:
                     lo[k] = x[k]
         x = {k: (lo[k] + hi[k]) / 2 for k in targets}
-    gc = dict(operators=ops, value_mult=vmult(x), h_pre=hp())
+    gc = cur()
     gc["p_eis"] = fit_eis(gc)
     got, wd = run(gc, tuple(range(20, 30)))                 # check on 10 seeds not used in the fit
     chk = [summarize(simulate(dict(pf, grid_cal=gc), s, POL), pf) for s in range(20, 30)]
@@ -286,5 +291,5 @@ def calibrate_grid(cal, seeds=tuple(range(7, 15)), iters=14, passes=3, operators
     wfit = {r: {m: (float(wdm(wd, r, m)), v[m]) for m in v} for r, v in wdd.items()}
     od, od_t = calibrate_overdue(dict(cal, grid_cal=gc), base=dict(grid="agents"))
     gc["overdue"] = od["overdue"]
-    return gc, dict(completion=fit, withdrawn_by_month=wfit, fitted_months=[m1, m2], eis_per_year=eis_fit,
+    return gc, dict(completion=fit, withdrawn_by_month=wfit, fitted_months=[m1, m3, m2], eis_per_year=eis_fit,
                     first_year_targets=od_t, regions=REGIONS, setting="backcast 2010-25")

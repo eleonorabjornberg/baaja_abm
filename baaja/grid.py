@@ -292,18 +292,20 @@ def run_agents(states, p, seed, hostile_to):
     n = len(F["t0"])
     Zv, Zc, Uc0, Zs, Uloc, Uacc = (g.normal(0, 1, n), g.normal(0, 1, n), g.random(n), g.normal(0, 1, n),
                                    g.random(n), g.random(n))
+    Elag = g.exponential(1.0, n)                                   # drawn last: earlier draws unchanged
     ctx = _supply_context()
     onpk = np.array([ctx["onpeak"][states[i]["name"]] for i in gen_idx])[np.searchsorted(gen_idx, F["typ"])]
     tx = _tx_counts(states, p, hostile_to, u_txreg, T_ext) if p["tx_hosting_gw"] > 0 else None
     out = dict(entered=F["seeded"].copy(), tIA=np.full(n, np.inf), gwd=np.full(n, np.inf), cost=np.full(n, np.nan),
                planned=np.zeros(n, bool), W=F["W"].copy())
     h_pre = (p.get("grid_cal") or {}).get("h_pre") or {}
+    lag = (p.get("grid_cal") or {}).get("exit_lag") or {}
     backcast = p["arrivals"] is not None
     for r in range(len(REGIONS)):
         idx = np.where(F["region"] == r)[0]
         if len(idx):
-            _region(r, idx, F, out, p, ops[REGIONS[r]], dict(Zv=Zv, Zc=Zc, Uc0=Uc0, Zs=Zs, Uloc=Uloc, Uacc=Uacc),
-                    onpk, ctx, tx, u_adopt[r], T, T_ext, backcast, h_pre.get(REGIONS[r]))
+            _region(r, idx, F, out, p, ops[REGIONS[r]], dict(Zv=Zv, Zc=Zc, Uc0=Uc0, Zs=Zs, Uloc=Uloc, Uacc=Uacc, Elag=Elag),
+                    onpk, ctx, tx, u_adopt[r], T, T_ext, backcast, h_pre.get(REGIONS[r]), lag.get(REGIONS[r], 0.0))
     # ---- write back, drop non-entrants ----
     pos = 0
     for i in gen_idx:
@@ -324,10 +326,11 @@ def pre_clock(Ew, h):
     if np.isscalar(h):
         return np.ceil(Ew / -np.log1p(-h))
     a1, a2 = -np.log1p(-h[0]), -np.log1p(-h[1])
-    return np.where(Ew <= H_SPLIT * a1, np.ceil(Ew / a1), H_SPLIT + np.ceil((Ew - H_SPLIT * a1) / a2))
+    with np.errstate(divide="ignore"):                             # a zero hazard is a clock that never runs out
+        return np.where(Ew <= H_SPLIT * a1, np.ceil(Ew / a1), H_SPLIT + np.ceil((Ew - H_SPLIT * a1) / a2))
 
 
-def _region(r, idx, F, out, p, op, U, onpk, ctx, tx, u_adopt, T, T_ext, backcast, h_pre=None):
+def _region(r, idx, F, out, p, op, U, onpk, ctx, tx, u_adopt, T, T_ext, backcast, h_pre=None, exit_lag=0.0):
     t0, seeded, ia_done = F["t0"][idx], F["seeded"][idx], F["ia_done"][idx]
     # withdrawal for reasons other than study results: a regional hazard until construction starts (the same unit draw
     # as the exogenous clock). Requests already holding an agreement at end-2025 keep the exogenous clock.
@@ -348,6 +351,10 @@ def _region(r, idx, F, out, p, op, U, onpk, ctx, tx, u_adopt, T, T_ext, backcast
     rule = p["ix_rule_month"]
     in_rto = r in RTO_IDX
     adopt = p["grid_2106"] and in_rto and (u_adopt < p["adopt_2106"])
+    # a developer whose study result makes it unprofitable holds its queue position for a while before withdrawing
+    # (mean exit_lag months, fitted by region to LBNL's 60-month withdrawal share); under Sec.2106(a)(3)'s single
+    # decision point and withdrawal penalties the hold shrinks by lag_2106
+    lag = np.ceil(U["Elag"][idx] * exit_lag * (p["lag_2106"] if adopt else 1.0)) if exit_lag > 0 else np.zeros(len(idx))
     g2110 = p["grid_2110"] if r != ERCOT else 0.0
     R = p["restudy_months"] if serial else 0
     # ---- throughput: start from end-2025 (scaled to the model's request units) or, in a backcast, from 2010 ----
@@ -405,7 +412,7 @@ def _region(r, idx, F, out, p, op, U, onpk, ctx, tx, u_adopt, T, T_ext, backcast
         vm = v0 * np.exp(beta * (scar(tnow) - s0))
         alive1 = sel & (W >= t_res - t0)
         stay1 = alive1 & ((c <= vm) | planned)
-        gwd[alive1 & ~stay1] = t_res[alive1 & ~stay1]
+        gwd[alive1 & ~stay1] = (t_res + lag)[alive1 & ~stay1]
         if single or R == 0:
             sign(stay1, t_sign); cost[alive1] = c[alive1]; return
         tot = mw[alive1].sum()
@@ -413,7 +420,7 @@ def _region(r, idx, F, out, p, op, U, onpk, ctx, tx, u_adopt, T, T_ext, backcast
         c2 = np.where(planned, c, c * (1 + p["restudy_rho"] * wsh))
         alive2 = stay1 & (W >= t_sign - t0)
         stay2 = alive2 & ((c2 <= vm) | planned)
-        gwd[alive2 & ~stay2] = t_sign[alive2 & ~stay2]
+        gwd[alive2 & ~stay2] = (t_sign + lag)[alive2 & ~stay2]
         sign(stay2, t_sign); cost[alive1] = c2[alive1]
 
     # ---- legacy requests (in the queue at end-2025, no agreement) ----
