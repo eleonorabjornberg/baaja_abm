@@ -186,15 +186,15 @@ def _completion_cells(rows, keys):
     return out
 
 
-def calibrate_grid(cal, seeds=tuple(range(7, 15)), iters=16, operators=None, wd_month=24):
+def calibrate_grid(cal, seeds=tuple(range(7, 15)), iters=14, passes=2, operators=None, wd_month=24):
     """Grid agents (Phase 2), current law, end-2025 queue seeded.
     (1) Grid operators fitted to LBNL request -> agreement times (grid.fit_operators).
-    (2) Withdrawal in three parts: (a) before the agreement, a regional hazard h_pre fitted so the share of requests
-    withdrawn within `wd_month` months matches LBNL's 2015-19 cohorts [D]; (b) at study results, when allocated cost
-    exceeds the developer's value (grid agents, LBNL cost and P(complete|cost) data); (c) after the agreement, a
-    hazard by technology and region fitted so completion of new requests matches calibrate_regions' targets [D].
-    Regions without a regional completion target share the technology's pooled target. Both hazards are bisected at
-    once, each on its own target.
+    (2) Withdrawal in two parts. (a) Background: a regional hazard from request to construction start, fitted so the
+    share of requests withdrawn within `wd_month` months matches LBNL's 2015-19 cohorts [D]. (b) At study results:
+    a developer leaves when the allocated cost exceeds its value. Value is LBNL's P(complete | cost) fit [D] scaled
+    by a factor per technology and region, fitted so completion of new requests matches calibrate_regions' targets
+    [D] (LBNL: over 90% of withdrawals come before an agreement). Regions without a regional completion target share
+    the technology's pooled target. The two are fitted in alternating passes (log value multiplier in [-5, 5]).
     (3) First-year timing of the seeded queue refitted (calibrate_overdue) with the agents on."""
     from .grid import fit_operators, withdrawal_curve_data, withdrawal_curve_model
     from .params import REGIONS
@@ -205,22 +205,14 @@ def calibrate_grid(cal, seeds=tuple(range(7, 15)), iters=16, operators=None, wd_
         if len(have) < len(REGIONS):                            # pooled cell only if some region has no target
             targets[f"{t}|*" + ",".join(have)] = TYPES[t]["completion_target"]
     wd_t = {r: v[wd_month] for r, v in withdrawal_curve_data().items()}
-    hz0 = dict(cal["hazard"])
     p = dict(BASE, **cal); p["grid"] = "agents"
-    lo = {k: 1e-4 for k in targets}; hi = {k: 0.6 for k in targets}
-    plo = {r: 1e-4 for r in wd_t}; phi = {r: 0.2 for r in wd_t}
 
-    def hazard(x):
-        h = dict(hz0)
-        for k, v in x.items():
+    def vmult(x):
+        v = {}
+        for k, val in x.items():
             t, reg = k.split("|")
-            if reg.startswith("*"):
-                h[t] = v
-                for m in ("ISO", "non-ISO"):
-                    h.pop(f"{t}|{m}", None)
-            else:
-                h[k] = v
-        return h
+            v[t if reg.startswith("*") else k] = float(np.exp(val))
+        return v
 
     def run(gc, ss):
         got, wd = [], []
@@ -228,24 +220,31 @@ def calibrate_grid(cal, seeds=tuple(range(7, 15)), iters=16, operators=None, wd_
             rows = simulate(dict(p, grid_cal=gc), s, POL)
             got.append(_completion_cells(rows, targets)); wd.append(withdrawal_curve_model(rows))
         return got, wd
-    for _ in range(iters):
-        x = {k: (lo[k] + hi[k]) / 2 for k in targets}
+    x = {k: 0.0 for k in targets}; y = {r: 0.01 for r in wd_t}
+    for rnd in range(passes):                      # alternate: background hazard, then values (each bisected afresh)
+        plo = {r: 1e-4 for r in wd_t}; phi = {r: 0.2 for r in wd_t}
+        for _ in range(iters):
+            y = {r: (plo[r] + phi[r]) / 2 for r in wd_t}
+            _, wd = run(dict(operators=ops, value_mult=vmult(x), h_pre=y), seeds)
+            for r in wd_t:
+                m = np.nanmean([w.get(r, {}).get(wd_month, np.nan) for w in wd])
+                if np.isnan(m) or m < wd_t[r]:
+                    plo[r] = y[r]
+                else:
+                    phi[r] = y[r]
         y = {r: (plo[r] + phi[r]) / 2 for r in wd_t}
-        got, wd = run(dict(operators=ops, hazard=hazard(x), h_pre=y), seeds)
-        for k in targets:
-            m = np.nanmean([g[k] for g in got])
-            if np.isnan(m) or m > targets[k]:
-                lo[k] = x[k]
-            else:
-                hi[k] = x[k]
-        for r in wd_t:
-            m = np.nanmean([w.get(r, {}).get(wd_month, np.nan) for w in wd])
-            if np.isnan(m) or m < wd_t[r]:
-                plo[r] = y[r]
-            else:
-                phi[r] = y[r]
-    gc = dict(operators=ops, hazard=hazard({k: (lo[k] + hi[k]) / 2 for k in targets}),
-              h_pre={r: (plo[r] + phi[r]) / 2 for r in wd_t})
+        lo = {k: -5.0 for k in targets}; hi = {k: 5.0 for k in targets}
+        for _ in range(iters):
+            x = {k: (lo[k] + hi[k]) / 2 for k in targets}
+            got, _ = run(dict(operators=ops, value_mult=vmult(x), h_pre=y), seeds)
+            for k in targets:
+                m = np.nanmean([g[k] for g in got])
+                if np.isnan(m) or m > targets[k]:
+                    hi[k] = x[k]
+                else:
+                    lo[k] = x[k]
+        x = {k: (lo[k] + hi[k]) / 2 for k in targets}
+    gc = dict(operators=ops, value_mult=vmult(x), h_pre=y)
     got, wd = run(gc, (20, 21, 22))
     fit = {k: (float(np.nanmean([g[k] for g in got])), targets[k]) for k in targets}
     wfit = {r: (float(np.nanmean([w.get(r, {}).get(wd_month, np.nan) for w in wd])), wd_t[r]) for r in wd_t}

@@ -1,4 +1,4 @@
-# Five simulations: BAAJA sections -> model -> data
+# Seven simulations: BAAJA sections -> model -> data
 
 **Bill version.** The model follows the **Senate-passed text**: the amendment in the nature of a substitute to H.R. 2347
 offered by Sens. Capito, Lee, Whitehouse and Heinrich (Senate file KAT26804 V62), which carries BAAJA as Divisions A and
@@ -15,8 +15,8 @@ electricity, renewables vs gas. Model code: `baaja/sims/simN_*.py`; results: `re
 | 2106 | applies to each **Transmission Organization** (RTO/ISO) instead of each transmission planning region; fee is "subregional" instead of "zonal"; adds storage and transmission-service locations, a co-optimization aim, and 2106(d): FERC may find existing processes compliant | Sec.2106 cut now applies to ISO-market projects only (`ix_cut_rto`); 2106(d) strengthens the 0% floor. ERCOT is still counted as ISO until Phase 1 regions separate it |
 | 1401 | permits in effect on/after **6 Nov 2026** (was 16 Sep); new exception (F): action "taken pursuant to any applicable law or regulation"; "materially" added to amend/alter | `halt_mult_1401` range 0.1 / 0.5 / 1.0 (was 0 / 0.1 / 0.3) |
 | 2213 | unchanged: 30-day completeness, 90-day NOI if an EIS is needed, decision or deferral within 30 days; still no enforcement | `comply_2213` 0.25 / 0.5 / 1.0 |
-| 2101 | offshore transmission removed from FERC backstop eligibility; "just and reasonable rates" added as a criterion | Phase 2 |
-| 2102 | adjacent area capped at a quarter mile; grid-enhancing technologies added | Phase 2 |
+| 2101 | offshore transmission removed from FERC backstop eligibility; "just and reasonable rates" added as a criterion | transmission permitting time; in Sim 7 finished lines add hosting room |
+| 2102 | adjacent area capped at a quarter mile; grid-enhancing technologies added | transmission timing (`recond_ce`); in Sim 7 finished lines add hosting room |
 | 1134 (new) | FAST-41 claims limited to 150 days (was 2 years) | with Sec.1110/2201 |
 | 1501-1504 (new) | NRC licensing without hearings unless requested; uranium enrichment licensing; deadlines; NRC pay | listed (no nuclear in the model; none reaches operation by 2041 through the queue data) |
 | 2115-2118 (new) | NGA civil-penalty review; RTO governance under FERC; Data Center Community Assistance Program | listed |
@@ -32,7 +32,7 @@ electricity, renewables vs gas. Model code: `baaja/sims/simN_*.py`; results: `re
 | 1202 | CWA s.401 certification timeline | modelled for hydro relicensing (48 -> 36 months, ranges) | |
 | 1204 | s.404: EPA veto window limited; nationwide permits 5 -> 10 years | listed: gas plants' Corps permits are in the federal nexus and EA durations (Corps 5.7-month median), but the veto-window change has no measurable delay effect | Corps individual permits x EIA-860 |
 | 1302 | ESA s.7 consultation 90 -> 60 days | modelled (statute) | |
-| 2102 | CE for reconductoring in existing rights-of-way | modelled (transmission EAs -> CE); transmission has no MW in the model, so no GW effect | |
+| 2102 | CE for reconductoring in existing rights-of-way | modelled (transmission EAs -> CE); in Sim 7 earlier transmission adds hosting room | |
 | 2213 | renewable rights-of-way: completeness 30 days, EIS NOI within 90 days | modelled: months to start of review 12 -> 4 (both ends are ranges) | |
 | 2229 | geothermal on leases not a major federal action | modelled (`geo_ce`) | NREL geothermal NEPA data |
 | 1107, 2231-2233, 2251-2252 | programmatic documents; hydro conditions and maintenance; offshore "unreasonable interference" | listed | |
@@ -52,7 +52,18 @@ electricity, renewables vs gas. Model code: `baaja/sims/simN_*.py`; results: `re
 |---|---|---|---|
 | 2106 | FERC rule within 18 months: each RTO/ISO files consolidated interconnection + regional planning within 2 years; published locations with an upfront, fixed, subregional per-MW fee | modelled as a sweep on ISO-market projects: study-time cut 0-42% from month 36 (rule timing 24-48); floor = no measured effect of past reforms, ceiling = ERCOT's pace | LBNL request -> agreement times by region (`data/interconnection_benchmark.json`) |
 | 2110 | FERC rulemaking on computing/AI queue practices; no target | central 0%, range 0-5% | |
-| 2101-2103 | transmission permitting, DOE congestion study, planning | listed | |
+| 2101-2103 | transmission permitting, DOE congestion study, planning | Sim 7: transmission projects that finish add hosting room to their region (lowering upgrade costs); 2103 listed | `tx_hosting_gw` (assumption 0.5-3 GW per line) |
+
+## Simulation 7: grid access as an agent-based system (`sim7_grid_agents.py`, Phase 2)
+
+| Section | What it does | Model (grid agents) | Data |
+|---|---|---|---|
+| 2106(a)(2) | published locations with an upfront, fixed per-MW fee | in RTOs that change their process (`adopt_2106`, drawn per RTO), a share of requests (`planned_share_2106`) use a published location: fixed fee, no cost shock, no re-study | LBNL network-upgrade cost by region |
+| 2106(a)(3) | single decision point, non-refundable security, withdrawal penalties | one decision at the first study result; requests below a minimum chance of success (`q_min_2106`) do not enter | LBNL P(complete given cost) |
+| 2106(d) | FERC may find existing processes compliant | `adopt_2106` 0-1 (central 0.5) | |
+| 2110 | FERC rulemaking on queue automation | study throughput x (1 + `g_2110`), central 0 (not sized), high 25%; not ERCOT | |
+| 2109 | advanced transmission technologies | extra hosting per line finished after the rule (`hosting_2109`, 0-30%) | |
+| 2101, 2102, 2214 | transmission permitting and CEs | transmission completion dates (permitting pipeline) -> hosting room | |
 
 ## Simulation 4: permit certainty across administrations (`sim4_certainty.py`)
 
@@ -82,8 +93,9 @@ margins follow NERC's 2025 LTRA. What reaches supply from the bill:
 | Section | Channel into supply | Regions reached |
 |---|---|---|
 | 1105-1110, 1302, 1401-1403, 2201, 2213, 2229 | more projects survive permitting, courts and halts | all nine |
-| 2106 | interconnection study time (dial) | FERC RTOs only: CAISO, ISO-NE, MISO, NYISO, PJM, SPP (not ERCOT, Southeast, West) |
-| 2110 | interconnection study time (dial) | all public-utility transmission providers |
+| 2106 | interconnection study time (dial, Sims 3 and 6); published locations, fixed fee, single decision point (Sim 7) | FERC RTOs only: CAISO, ISO-NE, MISO, NYISO, PJM, SPP (not ERCOT, Southeast, West) |
+| 2110 | interconnection study time (dial, Sims 3 and 6); study throughput (Sim 7) | all public-utility transmission providers (Sim 7: not ERCOT) |
+| 2101, 2102, 2109, 2214 | transmission finished sooner adds hosting room, lowering upgrade costs (Sim 7) | regions where transmission is built |
 | 1203 | NPDES permit term 5 -> 10 years for existing plants | listed: would act through retirements, which the model takes from announcements and age |
 | 2107, 2114, 2117 | data-center (computational load) costs, data, assistance | listed: demand side; demand is NERC's forecast with a range |
 
@@ -122,16 +134,16 @@ course-forward plan (Nov 2026) picks it up.
 | 1401 | Maintaining permits for non-Federal sponsors | M | Sim 4 |
 | 1402 | Fairness for specific project types | M | folded into 1401 residual |
 | 1403 | Avoiding unreasonable delays (1 year, applicant can sue) | M | `ce_cap` |
-| 2101 | Transmission permitting: FERC backstop siting, >= 230 kV | L -> Phase 2 | transmission gets MW and hosting room in Phase 2 |
-| 2102 | Reconductoring in existing rights-of-way | M (timing only) | `recond_ce`; MW effect in Phase 2 |
-| 2103 | DOE congestion study; regional/interregional planning | L -> Phase 2 | planning ahead of requests |
+| 2101 | Transmission permitting: FERC backstop siting, >= 230 kV | M (Sim 7) | finished lines add hosting room (`tx_hosting_gw`) |
+| 2102 | Reconductoring in existing rights-of-way | M | `recond_ce`; hosting room in Sim 7 |
+| 2103 | DOE congestion study; regional/interregional planning | L | no measured link from a study to MW built |
 | 2104 | Local transmission planning oversight | L | no measured link to generation |
 | 2105 | No federal ROFR | L | no measured link to generation |
-| 2106 | Consolidated interconnection + planning: rule in 18 months, filings in 2 years; fixed zonal per-MW cost; single decision point; non-refundable security; withdrawal penalties | M (dial) -> Phase 2 | Sim 3 sweep now; structural in Phase 2 |
+| 2106 | Consolidated interconnection + planning: rule in 18 months, filings in 2 years; fixed zonal per-MW cost; single decision point; non-refundable security; withdrawal penalties | M | dial in Sims 3 and 6; structural in Sim 7 (`grid_2106`, `adopt_2106`, `planned_share_2106`, `q_min_2106`, `fee_mult_2106`) |
 | 2107 | Ratepayer protection: computational loads pay transmission costs | L | demand side; Phase 1 demand scenarios |
 | 2108 | Behind-the-meter dispatchable resources: market access | L | outside the interconnection queue |
-| 2109 | Advanced transmission technologies (presumption of prudence) | L -> Phase 2 | hosting room per transmission project |
-| 2110 | AI/automation in queue processing: rulemaking within 1 year | M | `ix_2110`; Phase 2 throughput |
+| 2109 | Advanced transmission technologies (presumption of prudence) | M (Sim 7) | `hosting_2109`: extra hosting per line |
+| 2110 | AI/automation in queue processing: rulemaking within 1 year | M | `ix_2110` (dial); `g_2110` throughput in Sim 7 |
 | 2111 | Grid data access | L | |
 | 2112-2113, 2115 | PMAs, FERC fees, conforming | O | |
 | 2114 | Data on computational loads (EIA-861) | O | |
@@ -139,7 +151,7 @@ course-forward plan (Nov 2026) picks it up.
 | 2211 | Oil and gas drilling permits on non-Federal land | O | upstream gas supply, not power plants |
 | 2212 | Rights-of-way across Indian land | L | |
 | 2213 | Renewable rights-of-way: 30-day completeness, 90-day NOI if EIS, decision or deferral in 30 days; low-disturbance CEs | M | `intake_pub_baaja`, `comply_2213` (no enforcement mechanism in the section) |
-| 2214 | CEs for grid projects and storage on disturbed land | L -> Phase 2 | storage CE; transmission timing |
+| 2214 | CEs for grid projects and storage on disturbed land | M (Sim 7, transmission) | transmission timing -> hosting room; storage CE listed |
 | 2215 | Hardrock mill sites | O | |
 | 2221-2228 | Geothermal leasing, royalties, permits, pending suits | L | annual lease sales (2223) could raise geothermal requests; no data on elasticity |
 | 2229 | Geothermal NEPA review | M | `geo_ce` |

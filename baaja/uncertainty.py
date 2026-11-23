@@ -4,7 +4,9 @@ Each sample draws all [A] assumptions in params.ASSUMPTIONS and supply.SUPPLY_AS
 is drawn uniformly between low and central with probability 1/2 and between central and high otherwise, so the
 central value is the median. Current law and BAAJA are run with the same draws, seed and political path (paired);
 assumptions that describe current law move both runs. Sec.2106's study-time cut is reported two ways: held at its
-central value (0) and drawn across its range (0 to ERCOT's pace), together with Sec.2110's (0-5%).
+central value (0) and drawn across its range (0 to ERCOT's pace), together with Sec.2110's (0-5%). A third sample
+(grid="agents", Phase 2) replaces both dials with the grid agents and draws their assumptions: GRID_LAW (current law,
+both runs) and GRID_BILL (bill design, BAAJA only).
 
 Output: intervals that include parameter uncertainty, and each assumption's share of the variance of the result
 (squared standardized regression coefficients on the rank-transformed sample, normalised to sum to the R^2).
@@ -14,11 +16,12 @@ import numpy as np
 from . import supply as sp
 from .experiments import LAW_KEYS, _lever_key, params, politics_draw
 from .model import simulate, summarize
-from .params import ASSUMPTIONS, BAAJA, CF, GROUPS, TYPES
+from .params import ASSUMPTIONS, BAAJA, CF, GRID_BILL, GRID_LAW, GROUPS, LEVER_KEY, TYPES
 
 GRID_KEYS = ["ix_2110", "ix_2106"]                            # interconnection dials the bill does not size
 MODEL_KEYS = [k for k, v in ASSUMPTIONS.items() if v[0] is not None and k not in GRID_KEYS]
 SUPPLY_KEYS = list(sp.SUPPLY_ASSUMPTIONS)
+AGENT_KEYS = list(GRID_LAW) + list(GRID_BILL)
 
 
 def lhs(n, k, rng):
@@ -37,14 +40,22 @@ def _gw(run):
 
 def sample(n, cal, seed=2026, grid="central", supply_on=True):
     rng = np.random.default_rng(seed)
-    keys = MODEL_KEYS + (GRID_KEYS if grid == "range" else []) + (SUPPLY_KEYS if supply_on else [])
+    agents = grid == "agents"
+    keys = (MODEL_KEYS + (GRID_KEYS if grid == "range" else []) + (AGENT_KEYS if agents else [])
+            + (SUPPLY_KEYS if supply_on else []))
     U = lhs(n, len(keys), rng)
     X = np.zeros_like(U); rows = []
     for j in range(n):
         law, bill, sa = {}, dict(BAAJA), dict(sp.SA)
+        if agents:
+            law["grid"] = bill["grid"] = "agents"
         for i, k in enumerate(keys):
             if k in sp.SUPPLY_ASSUMPTIONS:
                 lo, c, hi, _ = sp.SUPPLY_ASSUMPTIONS[k]; v = value(lo, c, hi, U[j, i]); sa[k] = v
+            elif k in GRID_LAW:
+                lo, c, hi, _ = GRID_LAW[k]; v = value(lo, c, hi, U[j, i]); law[k] = v; bill[k] = v
+            elif k in GRID_BILL:
+                lo, c, hi, _ = GRID_BILL[k]; v = value(lo, c, hi, U[j, i]); bill[LEVER_KEY.get(k, k)] = v
             else:
                 lo, c, hi, _ = ASSUMPTIONS[k]; v = value(lo, c, hi, U[j, i])
                 if k in LAW_KEYS:
@@ -92,17 +103,25 @@ METRICS = ["GW total", "GW Renewable (new)", "GW Fossil (gas)", "GW Storage", "s
            "firm change GW 2035", "shortfall change GW 2035", "shortfall change GW 2041", "law shortfall GW 2035"]
 
 
-def report(n, cal, res_dir):
-    """Two joint samples (grid dials central / across their ranges) -> results/uncertainty.md|json."""
+def report(n, cal, res_dir, agents=None):
+    """Joint samples (grid dials central / across their ranges / grid agents) -> results/uncertainty.md|json."""
+    if agents is None:
+        agents = bool((cal.get("grid_cal") or {}).get("operators"))
     import json, os
     from .sims import table
     out, md = {}, ["# Joint uncertainty: all assumption ranges at once",
                    f"{n} Latin-hypercube samples per row, each paired current law vs BAAJA with its own seed and political "
                    "path. Every [A] assumption (permitting, courts, halts, supply) is drawn from its range; values are drawn "
                    "so the central value is the median. 'Grid dials' are the interconnection study-time cuts the bill does "
-                   "not size: Sec.2110 (0-5%) and Sec.2106 (0 to ERCOT's pace, RTO/ISO markets only)."]
+                   "not size: Sec.2110 (0-5%) and Sec.2106 (0 to ERCOT's pace, RTO/ISO markets only). The grid-agents row replaces "
+                   "the dials with Phase 2's queue model and also draws its assumptions (entry, scarcity response, cost growth, "
+                   "re-study, transmission hosting; Sec.2106 adoption, published-location share, fee, Sec.2110 throughput, "
+                   "Sec.2109 hosting)."]
     rows = []
-    for lab, grid in (("grid dials at 0 (data-sized provisions)", "central"), ("grid dials across their ranges", "range")):
+    labs = [("grid dials at 0 (data-sized provisions)", "central"), ("grid dials across their ranges", "range")]
+    if agents:
+        labs.append(("grid agents (Phase 2), their assumptions drawn", "agents"))
+    for lab, grid in labs:
         keys, X, res = sample(n, cal, grid=grid)
         o = {m: band([r[m] for r in res]) for m in METRICS}
         shares = {}

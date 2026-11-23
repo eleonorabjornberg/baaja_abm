@@ -282,9 +282,12 @@ def run_agents(states, p, seed, hostile_to):
     u_txreg = g.random(100000)
     # ---- flatten generation requests ----
     F = {k: np.concatenate([states[i][k] for i in gen_idx]) for k in
-         ("t0", "seeded", "ia_done", "W", "Ew", "hz", "age0", "region", "tDec", "build", "IX", "cand")}
+         ("t0", "seeded", "ia_done", "W", "Ew", "age0", "region", "tDec", "build", "IX", "cand")}
     F["typ"] = np.concatenate([np.full(states[i]["n"], i) for i in gen_idx])
     F["mw"] = np.concatenate([np.full(states[i]["n"], float(states[i]["ty"]["mw"])) for i in gen_idx])
+    vm = (p.get("grid_cal") or {}).get("value_mult") or {}
+    F["vmult"] = np.concatenate([np.array([vm.get(f"{states[i]['name']}|{rn}", vm.get(states[i]["name"], 1.0))
+                                           for rn in REGIONS])[np.maximum(states[i]["region"], 0)] for i in gen_idx])
     n = len(F["t0"])
     Zv, Zc, Uc0, Zs, Uloc, Uacc = (g.normal(0, 1, n), g.normal(0, 1, n), g.random(n), g.normal(0, 1, n),
                                    g.random(n), g.random(n))
@@ -313,11 +316,11 @@ def run_agents(states, p, seed, hostile_to):
 
 def _region(r, idx, F, out, p, op, U, onpk, ctx, tx, u_adopt, T, T_ext, backcast, h_pre=None):
     t0, seeded, ia_done = F["t0"][idx], F["seeded"][idx], F["ia_done"][idx]
-    # withdrawal for reasons other than study results: hazard h_pre until the agreement, the technology's post-agreement
-    # hazard after it (same unit draw Ew, so a project's clock continues across the agreement)
-    Ew, age0, Hpost = F["Ew"][idx], F["age0"][idx], -np.log1p(-F["hz"][idx])
-    Hpre = np.full(len(idx), -np.log1p(-h_pre)) if h_pre is not None else Hpost
-    W = np.where(ia_done, F["W"][idx], np.ceil(Ew / Hpre) + age0)  # months from request; seeded clocks start at month 0
+    # withdrawal for reasons other than study results: a regional hazard until construction starts (the same unit draw
+    # as the exogenous clock). Requests already holding an agreement at end-2025 keep the exogenous clock.
+    W = F["W"][idx]
+    if h_pre is not None:
+        W = np.where(ia_done, W, np.ceil(F["Ew"][idx] / -np.log1p(-h_pre)) + F["age0"][idx])   # months from request
     mw, cand, tDec, build = F["mw"][idx], F["cand"][idx], F["tDec"][idx], F["build"][idx]
     n = len(idx)
     entered = seeded.copy(); started = seeded & ia_done
@@ -327,7 +330,7 @@ def _region(r, idx, F, out, p, op, U, onpk, ctx, tx, u_adopt, T, T_ext, backcast
     cst, val = COST[r], VALUE[r]
     cmed = np.exp(cst["mu"])
     zv, zc, uc0, zs, uloc, uacc = (U[k][idx] for k in ("Zv", "Zc", "Uc0", "Zs", "Uloc", "Uacc"))
-    v0 = np.exp(val["mu"] + val["sigma"] * zv)                     # private value, $/kW
+    v0 = np.exp(val["mu"] + val["sigma"] * zv) * F["vmult"][idx]   # private value, $/kW (technology x region scale)
     craw = np.where(uc0 < cst["zero_share"], 1.0, np.exp(cst["sigma"] * zc))   # cost relative to the regional median
     rule = p["ix_rule_month"]
     in_rto = r in RTO_IDX
@@ -494,10 +497,6 @@ def _region(r, idx, F, out, p, op, U, onpk, ctx, tx, u_adopt, T, T_ext, backcast
                 decide(mem, tres, tsig, c, not serial, t)
             if serial:
                 break
-    # final withdrawal clock: signers continue on the post-agreement hazard from their agreement month
-    s = np.isfinite(tIA) & ~ia_done
-    rem = np.maximum(Ew[s] - Hpre[s] * np.maximum(tIA[s] - (t0[s] + age0[s]), 0), 0.0)
-    W[s] = np.ceil(tIA[s] - t0[s] + rem / Hpost[s])
     out["W"][idx] = W
     out["entered"][idx] = entered; out["tIA"][idx] = tIA; out["gwd"][idx] = gwd
     out["cost"][idx] = cost; out["planned"][idx] = planned

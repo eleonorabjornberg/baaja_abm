@@ -4,7 +4,7 @@ Personal research project (not thesis work), aimed at a policy brief or paper: h
 Affordability and Jobs Act of 2026 (BAAJA, introduced 30 Sep 2026, passed by the Senate 19 Nov 2026), would change US electricity supply.
 
 ## State (23 Nov 2026)
-- Branch `claude/vibrant-carson-9aw3xo` carries all work (v5 from `claude/epic-carson-9rxakw`, plus Phases 0-1 below).
+- Branch `claude/vibrant-carson-9aw3xo` carries all work (v5 from `claude/epic-carson-9rxakw`, plus Phases 0-2 below).
 - `README.md` has the current results, data register and assumption register. `docs/bill_question_map.md` maps every
   bill section to the model (modelled / listed / out of scope). `data/SOURCES.md` lists every raw source.
 - Run: `pip install -r requirements.txt`, `python -m pytest -q`, `python run.py --all --runs 100`, `python run.py --uncertainty 400`.
@@ -17,7 +17,7 @@ the calibrated permitting and court pipeline; rebuild grid access as interacting
 |---|---|---|
 | 0 | Re-verify; Sec.2213 compliance range; Sim 5 common baseline; CI; sources register; full bill map | done (see below) |
 | 1 | Supply accounting: 9 LBNL regions, EIA-860 fleet and retirements, NERC demand, firm capacity, reserve margins | done (see below) |
-| 2 | Grid access as agents: regional grid operators with study throughput and hosting room; developers who enter, stay or withdraw; transmission adds MW; Sec.2106/2103/2110/2101/2102/2109/2214 as mechanisms | in progress |
+| 2 | Grid access as agents: regional grid operators with study throughput and hosting room; developers who enter, stay or withdraw; transmission adds MW; Sec.2106/2103/2110/2101/2102/2109/2214 as mechanisms | done (see below) |
 | 3 | Joint uncertainty (Latin hypercube over all ranges), variance decomposition, regional backcast, post-2025 court scenario | harness done (`baaja/uncertainty.py`) |
 | 4 | ODD model description, brief, figures | |
 
@@ -54,12 +54,47 @@ the calibrated permitting and court pipeline; rebuild grid access as interacting
   excluded); current-law shortfall vs reference margins 68 GW in 2035, mostly PJM; BAAJA's data-sized provisions cut
   it by 0.3 GW.
 
+## Phase 2 changes
+- **Grid agents** (`baaja/grid.py`; `simulate(..., grid="agents")`; `grid="exogenous"` is unchanged and still drives
+  Sims 1-6, so earlier results reproduce exactly). The permitting, court and halt blocks stay vectorised; the grid
+  layer is a monthly loop per region over pre-drawn per-project random numbers, so paired runs still share draws.
+  - **Operators** (one per region): cluster studies (serial in MISO, CAISO and the other cluster regions; ERCOT
+    studies each request on its own) with study throughput that adapts to arrivals. Cluster size, mode, minimum study
+    time and throughput settings fitted per region to LBNL request -> agreement times, 2010-19 cohorts; 2020-24 held
+    out. Regions without enough data (SPP, West, ...) use a pooled fit.
+  - **Developers**: each request has a value (LBNL's P(complete | cost) relation, scaled per technology and region so
+    completion matches LBNL) and an allocated network-upgrade cost that rises with capacity already signed (`kappa`,
+    from LBNL cost data) and with re-study after withdrawals. At study results a developer withdraws if cost exceeds
+    value; before that a background regional hazard (fitted to the share of 2015-19 requests withdrawn by month 24)
+    applies. New requests respond to the published wait and to the region's projected shortfall 4 years ahead.
+  - **Transmission**: finished transmission projects add hosting room in their region, so Sec.2101/2102/2214 (via
+    transmission timing) and Sec.2109 (extra room per project) reach generator MW.
+  - **Bill**: Sec.2106 as structure in RTO/ISO regions only, adopted per RTO with probability `adopt_2106` (2106(d)):
+    published locations with a fixed per-MW fee (no cost-allocation shock or re-study for those requests), a single
+    decision point with non-refundable security (requests below `q_min_2106` chance of completing do not enter).
+    Sec.2110 as a throughput gain (central 0, the bill sets no target). Sec.2109 as hosting room.
+- **Calibration** (`calibrate.calibrate_grid`, `run.py --recalibrate-grid`): operators, then alternating passes over
+  the regional background hazard and the value scales; writes `grid_cal` and `grid_fit` to `results/calibration.json`.
+- **Sim 7** (`baaja/sims/sim7_grid_agents.py`, `results/sim7_grid_agents.md`): current law, BAAJA, BAAJA without
+  2106, without 2109, 2106 alone, 2106 adopted by every RTO, BAAJA + 2110 at +25%; exogenous runs alongside; regional
+  tables; validation (operator fit and holdout, withdrawal curve, value scales, months to operation, completion by
+  cost); one-at-a-time sensitivity over every grid assumption.
+- `baaja/uncertainty.py` adds a third joint sample with the grid agents and their assumptions drawn.
+- Tests: `tests/test_grid.py` (exogenous mode unchanged, determinism, current law has no bill effect, Sec.2106 leaves
+  ERCOT/Southeast/West alone, throughput shortens waits, congestion raises withdrawal, operator fit and holdout,
+  calibration tolerances).
+
+PHASE2_RESULTS
+
 ## Known issues carried forward
-- Not yet agent-based: projects are independent draws; interconnection is an exogenous time draw and Sec.2106 a dial.
+- Grid agents: completed projects take 14-21 months longer from request to operation than LBNL's medians (a longer
+  wait does not raise withdrawal, so no selection for short waits); MISO waits (27-35 months) shorter than recent
+  cohorts (45-50); ERCOT's early withdrawal twice the data's; SPP and West use pooled operator settings that fit
+  poorly. Current-law GW by 2041 is lower with agents than with the exogenous grid.
 - Simulation intervals are seed noise at central values; `results/uncertainty.md` has the joint ranges.
 - Completion targets treat still-active 2000-20 requests as failures; interconnection times come only from projects
   that signed agreements (Phase 2 calibration with survival methods).
-- No feedback from scarcity to entry: regional surpluses (ERCOT, West) and shortfalls (PJM) are not self-correcting (Phase 2).
+- Sims 1-6 have no feedback from scarcity to entry; only Sim 7's agents do.
 - Court parameters from 2001-22 cases, before *Seven County Infrastructure Coalition v. Eagle County* (2025).
 - Bill version: Senate-passed text, read from the Senate PDF; congress.gov status not yet confirmed (site refuses automated requests). The House may change it.
 
@@ -75,4 +110,4 @@ requests; LBNL files need an upload. api.eia.gov needs a free key.
 ## History
 v1: generic projects with an agency queue (`legacy/`). v3: technologies, two gates, assumed parameters. v4: LBNL
 calibration, challenger agents. v5 (18-20 Nov): federal nexus, EIS counts, court parameters, seeded queue, backcast,
-five simulations, measured federal-land intake. Phase 0 (23 Nov): as above.
+five simulations, measured federal-land intake. Phases 0-2 (23 Nov): as above.

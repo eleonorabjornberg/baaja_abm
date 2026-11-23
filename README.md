@@ -7,7 +7,7 @@ firm capacity to meet peak demand. Personal experiment, not peer reviewed.
 Parameters come from data wherever data exist; the rest are listed below as assumptions with ranges, and each
 simulation shows how its result moves across those ranges.
 
-## The six simulations
+## The seven simulations
 Each one maps a research question to bill sections (`docs/bill_question_map.md`), runs paired against current law
 (same seeds and political draws), and reports renewable vs gas. Numbers: mean [5th, 95th percentile] over 100 runs.
 
@@ -19,6 +19,7 @@ Each one maps a research question to bill sections (`docs/bill_question_map.md`)
 | 4 | Permit certainty across administrations | 1401, 1402, (1203, 1204 permit terms) | `results/sim4_certainty.md` |
 | 5 | Utility vs merchant decision control | 2104-2108 | `results/sim5_decision_control.md` |
 | 6 | Supply and resource adequacy by region and year | all of the above | `results/sim6_supply.md` |
+| 7 | Grid access as interacting agents (Phase 2) | 2106, 2109, 2110 (+ 2101, 2102, 2214 through transmission) | `results/sim7_grid_agents.md` |
 
 ## Results
 
@@ -143,6 +144,7 @@ seeded projects already overdue). Regional withdrawal hazards fit LBNL completio
 | capacity factors | EIA Electric Power Monthly; NREL ATB (offshore wind) | `params.CF` |
 | bill text | GovInfo BILLS-119s5653is; Senate-passed substitute KAT26804 V62 | `docs/bill_question_map.md` |
 | regions: request shares, completion by region, time since signed IA, IA -> operation | LBNL Queued Up through 2025 | `extract_regions.py` -> `region_targets.json` |
+| grid agents: request -> agreement time by region and cohort (2010-24), withdrawal timing (2015-19 cohorts), completion by type and region, network-upgrade cost and completion by cost (MISO, PJM, SPP, NYISO, ISO-NE, CAISO) | LBNL Queued Up through 2025; LBNL interconnection cost studies | `extract_grid.py` -> `grid_targets.json`; fitted in `calibrate.calibrate_grid` |
 | existing fleet, announced retirements, vintages, capacity factors | EIA-860 2025, EIA-860M Sep 2026, EIA-923 2025 | `extract_fleet.py` -> `fleet_targets.json` |
 | peak demand, firm transfers, existing-certain capacity, reference margins | NERC 2025 Long-Term Reliability Assessment | `extract_demand.py` -> `demand_targets.json` |
 | capacity credit of wind, solar, storage | NERC 2025 LTRA (2026); PJM preliminary ELCC class ratings DY2028-42 (2041) | `supply.ONPEAK_2026`, `ONPEAK_2041_PJM` |
@@ -184,6 +186,17 @@ the JSON summaries in `data/` from them.
 | `ret_announced` | 0.6 | 1.0 | 1.0 | Supply: share of announced retirements that happen on schedule (low = delays like the 2025 DOE 202(c) orders) |
 | `elcc_decline` | 0 | 0.5 | 1 | Supply: how far wind, solar, storage capacity credit falls by 2041, from NERC 2025 national values (0) to PJM's 2041/42 ratings (1) |
 | `demand_growth_mult` | 0.5 | 1.0 | 1.5 | Supply: multiplier on NERC's forecast demand growth |
+| `entry_wait_elast` | 0 | 0.3 | 1.0 | Grid agents: elasticity of new requests to the published wait |
+| `scarcity_beta` | 0 | 1 | 3 | Grid agents: developer value and entry rise with the region's projected shortfall (4 years ahead) |
+| `kappa` | 1.56 | 2.17 | 5.14 | Grid agents: growth of upgrade cost with capacity signed. **From data**: LBNL cost studies, 2018+ vs 2010-17 requests |
+| `restudy_rho`, `restudy_months` | 0.1, 3 | 0.3, 6 | 0.6, 12 | Grid agents: re-study cost rise after withdrawals; months from first result to agreement in cluster regions |
+| `tx_hosting_gw` | 0.5 | 1.5 | 3.0 | Grid agents: GW of interconnection room added by one transmission project |
+| `adopt_2106` | 0 | 0.5 | 1.0 | Sec.2106(d): chance that an RTO's process changes rather than being found compliant, drawn per RTO |
+| `planned_share_2106` | 0.25 | 0.5 | 0.9 | Sec.2106(a)(2): share of requests able to use a published location |
+| `q_min_2106` | 0.1 | 0.25 | 0.5 | Sec.2106(a)(3): lowest chance of completing at which a request still enters, given non-refundable security |
+| `fee_mult_2106` | 0.8 | 1.0 | 1.5 | Sec.2106(a)(2): fixed fee as a multiple of the region's median upgrade cost |
+| `g_2110` | 0 | 0 | 0.25 | Sec.2110: study throughput gain (the bill sets no target) |
+| `hosting_2109` | 0 | 0.1 | 0.3 | Sec.2109: extra hosting room per transmission project |
 
 Other assumptions without a range: transmission and hydro-relicensing arrival rates; offshore wind (800 MW) and
 geothermal (40 MW) project sizes; EIS litigation rates for offshore wind, hydro and storage; relative court-loss odds
@@ -193,19 +206,28 @@ of a truncated review (1.6); halt probabilities other than offshore wind.
 - **Onshore wind's federal nexus is a lower bound.** With wind habitat conservation plans added (+2.7 points), it is
   7-9%; FWS publishes no list of specific eagle permits, so the true share is somewhat higher.
 - **EA/CE data are BLM and DOE only.** Corps, USFS and FWS reviews are missing, so EA/CE suit rates are scaled down by a range.
-- **Storage is underestimated** (backcast ratio 0.54; storage completion is now set from EIA-860M late-stage data).
+- **Storage backcast runs high** (1.14 of EIA-860 2018-25 additions, after Phase 1 fixed the earlier 0.54).
 - **Gas pipelines and LNG are not simulated**; Sim 2 compares their litigation (10 NEPA cases a year vs 4 for renewables) from data.
-- **No prices or emissions; no feedback from scarcity to new requests** (Phase 2); arrivals stay at the 2021-25 average
-  (or 2025's mix). Demand is NERC's forecast, not modelled.
+- **No prices or emissions.** In Sims 1-6 arrivals stay at the 2021-25 average (or 2025's mix); only Sim 7's grid
+  agents let new requests respond to waits and regional scarcity. Demand is NERC's forecast, not modelled.
 - **Supply is capacity accounting, not dispatch**: firm capacity at on-peak shares against NERC's reference margins; no
   hourly reliability model, no imports beyond NERC's firm transfers.
 - **Regions are LBNL's nine**, matched to NERC assessment areas; CAISO and the West differ most from NERC's areas.
-- **Transmission has no MW in the model**, so transmission provisions affect only transmission projects' own timing.
+- **Transmission MW enter only through Sim 7's grid agents** (hosting room per finished project, an assumption range);
+  Sims 1-6 keep the earlier treatment, where transmission provisions change only transmission projects' own timing.
+- **Grid agents, fit gaps** (`results/sim7_grid_agents.md`, validation section):
+  - completed projects take longer from request to operation than LBNL's medians (about 14-21 months), because a
+    longer wait does not raise withdrawal in the model, so completed projects are not selected for short waits;
+  - MISO's modelled wait to agreement (about 27-35 months) is shorter than recent cohorts (45-50);
+  - ERCOT withdraws twice as fast in the first two years as the data (0.34 vs 0.17 by month 24), from study results
+    rather than the background hazard, which sits at its floor;
+  - SPP and the West have no queue data of their own and use pooled operator settings that fit poorly.
 
 ## Run
 ```bash
 pip install -r requirements.txt
-python run.py --all --runs 100    # calibrate, backcast, six simulations -> results/, figures/
+python run.py --all --runs 100    # calibrate, backcast, seven simulations -> results/, figures/
+python run.py --recalibrate-grid --sim 7 --runs 100   # refit the grid agents only, then Sim 7
 python run.py --uncertainty 400   # all assumption ranges at once -> results/uncertainty.md
 python run.py --sim 3 --runs 50   # one simulation, reusing results/calibration.json
 python -m pytest -q
@@ -214,5 +236,5 @@ python -m pytest -q
 ## Layout
 `baaja/params.py` parameters, data hooks, assumption register · `baaja/model.py` engine · `baaja/calibrate.py` ·
 `baaja/experiments.py` paired runs, sweeps, backcast · `baaja/supply.py` fleet, demand, adequacy · `baaja/uncertainty.py`
-joint sampling · `baaja/sims/` the six simulations · `baaja/plots.py` ·
+joint sampling · `baaja/grid.py` grid operators and developers (Phase 2) · `baaja/sims/` the seven simulations · `baaja/plots.py` ·
 `data/` extractors and JSON targets · `docs/bill_question_map.md` · `legacy/` v1 and the original v3.

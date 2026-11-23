@@ -1,0 +1,108 @@
+"""Grid agents (Phase 2): exogenous mode untouched, pairing, bill mechanics, and fit to the LBNL data."""
+import json
+import os
+
+import numpy as np
+import pytest
+
+from baaja import experiments as ex
+from baaja import grid as gr
+from baaja.model import simulate, summarize
+from baaja.params import BAAJA, REGIONS, TYPES
+
+POL = ["renew", "fossil", "renew", "fossil"]
+CAL = os.path.join(os.path.dirname(__file__), "..", "results", "calibration.json")
+
+
+@pytest.fixture(scope="module")
+def cal():
+    if not os.path.exists(CAL):
+        pytest.skip("no results/calibration.json (run.py --all)")
+    c = json.load(open(CAL))
+    if not (c["calibration"].get("grid_cal") or {}).get("operators"):
+        pytest.skip("calibration has no grid agents (run.py --all)")
+    return c
+
+
+def _gen(rows):
+    return {r["type"]: r for r in rows if TYPES[r["type"]]["ix"]}
+
+
+def _gw(rows, p):
+    s = summarize(rows, p)
+    return sum(s[t]["GW_online"] for t in TYPES)
+
+
+def test_exogenous_mode_ignores_grid_settings(cal):
+    c = cal["calibration"]
+    a = simulate(ex.params(dict(BAAJA, grid="exogenous"), c), 3, POL)
+    b = simulate(ex.params(dict(BAAJA, grid="exogenous", grid_2106=False, grid_2109=0.0, grid_2110=0.5, kappa=9.0), c), 3, POL)
+    for x, y in zip(a, b):
+        assert np.array_equal(x["done"], y["done"]) and np.allclose(x["tCOD"], y["tCOD"], equal_nan=True)
+
+
+def test_agents_deterministic_and_law_has_no_bill_effect(cal):
+    c = cal["calibration"]
+    pl = ex.params(dict(grid="agents"), c)
+    pz = gr._law(ex.params(dict(BAAJA, grid="agents"), c))      # every lever back at current law
+    a, b, z = simulate(pl, 5, POL), simulate(pl, 5, POL), simulate(pz, 5, POL)
+    assert _gw(a, pl) == _gw(b, pl) == _gw(z, pz)
+
+
+def test_sec2106_leaves_ercot_and_non_rto_regions_alone(cal):
+    c = cal["calibration"]
+    pl, p6 = ex.params(dict(grid="agents"), c), ex.params(dict(grid="agents", grid_2106=True, adopt_2106=1.0), c)
+    L, S = _gen(simulate(pl, 2, POL)), _gen(simulate(p6, 2, POL))
+    keep = [REGIONS.index(r) for r in ("ERCOT", "Southeast", "West")]
+    changed_rto = False
+    for t in L:
+        ml, ms = np.isin(L[t]["region"], keep), np.isin(S[t]["region"], keep)
+        assert np.array_equal(L[t]["tIA"][ml], S[t]["tIA"][ms]), t
+        rl, rs = L[t]["region"] == REGIONS.index("MISO"), S[t]["region"] == REGIONS.index("MISO")
+        changed_rto |= (rl.sum() != rs.sum()) or not np.array_equal(L[t]["tIA"][rl], S[t]["tIA"][rs])
+    assert changed_rto
+
+
+def test_more_study_throughput_shortens_waits(cal):
+    c = cal["calibration"]
+    late = lambda rows: np.concatenate([(r["tIA"] - r["t0"])[~r["seeded"] & (r["t0"] > 36) & (r["t0"] < 96) & np.isfinite(r["tIA"])
+                                        & (r["region"] == REGIONS.index("MISO"))] for r in _gen(rows).values()])
+    a = late(simulate(ex.params(dict(grid="agents"), c), 1, POL))
+    b = late(simulate(ex.params(dict(grid="agents", grid_2110=1.0), c), 1, POL))
+    assert np.median(b) < np.median(a)
+
+
+def test_congestion_raises_withdrawal_at_study_results(cal):
+    c = cal["calibration"]
+    share = lambda rows: np.mean(np.concatenate([np.isfinite(r["gwd"][~r["seeded"]]) for r in _gen(rows).values()]))
+    a = share(simulate(ex.params(dict(grid="agents", kappa=0.0), c), 1, POL))
+    b = share(simulate(ex.params(dict(grid="agents", kappa=10.0), c), 1, POL))
+    assert b > a
+
+
+def test_operators_fit_and_holdout(cal):
+    ops = cal["calibration"]["grid_cal"]["operators"]
+    for r in ("MISO", "CAISO", "ERCOT"):
+        assert ops[r]["fitted"] and ops[r]["fit_error"] < 0.15 and ops[r]["holdout_error"] < 0.15, r
+    h = ops["MISO"]["holdout"]["2020"]
+    assert abs(np.log(h["model_median"] / h["data_median"])) < 0.25       # MISO's lengthening, out of sample
+
+
+def test_grid_calibration_matches_targets(cal):
+    f = cal.get("grid_fit")
+    if not f:
+        pytest.skip("no grid_fit in calibration.json")
+    for r, (got, want) in f["withdrawn_by_month"].items():
+        if r != "ERCOT":
+            assert abs(got - want) < 0.06, r
+    for k, (got, want) in f["completion"].items():
+        if want >= 0.05:
+            assert abs(got - want) / want < 0.35, k
+
+
+def test_withdrawal_curve_data_shape():
+    d = gr.withdrawal_curve_data()
+    assert set(d) <= set(REGIONS) and len(d) >= 7
+    for v in d.values():
+        x = [v[m] for m in gr.WD_MONTHS]
+        assert all(0 <= a <= b <= 1 for a, b in zip(x, x[1:]))
