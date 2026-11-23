@@ -8,7 +8,7 @@ technologies are fitted at once: each uses its own uniforms, so they do not inte
 import numpy as np
 
 from .model import simulate, summarize
-from .params import BASE, GEN, TYPES
+from .params import BASE, ENGINE, GEN, TYPES
 
 POL = ["renew", "fossil", "renew", "fossil"]
 
@@ -77,6 +77,81 @@ def calibrate_markets(cal, seeds=(7, 8, 9), n_scale=0.5):
             else:
                 hi[k] = x[k]
     return dict(cal, hazard={**cal["hazard"], **{k: (lo[k] + hi[k]) / 2 for k in targets}}), targets
+
+
+MIN_CELL = 50   # expected requests in a 5-year cohort below which a region keeps the pooled hazard
+
+
+def regional_targets():
+    """Completion targets by region [D: LBNL 2000-20 cohort, cells with >= 30 requests], scaled so that, weighted by
+    each region's share of 2021-25 requests, they average to the pooled target used for the technology. Regions
+    without a target keep the pooled hazard."""
+    from .params import RGN
+    targets = {}
+    for t in GEN:
+        rt = RGN["types"][t]; pooled = TYPES[t]["completion_target"]
+        mk = ENGINE["lbnl"]["by_market"][t]
+        w = {}
+        for m, mname in ((0, "ISO"), (1, "non-ISO")):
+            ms = mk[mname]["arrivals_share_2021_25"]
+            for r, s in rt["new_share"][str(m)].items():
+                w[r] = w.get(r, 0.0) + ms * s
+        ok = {r: c for r, c in rt["completion"].items()
+              if c is not None and c > 0 and w.get(r, 0.0) * TYPES[t]["arr"] * 60 >= MIN_CELL}
+        miss = sum(v for r, v in w.items() if r not in ok)
+        den = sum(w.get(r, 0.0) * c for r, c in ok.items())
+        if den <= 0:
+            continue
+        k = pooled * (1 - miss) / den
+        for r, c in ok.items():
+            if w.get(r, 0.0) * TYPES[t]["arr"] * 60 >= MIN_CELL:   # enough projects in a 5-year cohort to fit
+                targets[f"{t}|{r}"] = min(c * k, 0.95)
+    return targets
+
+
+def calibrate_regions(cal, seeds=tuple(range(7, 19)), n_scale=1.0, iters=18):
+    """Withdrawal hazard per technology and region, fitted to regional_targets(); build and p_eis kept."""
+    targets = regional_targets()
+    p = dict(BASE, n_scale=n_scale, seed_queue=False, **cal)
+    lo = {k: 1e-4 for k in targets}; hi = {k: 0.6 for k in targets}
+    for _ in range(iters):
+        x = {k: (lo[k] + hi[k]) / 2 for k in targets}
+        p["hazard"] = {**cal["hazard"], **x}
+        r = _runs(p, seeds)
+        for k in targets:
+            t, reg = k.split("|")
+            got = np.nanmean([s[t][f"completion_rate|{reg}"] for s in r])
+            if np.isnan(got) or got > targets[k]:
+                lo[k] = x[k]
+            else:
+                hi[k] = x[k]
+    return dict(cal, hazard={**cal["hazard"], **{k: (lo[k] + hi[k]) / 2 for k in targets}}), targets
+
+
+def overdue_targets():
+    """First-year additions (GW) the seeded queue should deliver: mean of EIA-860 2024 and 2025 additions [D]."""
+    import json, os
+    e = json.load(open(os.path.join(os.path.dirname(__file__), "..", "data", "eia860_additions.json")))
+    return {t: (e[t]["2024"] + e[t]["2025"]) / 2 / 1000 for t in ("Solar", "Storage", "Onshore wind", "Gas")}
+
+
+def calibrate_overdue(cal, seeds=tuple(range(7, 15)), iters=14):
+    """Window W (months) over which seeded projects already past the usual post-IA construction time reach operation,
+    per technology, so that model year 1 (Nov 2026 - Oct 2027) matches overdue_targets(). Wider W -> fewer in year 1."""
+    targets = overdue_targets()
+    p = dict(BASE, **cal)
+    lo = {t: 1.0 for t in targets}; hi = {t: 480.0 for t in targets}
+    for _ in range(iters):
+        x = {t: (lo[t] * hi[t]) ** 0.5 for t in targets}      # geometric bisection
+        p["overdue"] = x
+        r = [summarize(simulate(p, s, POL), p)["_online_by_year"] for s in seeds]
+        for t in targets:
+            got = np.mean([rr[t][0] for rr in r])
+            if got > targets[t]:
+                lo[t] = x[t]
+            else:
+                hi[t] = x[t]
+    return dict(cal, overdue={t: (lo[t] * hi[t]) ** 0.5 for t in targets}), targets
 
 
 def check(cal, seeds=(20, 21, 22), n_scale=1.0):

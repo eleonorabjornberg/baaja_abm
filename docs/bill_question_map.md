@@ -73,6 +73,20 @@ electricity, renewables vs gas. Model code: `baaja/sims/simN_*.py`; results: `re
 | 2107, 2108 | transmission costs for computational loads; behind-the-meter dispatchable access | listed (outside the interconnection queue) | |
 | (ownership) | | gain split utility-owned vs merchant by EIA-860 ownership shares | EIA-860: 51% of new gas MW utility-owned vs 16-21% solar/wind |
 
+## Simulation 6: supply and resource adequacy (`sim6_supply.py`, Phase 1)
+
+No new bill sections: Sim 6 turns the queue additions that Sims 1-5 change into supply. Each project has an LBNL
+region; the existing fleet (EIA-860) retires on announced dates plus an age-based rate; firm capacity and reserve
+margins follow NERC's 2025 LTRA. What reaches supply from the bill:
+
+| Section | Channel into supply | Regions reached |
+|---|---|---|
+| 1105-1110, 1302, 1401-1403, 2201, 2213, 2229 | more projects survive permitting, courts and halts | all nine |
+| 2106 | interconnection study time (dial) | FERC RTOs only: CAISO, ISO-NE, MISO, NYISO, PJM, SPP (not ERCOT, Southeast, West) |
+| 2110 | interconnection study time (dial) | all public-utility transmission providers |
+| 1203 | NPDES permit term 5 -> 10 years for existing plants | listed: would act through retirements, which the model takes from announcements and age |
+| 2107, 2114, 2117 | data-center (computational load) costs, data, assistance | listed: demand side; demand is NERC's forecast with a range |
+
 ## Renewable vs gas asymmetries in the text
 - Renewable-only: 2213 (rights-of-way), 2102 (reconductoring, mostly serves renewables), 2251-2252 (offshore wind).
 - Gas-relevant: 1203 (NPDES term), 1204 (s.404), 2108 (dispatchable access).

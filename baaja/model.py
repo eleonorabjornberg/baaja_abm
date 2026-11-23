@@ -8,7 +8,7 @@ from statistics import NormalDist
 
 import numpy as np
 
-from .params import (REGIMES, CHALLENGER_MIX, CHALLENGERS, COURT_GROUP, ENGINE, GROUPS, HALT, INJ, LATE_SHARE,
+from .params import (REGIMES, REGIONS, REGION_SHARE, RTO_IDX, SINCE_IA, IA_TO_COD, CHALLENGER_MIX, CHALLENGERS, COURT_GROUP, ENGINE, GROUPS, HALT, INJ, LATE_SHARE,
                      RENEWABLE_SIDE, TRUNC_LOSS, TYPES, VAC, WIN, WIN_REL)
 
 KIND = np.array(["CE", "EA", "EIS"])
@@ -56,6 +56,7 @@ def simulate(p, seed, hostile_to):
     rng = np.random.default_rng(seed)
     # side stream for draws added after v5: keeps the main stream (and so every earlier draw) unchanged
     side = np.random.default_rng([seed, 7919])
+    side_reg = np.random.default_rng([seed, 104729])        # region draws (Phase 1), own stream
     T = p["T"]
     rows = []
     for name, ty in TYPES.items():
@@ -76,6 +77,7 @@ def simulate(p, seed, hostile_to):
         u_ix, u_w, u_mkt = rng.random(n), rng.random(n), rng.random(n)
         mk = ENGINE["lbnl"]["by_market"].get(name)
         mkt = (u_mkt < mk["non-ISO"]["arrivals_share_2021_25"]).astype(int) if mk else np.zeros(n, int)   # 1 = non-ISO
+        reg = draw_region(name, mkt, seeded, side_reg.random(n))  # index into REGIONS, within the drawn market
         # ---- federal review ----
         nexus = u_nex < min(1.0, ty["nex"] * p["nex_mult"])
         p_eis = (p["p_eis"] or {}).get(name, 0.0)
@@ -108,6 +110,9 @@ def simulate(p, seed, hostile_to):
         # ---- sponsor withdrawal clock (drawn now; seeded projects are alive at month 0, memoryless) ----
         hz = p["hazard"] or {}
         h = np.where(mkt == 1, hz.get(f"{name}|non-ISO", hz.get(name, 0.02)), hz.get(f"{name}|ISO", hz.get(name, 0.02)))
+        for k, rn in enumerate(REGIONS):                        # regional hazards, where calibrated, take precedence
+            if f"{name}|{rn}" in hz:
+                h = np.where(reg == k, hz[f"{name}|{rn}"], h)
         W = (np.ceil(np.log1p(-u_w) / np.log1p(-h)) + age0) if ty["ix"] else np.full(n, 1e9)
         decided = nexus & (W >= tDec - t0) & (tDec >= 0) & (tDec <= T)
         # ---- litigation on decided projects ----
@@ -139,12 +144,23 @@ def simulate(p, seed, hostile_to):
             IX = np.where(ia_done, age0, IX)
             # Sec.2110 (all public-utility transmission providers) + Sec.2106 (Transmission Organizations only:
             # RTO/ISO markets, mkt == 0, in the Senate-passed text)
-            cut = p["ix_cut"] + np.where(mkt == 0, p["ix_cut_rto"], 0.0)
+            cut = p["ix_cut"] + np.where(np.isin(reg, RTO_IDX), p["ix_cut_rto"], 0.0)   # FERC RTOs: not ERCOT
             IX = ix_cut(IX, t0, cut, p["ix_rule_month"])
         else:
             IX = np.zeros(n)
         tStart = np.maximum(tPermit, t0 + IX)
-        build = (p["build"] or {}).get(name, 24.0 if ty["ix"] else (36.0 if name == "Transmission" else 0.0))
+        build = (p["build"] or {}).get(name, IA_TO_COD.get(name, 24.0) if ty["ix"] else (36.0 if name == "Transmission" else 0.0))
+        build = np.full(n, float(build))
+        q_ia = SINCE_IA.get(name)
+        if q_ia is not None and ia_done.any():
+            # seeded projects with a signed IA are already part-way through construction [D: LBNL IA dates]; those
+            # past the usual post-IA time finish uniformly within a window `win` (calibrated per technology so that
+            # first-year additions match EIA-860's 2024-25 average, calibrate.calibrate_overdue) unless they withdraw
+            u1, u2 = side_reg.random(n), side_reg.random(n)
+            since = np.interp(u1, np.linspace(0, 1, len(q_ia)), q_ia) + MONTHS_BEFORE_START
+            win = (p.get("overdue") or {}).get(name, p["overdue_months"])
+            rest = np.maximum(IA_TO_COD.get(name, build[0]) - since, u2 * win)   # measured IA -> COD, 2022-25 [D]
+            build = np.where(ia_done, rest, build)
         tCOD = tStart + build
         # ---- executive halts after hostile turnovers (permitted, not yet online) ----
         halted = np.zeros(n, bool)
@@ -166,7 +182,7 @@ def simulate(p, seed, hostile_to):
                          sued=sued, who=np.where(sued, who, -1), lost=lost, vacated=vacated, paused=paused,
                          trunc=trunc, cut_months=cut_months, halted=halted, killed=killed, done=done,
                          tPermit=tPermit, tCOD=tCOD, wait=tCOD - t0, mw=ty["mw"], T=T, mkt=mkt,
-                         review_start=review_start))
+                         review_start=review_start, region=reg))
     return rows
 
 
@@ -206,12 +222,45 @@ def summarize(rows, p):
             sel = r["mkt"] == m
             s[f"GW_online|{lab}"] = float((online & sel).sum() * r["mw"] / 1000)
             s[f"completion_rate|{lab}"] = float(r["done"][coh & sel].mean()) if (coh & sel).any() else np.nan
+        for k, rn in enumerate(REGIONS):
+            sel = r["region"] == k
+            s[f"completion_rate|{rn}"] = float(r["done"][coh & sel].mean()) if (coh & sel).any() else np.nan
         for j, c in enumerate(CHALLENGERS):
             s[f"suits: {c}"] = float((r["who"] == j).sum())
             s[f"wins: {c}"] = float(((r["who"] == j) & r["lost"]).sum())
         out[r["type"]] = s
     out["_groups"] = summarize_groups(rows)
     out["_online_by_year"] = online_by_year(rows)
+    out["_online_region_year"] = online_by_region_year(rows)
+    return out
+
+
+def draw_region(name, mkt, seeded, u):
+    """Region of each project [D: LBNL 2021-25 request shares; active-queue shares for seeded projects], drawn
+    within its ISO / non-ISO market. -1 for types without queue data (transmission, hydro relicensing)."""
+    sh = REGION_SHARE.get(name)
+    if sh is None:
+        return np.full(len(u), -1)
+    out = np.empty(len(u), int)
+    for m in (0, 1):
+        for kind, sel in (("new", ~seeded), ("active", seeded)):
+            idx = (mkt == m) & sel
+            if idx.any():
+                regs, cum = sh[kind][m]
+                out[idx] = np.array(regs)[np.minimum(np.searchsorted(cum, u[idx], side="right"), len(regs) - 1)]
+    return out
+
+
+def online_by_region_year(rows):
+    """GW reaching operation in each model year, by technology and region: {type: [[GW per year] per region]}."""
+    out = {}
+    for r in rows:
+        if r["mw"] <= 0 or (r["region"] < 0).all():
+            continue
+        yrs = int(np.ceil(r["T"] / 12))
+        on = r["done"] & (r["tCOD"] <= r["T"]) & (r["tCOD"] >= 0)
+        out[r["type"]] = [(np.histogram(r["tCOD"][on & (r["region"] == k)], bins=yrs, range=(0, 12 * yrs))[0]
+                           * r["mw"] / 1000).tolist() for k in range(len(REGIONS))]
     return out
 
 

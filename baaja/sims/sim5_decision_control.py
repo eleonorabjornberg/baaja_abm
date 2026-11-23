@@ -12,7 +12,7 @@ import os
 from .. import experiments as ex
 from .. import plots
 from ..calibrate import calibrate_markets
-from ..params import BAAJA, ENGINE, GEN, UTILITY_OWNED
+from ..params import BAAJA, ENGINE, GEN, REGIONS, UTILITY_OWNED
 from . import regime_block, fmt, save, table
 
 MK = ("ISO", "non-ISO")
@@ -23,7 +23,9 @@ def _by_market(agg, t, m, key="by_type"):
 
 
 def run(n_runs, cal, res_dir, fig_dir):
-    calm, targets = calibrate_markets(cal)
+    # regional hazards (calibrate_regions) already give ISO / non-ISO completion; fit by market only if absent
+    has_regions = any(k.split("|")[-1] in REGIONS for k in cal["hazard"] if "|" in k)
+    calm, targets = (cal, {}) if has_regions else calibrate_markets(cal)
     base = ex.run_scenario({}, n_runs, calm)
     scen = {"BAAJA (data-based)": BAAJA, "BAAJA + Sec.2106 at 15%": dict(BAAJA, ix_cut_rto=0.15)}
     res = {}
@@ -47,7 +49,7 @@ def run(n_runs, cal, res_dir, fig_dir):
     md = "\n\n".join([
         "# Simulation 5: utility vs merchant decision control",
         "Each project is in an ISO/RTO market (mostly merchant developers) or a non-ISO region (West, Southeast: vertically "
-        "integrated utilities plan and own more). Withdrawal hazards are fitted separately to LBNL completion by market.",
+        "integrated utilities plan and own more). Withdrawal hazards are fitted to LBNL completion by region (and so by market), scaled to each technology's national target.",
         "## By technology: market split, completion, utility ownership, GW online by 2041 and BAAJA gain (ISO / non-ISO)",
         table(["technology", "non-ISO share of requests", "completion ISO / non-ISO", "utility-owned share of new MW (EIA-860)",
                "GW 2041, law"] + [f"gain: {k}" for k in scen], rows),

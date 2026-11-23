@@ -116,7 +116,7 @@ def test_harm_zero_under_current_law(cal):
 
 
 # --- the five simulations run end to end -------------------------------------------------------------------
-@pytest.mark.parametrize("mod", ["sim1_permitting", "sim2_litigation", "sim3_grid", "sim4_certainty", "sim5_decision_control"])
+@pytest.mark.parametrize("mod", ["sim1_permitting", "sim2_litigation", "sim3_grid", "sim4_certainty", "sim5_decision_control", "sim6_supply"])
 def test_simulation_runs(mod, cal, tmp_path):
     import importlib
     m = importlib.import_module(f"baaja.sims.{mod}")
@@ -138,10 +138,10 @@ def test_blm_review_parameters_come_from_eplanning():
     assert "lit_ea_data" not in TYPES["Gas"]          # gas keeps the generic all-sector rate
 
 
-def test_storage_completion_target_uses_eia860m_late_stage_ratio():
-    from baaja.params import E860M
-    assert TYPES["Storage"]["completion_target"] == pytest.approx(TYPES["Solar"]["completion_target"] * E860M["storage_vs_solar"])
-    assert TYPES["Storage"]["completion_target"] > TYPES["Storage"]["completion_target_lbnl_2000_20"]
+def test_storage_uses_measured_completion_and_post_ia_time():
+    from baaja.params import IA_TO_COD, LBNL
+    assert TYPES["Storage"]["completion_target"] == pytest.approx(LBNL["types"]["Storage"]["completion"])
+    assert TYPES["Storage"]["cod_target"] is None and 20 < IA_TO_COD["Storage"] < 40
 
 
 def test_regimes_match_lbnl_2025_request_rates(cal):

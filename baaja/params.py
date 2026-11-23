@@ -17,6 +17,25 @@ IXB = _load("interconnection_benchmark.json")              # [D] ERCOT vs CAISO/
 BLM = _load("blm_eplanning_targets.json")                  # [D] BLM ePlanning energy NEPA register
 E860M = _load("eia860m_targets.json")                      # [D] EIA-860M late-stage completion, planned pipeline
 MLRSF = _load("mlrs_filing_targets.json")["intake_months"]  # [D] BLM MLRS solar ROW filing -> notice
+RGN = _load("region_targets.json")                          # [D] LBNL requests by region (Phase 1)
+REGIONS = RGN["meta"]["regions_iso"] + RGN["meta"]["regions_non_iso"]
+RTO_IDX = [REGIONS.index(r) for r in RGN["meta"]["ferc_rto"]]   # Sec.2106 reaches these (not ERCOT)
+
+
+def _region_share(t):
+    out = {}
+    for kind in ("new", "active"):
+        out[kind] = {}
+        for m, names in ((0, RGN["meta"]["regions_iso"]), (1, RGN["meta"]["regions_non_iso"])):
+            sh = RGN["types"][t][f"{kind}_share"][str(m)]
+            w = [sh[r] for r in names]; tot = sum(w) or 1.0
+            out[kind][m] = ([REGIONS.index(r) for r in names], list(__import__("numpy").cumsum([x / tot for x in w])))
+    return out
+
+
+REGION_SHARE = {t: _region_share(t) for t in RGN["types"]}
+SINCE_IA = {t: v["since_ia_quantiles"] for t, v in RGN["types"].items() if v.get("since_ia_quantiles")}   # [D]
+IA_TO_COD = {t: v["ia_to_cod_median_recent"] for t, v in RGN["types"].items() if v.get("ia_to_cod_median_recent")}  # [D]
 _GAS2025 = ENGINE["lbnl"]["arrivals_by_year"]["Gas"]["2025"] / 12 / LBNL["types"]["Gas"]["arr_per_month"]
 MIN_N = 30
 
@@ -99,10 +118,18 @@ TYPES["Geothermal"]["mw"] = 40            # [A] 10 built projects
 _h = ENGINE["lbnl"]["hybrid_storage"]; _s = TYPES["Storage"]
 _s["mw"] = round((_s["arr"] * _s["mw"] + _h["req_per_month_2021_25"] * _h["mw_built_mean"]) / (_s["arr"] + _h["req_per_month_2021_25"]))
 _s["arr"] += _h["req_per_month_2021_25"]
-# storage: LBNL's 2000-20 cohort predates most batteries. Late-stage completion in EIA-860M (planned Dec 2021 -> Sep
-# 2026) is 1.07x solar's, so storage's target = solar's LBNL completion x that ratio [D]
+# storage completion: v5 raised the target from LBNL's 2000-20 cohort (9.1%) to solar's x the EIA-860M late-stage
+# ratio (13.4%) because the backcast ran at 0.37-0.54 of EIA additions. That shortfall came from the 62-month
+# post-IA time (below). With the measured 29 months, LBNL's own completion rate gives a backcast of 1.14 (2018-25),
+# so Phase 1 returns to the direct measure [D]; the 860M-ratio value is kept for reference.
 TYPES["Storage"]["completion_target_lbnl_2000_20"] = TYPES["Storage"]["completion_target"]
-TYPES["Storage"]["completion_target"] = TYPES["Solar"]["completion_target"] * E860M["storage_vs_solar"]
+TYPES["Storage"]["completion_target_860m_ratio"] = TYPES["Solar"]["completion_target"] * E860M["storage_vs_solar"]
+TYPES["Storage"]["completion_target"] = TYPES["Storage"]["completion_target_lbnl_2000_20"]
+# storage: the 2015-18 request -> COD cohort (34 projects) predates the battery boom and implied 62 months from IA to
+# COD; batteries reaching operation 2022-25 took a median 29 months [D: LBNL, n=49]. Post-IA time is set to that value
+# instead of being calibrated (Phase 1).
+TYPES["Storage"]["cod_target_lbnl_2015_18"] = TYPES["Storage"]["cod_target"]
+TYPES["Storage"]["cod_target"] = None
 # ---- demand/policy regimes: requests per technology relative to the 2021-25 mean [D] LBNL ----------------------
 # "2025": each technology at its 2025 request rate. 2025 mixes data-center demand (gas x2.1, geothermal x2.2) with
 # federal policy (tax-credit phase-outs, actions against wind/solar: solar x0.65, offshore wind x0.1); the data
@@ -190,6 +217,7 @@ BASE = dict(T=T, turnovers=TURNOVERS, n_scale=1.0, seed_queue=True, arrivals=Non
             deadline_bind=0.0, ce_shift=0.0, recond_ce=0.0, geo_ce=0.0, ce_cap=None,
             court="current", late_adapt=A["late_adapt"], exhaust_injury=A["exhaust_injury"], suit_payoff=1.0,
             inj_nonNEPA=A["inj_nonNEPA"], lit_months=LIT_MONTHS, halt_mult=1.0,
+            overdue_months=12.0, overdue=None,          # overdue: calibrated per technology
             ix_cut=0.0, ix_cut_rto=0.0, ix_rule_month=A["ix_rule_month"],   # all providers / RTO-ISO only
             harm_w={"CE": 0.0, "EA": 0.3, "EIS": 1.0}, harm_mw_transmission=300)
 
