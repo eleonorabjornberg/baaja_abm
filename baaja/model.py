@@ -52,138 +52,174 @@ def arrival_times(name, ty, p, rng):
     return np.concatenate(out) if out else np.zeros(0)
 
 
+def _pre(name, ty, p, rng, side, side_reg):
+    """Every random draw for one technology, in the v5 order, and everything that does not depend on grid access:
+    arrivals, federal review up to the permit decision, the sponsor's withdrawal clock, post-IA build time."""
+    T = p["T"]
+    t_new = arrival_times(name, ty, p, rng)
+    if p["seed_queue"] and ty["ix"]:
+        t_old, ia_done = seeded_queue(name, rng, p["n_scale"])
+    else:
+        t_old, ia_done = np.zeros(0), np.zeros(0, bool)
+    t0 = np.concatenate([t_old, t_new]); n = len(t0)
+    seeded = np.arange(n) < len(t_old); ia_done = np.concatenate([ia_done, np.zeros(len(t_new), bool)])
+    age0 = np.where(seeded, -t0, 0.0)                       # months already in the queue at month 0
+    # ---- draws (all unconditional) ----
+    u_nex, u_kind, z_D, u_esa, u_trunc = (rng.random(n), rng.random(n), rng.normal(0, 1, n), rng.random(n), rng.random(n))
+    z_in = rng.normal(0, 1, n)                              # federal-land intake draw [D: MLRS spread]
+    u_2213 = side.random(n)                                 # Sec.2213 deadline met for this application?
+    who = rng.choice(len(CHALLENGERS), n, p=CHALLENGER_MIX[name])
+    u_sue, u_late, u_ex, z_L, u_inj, u_lose, u_vac, u_kill = (rng.random(n) for _ in range(8))
+    u_ix, u_w, u_mkt = rng.random(n), rng.random(n), rng.random(n)
+    mk = ENGINE["lbnl"]["by_market"].get(name)
+    mkt = (u_mkt < mk["non-ISO"]["arrivals_share_2021_25"]).astype(int) if mk else np.zeros(n, int)   # 1 = non-ISO
+    reg = draw_region(name, mkt, seeded, side_reg.random(n))  # index into REGIONS, within the drawn market
+    # ---- federal review ----
+    nexus = u_nex < min(1.0, ty["nex"] * p["nex_mult"])
+    p_eis = (p["p_eis"] or {}).get(name, 0.0)
+    ea_sh = ty.get("ea_share_nonEIS", p["ea_share_nonEIS"])
+    p_ea = (1 - p_eis) * ea_sh * (1 - p["ce_shift"] - (p["recond_ce"] if name == "Transmission" else 0))
+    kind = np.where(u_kind < p_eis, 2, np.where(u_kind < p_eis + max(p_ea, 0), 1, 0))
+    if name == "Geothermal" and p["geo_ce"] > 0:            # Sec.2229: lease activities not a major federal action
+        kind = np.where(u_kind < p["geo_ce"], 0, kind)
+    med = np.where(kind == 0, ty["ce_med"], np.where(kind == 1, ty["ea_med"], ty["eis_med"]))
+    sig = np.where(kind == 0, 1.0, np.where(kind == 1, .6, .74))
+    D = med * np.exp(sig * z_D)
+    D = D + np.where((kind > 0) & (u_esa < p["esa_share"]), p["esa_months"], 0)
+    if ty["pub"]:                                           # filing -> NEPA notice, lognormal around the MLRS median
+        intake = p["intake_pub"] * np.exp(p["intake_pub_logsd"] * z_in)
+        if p["intake_pub_2213"] is not None:                # Sec.2213 deadlines cap new applications,
+            met = (t0 >= 0) & (u_2213 < p["comply_2213"])  # where the agency meets them (no enforcement)
+            intake = np.where(met, np.minimum(intake, p["intake_pub_2213"]), intake)
+    else:
+        intake = np.full(n, float(p["intake_oth"]))
+    review_start = t0 + intake
+    cap = np.where(kind == 1, 12 + 4, np.where(kind == 2, 24 + 4, np.inf))
+    if p["ce_cap"]:
+        cap = np.where(kind == 0, p["ce_cap"], cap)          # Sec.1402(c): 1 year for permits needing no EA/EIS
+    applies = nexus & (review_start >= 0) & (u_trunc < p["deadline_bind"])   # prospective only
+    trunc = applies & (D > cap) & (kind > 0)
+    cut_months = np.where(applies & (D > cap), D - cap, 0.0)
+    D = np.where(applies, np.minimum(D, cap), D)
+    nonnepa = (p["nonnepa_hydro_1202"] if p["nonnepa_hydro_1202"] is not None else p["nonnepa_hydro"]) if ty["nonnepa"] else 0.0
+    tDec = t0 + intake + D + nonnepa                         # permit decision, absent litigation
+    # ---- sponsor withdrawal clock (drawn now; seeded projects are alive at month 0, memoryless) ----
+    hz = p["hazard"] or {}
+    h = np.where(mkt == 1, hz.get(f"{name}|non-ISO", hz.get(name, 0.02)), hz.get(f"{name}|ISO", hz.get(name, 0.02)))
+    for k, rn in enumerate(REGIONS):                        # regional hazards, where calibrated, take precedence
+        if f"{name}|{rn}" in hz:
+            h = np.where(reg == k, hz[f"{name}|{rn}"], h)
+    W = (np.ceil(np.log1p(-u_w) / np.log1p(-h)) + age0) if ty["ix"] else np.full(n, 1e9)
+    # ---- interconnection study time, exogenous (used unless the grid agents replace it) ----
+    if ty["ix"]:
+        mu, s = np.log(ty["ix_med"]), ty["ix_sigma"]
+        lo = _erf((np.log(np.maximum(age0, 1e-9)) - mu) / s)   # seeded, IA not yet signed: study longer than age
+        u = np.where(seeded & ~ia_done, lo + u_ix * (1 - lo), u_ix)
+        IX = np.exp(mu + s * _inv(u))
+        IX = np.where(ia_done, age0, IX)
+    else:
+        IX = np.zeros(n)
+    build = (p["build"] or {}).get(name, IA_TO_COD.get(name, 24.0) if ty["ix"] else (36.0 if name == "Transmission" else 0.0))
+    build = np.full(n, float(build))
+    q_ia = SINCE_IA.get(name)
+    if q_ia is not None and ia_done.any():
+        # seeded projects with a signed IA are already part-way through construction [D: LBNL IA dates]; those
+        # past the usual post-IA time finish uniformly within a window `win` (calibrated per technology so that
+        # first-year additions match EIA-860's 2024-25 average, calibrate.calibrate_overdue) unless they withdraw
+        u1, u2 = side_reg.random(n), side_reg.random(n)
+        since = np.interp(u1, np.linspace(0, 1, len(q_ia)), q_ia) + MONTHS_BEFORE_START
+        win = (p.get("overdue") or {}).get(name, p["overdue_months"])
+        rest = np.maximum(IA_TO_COD.get(name, build[0]) - since, u2 * win)   # measured IA -> COD, 2022-25 [D]
+        build = np.where(ia_done, rest, build)
+    halt_u = [(rng.random(n), rng.random(n)) for _ in p["turnovers"]]   # executive-halt draws, one pair per turnover
+    return dict(name=name, ty=ty, T=T, n=n, t0=t0, seeded=seeded, ia_done=ia_done, age0=age0, who=who, u_sue=u_sue,
+                u_late=u_late, u_ex=u_ex, z_L=z_L, u_inj=u_inj, u_lose=u_lose, u_vac=u_vac, u_kill=u_kill, mkt=mkt,
+                region=reg, nexus=nexus, kind=kind, trunc=trunc, cut_months=cut_months, review_start=review_start,
+                tDec=tDec, W=W, Ew=-np.log1p(-u_w), hz=np.broadcast_to(h, (n,)).astype(float), IX=IX, build=build,
+                halt_u=halt_u, grid=None)
+
+
+def _post(s, p, hostile_to):
+    """Litigation, interconnection, construction and executive halts for one technology -> one row of results.
+    s["grid"] (agents mode) carries each project's signed-agreement month and grid withdrawal month."""
+    name, ty, T, n = s["name"], s["ty"], s["T"], s["n"]
+    t0, seeded, ia_done, age0, nexus, kind, trunc = s["t0"], s["seeded"], s["ia_done"], s["age0"], s["nexus"], s["kind"], s["trunc"]
+    tDec, W, who = s["tDec"], s["W"], s["who"]
+    g = s["grid"]
+    gwd = g["gwd"] if g is not None else np.full(n, np.inf)        # month the sponsor withdraws at a grid decision
+    decided = nexus & (W >= tDec - t0) & (tDec >= 0) & (tDec <= T) & (gwd >= tDec)
+    # ---- litigation on decided projects ----
+    l_ea = ty["lit_ea_data"] * p["lit_data_mult"] if "lit_ea_data" in ty else p["lit_ea"]
+    l_ce = ty["lit_ce_data"] * p["lit_data_mult"] if "lit_ce_data" in ty else p["lit_ce"]
+    lit_p = np.where(kind == 2, ty["lit_eis"], np.where(kind == 1, l_ea, l_ce))
+    if p["court"] == "baaja":
+        timely = s["u_late"] >= np.array(LATE_SHARE)[who] * (1 - p["late_adapt"])
+        passes = timely & (s["u_ex"] < p["exhaust_injury"])
+        sued = decided & (s["u_sue"] < lit_p * p["suit_payoff"]) & passes
+        inj = INJ * p["inj_nonNEPA"]; vac_share = 0.0
+    else:
+        sued = decided & (s["u_sue"] < lit_p)
+        inj = INJ; vac_share = VAC
+    L = p["lit_months"] * np.exp(.5 * s["z_L"])
+    paused = sued & (s["u_inj"] < inj)
+    p_win = WIN[name] * np.array(WIN_REL)[who] * np.where(trunc, TRUNC_LOSS, 1.0)
+    lost = sued & (s["u_lose"] < np.minimum(p_win, 1))
+    vacated = lost & (s["u_vac"] < vac_share)
+    delay = np.where(paused, L, 0.0) + np.where(vacated, p["remand_months"], 0.0)
+    killed = vacated & (s["u_kill"] < p["p_kill_vac"])
+    tPermit = np.where(nexus, tDec + delay, t0)
+    # ---- interconnection (parallel gate) ----
+    if ty["ix"] and g is not None:
+        IX = np.where(ia_done, age0, g["tIA"] - t0)
+    elif ty["ix"]:
+        # Sec.2110 (all public-utility transmission providers) + Sec.2106 (Transmission Organizations only:
+        # RTO/ISO markets in the Senate-passed text), as study-time dials
+        cut = p["ix_cut"] + np.where(np.isin(s["region"], RTO_IDX), p["ix_cut_rto"], 0.0)   # FERC RTOs: not ERCOT
+        IX = ix_cut(s["IX"], t0, cut, p["ix_rule_month"])
+    else:
+        IX = s["IX"]
+    tStart = np.maximum(tPermit, t0 + IX)
+    tCOD = tStart + s["build"]
+    # ---- executive halts after hostile turnovers (permitted, not yet online) ----
+    halted = np.zeros(n, bool)
+    for k, tt in enumerate(p["turnovers"]):
+        u_h, u_hk = s["halt_u"][k]
+        hostile = (hostile_to[k] == "renew") == (name in RENEWABLE_SIDE)
+        ph = HALT[name] * (1.0 if name == "Offshore wind" else p["halt_mult_other"]) * p["halt_mult"]
+        if not hostile or ph == 0:
+            continue
+        live = (tPermit <= tt) & (tCOD > tt) & nexus & ~killed & (W >= tt - t0) & (gwd > tt)
+        hh = live & (u_h < ph)
+        halted |= hh
+        killed |= hh & (u_hk < p["p_kill_halt"])
+        tCOD = np.where(hh, tCOD + p["halt_len"], tCOD); delay = delay + np.where(hh, p["halt_len"], 0)
+    wait = (tStart - t0) + p["delay_weight"] * delay
+    withdrawn = (W < wait) | np.isfinite(gwd)
+    done = ~withdrawn & ~killed
+    row = dict(type=name, t0=t0, seeded=seeded, nexus=nexus, kind=kind, decided=decided, tDec=tDec,
+               sued=sued, who=np.where(sued, who, -1), lost=lost, vacated=vacated, paused=paused,
+               trunc=trunc, cut_months=s["cut_months"], halted=halted, killed=killed, done=done,
+               tPermit=tPermit, tCOD=tCOD, wait=tCOD - t0, mw=ty["mw"], T=T, mkt=s["mkt"],
+               review_start=s["review_start"], region=s["region"])
+    if g is not None:
+        row.update(entered=g["entered"], cost=g["cost"], planned=g["planned"], tIA=np.where(ia_done, 0.0, g["tIA"]),
+                   gwd=gwd, cand=s["cand"], W=W)
+    return row
+
+
 def simulate(p, seed, hostile_to):
     rng = np.random.default_rng(seed)
     # side stream for draws added after v5: keeps the main stream (and so every earlier draw) unchanged
     side = np.random.default_rng([seed, 7919])
     side_reg = np.random.default_rng([seed, 104729])        # region draws (Phase 1), own stream
-    T = p["T"]
-    rows = []
-    for name, ty in TYPES.items():
-        t_new = arrival_times(name, ty, p, rng)
-        if p["seed_queue"] and ty["ix"]:
-            t_old, ia_done = seeded_queue(name, rng, p["n_scale"])
-        else:
-            t_old, ia_done = np.zeros(0), np.zeros(0, bool)
-        t0 = np.concatenate([t_old, t_new]); n = len(t0)
-        seeded = np.arange(n) < len(t_old); ia_done = np.concatenate([ia_done, np.zeros(len(t_new), bool)])
-        age0 = np.where(seeded, -t0, 0.0)                       # months already in the queue at month 0
-        # ---- draws (all unconditional) ----
-        u_nex, u_kind, z_D, u_esa, u_trunc = (rng.random(n), rng.random(n), rng.normal(0, 1, n), rng.random(n), rng.random(n))
-        z_in = rng.normal(0, 1, n)                              # federal-land intake draw [D: MLRS spread]
-        u_2213 = side.random(n)                                 # Sec.2213 deadline met for this application?
-        who = rng.choice(len(CHALLENGERS), n, p=CHALLENGER_MIX[name])
-        u_sue, u_late, u_ex, z_L, u_inj, u_lose, u_vac, u_kill = (rng.random(n) for _ in range(8))
-        u_ix, u_w, u_mkt = rng.random(n), rng.random(n), rng.random(n)
-        mk = ENGINE["lbnl"]["by_market"].get(name)
-        mkt = (u_mkt < mk["non-ISO"]["arrivals_share_2021_25"]).astype(int) if mk else np.zeros(n, int)   # 1 = non-ISO
-        reg = draw_region(name, mkt, seeded, side_reg.random(n))  # index into REGIONS, within the drawn market
-        # ---- federal review ----
-        nexus = u_nex < min(1.0, ty["nex"] * p["nex_mult"])
-        p_eis = (p["p_eis"] or {}).get(name, 0.0)
-        ea_sh = ty.get("ea_share_nonEIS", p["ea_share_nonEIS"])
-        p_ea = (1 - p_eis) * ea_sh * (1 - p["ce_shift"] - (p["recond_ce"] if name == "Transmission" else 0))
-        kind = np.where(u_kind < p_eis, 2, np.where(u_kind < p_eis + max(p_ea, 0), 1, 0))
-        if name == "Geothermal" and p["geo_ce"] > 0:            # Sec.2229: lease activities not a major federal action
-            kind = np.where(u_kind < p["geo_ce"], 0, kind)
-        med = np.where(kind == 0, ty["ce_med"], np.where(kind == 1, ty["ea_med"], ty["eis_med"]))
-        sig = np.where(kind == 0, 1.0, np.where(kind == 1, .6, .74))
-        D = med * np.exp(sig * z_D)
-        D = D + np.where((kind > 0) & (u_esa < p["esa_share"]), p["esa_months"], 0)
-        if ty["pub"]:                                           # filing -> NEPA notice, lognormal around the MLRS median
-            intake = p["intake_pub"] * np.exp(p["intake_pub_logsd"] * z_in)
-            if p["intake_pub_2213"] is not None:                # Sec.2213 deadlines cap new applications,
-                met = (t0 >= 0) & (u_2213 < p["comply_2213"])  # where the agency meets them (no enforcement)
-                intake = np.where(met, np.minimum(intake, p["intake_pub_2213"]), intake)
-        else:
-            intake = np.full(n, float(p["intake_oth"]))
-        review_start = t0 + intake
-        cap = np.where(kind == 1, 12 + 4, np.where(kind == 2, 24 + 4, np.inf))
-        if p["ce_cap"]:
-            cap = np.where(kind == 0, p["ce_cap"], cap)          # Sec.1402(c): 1 year for permits needing no EA/EIS
-        applies = nexus & (review_start >= 0) & (u_trunc < p["deadline_bind"])   # prospective only
-        trunc = applies & (D > cap) & (kind > 0)
-        cut_months = np.where(applies & (D > cap), D - cap, 0.0)
-        D = np.where(applies, np.minimum(D, cap), D)
-        nonnepa = (p["nonnepa_hydro_1202"] if p["nonnepa_hydro_1202"] is not None else p["nonnepa_hydro"]) if ty["nonnepa"] else 0.0
-        tDec = t0 + intake + D + nonnepa                         # permit decision, absent litigation
-        # ---- sponsor withdrawal clock (drawn now; seeded projects are alive at month 0, memoryless) ----
-        hz = p["hazard"] or {}
-        h = np.where(mkt == 1, hz.get(f"{name}|non-ISO", hz.get(name, 0.02)), hz.get(f"{name}|ISO", hz.get(name, 0.02)))
-        for k, rn in enumerate(REGIONS):                        # regional hazards, where calibrated, take precedence
-            if f"{name}|{rn}" in hz:
-                h = np.where(reg == k, hz[f"{name}|{rn}"], h)
-        W = (np.ceil(np.log1p(-u_w) / np.log1p(-h)) + age0) if ty["ix"] else np.full(n, 1e9)
-        decided = nexus & (W >= tDec - t0) & (tDec >= 0) & (tDec <= T)
-        # ---- litigation on decided projects ----
-        l_ea = ty["lit_ea_data"] * p["lit_data_mult"] if "lit_ea_data" in ty else p["lit_ea"]
-        l_ce = ty["lit_ce_data"] * p["lit_data_mult"] if "lit_ce_data" in ty else p["lit_ce"]
-        lit_p = np.where(kind == 2, ty["lit_eis"], np.where(kind == 1, l_ea, l_ce))
-        if p["court"] == "baaja":
-            timely = u_late >= np.array(LATE_SHARE)[who] * (1 - p["late_adapt"])
-            passes = timely & (u_ex < p["exhaust_injury"])
-            sued = decided & (u_sue < lit_p * p["suit_payoff"]) & passes
-            inj = INJ * p["inj_nonNEPA"]; vac_share = 0.0
-        else:
-            sued = decided & (u_sue < lit_p)
-            inj = INJ; vac_share = VAC
-        L = p["lit_months"] * np.exp(.5 * z_L)
-        paused = sued & (u_inj < inj)
-        p_win = WIN[name] * np.array(WIN_REL)[who] * np.where(trunc, TRUNC_LOSS, 1.0)
-        lost = sued & (u_lose < np.minimum(p_win, 1))
-        vacated = lost & (u_vac < vac_share)
-        delay = np.where(paused, L, 0.0) + np.where(vacated, p["remand_months"], 0.0)
-        killed = vacated & (u_kill < p["p_kill_vac"])
-        tPermit = np.where(nexus, tDec + delay, t0)
-        # ---- interconnection (parallel gate) ----
-        if ty["ix"]:
-            mu, s = np.log(ty["ix_med"]), ty["ix_sigma"]
-            lo = _erf((np.log(np.maximum(age0, 1e-9)) - mu) / s)   # seeded, IA not yet signed: study longer than age
-            u = np.where(seeded & ~ia_done, lo + u_ix * (1 - lo), u_ix)
-            IX = np.exp(mu + s * _inv(u))
-            IX = np.where(ia_done, age0, IX)
-            # Sec.2110 (all public-utility transmission providers) + Sec.2106 (Transmission Organizations only:
-            # RTO/ISO markets, mkt == 0, in the Senate-passed text)
-            cut = p["ix_cut"] + np.where(np.isin(reg, RTO_IDX), p["ix_cut_rto"], 0.0)   # FERC RTOs: not ERCOT
-            IX = ix_cut(IX, t0, cut, p["ix_rule_month"])
-        else:
-            IX = np.zeros(n)
-        tStart = np.maximum(tPermit, t0 + IX)
-        build = (p["build"] or {}).get(name, IA_TO_COD.get(name, 24.0) if ty["ix"] else (36.0 if name == "Transmission" else 0.0))
-        build = np.full(n, float(build))
-        q_ia = SINCE_IA.get(name)
-        if q_ia is not None and ia_done.any():
-            # seeded projects with a signed IA are already part-way through construction [D: LBNL IA dates]; those
-            # past the usual post-IA time finish uniformly within a window `win` (calibrated per technology so that
-            # first-year additions match EIA-860's 2024-25 average, calibrate.calibrate_overdue) unless they withdraw
-            u1, u2 = side_reg.random(n), side_reg.random(n)
-            since = np.interp(u1, np.linspace(0, 1, len(q_ia)), q_ia) + MONTHS_BEFORE_START
-            win = (p.get("overdue") or {}).get(name, p["overdue_months"])
-            rest = np.maximum(IA_TO_COD.get(name, build[0]) - since, u2 * win)   # measured IA -> COD, 2022-25 [D]
-            build = np.where(ia_done, rest, build)
-        tCOD = tStart + build
-        # ---- executive halts after hostile turnovers (permitted, not yet online) ----
-        halted = np.zeros(n, bool)
-        for k, tt in enumerate(p["turnovers"]):
-            u_h, u_hk = rng.random(n), rng.random(n)
-            hostile = (hostile_to[k] == "renew") == (name in RENEWABLE_SIDE)
-            ph = HALT[name] * (1.0 if name == "Offshore wind" else p["halt_mult_other"]) * p["halt_mult"]
-            if not hostile or ph == 0:
-                continue
-            live = (tPermit <= tt) & (tCOD > tt) & nexus & ~killed & (W >= tt - t0)
-            hh = live & (u_h < ph)
-            halted |= hh
-            killed |= hh & (u_hk < p["p_kill_halt"])
-            tCOD = np.where(hh, tCOD + p["halt_len"], tCOD); delay = delay + np.where(hh, p["halt_len"], 0)
-        wait = (tStart - t0) + p["delay_weight"] * delay
-        withdrawn = W < wait
-        done = ~withdrawn & ~killed
-        rows.append(dict(type=name, t0=t0, seeded=seeded, nexus=nexus, kind=kind, decided=decided, tDec=tDec,
-                         sued=sued, who=np.where(sued, who, -1), lost=lost, vacated=vacated, paused=paused,
-                         trunc=trunc, cut_months=cut_months, halted=halted, killed=killed, done=done,
-                         tPermit=tPermit, tCOD=tCOD, wait=tCOD - t0, mw=ty["mw"], T=T, mkt=mkt,
-                         review_start=review_start, region=reg))
-    return rows
+    if p.get("grid", "exogenous") == "agents":                  # background withdrawal and first-year timing
+        gc = p.get("grid_cal") or {}                            # refitted with the grid agents on
+        p = dict(p, hazard=gc.get("hazard") or p["hazard"], overdue=gc.get("overdue") or p.get("overdue"))
+    states = [_pre(name, ty, p, rng, side, side_reg) for name, ty in TYPES.items()]
+    if p.get("grid", "exogenous") == "agents":
+        from .grid import run_agents
+        states = run_agents(states, p, seed, hostile_to)
+    return [_post(s, p, hostile_to) for s in states]
 
 
 def harm_index(r, p):

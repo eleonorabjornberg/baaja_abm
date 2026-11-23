@@ -3,7 +3,8 @@
 Usage: python data/extract_grid.py LBNL_QUEUE_XLSX LBNL_COST_DIR FLEET_JSON   -> data/grid_targets.json
 
 replay[region]       every generation request 2008-25: request month (months since Jan 2008), months to withdrawal
-                     (-1 if not withdrawn) and months to signed IA (-1 if none). Replayed through the operator model to
+                     (-1 if not withdrawn), months to signed IA (-1 if none), status (0 active or suspended,
+                     1 operational, 2 withdrawn, 3 unknown) and MW. Replayed through the operator model to
                      fit study capacity (baaja/grid.py, fit_operators).
 ia_coverage[region]  share of operational projects with an IA date; regions >= 0.8 are used to fit study capacity
 arrivals[region]     requests per year 2008-25
@@ -101,8 +102,10 @@ def run(qpath, cost_dir, fleet_path):
     res["replay"], res["ia_coverage"], res["arrivals"] = {}, {}, {}
     for r in REG:
         s = g[g.region == r].sort_values("qm")
+        st = s.q_status.map({"active": 0, "suspended": 0, "operational": 1, "withdrawn": 2}).fillna(3).astype(int)
         res["replay"][r] = dict(q=s.qm.tolist(), wd=s.wd.fillna(-1).clip(lower=-1).astype(int).tolist(),
-                                ia=s.ia.fillna(-1).astype(int).tolist())
+                                ia=s.ia.fillna(-1).astype(int).tolist(), st=st.tolist(),
+                                mw=s.mw_1.fillna(0).round().astype(int).tolist())
         op = q[(q.region == r) & (q.q_status == "operational") & (q.q_year >= 2010)]
         res["ia_coverage"][r] = float(op.ia_date.notna().mean()) if len(op) else 0.0
         res["arrivals"][r] = {int(y): int(n) for y, n in s.groupby(s.q_date.dt.year).size().items()}

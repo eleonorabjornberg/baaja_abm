@@ -135,11 +135,11 @@ def overdue_targets():
     return {t: (e[t]["2024"] + e[t]["2025"]) / 2 / 1000 for t in ("Solar", "Storage", "Onshore wind", "Gas")}
 
 
-def calibrate_overdue(cal, seeds=tuple(range(7, 15)), iters=14):
+def calibrate_overdue(cal, seeds=tuple(range(7, 15)), iters=14, base=None):
     """Window W (months) over which seeded projects already past the usual post-IA construction time reach operation,
     per technology, so that model year 1 (Nov 2026 - Oct 2027) matches overdue_targets(). Wider W -> fewer in year 1."""
     targets = overdue_targets()
-    p = dict(BASE, **cal)
+    p = dict(BASE, **cal); p.update(base or {})
     lo = {t: 1.0 for t in targets}; hi = {t: 480.0 for t in targets}
     for _ in range(iters):
         x = {t: (lo[t] * hi[t]) ** 0.5 for t in targets}      # geometric bisection
@@ -166,3 +166,89 @@ def check(cal, seeds=(20, 21, 22), n_scale=1.0):
                       EIS_per_year=(m("EIS_per_year"), TYPES[t]["eis_target"]),
                       p_eis=cal["p_eis"].get(t), hazard=cal["hazard"].get(t), build=cal["build"].get(t))
     return out
+
+
+def _completion_cells(rows, keys):
+    """Completion of requests made in the first five years, by 'type|region' or 'type|*rest' (regions without a
+    regional target), from simulate() rows."""
+    from .params import REGIONS
+    out = {}
+    by = {r["type"]: r for r in rows}
+    for k in keys:
+        t, reg = k.split("|")
+        r = by[t]; coh = ~r["seeded"] & (r["t0"] < 60)
+        if reg.startswith("*"):
+            excl = [REGIONS.index(x) for x in reg[1:].split(",") if x]
+            sel = coh & ~np.isin(r["region"], excl)
+        else:
+            sel = coh & (r["region"] == REGIONS.index(reg))
+        out[k] = float(r["done"][sel].mean()) if sel.any() else np.nan
+    return out
+
+
+def calibrate_grid(cal, seeds=tuple(range(7, 15)), iters=16, operators=None, wd_month=24):
+    """Grid agents (Phase 2), current law, end-2025 queue seeded.
+    (1) Grid operators fitted to LBNL request -> agreement times (grid.fit_operators).
+    (2) Withdrawal in three parts: (a) before the agreement, a regional hazard h_pre fitted so the share of requests
+    withdrawn within `wd_month` months matches LBNL's 2015-19 cohorts [D]; (b) at study results, when allocated cost
+    exceeds the developer's value (grid agents, LBNL cost and P(complete|cost) data); (c) after the agreement, a
+    hazard by technology and region fitted so completion of new requests matches calibrate_regions' targets [D].
+    Regions without a regional completion target share the technology's pooled target. Both hazards are bisected at
+    once, each on its own target.
+    (3) First-year timing of the seeded queue refitted (calibrate_overdue) with the agents on."""
+    from .grid import fit_operators, withdrawal_curve_data, withdrawal_curve_model
+    from .params import REGIONS
+    ops = operators or fit_operators()
+    targets = regional_targets()
+    for t in GEN:
+        have = [k.split("|")[1] for k in targets if k.startswith(t + "|")]
+        if len(have) < len(REGIONS):                            # pooled cell only if some region has no target
+            targets[f"{t}|*" + ",".join(have)] = TYPES[t]["completion_target"]
+    wd_t = {r: v[wd_month] for r, v in withdrawal_curve_data().items()}
+    hz0 = dict(cal["hazard"])
+    p = dict(BASE, **cal); p["grid"] = "agents"
+    lo = {k: 1e-4 for k in targets}; hi = {k: 0.6 for k in targets}
+    plo = {r: 1e-4 for r in wd_t}; phi = {r: 0.2 for r in wd_t}
+
+    def hazard(x):
+        h = dict(hz0)
+        for k, v in x.items():
+            t, reg = k.split("|")
+            if reg.startswith("*"):
+                h[t] = v
+                for m in ("ISO", "non-ISO"):
+                    h.pop(f"{t}|{m}", None)
+            else:
+                h[k] = v
+        return h
+
+    def run(gc, ss):
+        got, wd = [], []
+        for s in ss:
+            rows = simulate(dict(p, grid_cal=gc), s, POL)
+            got.append(_completion_cells(rows, targets)); wd.append(withdrawal_curve_model(rows))
+        return got, wd
+    for _ in range(iters):
+        x = {k: (lo[k] + hi[k]) / 2 for k in targets}
+        y = {r: (plo[r] + phi[r]) / 2 for r in wd_t}
+        got, wd = run(dict(operators=ops, hazard=hazard(x), h_pre=y), seeds)
+        for k in targets:
+            m = np.nanmean([g[k] for g in got])
+            if np.isnan(m) or m > targets[k]:
+                lo[k] = x[k]
+            else:
+                hi[k] = x[k]
+        for r in wd_t:
+            m = np.nanmean([w.get(r, {}).get(wd_month, np.nan) for w in wd])
+            if np.isnan(m) or m < wd_t[r]:
+                plo[r] = y[r]
+            else:
+                phi[r] = y[r]
+    gc = dict(operators=ops, hazard=hazard({k: (lo[k] + hi[k]) / 2 for k in targets}),
+              h_pre={r: (plo[r] + phi[r]) / 2 for r in wd_t})
+    got, wd = run(gc, (20, 21, 22))
+    fit = {k: (float(np.nanmean([g[k] for g in got])), targets[k]) for k in targets}
+    wfit = {r: (float(np.nanmean([w.get(r, {}).get(wd_month, np.nan) for w in wd])), wd_t[r]) for r in wd_t}
+    od, od_t = calibrate_overdue(dict(cal, grid_cal=gc), base=dict(grid="agents"))
+    gc["overdue"] = od["overdue"]
+    return gc, dict(completion=fit, withdrawn_by_month=wfit, wd_month=wd_month, first_year_targets=od_t, regions=REGIONS)

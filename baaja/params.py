@@ -202,6 +202,40 @@ GEN = [t for t, v in TYPES.items() if v["ix"]]
 POLITICS = {"random (default)": None, "always hostile to renewables": ["renew"] * 4, "always hostile to fossil": ["fossil"] * 4}
 UTILITY_OWNED = {t: FED["types"][t]["utility_owned_share_MW"] for t in GEN}   # [D] EIA-860, new MW 2015-25
 
+# ---- grid agents (Phase 2, baaja/grid.py): used only when p['grid'] == 'agents' -------------------------------
+_K = _load("grid_targets.json")["kappa"]["by_region"]
+KAPPA = sorted(_K[r]["kappa"] for r in ("MISO", "SPP", "PJM"))      # [D] low, central, high
+
+# (low, central, high, note). Current-law behaviour (vary in both runs of a pair) and bill design (BAAJA only).
+GRID_LAW = {
+    "entry_wait_elast": (0.0, 0.3, 1.0, "elasticity of new requests to the published wait for a study result"),
+    "scarcity_beta":    (0.0, 1.0, 3.0, "developer value and entry rise by exp(beta x change in the region's projected "
+                         "capacity shortfall as a share of peak demand, 4 years ahead)"),
+    "kappa":            (round(KAPPA[0], 2), round(KAPPA[1], 2), round(KAPPA[2], 2),
+                         "growth of network-upgrade cost with capacity signed, per share of the regional fleet [D: LBNL "
+                         "cost data, 2018+ vs 2010-17 requests; MISO, SPP, PJM]"),
+    "restudy_rho":      (0.1, 0.3, 0.6, "re-study: cost rise for remaining requests per unit withdrawn MW share"),
+    "restudy_months":   (3, 6, 12, "months from first study result to agreement in cluster regions (re-study, facilities)"),
+    "tx_hosting_gw":    (0.5, 1.5, 3.0, "GW of interconnection room added by one transmission project"),
+}
+GRID_BILL = {
+    "adopt_2106":         (0.0, 0.5, 1.0, "Sec.2106(d): probability that an RTO's process changes rather than being "
+                           "found compliant, drawn per RTO"),
+    "planned_share_2106": (0.25, 0.5, 0.9, "Sec.2106(a)(2): share of requests able to use a published location"),
+    "q_min_2106":         (0.1, 0.25, 0.5, "Sec.2106(a)(3): lowest chance of completing (cost below value) at which a "
+                           "request still enters, given non-refundable security and penalties"),
+    "fee_mult_2106":      (0.8, 1.0, 1.5, "Sec.2106(a)(2): fixed fee as a multiple of the region's median upgrade cost"),
+    "g_2110":             (0.0, 0.0, 0.25, "Sec.2110: study throughput gain (rulemaking with no target)"),
+    "hosting_2109":       (0.0, 0.1, 0.3, "Sec.2109: extra hosting room per transmission project (advanced "
+                           "transmission technologies)"),
+}
+GRID_BASE = dict(grid="exogenous", grid_cal=None, entry_max=2.0, scarcity_ahead=48,
+                 **{k: v[1] for k, v in GRID_LAW.items()},
+                 grid_2106=False, grid_2110=0.0, grid_2109=0.0,
+                 **{k: v[1] for k, v in GRID_BILL.items() if k not in ("g_2110", "hosting_2109")})
+GRID_LEVERS = dict(grid_2106=True, grid_2110=GRID_BILL["g_2110"][1], grid_2109=GRID_BILL["hosting_2109"][1])
+LEVER_KEY = {"g_2110": "grid_2110", "hosting_2109": "grid_2109"}
+
 # ---- scenarios -------------------------------------------------------------------------------------------------
 BASE = dict(T=T, turnovers=TURNOVERS, n_scale=1.0, seed_queue=True, arrivals=None, start_year=2026,
             hazard=None, build=None, p_eis=None, nex_mult=1.0,
@@ -219,13 +253,13 @@ BASE = dict(T=T, turnovers=TURNOVERS, n_scale=1.0, seed_queue=True, arrivals=Non
             inj_nonNEPA=A["inj_nonNEPA"], lit_months=LIT_MONTHS, halt_mult=1.0,
             overdue_months=12.0, overdue=None,          # overdue: calibrated per technology
             ix_cut=0.0, ix_cut_rto=0.0, ix_rule_month=A["ix_rule_month"],   # all providers / RTO-ISO only
-            harm_w={"CE": 0.0, "EA": 0.3, "EIS": 1.0}, harm_mw_transmission=300)
+            harm_w={"CE": 0.0, "EA": 0.3, "EIS": 1.0}, harm_mw_transmission=300, **GRID_BASE)
 
 LEVERS = {   # BAAJA, central values, grouped by simulation
     "permitting": dict(deadline_bind=A["deadline_bind"], ce_shift=A["ce_shift"], recond_ce=A["recond_ce"], geo_ce=A["geo_ce"],
                        intake_pub_2213=A["intake_pub_baaja"], nonnepa_hydro_1202=A["nonnepa_hydro_baaja"], esa_months=2.0, ce_cap=12),
     "litigation": dict(court="baaja", suit_payoff=A["suit_payoff"], lit_months=A["lit_months_baaja"]),
-    "grid": dict(ix_cut=A["ix_2110"], ix_cut_rto=A["ix_2106"]),
+    "grid": dict(ix_cut=A["ix_2110"], ix_cut_rto=A["ix_2106"], **GRID_LEVERS),   # dials (exogenous) / structure (agents)
     "certainty": dict(halt_mult=A["halt_mult_1401"]),
 }
 BAAJA = {k: v for d in LEVERS.values() for k, v in d.items()}
