@@ -101,10 +101,6 @@ def test_grid_calibration_matches_targets(cal):
     for k, (got, want) in f["completion"].items():
         if k.startswith("Geothermal|*"):        # the handful of geothermal requests drawn outside the West
             continue
-        if k == "Storage|ERCOT":
-            # documented exception: its value scale sits at the lower bound and 17% of ERCOT requests have zero
-            # POI cost, above the 12% completion target, so no value scale reaches it (reported in the brief)
-            continue
         if want >= 0.05:
             assert abs(got - want) / want < 0.35, k
 
@@ -117,15 +113,21 @@ def test_withdrawal_curve_data_shape():
         assert all(0 <= a <= b <= 1 for a, b in zip(x, x[1:]))
 
 
-def test_zero_cost_requests_pay_nothing_and_never_leave_at_results(cal):
+def test_zero_cost_requests_pay_nothing_and_leave_only_for_cost_independent_reasons(cal):
     c = cal["calibration"]
-    G = _gen(simulate(ex.params(dict(grid="agents"), c), 4, POL))
-    cost = np.concatenate([r["cost"] for r in G.values()]); gwd = np.concatenate([r["gwd"] for r in G.values()])
-    reg = np.concatenate([r["region"] for r in G.values()])
-    pjm = (reg == REGIONS.index("PJM")) & np.isfinite(cost)
-    z = cost == 0
-    assert 0.5 * gr.COST[REGIONS.index("PJM")]["zero_share"] < z[pjm].mean() < 1.5 * gr.COST[REGIONS.index("PJM")]["zero_share"]
-    assert not np.isfinite(gwd[z]).any()
+    for va in (False, True):
+        G = _gen(simulate(ex.params(dict(grid="agents", value_a=va), c), 4, POL))
+        cost = np.concatenate([r["cost"] for r in G.values()]); gwd = np.concatenate([r["gwd"] for r in G.values()])
+        reg = np.concatenate([r["region"] for r in G.values()])
+        pjm = (reg == REGIONS.index("PJM")) & np.isfinite(cost)
+        z = cost == 0
+        zs = gr.COST[REGIONS.index("PJM")]["zero_share"]
+        assert 0.5 * zs < z[pjm].mean() < 1.5 * zs
+        left = np.isfinite(gwd[z & pjm]).mean()
+        if va:   # LBNL: a share 1 - a (0.23 in ISO regions) does not complete at any cost
+            assert 0.5 * (1 - gr.VALUE[REGIONS.index("PJM")]["a"]) < left < 1.5 * (1 - gr.VALUE[REGIONS.index("PJM")]["a"])
+        else:
+            assert left == 0
 
 
 def test_sec2106_fee_is_a_multiple_of_expected_cost(cal):

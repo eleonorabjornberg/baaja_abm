@@ -261,6 +261,16 @@ def run(n_runs, cal, res_dir, fig_dir, sweep_runs=None):
         scr[lab] = dict(law=float(g(Ls).mean()), baaja=float((g(Bs) - g(Ls)).mean()), every_rto=float((g(As) - g(Ls)).mean()))
     t_scr = table(["entry screens", "current law new GW", "BAAJA minus current law", "every RTO adopts Sec.2106"],
                   [[k, f"{v['law']:.0f}", f"{v['baaja']:+.1f}", f"{v['every_rto']:+.1f}"] for k, v in scr.items()])
+    # current-law planned transmission (MISO LRTP, SPP ITP, PJM RTEP) left out, in both runs
+    Ls = run_set(dict(AG, planned_tx=0.0), ns, cal)[0]
+    Bs = run_set(dict(scen["BAAJA"], planned_tx=0.0), ns, cal)[0]
+    As = run_set(dict(scen["BAAJA, Sec.2106 adopted by every RTO"], planned_tx=0.0), ns, cal)[0]
+    g = lambda R: np.array([ex.totals(x)["GW_new"] for x in R])
+    ptx = dict(law=float(g(Ls).mean()), baaja=float((g(Bs) - g(Ls)).mean()), every_rto=float((g(As) - g(Ls)).mean()))
+    t_ptx = table(["planned transmission", "current law new GW", "BAAJA minus current law", "every RTO adopts Sec.2106"],
+                  [["approved portfolios in both runs (central)", f"{scr[next(iter(scr))]['law']:.0f}",
+                    f"{scr[next(iter(scr))]['baaja']:+.1f}", f"{scr[next(iter(scr))]['every_rto']:+.1f}"],
+                   ["left out", f"{ptx['law']:.0f}", f"{ptx['baaja']:+.1f}", f"{ptx['every_rto']:+.1f}"]])
     t_sens = table(["assumption", "low / high", "BAAJA minus current law, new GW", "current law new GW", "what it is"], srows)
 
     md = "\n\n".join([
@@ -341,6 +351,11 @@ def run(n_runs, cal, res_dir, fig_dir, sweep_runs=None):
         "the recalibration because that chance is in units the calibration moves: where a fitted value scale sits at "
         "its lower bound, almost no request passes.",
         t_scr,
+        "## Planned transmission under current law",
+        "Regional portfolios approved by 2025 (MISO LRTP Tranches 1 and 2.1, SPP 2025 ITP, PJM 2025 RTEP 500 kV and "
+        "above; data/planned_tx.json) add hosting room in both runs from their in-service years, converted to "
+        "transmission project-equivalents at the average cost of a Tranche 1 project. The second row leaves them out.",
+        t_ptx,
     ])
     data = dict(results={k: v for k, v in res.items()}, exogenous=res_exo,
                 regions={k: {r: {m: _m(v, r, m) for m in v[0][r]} for r in REGIONS} for k, v in gst.items()},
@@ -348,7 +363,7 @@ def run(n_runs, cal, res_dir, fig_dir, sweep_runs=None):
                 withdrawal={"data": wdd, "model": {r: {m: float(np.nanmean([x["wd"].get(r, {}).get(m, np.nan) for x in xtra]))
                                                        for m in gr.WD_MONTHS} for r in REGIONS}},
                 cost_completion={"model": cc, "data": vb}, sensitivity=sdata, adequacy_current_law=adq,
-                timing=timing, screen_sensitivity=scr,
+                timing=timing, screen_sensitivity=scr, planned_tx_sensitivity=ptx,
                 supply={k: {"firm_2030": ex.band((nat[k]["firm"] - lawn["firm"])[:, sp.YEARS.index(2030)] / 1000),
                             "firm_2035": ex.band((nat[k]["firm"] - lawn["firm"])[:, k35] / 1000),
                             "shortfall_2041": ex.band((nat[k]["shortfall"] - lawn["shortfall"])[:, k41] / 1000),
