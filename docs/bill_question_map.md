@@ -13,7 +13,7 @@ electricity, renewables vs gas. Model code: `baaja/sims/simN_*.py`; results: `re
 
 | Section | Change | Model consequence |
 |---|---|---|
-| 2106 | applies to each **Transmission Organization** (RTO/ISO) instead of each transmission planning region; fee is "subregional" instead of "zonal"; adds storage and transmission-service locations, a co-optimization aim, and 2106(d): FERC may find existing processes compliant | Sec.2106 cut now applies to ISO-market projects only (`ix_cut_rto`); 2106(d) strengthens the 0% floor. ERCOT is still counted as ISO until Phase 1 regions separate it |
+| 2106 | applies to each **Transmission Organization** (RTO/ISO) instead of each transmission planning region; fee is "subregional" instead of "zonal"; adds storage and transmission-service locations, a co-optimization aim, and 2106(d): FERC may find existing processes compliant | Sec.2106 applies in the six FERC-jurisdictional RTOs/ISOs only (`ix_cut_rto`; Sim 7 `adopt_2106`); 2106(d) strengthens the 0% floor. The introduced text already excluded ERCOT ("transmission planning region" as defined in new s.225(a), which excludes it), so the change removes the Southeast and the non-ISO West |
 | 1401 | permits in effect on/after **6 Nov 2026** (was 16 Sep); new exception (F): action "taken pursuant to any applicable law or regulation"; "materially" added to amend/alter | `halt_mult_1401` range 0.1 / 0.5 / 1.0 (was 0 / 0.1 / 0.3) |
 | 2213 | unchanged: 30-day completeness, 90-day NOI if an EIS is needed, decision or deferral within 30 days; still no enforcement | `comply_2213` 0.25 / 0.5 / 1.0 |
 | 2101 | offshore transmission removed from FERC backstop eligibility; "just and reasonable rates" added as a criterion | transmission permitting time; in Sim 7 finished lines add hosting room |
@@ -79,10 +79,10 @@ electricity, renewables vs gas. Model code: `baaja/sims/simN_*.py`; results: `re
 
 | Section | What it does | Model | Data |
 |---|---|---|---|
-| 2106 | consolidated planning in every transmission planning region | modelled through Sim 3's range, by market | LBNL completion by ISO vs non-ISO |
+| 2106 | consolidated interconnection and planning in each Transmission Organization (RTO/ISO) | modelled through Sim 3's range, by market | LBNL completion by ISO vs non-ISO |
 | 2105 | no federal right of first refusal for regional transmission | listed: changes who builds transmission; no measured link to generator completion | |
 | 2104 | FERC oversight of local transmission planning on state referral | listed | |
-| 2107, 2108 | transmission costs for computational loads; behind-the-meter dispatchable access | listed (outside the interconnection queue) | |
+| 2107, 2108 | transmission costs for computational loads, and 2107(b): states may condition retail service to a computational load on new generation it procures; 2108: RTOs may not block behind-the-meter aggregations (5 kW-5 MW, storage, fuel cells, generators) from wholesale markets | listed: 2107(b) acts on the demand behind the adequacy gap; 2108 is capacity outside the interconnection queue | |
 | (ownership) | | gain split utility-owned vs merchant by EIA-860 ownership shares | EIA-860: 51% of new gas MW utility-owned vs 16-21% solar/wind |
 
 ## Simulation 6: supply and resource adequacy (`sim6_supply.py`, Phase 1)
@@ -101,8 +101,9 @@ margins follow NERC's 2025 LTRA. What reaches supply from the bill:
 | 2107, 2114, 2117 | data-center (computational load) costs, data, assistance | listed: demand side; demand is NERC's forecast with a range |
 
 ## Renewable vs gas asymmetries in the text
-- Renewable-only: 2213 (rights-of-way), 2102 (reconductoring, mostly serves renewables), 2251-2252 (offshore wind).
-- Gas-relevant: 1203 (NPDES term), 1204 (s.404), 2108 (dispatchable access).
+- Renewable and storage: 2213 (rights-of-way for wind, solar and storage: 2213(d) adds "or store"), 2102(a) (reconductoring, mostly serves renewables), 2251-2252 (offshore wind).
+- Gas-relevant: 2102(b) (interstate pipeline looping, compression and capacity enhancement in existing corridors are not a major Federal action), 1203 (NPDES term), 1204 (s.404).
+- Mixed: 2108 (behind-the-meter aggregations of storage, fuel cells and generators, 5 kW-5 MW).
 - Neutral on paper: 1106, 1110, 1401, 2106, 2110, 2201. They differ by technology through the data: federal nexus
   (gas ~33% via Corps permits vs wind ~5%), who sues (local groups for renewables), and interconnection time.
 
@@ -136,18 +137,18 @@ course-forward plan (Nov 2026) picks it up.
 | 1402 | Fairness for specific project types | M | folded into 1401 residual |
 | 1403 | Avoiding unreasonable delays (1 year, applicant can sue) | M | `ce_cap` |
 | 2101 | Transmission permitting: FERC backstop siting, >= 230 kV | M (Sim 7) | finished lines add hosting room (`tx_hosting_gw`) |
-| 2102 | Reconductoring in existing rights-of-way | M | `recond_ce`; hosting room in Sim 7 |
-| 2103 | DOE congestion study; regional/interregional planning | L | no measured link from a study to MW built |
+| 2102 | (a) Reconductoring in existing rights-of-way; (b) gas pipeline looping, compression and capacity enhancement in existing corridors not a major Federal action | M (a); L (b) | `recond_ce`; hosting room in Sim 7. (b) is upstream gas transport, not generation |
+| 2103 | Mandatory regional and joint interregional transmission planning with cost allocation (new FPA s.225); DOE congestion study | L | the bill's main transmission-building mechanism; not modelled because transmission is not planned endogenously (lines already in the queue only) |
 | 2104 | Local transmission planning oversight | L | no measured link to generation |
 | 2105 | No federal ROFR | L | no measured link to generation |
-| 2106 | Consolidated interconnection + planning: rule in 18 months, filings in 2 years; fixed zonal per-MW cost; single decision point; non-refundable security; withdrawal penalties | M | dial in Sims 3 and 6; structural in Sim 7 (`grid_2106`, `adopt_2106`, `planned_share_2106`, `q_min_2106`, `lag_2106`, `fee_mult_2106`) |
+| 2106 | Consolidated interconnection + planning: rule in 18 months, filings in 2 years; fixed subregional per-MW fee; single decision point; non-refundable security; withdrawal penalties | M | dial in Sims 3 and 6; structural in Sim 7 (`grid_2106`, `adopt_2106`, `planned_share_2106`, `q_min_2106`, `lag_2106`, `fee_mult_2106`) |
 | 2107 | Ratepayer protection: computational loads pay transmission costs | L | demand side; Phase 1 demand scenarios |
 | 2108 | Behind-the-meter dispatchable resources: market access | L | outside the interconnection queue |
-| 2109 | Advanced transmission technologies (presumption of prudence) | M (Sim 7) | `hosting_2109`: extra hosting per line |
-| 2110 | AI/automation in queue processing: rulemaking within 1 year | M | `ix_2110` (dial); `g_2110` throughput in Sim 7 |
+| 2109 | Advanced transmission technologies: public utilities must evaluate their systems and deploy on existing lines (return-on-equity penalty); not limited to RTOs | M (Sim 7), partly | `hosting_2109`: extra hosting per finished line only; the evaluate-and-deploy duty on existing lines is not modelled |
+| 2110 | AI/automation in queue processing: FERC to initiate a rulemaking within 1 year; covers all public utility transmission providers | M | `ix_2110` (dial); `g_2110` throughput in Sim 7 |
 | 2111 | Grid data access | L | |
 | 2112-2113, 2115 | PMAs, FERC fees, conforming | O | |
-| 2114 | Data on computational loads (EIA-861) | O | |
+| 2114 | Data on computational loads (EIA-861) | L | demand side, listed |
 | 2201 | Accelerating claims: 150 days for energy authorizations | M | with 1110 |
 | 2211 | Oil and gas drilling permits on non-Federal land | O | upstream gas supply, not power plants |
 | 2212 | Rights-of-way across Indian land | L | |

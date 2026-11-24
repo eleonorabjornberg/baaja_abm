@@ -151,11 +151,12 @@ def run(n_runs, cal, res_dir, fig_dir, regime=None):
     md = "\n\n".join([
         title,
         "Supply = existing fleet (EIA-860, end-2025) minus retirements plus what the model's queue brings online, by "
-        "LBNL region. Firm capacity, peak demand and the reference margin level (RML, the reserve margin a region "
+        "LBNL region. On-peak accredited capacity (\"firm\" below), peak demand and the reference margin level (RML, the reserve margin a region "
         "plans to) follow NERC's 2025 Long-Term Reliability Assessment. Wind, solar and batteries count at an on-peak "
-        "share that falls over time (central: halfway between NERC's 2025 national values and PJM's 2041/42 ratings). "
-        "The model has no feedback from scarcity to building yet (Phase 2), so surpluses in some regions are not "
-        "self-correcting and shortfalls are not filled by new entry.",
+        "share that falls over time (central: halfway between NERC's 2025 national values and PJM's 2041/42 ratings), "
+        "except in PJM, whose reference margin is an installed-capacity margin that already rises as accreditation falls. "
+        "This simpler model has no feedback from scarcity to building, so surpluses in some regions are not "
+        "self-correcting and shortfalls are not filled by new entry; the grid-agent model (Sim 7) adds an entry response.",
         "## Current law: the United States",
         t_nat,
         "## Current law: by region (reserve margin, % of peak demand; 5th-95th percentile across runs)",

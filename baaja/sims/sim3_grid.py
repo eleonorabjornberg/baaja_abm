@@ -35,9 +35,8 @@ def run(n_runs, cal, res_dir, fig_dir):
         "# Simulation 3: grid access",
         "All data-based BAAJA provisions are on in every row; only the Sec.2106 study-time cut varies. In the Senate-passed "
         "text Sec.2106 applies to Transmission Organizations (RTO/ISO markets) only, so the cut applies to projects in "
-        "ISO markets; non-ISO regions (Southeast, most of the West) are unaffected. ERCOT is counted as an ISO market here, "
-        "although it is outside FERC's jurisdiction for these rules, so the GW below are somewhat overstated until the "
-        "regional version (Phase 1) separates it. "
+        "the six FERC-jurisdictional RTOs/ISOs (CAISO, ISO-NE, MISO, NYISO, PJM, SPP); ERCOT (outside FERC's jurisdiction "
+        "for these rules), the Southeast and the non-ISO West are unaffected. "
         "Sec.2110 applies to all public-utility transmission providers and sets no target (central 0%, range 0-5%). For Sec.2106 the data give a bracket, not a point: no measured "
         f"shortening from past queue reforms (floor 0%), and ERCOT's pace as a ceiling: ERCOT {IXB['median_months_2015_19']['ERCOT']:.0f} vs "
         f"CAISO/MISO {IXB['pooled_non_ERCOT_median']:.0f} months from request to signed agreement (2015-19 requests), a "
