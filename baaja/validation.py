@@ -135,8 +135,11 @@ def report(cal, res_dir, n_runs=10):
         f"Means over {n_runs} runs per grid model. What was fitted to what: the exogenous model's withdrawal hazards to "
         "LBNL completion, in forward runs. The grid agents' operators to LBNL request-to-agreement times (2010-19 "
         "cohorts), and, in this backcast, their background withdrawal hazards to the shares of 2015-19 requests "
-        "withdrawn within 12 and 60 months and their value scales to completion of 2010-19 requests (LBNL). Not fitted, "
-        "so checks: EIA-860 additions nationally and by region, the 24- and 36-month withdrawal shares, and the "
+        "withdrawn within 12, 36 and 60 months (a first-year hazard, a later hazard and a hold after an adverse study "
+        "result, by region) and their value scales to completion of 2010-19 requests (LBNL). The EIS probabilities and "
+        "overdue windows are refitted with the agents on, and the storage settings were chosen with this backcast in "
+        "view, so the backcast is not fully independent of the fit. Not fitted, so checks: EIA-860 additions nationally "
+        "and by region, the 24-month withdrawal shares, and the "
         f"{HOLDOUT[0]}-{HOLDOUT[1]} cohorts.",
         "## National additions 2018-25",
         t_nat,

@@ -8,7 +8,7 @@ Code references are to `baaja/`. Every parameter is tagged in `baaja/params.py` 
 
 **Purpose.** Estimate how S.5653, the Bipartisan American Affordability and Jobs Act of 2026 (BAAJA; Senate-passed
 substitute to H.R. 2347, 19 Nov 2026), changes US electricity supply from Nov 2026 to Oct 2041. The output is new
-capacity by technology, region and year, and resource adequacy (firm capacity against NERC reference margins), each
+capacity by technology, region and year, and resource adequacy (on-peak accredited capacity against NERC reference margin levels), each
 compared with current law in paired runs. The model is built to separate what the bill text and the data can size
 from what depends on how agencies, FERC and RTOs implement it.
 
@@ -159,22 +159,34 @@ turnover, permitted projects not yet online are halted with probability by techn
   lambda, sigma)` are fitted by grid search on LBNL 2010-19 cohorts (MISO, CAISO, ERCOT each; other regions a pooled
   MISO+CAISO fit) to censoring-consistent medians and signed shares; 2020-24 cohorts are a holdout.
 - **Developer value and cost.** Value per kW lognormal [D: LBNL P(complete | upgrade cost)], scaled by technology and
-  region (`value_mult`, fitted so completion matches LBNL). Upgrade cost lognormal by region with a share at zero
-  [D: LBNL cost studies], times `exp(kappa x (GW signed since 2026 - hosting room) / regional fleet GW)`.
+  region (`value_mult`, fitted so completion matches LBNL). Upgrade cost lognormal by region, with LBNL's share of
+  requests at zero cost paying nothing [D: LBNL cost studies], times `exp(kappa x (GW signed since 2026 - hosting
+  room) / regional fleet GW)`. `kappa` is 0 / 2.17 / 5.14 (low / central / high): central is the median of MISO, SPP
+  and PJM, the three cluster markets where LBNL costs rose between 2010-17 and 2018+ requests; high is PJM; low is 0,
+  because three regions cannot pin the rate down. NYISO and the Southeast give negative rates and the West (3.7 GW
+  connected over a 183 GW fleet) an implausibly large one, so they are not used. ERCOT has `kappa` = 0: it does not
+  allocate network upgrades to generators, and its LBNL costs are point-of-interconnection only.
 - **Decisions.** At the first study result (R = `restudy_months` before the agreement in cluster regions) a developer
   stays if cost <= value x exp(beta x change in scarcity); withdrawals raise the others' cost by `restudy_rho` x the
   withdrawn MW share and they decide again at the agreement. A developer who leaves holds its queue position for an
   exponential time with regional mean `exit_lag` before the withdrawal is recorded.
 - **Entry.** Requests enter with probability `min(mult, 1)`, and extra candidate requests (up to `entry_max` x the base
   rate) enter with probability `(mult - 1) / (entry_max - 1)`, where `mult = (W_ref / W_pub)^entry_wait_elast x
-  exp(scarcity_beta x change in scarcity)`.
+  exp(scarcity_beta x change in scarcity)`, bounded to [0.2, `entry_max`] (the lower bound keeps at least a fifth of
+  requests entering however long the published wait; an assumption). The scarcity signal uses central demand and
+  supply assumptions, and is off in the backcast. Current law has no entry screen; Sim 7's sensitivity adds one
+  (`q_min_law` = 0.1, for Order 2023's readiness deposits) to both runs.
 - **Transmission.** Transmission projects through the same permitting and court pipeline; each completion adds
   `tx_hosting_gw` of room in a region drawn by generation request shares. Only the bill's change in transmission
   relative to current law (same draws) moves costs; the historical pace is in `kappa`.
 - **Bill.** Sec.2106 in RTOs that adopt (probability `adopt_2106`, drawn per RTO), from the rule month: a share
   `planned_share_2106` of new requests use a published location at a fixed fee (`fee_mult_2106` x the region's
-  median cost; no cost shock, no re-study); one decision at the first result; requests below a chance of completing
-  `q_min_2106` do not enter; the post-result hold shrinks by `lag_2106`. Sec.2110: throughput x (1 + `g_2110`)
+  expected upgrade cost, zero-cost requests included, times the congestion multiplier; 1 = the fee recovers the
+  expected cost; no cost shock, no re-study); one decision at the first result; requests whose chance of completing
+  (upgrade cost below value) is below `q_min_2106` do not enter, standing for non-refundable security and withdrawal
+  penalties; the post-result hold shrinks by `lag_2106`. Requests made before the rule month keep the current
+  process (an assumption: new s.228 has no transition clause). `ix_rule_month` (24 / 36 / 48) is an assumption; the
+  statute gives FERC 18 months for the rule and providers 2 years to file. Sec.2110: throughput x (1 + `g_2110`)
   outside ERCOT. Sec.2109: hosting room x (1 + `hosting_2109`) for projects after the rule month.
 
 ### 7.6 Construction
@@ -183,9 +195,12 @@ fitted to LBNL completion timing. Seeded projects past the usual time finish wit
 
 ### 7.7 Supply and adequacy (`baaja/supply.py`)
 Existing fleet by region and group with announced retirements (share on schedule `ret_announced`) and an age hazard
-for coal, gas and oil past the median retirement age (`ret_hazard_old`). Firm capacity: dispatchable at net summer
-capacity; wind, solar, storage at on-peak shares from NERC 2025, declining towards PJM's 2041/42 ELCC ratings by
-`elcc_decline`; a per-region factor to NERC's existing-certain basis in 2026; plus NERC firm transfers. Demand: NERC
+for coal, gas and oil past the median retirement age (`ret_hazard_old`). On-peak accredited capacity (`firm`
+in the code): dispatchable at net summer capacity; wind, solar, storage at NERC 2025 on-peak shares, declining towards
+PJM's 2041/42 ELCC class ratings by `elcc_decline`, except in PJM, whose reference margin is an installed reserve
+margin that already rises (18.6% to 35.1%) as the mix shifts to these resources, so its shares stay at 2026 values;
+a per-region factor to NERC's existing-certain basis in 2026, applied to additions too where it is below 1 (MISO's
+accredited basis); plus NERC firm transfers. Demand: NERC
 net internal demand, growth scaled by `demand_growth_mult`, extended past 2035 at the 2030-35 rate. Shortfall =
 max(0, (1 + reference margin) x demand - firm).
 

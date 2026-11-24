@@ -14,82 +14,98 @@ def _j(res_dir, name):
 
 
 def headline(res_dir, path):
-    """BAAJA minus current law by 2041 under each way of modelling grid access, with intervals."""
+    """BAAJA minus current law by 2041 (new capacity, relicensed hydro excluded), by model and scenario."""
     s7, un = _j(res_dir, "sim7_grid_agents.json"), _j(res_dir, "uncertainty.json")
-    exo = s7["exogenous"]["BAAJA (exogenous grid)"]["diff_vs_baseline"]["GW_total"]
-    U = {k: v["bands"]["GW total"] for k, v in un.items()}
+    G = "GW_new"
+    exo = s7["exogenous"]["BAAJA (exogenous grid)"]["diff_vs_baseline"][G]
+    U = {k: v["bands"]["GW new"] for k, v in un.items()}
     r = s7["results"]
+    d = lambda k: r[k]["diff_vs_baseline"][G]
     rows = [
-        ("Data-sized provisions, exogenous grid (central values)", exo, C_EXO, "runs"),
-        ("   same, all assumption ranges", U["grid dials at 0 (data-sized provisions)"], C_EXO, "joint"),
-        ("Grid agents: BAAJA (central values)", r["BAAJA"]["diff_vs_baseline"]["GW_total"], C_AGT, "runs"),
-        ("   same, all assumption ranges", U["grid agents (Phase 2), their assumptions drawn"], C_AGT, "joint"),
-        ("Grid agents: every RTO adopts Sec.2106", r["BAAJA, Sec.2106 adopted by every RTO"]["diff_vs_baseline"]["GW_total"], C_ALL, "runs"),
-        ("Study-time dial 0 to ERCOT pace (all ranges)", U["grid dials across their ranges"], "#c9c8c3", "joint"),
+        ("Simpler model, data-sized provisions", exo, C_EXO, "runs"),
+        ("   same, all assumption ranges drawn", U["grid dials at 0 (data-sized provisions)"], C_EXO, "joint"),
+        ("Grid agents: no RTO adopts Sec.2106", d("BAAJA without Sec.2106"), C_AGT, "runs"),
+        ("Grid agents: each RTO adopts with p = 0.5", d("BAAJA"), C_AGT, "runs"),
+        ("Grid agents: every RTO adopts Sec.2106", d("BAAJA, Sec.2106 adopted by every RTO"), C_ALL, "runs"),
+        ("Grid agents, all assumption ranges drawn", U["grid agents (Phase 2), their assumptions drawn"], C_AGT, "joint"),
+        ("Simpler model, study-time cut 0 to ERCOT pace", U["grid dials across their ranges"], "#c9c8c3", "joint"),
     ]
-    fig, ax = plt.subplots(figsize=(8.6, 3.6))
+    lo = min(b["p5"] for _, b, _, _ in rows); hi = max(b["p95"] for _, b, _, _ in rows)
+    fig, ax = plt.subplots(figsize=(8.6, 3.9))
     for i, (lab, b, c, kind) in enumerate(rows[::-1]):
         mid = b.get("p50", b["mean"])
         ax.plot([b["p5"], b["p95"]], [i, i], color=c, lw=6 if kind == "joint" else 3, solid_capstyle="butt", alpha=.9)
         ax.plot(mid, i, "o", color=INK, ms=5)
-        ax.text(b["p95"] + 2, i, f"{mid:+.0f} [{b['p5']:+.0f}, {b['p95']:+.0f}]", va="center", fontsize=8, color=INK2)
-    ax.set_yticks(range(len(rows)), [r[0] for r in rows[::-1]], fontsize=8)
+        ax.text(b["p95"] + (hi - lo) * .01, i, f"{mid:+.0f} [{b['p5']:+.0f}, {b['p95']:+.0f}]", va="center", fontsize=8, color=INK2)
+    ax.set_yticks(range(len(rows)), [x[0] for x in rows[::-1]], fontsize=8)
     ax.axvline(0, color=INK2, lw=.8)
-    ax.set_xlim(-5, 235); ax.grid(axis="y", visible=False)
-    ax.set_xlabel("GW online by Nov 2041, BAAJA minus current law (dot: central, bar: 5th-95th percentile)", fontsize=9)
-    ax.set_title("BAAJA by 2041: +10 to +50 GW, depending on Sec.2106 (current law builds ~910 GW)", loc="left", fontsize=9)
+    ax.set_xlim(min(lo, 0) - (hi - lo) * .03, hi + (hi - lo) * .22); ax.grid(axis="y", visible=False)
+    ax.set_xlabel("new GW online by Nov 2041, BAAJA minus current law. Thin bars: 5th-95th percentile across 100 paired "
+                  "runs, dot = mean;\nthick bars: across 400 joint samples of all assumption ranges, dot = median",
+                  fontsize=8)
+    law = r["Current law"]["totals"][G]["mean"]
+    ax.set_title(f"BAAJA by 2041: {d('BAAJA without Sec.2106')['mean']:+.0f} GW if no RTO adopts Sec.2106, "
+                 f"{d('BAAJA, Sec.2106 adopted by every RTO')['mean']:+.0f} GW if all do (current law: ~{law:,.0f} GW new)",
+                 loc="left", fontsize=9)
     fig.tight_layout(); fig.savefig(path, dpi=200); plt.close(fig)
 
 
 def regions(res_dir, path):
     s7 = _j(res_dir, "sim7_grid_agents.json")["regions"]
     law = s7["Current law"]; regs = list(law)
-    sc = {"BAAJA (central: each RTO adopts with p = 0.5)": ("BAAJA", C_AGT),
-          "BAAJA, every RTO adopts Sec.2106": ("BAAJA, Sec.2106 adopted by every RTO", C_ALL)}
-    fig, ax = plt.subplots(figsize=(8.6, 3.4)); w = .38
+    sc = {"no RTO adopts Sec.2106": ("BAAJA without Sec.2106", C_EXO),
+          "each RTO adopts with p = 0.5": ("BAAJA", C_AGT),
+          "every RTO adopts Sec.2106": ("BAAJA, Sec.2106 adopted by every RTO", C_ALL)}
+    fig, ax = plt.subplots(figsize=(8.6, 3.4)); w = .27
     for j, (lab, (k, c)) in enumerate(sc.items()):
         v = [s7[k][r]["GW_online"] - law[r]["GW_online"] for r in regs]
-        x = np.arange(len(regs)) + (j - .5) * w
+        x = np.arange(len(regs)) + (j - 1) * w
         ax.bar(x, v, w * .95, color=c, label=lab)
         for xi, vi in zip(x, v):
-            ax.text(xi, vi + .3, f"{vi:.0f}", ha="center", fontsize=7, color=INK2)
-    ax.set_xticks(range(len(regs)), regs, fontsize=8); ax.grid(axis="x", visible=False)
-    ax.set_ylabel("GW by 2041 vs current law")
-    ax.set_title("Grid agents: the gain is in RTO markets, most of it in MISO and PJM (ERCOT, Southeast, West: permitting only)",
+            ax.text(xi, vi + (.3 if vi >= 0 else -1.2), f"{vi:.0f}", ha="center", fontsize=6.5, color=INK2)
+    ax.set_xticks(range(len(regs)), regs, fontsize=8); ax.grid(axis="x", visible=False); ax.axhline(0, color=INK2, lw=.8)
+    ax.set_ylabel("new GW by 2041 vs current law")
+    ax.set_title("Grid agents, by region (Sec.2106 applies only in RTO/ISO markets, not ERCOT, the Southeast or the West)",
                  loc="left", fontsize=9)
     ax.legend(frameon=False, fontsize=8); fig.tight_layout(); fig.savefig(path, dpi=200); plt.close(fig)
 
 
 def shortfall(res_dir, path):
-    s6, s7 = _j(res_dir, "sim6_supply.json"), _j(res_dir, "sim7_grid_agents.json")
-    yrs = s6["years"]; sh = s6["national_law"]["shortfall"]
-    fig, ax = plt.subplots(figsize=(8.6, 3.4))
-    ax.fill_between(yrs, [b["p5"] / 1000 for b in sh], [b["p95"] / 1000 for b in sh], color=C_EXO, alpha=.2, lw=0)
-    ax.plot(yrs, [b["mean"] / 1000 for b in sh], color=INK2, lw=2, label="current law, exogenous grid (Sim 6)")
+    s7 = _j(res_dir, "sim7_grid_agents.json")
     ag = s7["adequacy_current_law"]["grid agents (this simulation)"]["national"]
-    ax.plot([int(y) for y in ag], [ag[y]["mean"] for y in ag], "o", color=C_AGT, ms=6, label="current law, grid agents (Sim 7)")
-    sup = s7["supply"]["BAAJA"]["shortfall_2035"]
-    base35 = ag["2035"]["mean"]
-    ax.errorbar([2035.25], [base35 + sup["mean"]], yerr=[[sup["mean"] - sup["p5"] if sup["mean"] > sup["p5"] else 0],
-                [sup["p95"] - sup["mean"] if sup["p95"] > sup["mean"] else 0]], fmt="s", color=C_ALL, ms=5,
-                label=f"BAAJA, grid agents, 2035 ({sup['mean']:+.1f} GW)")
-    ax.set_ylabel("GW below reference margins"); ax.set_ylim(bottom=0)
-    ax.set_title("Current law falls short of NERC reference margins, mostly in PJM; BAAJA closes a few percent of the gap",
-                 loc="left", fontsize=9)
-    ax.legend(frameon=False, fontsize=8, loc="upper left"); fig.tight_layout(); fig.savefig(path, dpi=200); plt.close(fig)
+    ex_ = s7["adequacy_current_law"]["exogenous study times (Sims 1-6)"]["national"]
+    fig, ax = plt.subplots(figsize=(8.6, 3.4))
+    for off, a, c, lab in ((-.15, ex_, C_EXO, "current law, simpler model"), (0, ag, INK2, "current law, grid agents")):
+        ys = sorted(int(y) for y in a)
+        ax.errorbar([y + off for y in ys], [a[str(y)]["mean"] for y in ys],
+                    yerr=[[a[str(y)]["mean"] - a[str(y)]["p5"] for y in ys], [a[str(y)]["p95"] - a[str(y)]["mean"] for y in ys]],
+                    fmt="o", color=c, ms=5, capsize=3, label=lab)
+    sup = s7["supply"]
+    for key, c, lab in (("BAAJA", C_AGT, "BAAJA (p = 0.5)"), ("BAAJA, Sec.2106 adopted by every RTO", C_ALL, "BAAJA, every RTO")):
+        pts = [(2035, sup[key]["shortfall_2035"]), (2041, sup[key]["shortfall_2041"])]
+        ax.plot([y + .15 for y, _ in pts], [ag[str(y)]["mean"] + b["mean"] for y, b in pts], "s", color=c, ms=5,
+                label=f"{lab}: {pts[0][1]['mean']:+.1f} GW in 2035, {pts[1][1]['mean']:+.1f} in 2041")
+    ax.set_xticks([2027, 2035, 2041]); ax.set_ylabel("GW below NERC reference margin levels"); ax.set_ylim(bottom=0)
+    ax.set_title("Shortfall below NERC reference margin levels (a benchmark, mostly PJM's rising margin); bars: 5th-95th "
+                 "percentile across runs", loc="left", fontsize=9)
+    ax.legend(frameon=False, fontsize=7.5, loc="upper left"); fig.tight_layout(); fig.savefig(path, dpi=200); plt.close(fig)
 
 
 def drivers(res_dir, path):
     un = _j(res_dir, "uncertainty.json")
-    panels = [("grid dials at 0 (data-sized provisions)", "Data-sized provisions"),
+    panels = [("grid dials at 0 (data-sized provisions)", "Simpler model, data-sized provisions"),
               ("grid agents (Phase 2), their assumptions drawn", "Grid agents")]
-    fig, axes = plt.subplots(1, 2, figsize=(8.6, 3.0))
+    fig, axes = plt.subplots(1, 2, figsize=(8.6, 3.2))
     for ax, (k, t) in zip(axes, panels):
-        v = un[k]["variance"]["GW total"]
+        v = un[k]["variance"]["GW new"]
         top = v["top"][:6][::-1]
-        ax.barh(range(len(top)), [100 * x[1] for x in top], color=C_AGT if "agents" in k else C_EXO)
-        ax.set_yticks(range(len(top)), [x[0] for x in top], fontsize=8); ax.grid(axis="y", visible=False)
-        ax.set_xlabel("% of variance in GW (rank regression)", fontsize=8)
+        x = [100 * e[1] for e in top]
+        err = [[100 * (e[1] - e[2][0]) for e in top], [100 * (e[2][1] - e[1]) for e in top]]
+        err = [[max(a, 0) for a in err[0]], [max(a, 0) for a in err[1]]]
+        ax.barh(range(len(top)), x, xerr=err, color=C_AGT if "agents" in k else C_EXO, ecolor=INK2, capsize=2)
+        ax.set_yticks(range(len(top)), [e[0].replace(" (share of RTO capacity)", "") for e in top], fontsize=7.5)
+        ax.grid(axis="y", visible=False)
+        ax.set_xlabel("% of variance in new GW (rank regression; bars: bootstrap 90%)", fontsize=7.5)
         ax.set_title(f"{t} (R² {v['r2']:.2f})", loc="left", fontsize=9)
     fig.tight_layout(); fig.savefig(path, dpi=200); plt.close(fig)
 
@@ -108,7 +124,7 @@ def backcast(res_dir, path):
     ax.axhline(1, color=C_EIA, lw=1.2, label="EIA-860")
     ax.set_xticks(range(len(tech)), tech); ax.grid(axis="x", visible=False); ax.set_ylim(0, 1.3)
     ax.set_ylabel("model / EIA-860, 2018-25 additions")
-    ax.set_title("Backcast 2010-25 under current law (not fitted to EIA): national fit, storage too low with agents",
+    ax.set_title("Backcast 2010-25 under current law (EIA-860 additions not used in fitting), national",
                  loc="left", fontsize=9)
     ax.legend(frameon=False, fontsize=8, ncol=3, loc="upper left"); fig.tight_layout(); fig.savefig(path, dpi=200); plt.close(fig)
 
