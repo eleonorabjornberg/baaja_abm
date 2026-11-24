@@ -44,8 +44,8 @@ def headline(res_dir, path):
                   "runs, dot = mean; thick bars: 400 joint samples\nof all assumption ranges, dot = median",
                   fontsize=8)
     law = r["Current law"]["totals"][G]["mean"]
-    ax.set_title(f"BAAJA by 2041: {d('BAAJA without Sec.2106')['mean']:+.0f} GW if no RTO adopts Sec.2106, "
-                 f"{d('BAAJA, Sec.2106 adopted by every RTO')['mean']:+.0f} GW if all do (current law: ~{law:,.0f} GW new)",
+    ax.set_title(f"BAAJA by 2041: {d('BAAJA without Sec.2106')['mean']:+.1f} GW if no RTO adopts Sec.2106, "
+                 f"{d('BAAJA, Sec.2106 adopted by every RTO')['mean']:+.1f} GW if all do (current law: ~{law:,.0f} GW new)",
                  loc="left", fontsize=9)
     fig.tight_layout(); fig.savefig(path, dpi=200); plt.close(fig)
 
