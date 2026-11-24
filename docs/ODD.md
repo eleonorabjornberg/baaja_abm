@@ -175,16 +175,20 @@ turnover, permitted projects not yet online are halted with probability by techn
   exp(scarcity_beta x change in scarcity)`, bounded to [0.2, `entry_max`] (the lower bound keeps at least a fifth of
   requests entering however long the published wait; an assumption). The scarcity signal uses central demand and
   supply assumptions, and is off in the backcast. Current law has no entry screen; Sim 7's sensitivity adds one
-  (`q_min_law` = 0.1, for Order 2023's readiness deposits) to both runs.
+  (`q_min_law` = 0.1, the share of requests screened out, standing for Order 2023's readiness deposits) to both runs.
 - **Transmission.** Transmission projects through the same permitting and court pipeline; each completion adds
   `tx_hosting_gw` of room in a region drawn by generation request shares. Only the bill's change in transmission
   relative to current law (same draws) moves costs; the historical pace is in `kappa`.
 - **Bill.** Sec.2106 in RTOs that adopt (probability `adopt_2106`, drawn per RTO), from the rule month: a share
   `planned_share_2106` of new requests use a published location at a fixed fee (`fee_mult_2106` x the region's
   expected upgrade cost, zero-cost requests included, times the congestion multiplier; 1 = the fee recovers the
-  expected cost; no cost shock, no re-study); one decision at the first result; requests whose chance of completing
-  (upgrade cost below value) is below `q_min_2106` do not enter, standing for non-refundable security and withdrawal
-  penalties; the post-result hold shrinks by `lag_2106`. Requests made before the rule month keep the current
+  expected cost; no cost shock, no re-study); one decision at the first result; the share `screen_2106` of new requests least
+  likely to complete (upgrade cost below value) relative to others of the same technology and region do not enter,
+  standing for non-refundable security and withdrawal penalties. Within a technology and region that chance rises
+  with the developer's private value draw, so the screen keeps out requests whose value draw falls in the bottom
+  `screen_2106` share. An earlier version screened on an absolute chance (below 0.25); its units moved with the
+  calibration, so it was replaced after the recalibrated results were seen, and it is kept as a sensitivity
+  (`q_abs_2106`); the post-result hold shrinks by `lag_2106`. Requests made before the rule month keep the current
   process (an assumption: new s.228 has no transition clause). `ix_rule_month` (24 / 36 / 48) is an assumption; the
   statute gives FERC 18 months for the rule and providers 2 years to file. Sec.2110: throughput x (1 + `g_2110`)
   outside ERCOT. Sec.2109: hosting room x (1 + `hosting_2109`) for projects after the rule month.

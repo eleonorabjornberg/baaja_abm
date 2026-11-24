@@ -253,7 +253,7 @@ the JSON summaries in `data/` from them.
 | `tx_hosting_gw` | 0.5 | 1.5 | 3.0 | Grid agents: GW of interconnection room added by one transmission project |
 | `adopt_2106` | 0 | 0.5 | 1.0 | Sec.2106(d): chance that an RTO's process changes rather than being found compliant, drawn per RTO |
 | `planned_share_2106` | 0.25 | 0.5 | 0.9 | Sec.2106(a)(2): share of requests able to use a published location |
-| `q_min_2106` | 0.1 | 0.25 | 0.5 | Sec.2106(a)(3): lowest chance of completing at which a request still enters, given non-refundable security |
+| `screen_2106` | 0.1 | 0.25 | 0.5 | Sec.2106(a)(3): share of new requests that non-refundable security and withdrawal penalties keep out, those least likely to complete within their technology and region |
 | `lag_2106` | 0 | 0.5 | 1.0 | Sec.2106(a)(3): how long a developer holds its queue position after an adverse study result, relative to current law (withdrawal penalties shorten it; 0 = leaves at once) |
 | `fee_mult_2106` | 0.8 | 1.0 | 1.5 | Sec.2106(a)(2): fixed fee as a multiple of the region's median upgrade cost |
 | `g_2110` | 0 | 0 | 0.25 | Sec.2110: study throughput gain (the bill sets no target) |
@@ -287,7 +287,7 @@ of a truncated review (1.6); halt probabilities other than offshore wind.
   - MISO's modelled wait to agreement (about 27-35 months) is shorter than recent cohorts (45-50);
   - SPP and the West have no queue data of their own and use pooled operator settings that fit poorly.
 - **`lag_2106` has no effect on GW**: in the grid agents a developer's decision to leave is made at the study result;
-  the hold only delays when the withdrawal is recorded. Sec.2106(a)(3)'s penalties act through `q_min_2106` alone.
+  the hold only delays when the withdrawal is recorded. Sec.2106(a)(3)'s penalties act through `screen_2106` alone.
 - **Suit counts differ between grid models**: with the agents, more requests stay alive to a federal decision, so
   current-law suits 2026-41 are 185 (exogenous 119) and BAAJA's cut in suits is larger.
 - **Courts after *Seven County* (May 2025)** are an assumption range (`nepa_win_mult`, `nepa_suit_mult`): no

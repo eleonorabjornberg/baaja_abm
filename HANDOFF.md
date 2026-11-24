@@ -73,7 +73,7 @@ the calibrated permitting and court pipeline; rebuild grid access as interacting
     transmission timing) and Sec.2109 (extra room per project) reach generator MW.
   - **Bill**: Sec.2106 as structure in RTO/ISO regions only, adopted per RTO with probability `adopt_2106` (2106(d)):
     published locations with a fixed per-MW fee (no cost-allocation shock or re-study for those requests), a single
-    decision point with non-refundable security (requests below `q_min_2106` chance of completing do not enter).
+    decision point with non-refundable security (the `screen_2106` share of new requests least likely to complete within their technology and region do not enter).
     Sec.2110 as a throughput gain (central 0, the bill sets no target). Sec.2109 as hosting room.
 - **Calibration** (`calibrate.calibrate_grid`, `run.py --recalibrate-grid`): operators, then alternating passes over
   the regional background hazard and the value scales; writes `grid_cal` and `grid_fit` to `results/calibration.json`.

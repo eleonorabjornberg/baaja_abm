@@ -241,8 +241,8 @@ GRID_BILL = {
     "adopt_2106":         (0.0, 0.5, 1.0, "Sec.2106(d): probability that an RTO's process changes rather than being "
                            "found compliant, drawn per RTO"),
     "planned_share_2106": (0.25, 0.5, 0.9, "Sec.2106(a)(2): share of requests able to use a published location"),
-    "q_min_2106":         (0.1, 0.25, 0.5, "Sec.2106(a)(3): lowest chance of completing (cost below value) at which a "
-                           "request still enters, given non-refundable security and penalties"),
+    "screen_2106":        (0.1, 0.25, 0.5, "Sec.2106(a)(3): share of requests that non-refundable security and withdrawal "
+                           "penalties keep out, those least likely to complete within their technology and region"),
     "lag_2106":           (0.0, 0.5, 1.0, "Sec.2106(a)(3): months a developer holds its queue position after an "
                            "adverse study result, relative to current law, with a single decision point and withdrawal "
                            "penalties (0 = leaves at once)"),
@@ -253,7 +253,8 @@ GRID_BILL = {
                            "transmission technologies)"),
 }
 GRID_BASE = dict(grid="exogenous", grid_cal=None, region_by_year=False, entry_max=2.0, scarcity_ahead=48,
-                 q_min_law=0.0,     # current-law entry screen: 0 central; 0.1 in Sim 7's sensitivity (Order 2023 deposits)
+                 q_min_law=0.0,     # current-law entry screen, share screened out (relative): 0 central; 0.1 in Sim 7's sensitivity (Order 2023 deposits)
+                 q_abs_2106=0.0,    # previous absolute Sec.2106 screen (min P(cost <= value) to enter): sensitivity only
                  **{k: v[1] for k, v in GRID_LAW.items()},
                  grid_2106=False, grid_2110=0.0, grid_2109=0.0,
                  **{k: v[1] for k, v in GRID_BILL.items() if k not in ("g_2110", "hosting_2109")})

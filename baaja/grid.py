@@ -468,17 +468,25 @@ def _region(r, idx, F, out, p, op, U, onpk, ctx, tx, u_adopt, T, T_ext, backcast
                 ok = np.where(cand[ii], uacc[ii] < (mult - 1) / max(p["entry_max"] - 1, 1e-9), uacc[ii] < min(mult, 1.0))
                 b2106 = adopt and t >= rule
                 if b2106 or q_law > 0:
-                    cg = cong(t); cb = cmed * cg
-                    vm = v0[ii] * np.exp(beta * sc)
-                    # chance that the upgrade cost comes in below the request's value
-                    qv = cst["zero_share"] + (1 - cst["zero_share"]) * ndtr((np.log(np.maximum(vm, 1e-9)) - np.log(cb)) / cst["sigma"])
+                    # entry screen (security and withdrawal penalties): within a technology and region the chance that
+                    # the upgrade cost comes in below value rises with the private-value draw, so the requests least
+                    # likely to complete are the lowest value ranks; a share of them is kept out
+                    rank = ndtr(zv[ii])
                     if b2106:
+                        cg = cong(t)
+                        vm = v0[ii] * np.exp(beta * sc)
+                        screen = rank >= max(p["screen_2106"], q_law)
+                        q_abs = p.get("q_abs_2106", 0.0)               # previous absolute screen (sensitivity only)
+                        if q_abs > 0:
+                            qv = cst["zero_share"] + (1 - cst["zero_share"]) * ndtr(
+                                (np.log(np.maximum(vm, 1e-9)) - np.log(cmed * cg)) / cst["sigma"])
+                            screen &= qv >= q_abs
                         fe = p["fee_mult_2106"] * cmean * cg             # fixed fee: a multiple of the expected cost
                         pl = (uloc[ii] < p["planned_share_2106"]) & (vm >= fe)
-                        ok &= pl | (qv >= max(p["q_min_2106"], q_law))
+                        ok &= pl | screen
                         planned[ii] = ok & pl; fee[ii] = fe
                     else:
-                        ok &= qv >= q_law
+                        ok &= rank >= q_law
                 entered[ii] = ok
                 cnt[t] += ok.sum()
         # throughput adapts to the arrival rate

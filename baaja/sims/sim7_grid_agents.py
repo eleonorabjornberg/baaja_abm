@@ -245,15 +245,18 @@ def run(n_runs, cal, res_dir, fig_dir, sweep_runs=None):
         sdata[key] = dict(low=lo, high=hi, diff_low=cells[0][0], diff_high=cells[1][0], law_low=cells[0][1], law_high=cells[1][1])
         srows.append([key + (" (current law)" if key in GRID_LAW else " (bill)"), f"{lo} / {hi}",
                       f"{cells[0][0]:+.1f} / {cells[1][0]:+.1f}", f"{cells[0][1]:.0f} / {cells[1][1]:.0f}", note])
-    # current law already screens requests (Order 2023 readiness deposits): both runs with an entry screen of 0.1
+    # current law already screens requests (Order 2023 readiness deposits): both runs screen out a 0.1 share; and the
+    # previous absolute Sec.2106 screen (enter only if P(cost <= value) >= 0.25), kept as a sensitivity
     scr = {}
-    for lab, q in (("none (central)", 0.0), ("0.1 (Order 2023 deposits)", 0.1)):
+    for lab, q, bo in (("current law: none; Sec.2106: relative 0.25 (central)", 0.0, {}),
+                       ("current law: 0.1 share screened (Order 2023 deposits)", 0.1, {}),
+                       ("Sec.2106: absolute screen at 0.25 (previous specification)", 0.0, dict(screen_2106=0.0, q_abs_2106=0.25))):
         Ls = run_set(dict(AG, q_min_law=q), ns, cal)[0]
-        Bs = run_set(dict(scen["BAAJA"], q_min_law=q), ns, cal)[0]
-        As = run_set(dict(scen["BAAJA, Sec.2106 adopted by every RTO"], q_min_law=q), ns, cal)[0]
+        Bs = run_set(dict(scen["BAAJA"], q_min_law=q, **bo), ns, cal)[0]
+        As = run_set(dict(scen["BAAJA, Sec.2106 adopted by every RTO"], q_min_law=q, **bo), ns, cal)[0]
         g = lambda R: np.array([ex.totals(x)["GW_new"] for x in R])
         scr[lab] = dict(law=float(g(Ls).mean()), baaja=float((g(Bs) - g(Ls)).mean()), every_rto=float((g(As) - g(Ls)).mean()))
-    t_scr = table(["current-law entry screen", "current law new GW", "BAAJA minus current law", "every RTO adopts Sec.2106"],
+    t_scr = table(["entry screens", "current law new GW", "BAAJA minus current law", "every RTO adopts Sec.2106"],
                   [[k, f"{v['law']:.0f}", f"{v['baaja']:+.1f}", f"{v['every_rto']:+.1f}"] for k, v in scr.items()])
     t_sens = table(["assumption", "low / high", "BAAJA minus current law, new GW", "current law new GW", "what it is"], srows)
 
@@ -326,9 +329,14 @@ def run(n_runs, cal, res_dir, fig_dir, sweep_runs=None):
         "the agents' current law and the exogenous model comes from cost growth.",
         t_sens,
         "### Current law with an entry screen",
-        "Order 2023 already requires readiness deposits and withdrawal penalties. The central current law has no "
-        "entry screen; this row gives both runs one (requests enter only if their chance of completing is at least "
-        "0.1), to show how much of Sec.2106's screening effect is already in place.",
+        "Sec.2106(a)(3)'s non-refundable security and withdrawal penalties are modelled as an entry screen: in an RTO "
+        "that changes its process, the share screen_2106 (central 0.25) of new requests least likely to complete, "
+        "ranked within their technology and region, do not enter. Order 2023 already requires readiness deposits and "
+        "withdrawal penalties; the second row screens out a 0.1 share in both runs, to show how much of Sec.2106's "
+        "screening effect is already in place. The third row is the previous specification, an absolute threshold "
+        "(enter only if the chance that upgrade cost comes in below value is at least 0.25). It was replaced after "
+        "the recalibration because that chance is in units the calibration moves: where a fitted value scale sits at "
+        "its lower bound, almost no request passes.",
         t_scr,
     ])
     data = dict(results={k: v for k, v in res.items()}, exogenous=res_exo,
