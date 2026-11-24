@@ -160,7 +160,10 @@ turnover, permitted projects not yet online are halted with probability by techn
   lambda, sigma)` are fitted by grid search on LBNL 2010-19 cohorts (MISO, CAISO, ERCOT each; other regions a pooled
   MISO+CAISO fit) to censoring-consistent medians and signed shares; 2020-24 cohorts are a holdout.
 - **Developer value and cost.** Value per kW lognormal [D: LBNL P(complete | upgrade cost)], scaled by technology and
-  region (`value_mult`, fitted so completion matches LBNL). Upgrade cost lognormal by region, with LBNL's share of
+  region (`value_mult`, fitted so completion matches LBNL). LBNL's fit, `P(complete | c) = a x (1 - Phi((ln c - mu) /
+  sigma))`, also gives a share `1 - a` of requests that do not complete at any cost (0.23 in RTO regions, 0.51 in the
+  Southeast and West); those requests get no value (`value_a`, on by default), so a zero-cost draw is not on its own a
+  route to completion. Upgrade cost lognormal by region, with LBNL's share of
   requests at zero cost paying nothing [D: LBNL cost studies], times `exp(kappa x (GW signed since 2026 - hosting
   room) / regional fleet GW)`. `kappa` is 0 / 2.17 / 5.14 (low / central / high): central is the median of MISO, SPP
   and PJM, the three cluster markets where LBNL costs rose between 2010-17 and 2018+ requests; high is PJM; low is 0,
@@ -169,7 +172,9 @@ turnover, permitted projects not yet online are halted with probability by techn
   allocate network upgrades to generators, and its LBNL costs are point-of-interconnection only.
 - **Decisions.** At the first study result (R = `restudy_months` before the agreement in cluster regions) a developer
   stays if cost <= value x exp(beta x change in scarcity); withdrawals raise the others' cost by `restudy_rho` x the
-  withdrawn MW share and they decide again at the agreement. A developer who leaves holds its queue position for an
+  withdrawn MW share, each remaining request's cost also changes by a lognormal factor (`restudy_mu`, `restudy_sd`),
+  and they decide again at the agreement. The four re-study values are fitted to SPP's DISIS results workbooks (nine
+  clusters, 2016-23, postings 2020-26; `data/spp_restudy.json`). A developer who leaves holds its queue position for an
   exponential time with regional mean `exit_lag` before the withdrawal is recorded.
 - **Entry.** Requests enter with probability `min(mult, 1)`, and extra candidate requests (up to `entry_max` x the base
   rate) enter with probability `(mult - 1) / (entry_max - 1)`, where `mult = (W_ref / W_pub)^entry_wait_elast x
@@ -178,7 +183,10 @@ turnover, permitted projects not yet online are halted with probability by techn
   supply assumptions, and is off in the backcast. Current law has no entry screen; Sim 7's sensitivity adds one
   (`q_min_law` = 0.1, the share of requests screened out, standing for Order 2023's readiness deposits) to both runs.
 - **Transmission.** Transmission projects through the same permitting and court pipeline; each completion adds
-  `tx_hosting_gw` of room in a region drawn by generation request shares. Only the bill's change in transmission
+  `tx_hosting_gw` of room in a region drawn by generation request shares. Transmission already approved under current
+  law (MISO LRTP Tranches 1 and 2.1, SPP 2025 ITP, PJM 2025 RTEP Window 1 at 500 kV and above; `data/planned_tx.json`)
+  adds room in its own region as it enters service, in both runs, counted in project-equivalents of $0.57 billion
+  (Tranche 1's cost per project); `planned_tx` = 0 leaves it out (Sim 7 sensitivity). Only the bill's change in transmission
   relative to current law (same draws) moves costs; the historical pace is in `kappa`.
 - **Bill.** Sec.2106 in RTOs that adopt (probability `adopt_2106`, drawn per RTO), from the rule month: a share
   `planned_share_2106` of new requests use a published location at a fixed fee (`fee_mult_2106` x the region's
