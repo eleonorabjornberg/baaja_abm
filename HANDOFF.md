@@ -4,10 +4,11 @@ Personal research project (not thesis work), aimed at a policy brief or paper: h
 Affordability and Jobs Act of 2026 (BAAJA, introduced 30 Sep 2026, passed by the Senate 19 Nov 2026), would change US electricity supply.
 
 ## State (23 Nov 2026)
-- Branch `claude/vibrant-carson-9aw3xo` carries all work (v5 from `claude/epic-carson-9rxakw`, plus Phases 0-3 below).
+- Branch `claude/vibrant-carson-9aw3xo` carries all work (v5 from `claude/epic-carson-9rxakw`, plus Phases 0-4 below).
 - `README.md` has the current results, data register and assumption register. `docs/bill_question_map.md` maps every
   bill section to the model (modelled / listed / out of scope). `data/SOURCES.md` lists every raw source.
-- Run: `pip install -r requirements.txt`, `python -m pytest -q`, `python run.py --all --runs 100`, `python run.py --uncertainty 400`, `python run.py --backcast`.
+- Run: `pip install -r requirements.txt`, `python -m pytest -q`, `python run.py --all --runs 100`, `python run.py --uncertainty 400`, `python run.py --backcast`, `python run.py --brief-figures`.
+- Write-up: `docs/brief.md` (brief) and `docs/ODD.md` (model description).
 
 ## Plan (agreed 23 Nov 2026)
 Headline result: **net supply and adequacy by region and year**. Architecture: **agents where it matters**: keep
@@ -19,7 +20,7 @@ the calibrated permitting and court pipeline; rebuild grid access as interacting
 | 1 | Supply accounting: 9 LBNL regions, EIA-860 fleet and retirements, NERC demand, firm capacity, reserve margins | done (see below) |
 | 2 | Grid access as agents: regional grid operators with study throughput and hosting room; developers who enter, stay or withdraw; transmission adds MW; Sec.2106/2103/2110/2101/2102/2109/2214 as mechanisms | done (see below) |
 | 3 | Joint uncertainty (Latin hypercube over all ranges), variance decomposition, regional backcast, post-2025 court scenario | done (see below) |
-| 4 | ODD model description, brief, figures | |
+| 4 | ODD model description, brief, figures | done (see below) |
 
 ## Phase 0 changes
 - **Sec.2213 compliance** (`comply_2213`, 0.25 / 0.5 / 1.0): the section's 30- and 90-day clocks have no sponsor
@@ -132,6 +133,18 @@ whenever `grid_cal` exists.
   requests fits LBNL by region at 12-36 months (agents); 2020-23 holdout mixed.
 - With the agents, current-law suits 2026-41 are 185 (exogenous 119): more requests stay alive to a federal decision.
   BAAJA's cut in suits is therefore larger in agents runs (-137 vs -81 for all data-sized provisions in Sim 2).
+
+## Phase 4 changes
+- `docs/ODD.md`: model description in ODD form (purpose and patterns, entities, process and scheduling, design
+  concepts, initialization, input data, submodels 7.1-7.8, reproducibility).
+- `docs/brief.md`: methods and results brief. Headline: +32 GW by 2041 [+14, +53] with grid agents (joint ranges
+  +7 to +77); +10 GW without Sec.2106; +52 GW if every RTO adopts. Shortfall -1.8 GW in 2035, -5.1 GW in 2041.
+  Also published as a shareable doc: https://claude.ai/artifact/38qM9go9z5Trbn4SVCNDF3 (private until shared).
+- Comparison with published estimates (all on the introduced text): Rhodium (RHG-NEMS, 2 Nov) 17-249 GW of clean
+  capacity through 2040, mid 56; RFF (ReEDS, 29 Oct) about 60 GW by 2028; SEIA 167 GW of solar 2028-35 (method not
+  published). They remove or reduce interconnection limits by assumption; here Sec.2106 is modelled, RTO-only, with
+  adoption drawn per RTO. With a pure study-time dial this model spans +8 to +190 GW, close to Rhodium's range.
+- `baaja/brief_figures.py` + `run.py --brief-figures` (also in `--all`): `figures/brief_1..5_*.png` from results JSON.
 
 ## Known issues carried forward
 - Grid agents: completed projects take too long from request to operation (a longer wait does not raise withdrawal,

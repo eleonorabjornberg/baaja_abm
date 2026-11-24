@@ -7,6 +7,10 @@ firm capacity to meet peak demand. Personal experiment, not peer reviewed.
 Parameters come from data wherever data exist; the rest are listed below as assumptions with ranges, and each
 simulation shows how its result moves across those ranges.
 
+**Write-up (Phase 4):** [`docs/brief.md`](docs/brief.md) is the methods and results brief, with figures, limits, a
+reproducibility note and a comparison with published estimates (Rhodium, RFF, SEIA). [`docs/ODD.md`](docs/ODD.md) is the
+full model description in ODD form (Grimm et al. 2020).
+
 ## The seven simulations
 Each one maps a research question to bill sections (`docs/bill_question_map.md`), runs paired against current law
 (same seeds and political draws), and reports renewable vs gas. Numbers: mean [5th, 95th percentile] over 100 runs.
@@ -296,6 +300,7 @@ python run.py --all --runs 100    # calibrate, backcast, seven simulations -> re
 python run.py --recalibrate-grid --sim 7 --runs 100   # refit the grid agents only, then Sim 7
 python run.py --uncertainty 400   # all assumption ranges at once -> results/uncertainty.md
 python run.py --backcast          # 2010-25 backcast, both grid models -> results/backcast.md
+python run.py --brief-figures     # figures for docs/brief.md from results/*.json -> figures/brief_*.png
 python run.py --sim 3 --runs 50   # one simulation, reusing results/calibration.json
 python -m pytest -q
 ```
@@ -304,4 +309,5 @@ python -m pytest -q
 `baaja/params.py` parameters, data hooks, assumption register · `baaja/model.py` engine · `baaja/calibrate.py` ·
 `baaja/experiments.py` paired runs, sweeps · `baaja/validation.py` 2010-25 backcast by region · `baaja/supply.py` fleet, demand, adequacy · `baaja/uncertainty.py`
 joint sampling · `baaja/grid.py` grid operators and developers (Phase 2) · `baaja/sims/` the seven simulations · `baaja/plots.py` ·
-`data/` extractors and JSON targets · `docs/bill_question_map.md` · `legacy/` v1 and the original v3.
+`baaja/brief_figures.py` figures for the brief · `data/` extractors and JSON targets · `docs/bill_question_map.md` · `docs/ODD.md` ·
+`docs/brief.md` · `legacy/` v1 and the original v3.
