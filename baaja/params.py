@@ -259,7 +259,7 @@ GRID_BILL = {
     "screen_2106":        (0.1, 0.25, 0.5, "Sec.2106(a)(3): share of requests that non-refundable security and withdrawal "
                            "penalties keep out, those least likely to complete within their technology and region [A; check: "
                            "LBNL 12-month withdrawal shares of 2015-19 requests in FERC RTOs run 0.14 (SPP) to 0.58 "
-                           "(CAISO), median about 0.29; Johnston, Liu and Yang find deposits deter mainly such quick "
+                           "(CAISO), median about 0.3; Johnston, Liu and Yang find deposits deter mainly such quick "
                            "leavers]"),
     "lag_2106":           (0.0, 0.5, 1.0, "Sec.2106(a)(3): months a developer holds its queue position after an "
                            "adverse study result, relative to current law, with a single decision point and withdrawal "

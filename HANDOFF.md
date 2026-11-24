@@ -138,7 +138,7 @@ whenever `grid_cal` exists.
 ## Phase 4 changes
 - `docs/ODD.md`: model description in ODD form (purpose and patterns, entities, process and scheduling, design
   concepts, initialization, input data, submodels 7.1-7.8, reproducibility).
-- `docs/brief.md`: methods and results brief. Headline: +32 GW by 2041 [+14, +53] with grid agents (joint ranges
+- `docs/brief.md` (Phase 4 version, superseded): methods and results brief. Headline: +32 GW by 2041 [+14, +53] with grid agents (joint ranges
   +7 to +77); +10 GW without Sec.2106; +52 GW if every RTO adopts. Shortfall -1.8 GW in 2035, -5.1 GW in 2041.
   Also published as a shareable doc: https://claude.ai/artifact/38qM9go9z5Trbn4SVCNDF3 (private until shared).
 - Comparison with published estimates (all on the introduced text): Rhodium (RHG-NEMS, 2 Nov) 17-249 GW of clean
@@ -162,7 +162,7 @@ Three reviewers challenged the Phase 4 brief. Fixes, in commits adb1f68 to 1e4f7
 - Storage in ERCOT is exempted from the calibration-tolerance test (value scale at its lower bound; 17% zero-POI-cost
   share against a 12% completion target).
 
-**Current results** (`docs/brief.md`, `README.md`): grid agents, current law 954 GW new by 2041 (exogenous 1,090).
+**Results at that point** (superseded below): grid agents, current law 954 GW new by 2041 (exogenous 1,090).
 BAAJA +21.9 GW [+7.5, +37.2] (renewables +14.9, gas +5.0, storage +2.0); no RTO adopts Sec.2106 +6.7; every RTO
 adopts +37.0; absolute screen -2.2. MISO +12.4, PJM about 0.5 (the relative screen keeps out PJM requests that would
 have completed). Joint ranges +26.5 [+4.9, +64.0]. Shortfall below reference margins, current law: 69 GW in 2035
@@ -200,7 +200,7 @@ Eleonora asked for the data behind the brief's limits to be downloaded. What cam
 **Current results** (supersede the two sections above): grid agents, current law 972 GW new by 2041. BAAJA +36.5 GW
 [+11.2, +60.5] (renewables +25.3, gas +6.4, storage +4.8); no RTO adopts +6.5; every RTO adopts +65.0 (no screen +72.1,
 absolute screen +41.0). MISO +20.2 (+39.1 every RTO), PJM +4.6 (+7.6). Single decision point +61.6 over BAAJA without
-Sec.2106 (every RTO); with a five-month re-study round Sec.2106 adds +34.2; with none +1.2. Joint ranges +37.7
+Sec.2106 (every RTO); with a five-month re-study round Sec.2106 adds +34.2; with none +1.1. Joint ranges +37.7
 [+4.6, +90.1]; realized adoption 54% of variance, Sec.2110 12%. Shortfall, current law 68 GW in 2035 and 112 in 2041;
 BAAJA cuts it by 4.9 [0.4, 9.7] in 2035 (9.0 every RTO). Backcast: agents 0.67 / 0.83 / 0.80 / 0.41 of EIA-860
 solar / wind / gas / storage 2018-25; regional log error 0.52 (exogenous 0.42).
@@ -211,7 +211,7 @@ solar / wind / gas / storage 2018-25; regional log error 0.52 (exogenous 0.42).
   (exogenous model 39-60), so the agents build only 0.41 (storage), 0.67 (solar) and 0.83 (wind) of EIA-860's
   2018-25 additions, most of the gap in CAISO and ERCOT; near-term current-law build with agents is conservative.
   In CAISO, ISO-NE and MISO the fitted hold after an adverse result reaches its 20-year bound (the data cannot
-  tell a long hold from never withdrawing); MISO's 60-month share stays high (0.75 vs 0.62). The 2020-23 withdrawal
+  tell a long hold from never withdrawing); MISO's 60-month share stays high (0.74 vs 0.62). The 2020-23 withdrawal
   holdout is mixed by region (PJM and CAISO withdraw less early in the data than the model; SPP, West and NYISO more).
   SPP and West use pooled operator settings. ERCOT's LBNL withdrawal shares are probably too low (thin early data).
 - Simulation intervals in Sims 1-7 are seed noise at central values; `results/uncertainty.md` has the joint ranges.

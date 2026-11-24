@@ -37,7 +37,7 @@ Sim 7): renewables 657 GW, gas 178 GW, storage 255 GW (relicensed hydro excluded
 **Everything in the bill that the data can size** (Sims 1, 2, 4 together, central values): **+8.0 GW of new
 capacity** [+6.1, +9.6] (+9.7 GW with relicensed hydro): renewables +6.6 GW, gas +1.0 GW, storage +0.3 GW. That is
 under 1% more capacity than current law, about 6:1 renewables to gas. Across all assumption ranges at once:
-**+8.0 GW [+4.6, +13.1]**. If 2025's request mix continues, renewables +4.6 GW and gas +2.4 GW (about 2:1).
+**+8.0 GW [+4.6, +13.1]**. If 2025's request mix continues, renewables +4.5 GW and gas +2.3 GW (about 2:1).
 
 Change from the 20 Nov version (+15 GW, renewables +11.2): Sec.2213's deadlines are no longer assumed always met
 (-3.9 GW renewables), and the Senate-passed Sec.1401 protects permits less (-0.4 GW).
@@ -135,25 +135,25 @@ with an agent-based queue that sizes the bill's actual mechanisms (below).
      of 972 GW, against +8.0 GW with the exogenous grid.
    - **If no RTO adopts Sec.2106: +6.5 GW [+4.6, +8.3]; if every RTO adopts: +65.0 GW [+57.7, +71.1].** Sec.2109's
      hosting room adds about +3.8 GW in the central case; a 25% Sec.2110 throughput gain brings it to +57.5 GW. Without
-     the approved transmission, current law is 948 GW and the central gain +24.7 GW.
+     the approved transmission, current law is 948 GW and the central gain +24.7 GW (against 973 and +29.3 in the same 20 runs).
    - The entry screen in 2106(a)(3) keeps out the quarter of new requests least likely to complete within their
-     technology and region (range 10-50%; LBNL's 12-month withdrawal shares of 2015-19 requests have a median of 0.29
+     technology and region (range 10-50%; LBNL's 12-month withdrawal shares of 2015-19 requests have a median of about 0.3
      across RTOs). This relative screen replaced an absolute probability threshold after the results were seen. Every
      RTO adopts: no screen +72.1 GW, relative +65.0, absolute +41.0 (p = 0.5: +41.0 / +36.5 / +23.9; 100 paired runs,
      `results/sec2106_decomposition.md`). Keeping out half the requests gives +15.0 GW; a tenth, +32.6 GW (20 runs).
    - What Sec.2106 does (every RTO adopts, `python run.py --decomposition`): the single decision point adds +61.6 GW
-     over BAAJA without Sec.2106, published locations +4.1, the relative screen -7.1. The single decision point is
+     over BAAJA without Sec.2106, published locations +4.0, the relative screen -7.1. The single decision point is
      worth that much because it removes the current-law re-study round. With costs unchanged by re-study Sec.2106 adds
      +43.1 GW; with a five-month round (Order No. 2023's 150-day restudy deadline) +34.2 GW; with no re-study round
-     +1.2 GW. Titles I-II alone (no Sec.2106, no Sec.2109) give +3.0 GW.
+     +1.1 GW. Titles I-II alone (no Sec.2106, no Sec.2109) give +3.0 GW.
    - Timing: the gain is +0.3 GW in 2030 and +19.0 GW in 2035, because the rules apply to studies from month 36.
-   - Most of the gain is in **MISO** (+20.2 GW; +39.1 GW if every RTO adopts; about two thirds of the Sec.2106
+   - Most of the gain is in **MISO** (+20.2 GW; +39.1 GW if every RTO adopts; 62-64% of the Sec.2106
      increment). With PJM's study throughput relative to arrivals (0.97 against MISO's fitted 0.59), MISO's every-RTO
      gain is +24.7 GW. PJM gains +4.6 GW (+7.6 if every RTO adopts, +15.4 without the screen).
    - **Adequacy**: BAAJA cuts the 2035 national shortfall by 4.9 GW [0.4, 9.7] (5.3 GW in 2041); 9.0 GW if every RTO
      adopts. With agents, the current-law shortfall is **68 GW in 2035** and 112 GW in 2041, mostly PJM (56 GW in 2035).
    - The current-law level is uncertain: the growth of upgrade cost with capacity signed (`kappa`, from LBNL cost
-     data) moves current-law GW from 900 to 1,060 (central 972) and BAAJA's gain from +25.4 to +35.0 GW (20 runs).
+     data) moves current-law GW from 900 to 1,060 (central 973 in these 20 runs) and BAAJA's gain from +25.4 to +35.0 GW (20 runs).
    - Fit: see Validation and `results/backcast.md`. Storage in ERCOT now fits (0.145 vs 0.117 completion); geothermal
      outside the West misses (0.20 vs 0.14); five value scales sit at a bound of their range.
 
@@ -186,7 +186,7 @@ on the same requests; EIA-860 additions by region use nameplate capacity (region
   in CAISO and ERCOT and is the same gap as "completed projects are not selected for short waits" (known limits).
 - **Withdrawal timing of 2015-19 requests** (fitted at 12, 36 and 60 months): the agents match LBNL by region within
   0.01 at 12 and 36 months, and within 0.07 at 24 months (not fitted). At 60 months MISO is 0.74 vs 0.62 even with its
-  hold at the bound (CAISO, ISO-NE and MISO hold at the 240-month bound). The exogenous model withdraws about 65% of requests by month 12 everywhere (data 9-58%).
+  hold at the bound (CAISO, ISO-NE and MISO hold at the 240-month bound). The exogenous model withdraws 0.42-0.73 of requests by month 12 (data 0.09-0.58).
 - **Holdout (2020-23 requests, used in no fit)** is mixed: the agents withdraw too fast in CAISO (0.59 vs 0.12 by month
   12) and PJM (0.30 vs 0.13), too slowly in NYISO (0.40 vs 0.72) and the West (0.09 vs 0.33). PJM's own queue file
   confirms LBNL's shift (0.28 of 2015-19 requests withdrawn within 12 months, 0.11 of 2020-23 requests).
@@ -206,7 +206,7 @@ on the same requests; EIA-860 additions by region use nameplate capacity (region
 | interconnection bracket for Sec.2106 | LBNL request -> agreement times, ERCOT vs CAISO/MISO | `extract_interconnection_benchmark.py` |
 | late-stage completion, planned pipeline | EIA-860M Dec 2021 and Sep 2026 | `extract_eia860m.py` |
 | right-of-way intake time (filing -> NEPA notice) | BLM MLRS solar development grants with filing dates (459 cases; 60 clean base cases) | `extract_mlrs_filing.py` |
-| BLM solar right-of-way outcomes (check) | BLM MLRS solar development grants (741 cases): 9.6% of resolved applications authorized vs 8.7% model completion for federal-nexus solar | `extract_mlrs.py` |
+| BLM solar right-of-way outcomes (check) | BLM MLRS solar development grants (741 cases): 9.6% of resolved applications authorized vs 8.9% model completion for federal-nexus solar | `extract_mlrs.py` |
 | wind habitat conservation plans | Dryad doi:10.5061/dryad.59zw3r2kf file list x EIA-860 | `extract_wind_hcp.py` |
 | federal actions against wind/solar 2025-26 | Sabin Climate Backtracker | `extract_backtracker.py` |
 | state vs federal venue of renewable opposition | Sabin Center 2026 contested projects and restrictions | `extract_permits_opposition.py` |

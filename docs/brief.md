@@ -28,26 +28,26 @@ decision point removes. In the model it removes the current-law re-study round, 
 studies for 2016-23: agreements came a median of 17 months after the first complete study result, and the upgrade
 costs of the requests that stayed moved by a median of -8% with a wide spread. With that round, Sec.2106 is worth
 58.6 GW if every RTO changes its process. If re-studies took the 150 days that FERC Order No. 2023 now requires, it
-would be worth 34.2 GW, and with no re-study round under current law, 1.2 GW (section 4.5). The third is
+would be worth 34.2 GW, and with no re-study round under current law, 1.1 GW (section 4.5). The third is
 the entry screen that stands for the non-refundable security. With every RTO changing its process, the bill adds
 72.1 GW with no screen, 65.0 GW with the relative screen used here, and 41.0 GW with the absolute threshold I first
 specified. I changed from the absolute to the relative version after seeing results (section 2). Drawing the
 assumption ranges of section 5 together, with the relative screen and the calibration held fixed, gives a median of
 37.7 GW [4.6, 90.1] (5th-95th percentile of 400 joint samples).
 
-These numbers are higher than in my previous draft (21.9 GW central, 37.0 GW with every RTO), for two reasons. I
+These numbers are higher than in my previous draft (21.9 GW central, 37.0 GW with every RTO), for three reasons. I
 replaced my assumed re-study round (a six-month round with a cost rise of 0.3 per withdrawn share) with the SPP fit,
 and I added the share of requests that LBNL's own fit says fail at any cost, which corrected how the model reads PJM's
 cost data. Transmission that MISO, SPP and PJM have already approved is now in both runs and adds about 4.6 GW to the
-central gain.
+central gain (29.3 against 24.7 GW in 20 paired runs).
 
 Little changes before the early 2030s. The model assumes reformed interconnection studies start about three years
 after enactment (range two to four; the bill gives FERC 18 months for the rule and RTOs two years from enactment to
 file, and under Order No. 2023 the first compliance orders came 20 to 24 months after the rule), and that requests
 already in the queue keep their current terms. By 2030 the bill has added 0.3 GW; by 2035, 19.0 GW.
 
-The gain is concentrated in MISO, with 20.2 of the 36.5 GW, and MISO accounts for about two thirds of what Sec.2106
-adds, so the result is close to a question about whether MISO's process changes. MISO gains because its fitted study
+The gain is concentrated in MISO, with 20.2 of the 36.5 GW, and MISO accounts for 62% of what Sec.2106
+adds (64% if every RTO changes its process), so the result is close to a question about whether MISO's process changes. MISO gains because its fitted study
 capacity falls short of the requests arriving; with PJM's ratio of study capacity to arrivals, MISO's gain with every
 RTO changing falls from 39.1 to 24.7 GW. PJM gains 4.6 GW in the central case and 7.6 GW if every RTO changes its
 process; without the entry screen it would gain 15.4 GW. ERCOT is outside FERC's rate and interconnection
@@ -160,7 +160,7 @@ region's expected upgrade cost, so requests at a published location face no cost
 requests are exempt from the screen; and the security in (B) is represented as an entry screen, applied before costs
 are known, while the penalty in (C), which applies once costs are known, is not modeled separately. Within each
 technology and region, the quarter of new requests least likely to complete (range a tenth to a half) do not enter.
-A quarter is close to the median share of 2015-19 requests that RTOs saw withdrawn within a year (median 0.29 across the six
+A quarter is close to the median share of 2015-19 requests that RTOs saw withdrawn within a year (median about 0.3 across the six
 FERC-jurisdictional RTOs in LBNL's data, from 0.14 in SPP to 0.58 in CAISO), the requests that Johnston, Liu and Yang
 (2023, revised 2026) find higher entry costs deter. For PJM they find that higher queue-entry costs have little effect
 on completed capacity (-1.2% to +0.8%) or on waiting time, because they mainly deter requests that would have left
@@ -194,7 +194,7 @@ All inputs are public. Sources, retrieval dates and file hashes are in `data/SOU
 
 - Interconnection: LBNL *Queued Up* workbook (requests through 2025) and LBNL interconnection-cost studies for MISO,
   PJM, SPP, NYISO, ISO-NE and non-ISO balancing areas (used for the Southeast and West). SPP's DISIS results
-  workbooks for clusters 2016-1 to 2023-1, every posting (the re-study round). PJM's planning-queue export and ERCOT's
+  workbooks for clusters 2016-2 to 2023-1, every posting (the re-study round). PJM's planning-queue export and ERCOT's
   monthly Generator Interconnection Status reports (December 2018-2025 and October 2026), used as checks. The CAISO,
   MISO and NYISO queue files were downloaded for cross-checks but are not used.
 - Transmission plans: MISO MTEP25 Chapter 2 (Long Range Transmission Planning), SPP's 2025 Integrated Transmission
@@ -243,7 +243,7 @@ standard for all six and FERC treated them alike in 2025, so the central row's s
 all-or-nothing outcomes. The simpler model, with study times drawn from history and Sec.2106 and Sec.2110 set to
 zero, gives +8.0 GW [+6.1, +9.6] for the permitting, court and certainty provisions, and has no Sec.2109. With the
 grid agents the same provisions give 3.0 GW. The first row's total is close to the simpler model's by coincidence;
-on the provisions the two models share they differ by a factor of almost three.
+on the provisions the two models share they differ by a factor of 2.7.
 
 Part of the gain is timing. With every RTO changing its process, new requests in RTO regions add 62.3 GW online by
 November 2041, but only 48.4 GW more of them ever complete; the difference, about 14 GW, would have come online after
@@ -265,7 +265,7 @@ The bill adds under 1 GW before 2033. The permitting and court provisions add a 
 The model applies Sec.2106 only to requests made after reformed studies start (late 2029 in the central case, an
 assumption; the statute is silent on requests already queued), and the first of those come online in 2033.
 Current-law additions peak at 115 GW in 2029, while the queue standing at the end of 2025 is being built, then
-settle at 50 to 62 GW a year. The peak is about twice the largest year in EIA-860 for these technologies (57.5 GW in
+settle at 50 to 62 GW a year. The peak is about twice the largest year in EIA-860 for these technologies (57.6 GW in
 2025); the model puts no supply-chain or labor limit on construction.
 
 ### 4.3 Where
@@ -276,7 +276,7 @@ Of the 36.5 GW in the central case, 20.2 GW is in MISO; if every RTO changes its
 65.0 GW. ERCOT, the Southeast and the non-ISO West gain 0.5 to 1.7 GW each from the provisions that apply everywhere.
 
 MISO's share comes from its queue. Its fitted study capacity at the end of 2025 is 0.59 of the requests arriving,
-against 0.97 in PJM, so in MISO requests wait longest and a faster process and fewer entrants both shorten the queue.
+against 0.97 in PJM, so MISO's ratio is among the lowest and a faster process and fewer entrants both shorten the queue.
 With PJM's ratio, MISO's gain with every RTO changing its process falls from 39.1 to 24.7 GW
 (`results/sec2106_decomposition.json`).
 
@@ -316,7 +316,7 @@ what the rest of Sec.2106 adds. Keeping out a tenth gives +32.6 GW.
 ### 4.5 What the single decision point does
 
 Taking Sec.2106 apart, with every RTO changing its process (`results/sec2106_decomposition.json`, 100 paired runs),
-the single decision point alone adds 61.6 GW over the bill without Sec.2106, published locations add 4.1 GW more, and
+the single decision point alone adds 61.6 GW over the bill without Sec.2106, published locations add 4.0 GW more, and
 the relative screen takes 7.1 GW away, for 58.6 GW in all. Published locations add little because the fee is set at
 the region's expected upgrade cost, which with skewed costs is more than most requests would pay, so few use them; a
 published location is presumably one with room, and its fee could be lower.
@@ -325,7 +325,9 @@ The single decision point is worth so much because of what it removes. Under cur
 model has one re-study round fitted to SPP (section 2): the costs of the requests that stay rise by 0.1 times the
 share of capacity that withdrew, each one's cost also moves by its own factor (median -8%, spread 0.6 in logs), and
 the agreement comes 17 months after the first result. Requests whose re-studied cost exceeds their value leave, and
-those that stay wait. The table changes the round in current law and in the bill alike.
+those that stay wait. The table changes the round in current law and in the bill alike. Current law is the same
+972 GW with a 17-month and a five-month round because the time to agreement is fitted to LBNL's data either way; a
+shorter round places the first result later, closer to the agreement, so the single decision point saves fewer months.
 
 | current-law re-study round (law and bill) | current law GW | no RTO changes | every RTO, single decision point only | every RTO, full Sec.2106 | central (p = 0.5) |
 |---|---|---|---|---|---|
@@ -337,7 +339,7 @@ those that stay wait. The table changes the round in current law and in the bill
 
 The cost changes at re-study and the waiting each account for part of the effect. Without the request-level cost
 changes, Sec.2106 adds 48.6 GW with every RTO changing its process; with costs unchanged by re-study, 43.1 GW; with a
-five-month round, 34.2 GW; with no re-study round at all, 1.2 GW. The SPP fit is the only data behind the
+five-month round, 34.2 GW; with no re-study round at all, 1.1 GW. The SPP fit is the only data behind the
 round, and it covers clusters studied before Order No. 2023 set a 150-day restudy deadline. Whether RTOs will meet
 the new deadline is not yet known (Order No. 2023 also set penalties of $1,000 to $2,500 per business day for late
 studies, capped at the study deposits), so I keep the measured 17 months as the central value and the 150-day deadline as the low end of the range. The model also lets the
@@ -533,7 +535,7 @@ implementation fixed, so the overlap at its low end says little. Against RFF's f
    includes executive actions that impede wind, which its policy cases remove; this model's current law has a
    residual risk of federal halts that Sec.1401 reduces. Rhodium did not model the permit-certainty provisions. It
    calls its results conservative because it also left out the geothermal, advanced-transmission-technology and VPP
-   provisions; Sec.2109 alone adds 3.5 GW here if no RTO changes its process and 3.8 GW in the central case.
+   provisions; Sec.2109 alone adds about 3.5 GW here if no RTO changes its process and 3.8 GW in the central case.
 3. Interconnection. All three studies set the extent of interconnection relief by assumption: RFF removes its
    baseline limits, Rhodium reduces barriers by a chosen amount, and this model assumes which RTOs change their
    process, what the change removes and how strictly they screen. RFF reports that its results are robust to its
@@ -570,7 +572,7 @@ suggests their outcomes move together. Under Order No. 2023, FERC accepted the c
 NYISO, PJM and SPP in part, each with further filings due, and let each keep its existing cluster process (FERC 2025a-e;
 2026). If FERC treats Sec.2106 the same way, the no-RTO and every-RTO cases are more likely than independent draws
 imply, so the central 36.5 GW is less likely than the spread around it. MISO's compliance order could not be
-retrieved, and MISO carries about two thirds of the Sec.2106 effect; its gain depends on its fitted shortfall of study
+retrieved, and MISO carries 62 to 64% of the Sec.2106 effect; its gain depends on its fitted shortfall of study
 capacity persisting to 2041.
 
 The re-study round. The fitted round comes from one RTO, SPP, and from clusters studied before Order No. 2023 took
@@ -713,7 +715,7 @@ https://seia.org/research-resources/baaja-impact-on-the-electricity-sector/
 Southwest Power Pool (2025). *2025 Integrated Transmission Plan Report.* Little Rock, AR: SPP.
 https://spp.org/documents/75192/2025%20integrated%20transmission%20plan%20report.pdf
 
-Southwest Power Pool (2020-26). Definitive Interconnection System Impact Study results, clusters DISIS-2016-001 to
+Southwest Power Pool (2020-26). Definitive Interconnection System Impact Study results, clusters DISIS-2016-002 to
 DISIS-2023-001. https://opsportal.spp.org/Studies/Gen
 
 Windrum, P., Fagiolo, G. and Moneta, A. (2007). Empirical validation of agent-based models: alternatives and
