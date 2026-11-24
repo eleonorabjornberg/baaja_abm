@@ -245,8 +245,9 @@ GRID_LAW = {
                          "cost rose most may have left]"),
     "restudy_sd":       (0.3, 0.6, 1.0, "re-study: spread (s.d. of log change) of a remaining request's upgrade cost "
                          "[D: SPP, interquartile range / 1.349 = 0.62; low = one posting step, 0.31; high = s.d., 0.97]"),
-    "restudy_months":   (10, 17, 29, "months from first complete study result to agreement in cluster regions [D: SPP, "
-                         "Phase 2 to latest restudy posting, median of 8 clusters 16.8, range 10.5-28.7]"),
+    "restudy_months":   (5, 17, 29, "months from first complete study result to agreement in cluster regions [D: SPP, "
+                         "Phase 2 to latest restudy posting, median of 8 clusters 16.8, high 28.7; low 5 = Order No. "
+                         "2023's 150-day cluster restudy deadline, which SPP's 2016-23 clusters predate]"),
     "tx_hosting_gw":    (0.5, 1.5, 3.0, "GW of interconnection room added by one transmission project"),
 }
 GRID_BILL = {

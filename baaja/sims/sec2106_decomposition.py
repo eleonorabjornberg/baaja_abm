@@ -100,7 +100,7 @@ def _cases(cal):
     flat = dict(restudy_rho=0.0, restudy_mu=0.0, restudy_sd=0.0)
     for tag, x in (("B no cost shock (sd=0, mu=0)", dict(restudy_mu=0.0, restudy_sd=0.0)),
                    ("B costs unchanged by re-study", flat),
-                   ("B months=6 (previous assumption)", dict(restudy_months=6)),
+                   ("B months=5 (Order No. 2023 restudy deadline)", dict(restudy_months=5)),
                    ("B no re-study round", dict(flat, restudy_months=0))):
         law(tag, x)
         for name, o in (("without Sec.2106", dict(EV, grid_2106=False)),
@@ -192,7 +192,7 @@ def report(res):
     t_a = table(["case (every RTO adopts unless p=0.5)", "BAAJA minus current law, new GW", "of which Sec.2106",
                  "RTO regions, GW"], rows_a)
     rows_b = []
-    for tag in ("B no cost shock (sd=0, mu=0)", "B costs unchanged by re-study", "B months=6 (previous assumption)",
+    for tag in ("B no cost shock (sd=0, mu=0)", "B costs unchanged by re-study", "B months=5 (Order No. 2023 restudy deadline)",
                 "B no re-study round"):
         L = res[f"{tag}|law"]["GW_new"]["mean"]
         g = lambda nm: res[f"{tag}|{nm}"]["diff_GW_new"]["mean"]
