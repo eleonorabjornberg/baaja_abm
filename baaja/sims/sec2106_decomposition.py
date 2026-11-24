@@ -5,7 +5,8 @@ draws and assumption changes. Writes results/sec2106_decomposition.md|json.
 
   A. Sec.2106 by component (every RTO adopts): single decision point (the re-study round removed), published locations,
      entry screen (relative, absolute, none); and the same screens with each RTO adopting with p = 0.5.
-  B. The current-law re-study round turned down in law and bill alike (restudy_rho, restudy_months).
+  B. The current-law re-study round turned down in law and bill alike (restudy_rho, restudy_mu, restudy_sd,
+     restudy_months).
   C. PJM's upgrade-cost distribution given MISO's zero-cost share or MISO's spread; MISO given PJM's study throughput.
   D. Permitting and courts only (Sec.2106 and Sec.2109 off) with grid agents.
   E. More or sooner: RTO capacity online by Nov 2041 against capacity that ever completes.
@@ -96,9 +97,11 @@ def _cases(cal):
                     ("p=0.5: absolute screen", dict(B, screen_2106=0.0, q_abs_2106=0.25))):
         bill("A", name, o)
     # B. re-study round
-    for tag, x in (("B rho=0", dict(restudy_rho=0.0)), ("B months=1", dict(restudy_months=1)),
-                   ("B rho=0, months=1", dict(restudy_rho=0.0, restudy_months=1)),
-                   ("B months=0", dict(restudy_months=0))):
+    flat = dict(restudy_rho=0.0, restudy_mu=0.0, restudy_sd=0.0)
+    for tag, x in (("B no cost shock (sd=0, mu=0)", dict(restudy_mu=0.0, restudy_sd=0.0)),
+                   ("B costs unchanged by re-study", flat),
+                   ("B months=6 (previous assumption)", dict(restudy_months=6)),
+                   ("B no re-study round", dict(flat, restudy_months=0))):
         law(tag, x)
         for name, o in (("without Sec.2106", dict(EV, grid_2106=False)),
                         ("single decision point only", dict(EV, screen_2106=0.0, planned_share_2106=0.0)),
@@ -189,13 +192,14 @@ def report(res):
     t_a = table(["case (every RTO adopts unless p=0.5)", "BAAJA minus current law, new GW", "of which Sec.2106",
                  "RTO regions, GW"], rows_a)
     rows_b = []
-    for tag in ("B rho=0", "B months=1", "B rho=0, months=1", "B months=0"):
+    for tag in ("B no cost shock (sd=0, mu=0)", "B costs unchanged by re-study", "B months=6 (previous assumption)",
+                "B no re-study round"):
         L = res[f"{tag}|law"]["GW_new"]["mean"]
         g = lambda nm: res[f"{tag}|{nm}"]["diff_GW_new"]["mean"]
         rows_b.append([tag[2:], f"{L:.0f}", f"{g('without Sec.2106'):+.1f}", f"{g('single decision point only'):+.1f}",
                        f"{g('full Sec.2106'):+.1f}", f"{g('p=0.5'):+.1f}"])
     g0 = lambda nm: A(nm)["diff_GW_new"]["mean"]
-    rows_b.insert(0, ["central (rho 0.3, 6 months)", f"{law:.0f}", f"{g0('without Sec.2106'):+.1f}",
+    rows_b.insert(0, ["central (rho 0.1, mu -0.08, sd 0.6, 17 months)", f"{law:.0f}", f"{g0('without Sec.2106'):+.1f}",
                       f"{g0('single decision point only'):+.1f}", f"{g0('+ relative screen (central)'):+.1f}",
                       f"{g0('p=0.5: relative screen (central)'):+.1f}"])
     t_b = table(["current-law re-study round (law and bill)", "current law new GW", "without Sec.2106",
@@ -230,13 +234,14 @@ def report(res):
         f"Mean [5th, 95th percentile] across {n} paired runs; every case is paired with current law under the same seeds, "
         "political draws and assumption changes. New capacity excludes relicensed hydro. GW online by Nov 2041.",
         "## A. Sec.2106 by component",
-        "The single decision point removes the current-law re-study round (withdrawals raise the cost of those who stay, "
-        "restudy_rho, and add restudy_months before agreement). Published locations add a share of requests at sites "
+        "The single decision point removes the current-law re-study round (the cost of those who stay moves with the "
+        "withdrawn share, restudy_rho, and by a request-level shock, restudy_mu and restudy_sd, and the agreement comes "
+        "restudy_months later). Published locations add a share of requests at sites "
         "the provider has studied, at a fixed fee. The entry screen keeps out the requests least likely to complete.",
         t_a,
         "## B. The current-law re-study round",
-        "Both current law and the bill change. With no re-study penalty under current law, Sec.2106's single decision "
-        "point has little to remove.",
+        "Both current law and the bill change. With no re-study round under current law, Sec.2106's single decision "
+        "point has nothing to remove.",
         t_b,
         "## By region: the entry screen",
         t_r,

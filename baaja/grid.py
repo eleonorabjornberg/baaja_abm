@@ -13,7 +13,8 @@ Agents, one set per LBNL region:
   Developer       each request has a private value per kW, lognormal [D: LBNL cost data, P(complete | upgrade cost)].
                   At its study result it learns its network-upgrade cost (lognormal by region [D]) and stays only if
                   cost <= value. In cluster regions under current law the result comes R months before the agreement;
-                  withdrawals raise the cost of those who stay (re-study, by rho x the withdrawn MW share) and they
+                  in between, a re-study moves the cost of those who stay, by rho x the withdrawn MW share and a
+                  request-level shock exp(mu + sd z) (both fitted to SPP's successive cluster postings), and they
                   decide again. New requests enter in response to the published wait and to regional scarcity.
   Transmission    projects (the model's transmission type, through permitting and courts as before) add hosting
                   room when they reach operation; upgrade costs rise with capacity signed since 2026 net of that room.
@@ -292,7 +293,8 @@ def run_agents(states, p, seed, hostile_to):
     n = len(F["t0"])
     Zv, Zc, Uc0, Zs, Uloc, Uacc = (g.normal(0, 1, n), g.normal(0, 1, n), g.random(n), g.normal(0, 1, n),
                                    g.random(n), g.random(n))
-    Elag = g.exponential(1.0, n)                                   # drawn last: earlier draws unchanged
+    Elag = g.exponential(1.0, n)                                   # drawn after the others: earlier draws unchanged
+    Zr = g.normal(0, 1, n)                                         # re-study cost shock (added later, drawn last)
     ctx = _supply_context()
     onpk = np.array([ctx["onpeak"][states[i]["name"]] for i in gen_idx])[np.searchsorted(gen_idx, F["typ"])]
     tx = _tx_counts(states, p, hostile_to, u_txreg, T_ext) if p["tx_hosting_gw"] > 0 else None
@@ -304,7 +306,7 @@ def run_agents(states, p, seed, hostile_to):
     for r in range(len(REGIONS)):
         idx = np.where(F["region"] == r)[0]
         if len(idx):
-            _region(r, idx, F, out, p, ops[REGIONS[r]], dict(Zv=Zv, Zc=Zc, Uc0=Uc0, Zs=Zs, Uloc=Uloc, Uacc=Uacc, Elag=Elag),
+            _region(r, idx, F, out, p, ops[REGIONS[r]], dict(Zv=Zv, Zc=Zc, Uc0=Uc0, Zs=Zs, Uloc=Uloc, Uacc=Uacc, Elag=Elag, Zr=Zr),
                     onpk, ctx, tx, u_adopt[r], T, T_ext, backcast, h_pre.get(REGIONS[r]), lag.get(REGIONS[r], 0.0))
     # ---- write back, drop non-entrants ----
     pos = 0
@@ -345,7 +347,9 @@ def _region(r, idx, F, out, p, op, U, onpk, ctx, tx, u_adopt, T, T_ext, backcast
     C, serial, d, lam, sig = op["C"], op["serial"], op["d"], op["lam"], op["sig"]
     cst, val = COST[r], VALUE[r]
     cmed = np.exp(cst["mu"])
-    zv, zc, uc0, zs, uloc, uacc = (U[k][idx] for k in ("Zv", "Zc", "Uc0", "Zs", "Uloc", "Uacc"))
+    zv, zc, uc0, zs, uloc, uacc, zr = (U[k][idx] for k in ("Zv", "Zc", "Uc0", "Zs", "Uloc", "Uacc", "Zr"))
+    # re-study: each remaining request's cost moves by exp(mu + sd z) [D: SPP DISIS postings, Phase 2 to latest]
+    shock = np.exp(p["restudy_mu"] + p["restudy_sd"] * zr)
     v0 = np.exp(val["mu"] + val["sigma"] * zv) * F["vmult"][idx]   # private value, $/kW (technology x region scale)
     # cost relative to the regional median of non-zero costs; LBNL's zero-cost share pays nothing
     craw = np.where(uc0 < cst["zero_share"], 0.0, np.exp(cst["sigma"] * zc))
@@ -422,7 +426,7 @@ def _region(r, idx, F, out, p, op, U, onpk, ctx, tx, u_adopt, T, T_ext, backcast
             sign(stay1, t_sign); cost[alive1] = c[alive1]; return
         tot = mw[alive1].sum()
         wsh = mw[alive1 & ~stay1].sum() / tot if tot > 0 else 0.0
-        c2 = np.where(planned, c, c * (1 + p["restudy_rho"] * wsh))
+        c2 = np.where(planned, c, c * (1 + p["restudy_rho"] * wsh) * shock)
         alive2 = stay1 & (W >= t_sign - t0)
         stay2 = alive2 & ((c2 <= vm) | planned)
         gwd[alive2 & ~stay2] = (t_sign + lag)[alive2 & ~stay2]

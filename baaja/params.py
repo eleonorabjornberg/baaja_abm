@@ -233,8 +233,17 @@ GRID_LAW = {
                          "growth of network-upgrade cost with capacity signed, per share of the regional fleet [D: LBNL "
                          "cost data, 2018+ vs 2010-17 requests; central = median of MISO, SPP, PJM, high = PJM, low = 0; "
                          "not ERCOT]"),
-    "restudy_rho":      (0.1, 0.3, 0.6, "re-study: cost rise for remaining requests per unit withdrawn MW share"),
-    "restudy_months":   (3, 6, 12, "months from first study result to agreement in cluster regions (re-study, facilities)"),
+    # re-study round [D: SPP DISIS results workbooks, 9 clusters 2016-23, postings 2020-26; data/spp_restudy.json]
+    "restudy_rho":      (0.0, 0.1, 0.6, "re-study: cost change for remaining requests per unit withdrawn MW share [D: SPP, "
+                         "slope of cluster cost ratio on withdrawn share through the origin, 0.11, s.e. about 0.8; "
+                         "zero not excluded]"),
+    "restudy_mu":       (-0.4, -0.08, 0.0, "re-study: median log change in a remaining request's upgrade cost [D: SPP, "
+                         "Phase 2 to latest posting, -0.08; low = mean among changed, -0.39; high 0: requests whose "
+                         "cost rose most may have left]"),
+    "restudy_sd":       (0.3, 0.6, 1.0, "re-study: spread (s.d. of log change) of a remaining request's upgrade cost "
+                         "[D: SPP, interquartile range / 1.349 = 0.62; low = one posting step, 0.31; high = s.d., 0.97]"),
+    "restudy_months":   (10, 17, 29, "months from first complete study result to agreement in cluster regions [D: SPP, "
+                         "Phase 2 to latest restudy posting, median of 8 clusters 16.8, range 10.5-28.7]"),
     "tx_hosting_gw":    (0.5, 1.5, 3.0, "GW of interconnection room added by one transmission project"),
 }
 GRID_BILL = {
