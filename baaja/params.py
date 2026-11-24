@@ -261,7 +261,7 @@ GRID_BILL = {
     "hosting_2109":       (0.0, 0.1, 0.3, "Sec.2109: extra hosting room per transmission project (advanced "
                            "transmission technologies)"),
 }
-GRID_BASE = dict(grid="exogenous", grid_cal=None, region_by_year=False, entry_max=2.0, scarcity_ahead=48,
+GRID_BASE = dict(grid="exogenous", value_a=True, planned_tx=1.0, grid_cal=None, region_by_year=False, entry_max=2.0, scarcity_ahead=48,
                  q_min_law=0.0,     # current-law entry screen, share screened out (relative): 0 central; 0.1 in Sim 7's sensitivity (Order 2023 deposits)
                  q_abs_2106=0.0,    # previous absolute Sec.2106 screen (min P(cost <= value) to enter): sensitivity only
                  **{k: v[1] for k, v in GRID_LAW.items()},

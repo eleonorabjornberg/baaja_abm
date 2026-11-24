@@ -63,6 +63,23 @@ publisher has revised it.
 | Engrossed Senate amendment to H.R. 2347 (S.Amdt. 6883 as passed, 19 Nov 2026) | `BILLS-119hr2347eas.htm` (in `raw/bill_eas/`) | https://www.govinfo.gov/content/pkg/BILLS-119hr2347eas/html/BILLS-119hr2347eas.htm | 24 Nov 2026 | Download, `c6d763e043236b5fe19b524f01ecbf0aa81e5ce2c85b199625d9053bf9c4565b` | check of KAT26804: Secs. 1105, 1106, 1108, 1110, 1202, 1302, 1401, 2106-2110, 2201, 2213, 2229 identical word for word (only line-end hyphenation and quote marks differ) |
 | Manager's substitute as released 7 Nov 2026 (KAT26764) | `ANS_HR2347_2026-11-07.pdf` | https://www.epw.senate.gov/wp-content/uploads/media/doc/11.7.26%20ANS%20to%20H.R.%202347.pdf | 23 Nov 2026 | Download, `17a0efcf8d0cd5e952287b996e5390dae4f196a31d4d0e89951ca996ab10c7eb` | reference |
 
+## Added 24 Nov 2026 (re-study round, corner checks, planned transmission, compliance orders)
+
+Retrieved 24 Nov 2026. Hashes of every file are in `raw/SHA256SUMS`; raw files are not committed.
+
+| Source | Raw files | URL | Status | Used for |
+|---|---|---|---|---|
+| SPP Definitive Interconnection System Impact Study (DISIS) results workbooks, clusters 2016-1 to 2023-1, every posting (Phase 1, Phase 2, restudies) | `raw/spp_gi/wb/*.xlsx`, `raw/spp_gi/wb_zip/` (49 files) | https://opsportal.spp.org/Studies/Gen (GenList pages by year link each workbook; directory listings return 403) | Download | `extract_spp_restudy.py` -> `spp_restudy.json` (re-study cost changes, timing; `restudy_*` parameters) |
+| PJM planning queue export (legacy queue, data through Dec 2024) | `raw/pjm_queue/PlanningQueues.xml` | https://www.pjm.com/pub/planning/downloads/xml/PlanningQueues.xml | Download, `08ed92b51a08743d...` | check of LBNL withdrawal timing for PJM 2015-23 requests (brief section 6); no agreement dates in the file |
+| ERCOT Generator Interconnection Status (GIS) reports, December 2018-2025 and October 2026 | `raw/ercot_gis/GIS_Report_*.xlsx` | https://www.ercot.com/misapp/servlets/IceDocListJsonWS?reportTypeId=15933 (document list; files linked from it) | Download | check of ERCOT storage completion (brief section 6) |
+| FERC orders on Order No. 2023 compliance: CAISO ER24-2042, ISO-NE ER24-2007/2009, NYISO ER24-1915-000 and -002, PJM ER24-2045-000 and -004, SPP ER24-2026-001 | `raw/ferc_o2023/*` | https://www.ferc.gov/sites/default/files/ (direct PDF links, e.g. 2025-07/E-2-ER24-2045-000.pdf, 2026-01/ER24-2026-001.pdf, 2025-03/20250331-3100_ER24-2009-000.pdf; the eLibrary search API refuses automated requests) | Download | priors for adoption and rule timing (brief sections 2 and 8) |
+| MISO MTEP25 Chapter 2, Long Range Transmission Planning (Tranche 1 and 2.1) | `raw/miso/MTEP25_Chapter_2_-_Regional_Long_Range_Transmission_Planning.pdf` | https://www.misoenergy.org (MTEP25; site refuses automated requests) | Upload (see above) | `planned_tx.json` (Tranche 1 $10.3B, 18 projects; Tranche 2.1 $21.9B, 24 projects by in-service year) |
+| SPP 2025 Integrated Transmission Plan report and fact sheet | `raw/tx_plans/SPP_2025_ITP_report.pdf`, `SPP_2025_ITP_factsheet.pdf` | https://spp.org/documents/75192/2025%20integrated%20transmission%20plan%20report.pdf | Download | `planned_tx.json` ($8.6B approved, 50 projects) |
+| PJM 2025 Regional Transmission Expansion Plan report; MISO Tranche 2.1 evaluation (PJM IPSAC, 5 Dec 2025); PJM project construction list; PJM TCIC workbook | `raw/tx_plans/PJM_*` | https://www.pjm.com/planning (RTEP reports; IPSAC materials) | Download | `planned_tx.json` (2025 RTEP Window 1, 500 kV and above, $9.8B); the rest kept for cross-checks |
+| MISO LRTP Tranche 1 generation enabled (about 53 GW) and in-service years 2028-2030 | - | https://www.utilitydive.com/news/miso-benefits-transmission-projects-renewable/621729/ ; https://www.pv-tech.org/misos-newly-approved-transmission-line-buildout-to-support-53gw-of-renewables/ | press reports of MISO's July 2022 approval | anchor for the high end of `tx_hosting_gw`; in-service years of Tranche 1 in `planned_tx.json` |
+
+Not obtained: MISO's Order 2023 compliance order (ER24-2046) and MISO LRTP project lists from misoenergy.org (HTTP 403); upload them to `raw/` to add MISO to the compliance-order priors.
+
 ## Access from the cloud environment (23 Nov 2026)
 - Reachable: eia.gov file downloads, govinfo.gov, nerc.com, energy.senate.gov, epw.senate.gov, ercot.com, nyiso.com, pjm.com documents.
 - Interactive only (no direct file link found): SPP, ISO-NE and PJM queue exports; not needed while the LBNL workbook covers those regions.

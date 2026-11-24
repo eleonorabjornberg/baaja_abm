@@ -1,0 +1,54 @@
+{
+ "_note": "Current-law regional transmission portfolios approved by 2025, by region and in-service year, in $ billion (nominal as published). grid.py converts dollars to transmission project-equivalents at the average cost of a MISO LRTP Tranche 1 project ($10.3B / 18 = $0.572B) and gives each the model's hosting room per transmission project (tx_hosting_gw). Built 2026-11-24 by hand from the documents below; see data/SOURCES.md.",
+ "unit_cost_bn": 0.5722222222222223,
+ "portfolios": [
+  {
+   "region": "MISO",
+   "name": "LRTP Tranche 1",
+   "bn": 10.3,
+   "projects": 18,
+   "isd": {
+    "2028": 3.4333333333333336,
+    "2029": 3.4333333333333336,
+    "2030": 3.4333333333333336
+   },
+   "source": "MISO MTEP25 Chapter 2 (approved July 2022, $10.3B, 18 projects); in-service 2028-2030 per MISO portfolio materials, spread evenly [A]; MISO projects about 53 GW of generation enabled"
+  },
+  {
+   "region": "MISO",
+   "name": "LRTP Tranche 2.1",
+   "bn": 21.872,
+   "projects": 24,
+   "isd": {
+    "2032": 7.242,
+    "2033": 3.32,
+    "2034": 11.31
+   },
+   "source": "MISO MTEP25 Chapter 2, Table 2.1 (24 projects, targeted in-service year and cost per project, $M 2024)"
+  },
+  {
+   "region": "SPP",
+   "name": "2025 ITP (approved portfolio)",
+   "bn": 8.6,
+   "projects": 50,
+   "isd": {
+    "2030": 2.8666666666666667,
+    "2031": 2.8666666666666667,
+    "2032": 2.8666666666666667
+   },
+   "source": "SPP 2025 ITP fact sheet ($8.6B approved, 50 projects, 949 miles of new 765 kV); in-service 2030-2032 spread evenly [A]"
+  },
+  {
+   "region": "PJM",
+   "name": "2025 RTEP Window 1, 500 kV and above",
+   "bn": 9.8,
+   "projects": null,
+   "isd": {
+    "2030": 3.266666666666667,
+    "2031": 3.266666666666667,
+    "2032": 3.266666666666667
+   },
+   "source": "PJM 2025 RTEP report, Section 3 ($10.9B competitive baseline approved; 500 kV-and-above upgrades $9.8B; listed in-service dates 6/1/2029-6/1/2032); spread 2030-2032 evenly [A]"
+  }
+ ]
+}

@@ -12,12 +12,15 @@ Agents, one set per LBNL region:
                   oldest first, at rate K (serial regions) or keep their exogenous draw (ERCOT).
   Developer       each request has a private value per kW, lognormal [D: LBNL cost data, P(complete | upgrade cost)].
                   At its study result it learns its network-upgrade cost (lognormal by region [D]) and stays only if
-                  cost <= value. In cluster regions under current law the result comes R months before the agreement;
+                  cost <= value; a share 1 - a does not complete at any cost, zero cost included (a from the same
+                  LBNL fit). In cluster regions under current law the result comes R months before the agreement;
                   in between, a re-study moves the cost of those who stay, by rho x the withdrawn MW share and a
                   request-level shock exp(mu + sd z) (both fitted to SPP's successive cluster postings), and they
                   decide again. New requests enter in response to the published wait and to regional scarcity.
   Transmission    projects (the model's transmission type, through permitting and courts as before) add hosting
-                  room when they reach operation; upgrade costs rise with capacity signed since 2026 net of that room.
+                  room when they reach operation; upgrade costs rise with capacity signed since 2026 net of that room
+                  and of the room added by current-law regional portfolios approved by 2025 (MISO LRTP Tranches 1 and
+                  2.1, SPP 2025 ITP, PJM 2025 RTEP 500 kV and above), in both runs of a pair.
 Bill provisions:
   Sec.2106        in each RTO that adopts a new process (2106(d): FERC may find existing ones compliant), from the rule
                   month: a share of requests can use published locations with a fixed per-MW fee (no cost shock, no
@@ -48,6 +51,13 @@ NON_ISO = [REGIONS.index(r) for r in ("Southeast", "West")]
 FLEET_GW = np.array([sum(FLEET["capacity"].get(r, {}).values()) / 1000 for r in REGIONS])
 COST = [GT["cost"][r] for r in REGIONS]
 VALUE = [GT["value"]["non-ISO" if i in NON_ISO else "ISO"] for i in range(len(REGIONS))]
+# current-law transmission portfolios approved by 2025 (MISO LRTP, SPP ITP, PJM RTEP), project-equivalents in service
+# by year [D: data/planned_tx.json]
+_PTX = json.load(open(os.path.join(_D, "planned_tx.json")))
+PLAN_TX = {}
+for _pf in _PTX["portfolios"]:
+    for _y, _bn in _pf["isd"].items():
+        PLAN_TX.setdefault(REGIONS.index(_pf["region"]), []).append((int(_y), _bn / _PTX["unit_cost_bn"]))
 D_DATA = np.array([sum(GT["arrivals"][r].get(str(y), 0) for y in range(2021, 2026)) / 60 for r in REGIONS])
 from .params import GRID_BASE, GRID_LEVERS  # noqa: E402  (assumptions live in params)
 
@@ -295,6 +305,7 @@ def run_agents(states, p, seed, hostile_to):
                                    g.random(n), g.random(n))
     Elag = g.exponential(1.0, n)                                   # drawn after the others: earlier draws unchanged
     Zr = g.normal(0, 1, n)                                         # re-study cost shock (added later, drawn last)
+    Ua = g.random(n)                                               # cost-independent failure (added later, drawn last)
     ctx = _supply_context()
     onpk = np.array([ctx["onpeak"][states[i]["name"]] for i in gen_idx])[np.searchsorted(gen_idx, F["typ"])]
     tx = _tx_counts(states, p, hostile_to, u_txreg, T_ext) if p["tx_hosting_gw"] > 0 else None
@@ -306,7 +317,7 @@ def run_agents(states, p, seed, hostile_to):
     for r in range(len(REGIONS)):
         idx = np.where(F["region"] == r)[0]
         if len(idx):
-            _region(r, idx, F, out, p, ops[REGIONS[r]], dict(Zv=Zv, Zc=Zc, Uc0=Uc0, Zs=Zs, Uloc=Uloc, Uacc=Uacc, Elag=Elag, Zr=Zr),
+            _region(r, idx, F, out, p, ops[REGIONS[r]], dict(Zv=Zv, Zc=Zc, Uc0=Uc0, Zs=Zs, Uloc=Uloc, Uacc=Uacc, Elag=Elag, Zr=Zr, Ua=Ua),
                     onpk, ctx, tx, u_adopt[r], T, T_ext, backcast, h_pre.get(REGIONS[r]), lag.get(REGIONS[r], 0.0))
     # ---- write back, drop non-entrants ----
     pos = 0
@@ -351,6 +362,10 @@ def _region(r, idx, F, out, p, op, U, onpk, ctx, tx, u_adopt, T, T_ext, backcast
     # re-study: each remaining request's cost moves by exp(mu + sd z) [D: SPP DISIS postings, Phase 2 to latest]
     shock = np.exp(p["restudy_mu"] + p["restudy_sd"] * zr)
     v0 = np.exp(val["mu"] + val["sigma"] * zv) * F["vmult"][idx]   # private value, $/kW (technology x region scale)
+    # LBNL's P(complete | cost) = a x P(value >= cost): a share 1 - a of requests that receive a study result do not
+    # complete at any cost, zero cost included [D: same fit as value mu, sigma; ISO 0.77, non-ISO 0.49]
+    if p.get("value_a", True):
+        v0 = np.where(U["Ua"][idx] < val["a"], v0, -1.0)
     # cost relative to the regional median of non-zero costs; LBNL's zero-cost share pays nothing
     craw = np.where(uc0 < cst["zero_share"], 0.0, np.exp(cst["sigma"] * zc))
     # expected upgrade cost (zero-cost share included): what a fee meant to recover upgrade costs has to charge
@@ -395,13 +410,16 @@ def _region(r, idx, F, out, p, op, U, onpk, ctx, tx, u_adopt, T, T_ext, backcast
     A = np.zeros(T_ext + 2)                                         # GW signed since month 0, by month (increments)
     kappa = 0.0 if r == ERCOT else p["kappa"]                       # ERCOT does not allocate network upgrades [D]
 
+    # planned current-law lines (same in both runs of a pair), mid-year of their in-service year
+    plan = [(12 * (y - 2026) + 6, k) for y, k in PLAN_TX.get(r, [])] if not backcast else []
+
     def cong(t):
         a = A[: t + 1].sum()
-        h = 0.0
+        h = p["tx_hosting_gw"] * p.get("planned_tx", 1.0) * sum(k for m, k in plan if t >= m)
         if tx is not None:
             tt = min(t, tx["scn"].shape[1] - 1)
             extra = 1 + (p["grid_2109"] if t >= rule else 0.0)
-            h = p["tx_hosting_gw"] * (extra * tx["scn"][r, tt] - tx["law"][r, tt])
+            h += p["tx_hosting_gw"] * (extra * tx["scn"][r, tt] - tx["law"][r, tt])
         return np.exp(kappa * (a - h) / FLEET_GW[r])
 
     def sign(sel, when):
