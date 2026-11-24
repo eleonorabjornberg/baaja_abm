@@ -6,16 +6,19 @@
 ## Summary
 
 The Bipartisan American Affordability and Jobs Act (BAAJA) was introduced as S.5653 on 30 September 2026 and adopted
-with changes as S.Amdt. 6883 to H.R. 2347, which the Senate passed on 19 November 2026 by 62 to 33. This brief asks
-how much generating and storage capacity the Senate-passed text would bring online in the United States by 2041,
+with changes as S.Amdt. 6883 to H.R. 2347, which the Senate passed on 19 November 2026 by 62 to 33. The House has
+not yet acted on it, so it is not law; the model assumes enactment in November 2026, and later enactment moves every
+date below by the same amount. This brief asks how much generating and storage capacity the Senate-passed text would
+bring online in the United States by 2041,
 in which regions, and what that does to regional reserve margins.
 
 By November 2041 the bill adds 6.7 GW of new capacity if no RTO/ISO changes its interconnection process under
 Sec.2106, and 37.0 GW if every one does, against about 954 GW that comes online under current law. With each RTO
 changing its process with probability one half, the result is 21.9 GW [5th-95th percentile 7.5 to 37.2] across 100
 paired runs; that interval mostly reflects which RTOs happen to change, and the one-half probability is an
-assumption, not an estimate. Of the 21.9 GW, 14.9 GW are renewables, 5.0 GW gas and 2.0 GW storage. Relicensed hydro
-returning to service sooner adds a further 1.8 GW and is not counted as new capacity.
+assumption, not an estimate. Of the 21.9 GW, 14.9 GW are renewables, 5.0 GW gas and 2.0 GW storage. Existing hydro
+whose new licence comes sooner accounts for a further 1.8 GW; this is retained capacity, not added supply, and is not
+counted as new capacity.
 
 The size of the Sec.2106 effect rests on assumed parameters. The two that matter most are whether an RTO's process
 actually changes (FERC may find existing processes compliant under Sec.2106(d)) and how many requests the
@@ -26,23 +29,26 @@ changed to the relative version after seeing those results (section 2), and repo
 range together gives a median of 26.5 GW [4.9, 64.0] (5th-95th percentile of 400 joint samples).
 
 Little changes before the early 2030s. The model assumes reformed interconnection studies start about three years
-after enactment (range two to four; the bill gives FERC 18 months for the rule and RTOs two years to file), and that
+after enactment (range two to four; the bill gives FERC 18 months for the rule and RTOs two years from enactment to file), and that
 requests already in the queue keep their current terms. By 2030 the bill has added 0.3 GW; by 2035, 10.8 GW.
 
 The gain is concentrated in MISO, with 12.4 of the 21.9 GW. PJM gains almost nothing, because in PJM the modelled
-entry screen keeps out requests that would have completed (section 4.3). ERCOT is outside FERC jurisdiction and the
-Southeast and non-ISO West have no RTO, so Sec.2106 does not reach them; they gain from permitting and from Sec.2109,
-which applies to all public-utility transmission providers.
+entry screen keeps out requests that would have completed (section 4.3). ERCOT is outside FERC's rate and interconnection
+jurisdiction, and the Southeast and most of the non-ISO West have no RTO, so Sec.2106 does not reach them. ERCOT gains
+from the permitting and court provisions only; the Southeast and the non-ISO West also gain from Sec.2109, which
+applies to FERC-jurisdictional public utilities, not only to RTOs.
 
 Under current law the national shortfall below NERC's Reference Margin Levels reaches about 69 GW in 2035 and 122 GW
-in 2041, most of it in PJM, where NERC's margin rises from 18.6% to 35.1%. BAAJA reduces the 2035 shortfall by 3.1 GW
+in 2041, most of it in PJM, whose installed reserve margin, as reported by NERC, rises from 18.6% in 2026 to 35.1% in
+2034. NERC's forecast ends in 2035; the 2041 figure extends demand at its 2030-35 growth rate and holds margins at
+their 2035 levels. BAAJA reduces the 2035 shortfall by 3.1 GW
 [0.3, 6.4]. The shortfall is a benchmark against NERC's planning margins, not a forecast of outages, and the bill
 does not close it.
 
 The bill's gain in clean capacity here, 16.9 GW of renewables and storage by November 2041, is just below the low end of
-Rhodium Group's 17 to 249 GW through 2040 and well below Resources for the Future's figure of about 60 GW by 2028.
+Rhodium Group's 17 to 249 GW through 2040 (King et al. 2026) and well below Resources for the Future's figure of about 60 GW by 2028 (Rennert and Bergman 2026).
 The difference has several sources that cannot be separated from outside: both studies expand transmission under
-the bill and this model does not plan any; RFF attributes its near-term gain mainly to permit certainty; and each
+the bill and this model does not plan any; RFF names permit certainty and faster interconnection as the primary drivers of its near-term gain; and each
 study, including this one, sets the extent of interconnection relief by assumption.
 
 ![Headline: BAAJA minus current law by 2041](../figures/brief_1_headline.png)
@@ -54,8 +60,8 @@ BAAJA is a permitting and transmission bill. The provisions that bear on generat
 
 | group | main sections modelled | what changes in the model |
 |---|---|---|
-| Permitting | 1105-1106 and 1108 (level of review; one-year EA and two-year EIS deadlines), 1202 (one-year Clean Water Act s.401 clock), 1302 (ESA consultation timeline), 2213 (federal-land rights-of-way clocks), 2229 | months to a federal permit |
-| Courts | 1110 and 2201 (150-day limit to sue, comment exhaustion, remand without vacatur); 1134 extends the same limit to FAST-41 claims (1205 and 1305, for s.404 and ESA opinions, are listed but not modelled separately) | how many suits are filed and how many halt a project |
+| Permitting | 1105 and 1108 (level of review), 1106 (enforcement of the existing one-year EA and two-year EIS deadlines, new deadlines for decisions after the review), 1202 (tighter rules on the existing one-year Clean Water Act s.401 clock), 1302 (ESA consultation timeline), 2213 (clocks for renewable and storage rights-of-way on federal land), 2229 | months to a federal permit |
+| Courts | 1110 (150-day limit, comment exhaustion and remand without vacatur for NEPA claims) and 2201 (150-day limit and expedited review for energy authorizations); 1134 sets a 150-day limit for FAST-41 claims (1205 and 1305, for s.404 approvals and ESA opinions, are listed but not modelled separately) | how many suits are filed and how many halt a project |
 | Permit certainty | 1401 | whether a permit can be revoked or suspended after issue |
 | Grid access | 2106 (interconnection reform in RTOs/ISOs), 2110 (study automation), 2109 (advanced transmission technologies), 2101, 2102(a) and 2214 (transmission permitting) | who enters the interconnection queue, who leaves it, how long studies take, how much hosting room the grid has |
 
@@ -65,14 +71,15 @@ on existing plants and on wetlands permits the model cannot attach to generation
 The model asks how much capacity comes online by region and year with and without the bill, and what that does to
 each region's reserve margin. It does not estimate prices, emissions or customer bills.
 
-Several provisions that bear on supply are outside the model. Sec.2107(b) lets states condition retail service to a
+Several provisions that bear on supply are outside the model. Sec.2107(b) confirms that states may condition retail service to a
 data center on new generation it procures, which acts on the demand behind the adequacy gap. Sec.2108 bars RTOs from
-blocking behind-the-meter aggregations (5 kW to 5 MW of storage, fuel cells and generators) from wholesale markets,
+blocking aggregations of behind-the-meter storage, fuel cells and generators of 5 kW to 5 MW each from wholesale markets,
 which is capacity outside the interconnection queue. Sec.2102(b) exempts interstate gas pipeline looping and
-compression in existing corridors from NEPA review. Sec.2109 also requires utilities to evaluate and deploy advanced
-technologies on existing lines; the model credits only extra hosting room on lines finished after the rule.
-Sec.2103 (mandatory regional and interregional planning with cost allocation) is the bill's main mechanism for
-building transmission, and the model does not plan transmission. Sec.1501-1504 (nuclear licensing) are listed
+compression in existing corridors from NEPA review. Sec.2109 also requires public utilities to evaluate advanced
+technologies on existing lines and deploy them where benefits exceed costs; the model credits only extra hosting room
+on lines finished after month 36, later than the one year the statute gives FERC for its order.
+Sec.2103 (new interregional planning with cost allocation; regional planning is deemed met by Order No. 1920) is, in
+my reading, the bill's main route to new transmission, and the model does not plan transmission. Sec.1501-1504 (nuclear licensing) are listed
 because no new reactor reaches operation through the queue data by 2041.
 
 ## 2. The model
@@ -88,23 +95,29 @@ construction. Permitting and litigation are sized from CEQ, BLM, Army Corps and 
 
 Grid operators, one per region, study requests in clusters (ERCOT one at a time) with a throughput fitted to LBNL
 request-to-agreement times. They allocate network-upgrade costs drawn from LBNL's regional cost studies; costs rise
-with the capacity signed in a region (by a rate fitted to LBNL cost data for requests made since 2018 against 2010-17; zero in ERCOT, which does not allocate network upgrades to generators) and fall as transmission is finished.
+with the capacity signed in a region (by a rate fitted to LBNL cost data for requests made since 2018 against 2010-17; zero in ERCOT, which did not allocate network upgrades to generators through 2025) and fall as transmission is finished.
 
 Developers enter on the published wait and on their region's projected capacity shortfall. At each study result they
 compare the allocated upgrade cost with the project's private value (both from LBNL cost data) and stay or leave.
 They also withdraw over time at background rates fitted by region.
 
 Supply. What comes online is added to the EIA-860 fleet, less announced and age-based retirements, and compared with
-NERC's 2025 peak-demand forecast and reference margin levels, using NERC's on-peak capacity shares by technology
-(on-peak accredited capacity below).
+NERC's 2025 peak-demand forecast and reference margin levels (NERC 2026). Wind, solar and batteries count at on-peak
+shares that start at NERC's national values and fall halfway to PJM's 2041/42 ELCC class ratings by 2041 (on-peak
+accredited capacity below).
 
-The bill enters as mechanisms. Under Sec.2106 a reformed RTO publishes interconnection locations with an upfront,
-fixed per-MW fee set at the region's expected upgrade cost (so the requests using them face no cost shock at the
-study result and no re-study), holds a single decision point, and requires non-refundable security and withdrawal
-penalties, which the model represents as an entry screen. Within each technology and region, the quarter of new
+The bill enters as mechanisms. Under Sec.2106 a reformed RTO publishes planned interconnection locations
+with "an upfront, fixed, subregional, per-megawatt fee" (new FPA s.228(a)(2)(B)), holds a single decision point, and
+requires "meaningful and nonrefundable financial security" and "withdrawal penalties after the determination of total
+costs of interconnection ... are provided to the customer" (s.228(a)(3)(B) and (C)). Three choices here are model
+assumptions, not statute: the fee is set at the region's expected upgrade cost, so requests at a published location
+face no cost shock at the study result and no re-study; those requests are exempt from the screen; and the security
+in (B) is represented as an entry screen, applied before costs are known, while the penalty in (C), which applies once
+costs are known, is not modelled separately. Within each technology and region, the quarter of new
 requests least likely to complete (range a tenth to a half) do not enter; requests using a published location are
-exempt. Johnston, Liu and Yang (2023, revised 2026) find that higher queue-entry costs deter speculative requests
-with little change in the capacity that completes, which is what a screen on the least likely requests implies.
+exempt. Johnston, Liu and Yang (2023, revised 2026) find, for PJM, that higher queue-entry costs mainly deter
+low-value requests that would have left quickly, with little change in completed capacity (-1.2% to +0.8%) or in
+waiting time, which is what a screen on the least likely requests implies.
 Each RTO's process changes with probability 0.5 in the central case.
 
 The screen was first specified as an absolute threshold: requests whose modelled chance of completing was below
@@ -131,7 +144,7 @@ All inputs are public. Sources, retrieval dates and file hashes are in `data/SOU
   PJM, SPP, NYISO, ISO-NE and non-ISO balancing areas (used for the Southeast and West). The CAISO, MISO and NYISO queue files were downloaded for cross-checks but are not
   used.
 - Permitting: CEQ EIS timelines, BLM MLRS rights-of-way cases, Army Corps permit data.
-- Courts: 1,821 NEPA cases filed 2001-22; Sabin Center renewable-opposition database.
+- Courts: a case-level export of 1,821 NEPA cases filed 2001-22 (supplied; publisher to be recorded in `data/SOURCES.md`); Sabin Center renewable-opposition database.
 - Fleet, retirements and generation: EIA-860 (2015-2025), EIA-860M, EIA-923.
 - Demand and adequacy: NERC 2025 Long-Term Reliability Assessment; PJM ELCC class ratings.
 - Bill text: the Senate floor copy of S.Amdt. 6883 (KAT26804 V62), checked against the engrossed Senate amendment to
@@ -155,9 +168,10 @@ excludes relicensed hydro, which is reported separately.
 
 Current law brings about 954 GW of new capacity online by November 2041 [939, 972]. The bill adds 0.7% to 3.9% to that
 (2.3% in the central case), depending on how many RTOs change their process. The first row, which keeps every provision except Sec.2106, contains
-Titles I and II (permitting and courts), Sec.2109 and Sec.2110 at zero; Sec.2109's extra hosting room adds about 4 GW
-to the central case (+17.8 GW without it). Relicensed hydro that returns to service sooner adds a further 1.8 GW in
-every bill scenario.
+the permitting, court and permit-certainty provisions (Division A, Titles I-IV; Division B, Title II), Sec.2109, and
+Sec.2110 at zero; Sec.2109's extra hosting room adds about 4 GW
+to the central case (+17.8 GW without it). Existing hydro whose new licence comes sooner accounts for a further 1.8 GW
+in every bill scenario; it is retained capacity, not added supply.
 
 The interval on the central row is wide because it mostly records which RTOs happen to change their process in each
 run. The two rows around it bound it, and the probability of one half is an assumption: Sec.2106(d) lets FERC find an
@@ -178,8 +192,8 @@ first row.
 | 2041 | 44 | +21.9 | +6.7 | +37.0 |
 
 The bill adds under 1 GW before 2033. The permitting and court provisions add a little each year from the start.
-Sec.2106 applies only to requests made after the rule takes effect (late 2029 in the central case), and the first of
-those come online in 2033. Current-law additions peak at 118 GW in 2029, while the queue standing at the end of 2025
+The model applies Sec.2106 only to requests made after reformed studies start (late 2029 in the central case, an
+assumption; the statute is silent on requests already queued), and the first of those come online in 2033. Current-law additions peak at 118 GW in 2029, while the queue standing at the end of 2025
 is being built, then settle at 44 to 62 GW a year.
 
 ### 4.3 Where
@@ -203,7 +217,7 @@ deposit as screening on value, and a deposit that screened on cost information w
 | entry screen | current law GW | BAAJA central vs current law | every RTO changes |
 |---|---|---|---|
 | Sec.2106 keeps out the bottom quarter within technology and region (central) | 956 | +17.4 | +37.3 |
-| as above, and current law already screens out a tenth (Order 2023 deposits) | 957 | +19.4 | +39.8 |
+| as above, and current law already screens out a tenth (FERC Order No. 2023 readiness deposits) | 957 | +19.4 | +39.8 |
 | Sec.2106 keeps out requests whose chance of completing is below 0.25 (previous specification) | 956 | -2.2 | -4.6 |
 
 These rows use 20 paired runs each, so the central case is +17.4 GW instead of +21.9 GW with 100 runs; the difference
@@ -224,8 +238,12 @@ Sec.2106. Keeping out a tenth gives +21.0 GW.
 The adequacy account compares on-peak accredited capacity with NERC's 2025 peak-demand forecast plus each region's
 Reference Margin Level, the reserve margin NERC uses as its planning benchmark. Under current law the national
 shortfall below those levels is 9 GW in 2027, 69 GW [66, 73] in 2035 and 122 GW [118, 127] in 2041. In 2035, 57 GW of
-the shortfall is in PJM, whose Reference Margin Level, as an installed-capacity margin, rises from 18.6% in 2026 to
-35.1% in 2034 as accreditation of new resources falls; CAISO (7 GW) and MISO (5 GW) account for most of the rest.
+the shortfall is in PJM, whose Reference Margin Level, an installed reserve margin, rises in NERC's assessment from
+18.6% in 2026 to 35.1% in 2034. PJM explains the rise by resources added having lower accredited value than those
+retiring (PJM 2026). PJM's own October 2026 study projects a lower path, 24.4% for 2034/35; on NERC's 2035 PJM peak of
+199 GW that difference is about 21 GW of the 57. CAISO (7 GW) and MISO (5 GW) account for most of the rest. NERC's
+forecast ends in 2035: for 2036-41 the model extends demand at its 2030-35 growth rate and holds each region's margin
+at its 2035 level, so the 2041 figures rest on that extension.
 
 BAAJA reduces the 2035 shortfall by 3.1 GW [0.3, 6.4] in the central case and by 5.8 GW if every RTO changes its
 process; by 2041 the reductions are 5.7 and 10.3 GW. The bill does not close the gap. Most of the shortfall is in PJM,
@@ -353,29 +371,31 @@ Comparing like with like, this model's gain in clean capacity (new renewables an
 16.9 GW in the central case, against Rhodium's 17 to 249 GW through 2040. The difference has four
 sources, and from the published material they cannot be separated.
 
-1. Transmission. Rhodium projects 1.9 to 2.6 TW-miles of new transmission a year under the bill, against 0.9 to 1.9
+1. Transmission. Rhodium projects 1.9 to 2.6 TW-miles of new interregional transmission a year under the bill, against 0.9 to 1.9
    in its baseline and 0.7 in 2015-24, and RFF's transmission is about 30% above baseline by 2041. Both let new lines
    carry new generation. This model makes transmission already in the queue faster and adds Sec.2109 hosting room,
    but does not plan new lines in response to the bill (Sec.2103 is not modelled). This is a limit of this model.
-2. Permit certainty. RFF attributes its 2028 gain mainly to "provisions intended to increase permitting certainty
-   and consistency across administrations". In the simpler model here, Sec.1401 adds 0.3 to 0.7 GW of renewables.
+2. Permit certainty. RFF writes that "In the near term, the primary drivers are provisions intended to increase
+   permitting certainty and consistency across administrations and provisions intended to speed the interconnection
+   of new generation." I disagree on the second driver by 2028, given the statute's clock (point 4). In the simpler model here, Sec.1401 adds 0.3 to 0.7 GW of renewables.
    The difference is in the assumed baseline: RFF's current law includes executive actions that impede wind, which
    its policy cases remove; this model's current law has a residual risk of federal halts that Sec.1401 reduces.
-   Rhodium did not model the permit-certainty provisions and calls its results conservative.
+   Rhodium did not model the permit-certainty provisions. It calls its results conservative because it also left out
+   the geothermal, advanced-transmission-technology and VPP provisions; Sec.2109 alone adds about 4 GW here.
 3. Interconnection. All three studies set the extent of interconnection relief by assumption: RFF removes its
    baseline limits, Rhodium reduces barriers by a chosen amount, and this model assumes which RTOs change their
    process and how strictly they screen. RFF reports that its results are robust to its interconnection
    representation, with the timing of the build-out shifting. Here, the interconnection assumptions are the largest source of uncertainty.
 4. Scope and timing. The Senate-passed Sec.2106 reaches only RTOs/ISOs; both studies used the introduced text,
-   which already excluded ERCOT but also covered the Southeast and the non-ISO West. Those two regions account for
-   34% of current-law new capacity here (323 of 954 GW). The statute's own clock (rule in 18 months, filings in two years)
+   which already excluded ERCOT but also covered the Southeast and most of the non-ISO West. Those two regions account for
+   34% of current-law new capacity here (323 of 954 GW). The statute's own clock (rule in 18 months, filings two years from enactment)
    makes a large interconnection effect by 2028 unlikely, whatever the model.
 
 Neither published study estimates the NEPA and court provisions separately, so they neither confirm nor contradict
 the small effect found for them here. The Clean Air Task Force (12 Nov 2026) argues that Sec.1401's
 national-security exception, and the absence of a bar on agencies seeking voluntary remand of issued
 authorizations, leave near-term risk to permitted projects. That points the same way as the residual halt risk
-assumed here, though the model's residual rests on a different exception, 1401(F) (action "taken pursuant to any
+assumed here, though the model's residual rests on a different exception, 1401(b)(1)(F) (action "taken pursuant to any
 applicable law or regulation").
 
 SEIA's 167 GW of additional solar between 2028 and 2035 is about 19 times this model's solar gain by November 2041
@@ -388,8 +408,8 @@ process changes, and how many requests the non-refundable security and withdrawa
 screen was also respecified after the first results were seen (section 2). Reading the result as a range across
 those assumptions is safer than reading the central number.
 
-The model plans no transmission. Sec.2103 (mandatory regional and interregional planning with cost allocation) is
-the bill's main route to new lines, and both published studies credit the bill with more transmission. Upgrade
+The model plans no transmission. Sec.2103 (new interregional planning with cost allocation) is, in my reading, the
+bill's main route to new lines, and both published studies credit the bill with more transmission. Upgrade
 costs here rise with capacity signed and fall only as transmission already in the queue is finished and with Sec.2109's added hosting room, so the model
 understates what the bill does if Sec.2103 works as intended.
 
@@ -402,12 +422,23 @@ side of the calibration. The backcast fails out of sample on withdrawal timing a
 Developers respond to upgrade costs, published waits and their region's projected shortfall, but not to prices,
 tax credits or offtake contracts, so the model says nothing about how the bill interacts with federal tax credits or
 power prices. Demand is NERC's 2025 forecast and does not respond to the bill;
-Sec.2107(b) on data-center supply is outside the model. On-peak shares by technology are fixed at NERC's values,
-although storage's accredited share falls as more storage is built.
+Sec.2107(b) on data-center supply is outside the model. On-peak shares of wind, solar and batteries start at
+NERC's national values and fall halfway to PJM's 2041/42 ELCC class ratings by 2041 (outside PJM, whose installed
+margin already reflects falling accreditation); they do not respond to how much of each is built.
 
 Requests already in the queue when the rule takes effect keep the current process, because the new s.228 has no
 transition clause; if FERC moved them into the reformed process, the effect would come sooner. The rule month (three
 years after enactment, range two to four) is an assumption.
+
+Court parameters come from cases filed 2001-22, before *Seven County Infrastructure Coalition v. Eagle County*
+(2025), in which the Supreme Court told lower courts to defer to agencies on the scope of NEPA review. The central
+case assumes no change since. If challengers' NEPA remedies fall by 30-50% and suits by up to 40%, the court
+provisions are worth 0.2 to 0.5 GW instead of 0.9 GW (`results/sim2_litigation.md`). Sec.1110(d) codifies part of
+that holding, so part of what is credited to the bill here may already be current law.
+
+The model's West region is treated as outside Sec.2106, but SPP's RTO expansion into the Western Interconnection
+began operating in April 2026, so Sec.2106 would reach those utilities if SPP changes its process. The West's gain is
+understated by that much.
 
 The model does not estimate prices, emissions, customer bills or reliability events. The shortfall below NERC's
 reference margin levels is a planning benchmark.
@@ -441,9 +472,12 @@ python -m pytest -q
 
 ## References
 
-Clean Air Task Force (2026, 12 November). Even after manager's amendment, BAAJA's permitting certainty provisions
+Clean Air Task Force (2026, 12 November). Even after the manager's amendment, BAAJA's permitting certainty provisions
 may not prevent near-term actions to stop clean energy projects.
 https://www.catf.us/2026/11/even-after-managers-amendment-baajas-permitting-certainty-provisions-may-not-prevent-near-term-actions-stop-clean-energy-projects/
+
+Federal Energy Regulatory Commission (2023, 28 July). Improvements to Generator Interconnection Procedures and
+Agreements, Order No. 2023. 184 FERC ¶ 61,054.
 
 Grimm, V., Revilla, E., Berger, U., Jeltsch, F., Mooij, W.M., Railsback, S.F., Thulke, H.-H., Weiner, J.,
 Wiegand, T. and DeAngelis, D.L. (2005). Pattern-oriented modeling of agent-based complex systems: lessons from
@@ -458,16 +492,25 @@ Artificial Societies and Social Simulation* 23(2): 7. https://doi.org/10.18564/j
 Johnston, S., Liu, Y. and Yang, C. (2023, revised November 2026). An empirical analysis of the interconnection
 queue. NBER Working Paper 31946. https://doi.org/10.3386/w31946
 
-Rand, J., Cheyette, A., Talley, C., Zhang, S., Gorman, W., Wiser, R.H., Seel, J., Jeong, S. and Kahrl, F. (2026).
-*Queued Up: 2026 Edition. Characteristics of Power Plants Seeking Transmission Interconnection as of the End of
-2025.* Berkeley, CA: Lawrence Berkeley National Laboratory. https://emp.lbl.gov/queues
+King, B., Bower, G., Case, R., Kolus, H., Larsen, J., Pastorek, N. and Wiens, M. (2026, 2 November). Estimating
+the US energy system impacts of the Bipartisan American Affordability and Jobs Act. Rhodium Group.
+https://rhg.com/research/baaja-us-energy-system-impacts/
+
+North American Electric Reliability Corporation (2026). *2025 Long-Term Reliability Assessment* (January 2026,
+errata February 2026). Atlanta: NERC.
+https://www.nerc.com/pa/RAPA/ra/Reliability%20Assessments%20DL/NERC_LTRA_2025.pdf
+
+PJM Interconnection (2026, 30 October). *2026 PJM Effective Load Carrying Capability and Reserve Requirement Study
+(ELCC/RRS)*; and preliminary ELCC class ratings for delivery years 2028/29-2041/42.
+https://www.pjm.com/planning/resource-adequacy-planning/effective-load-carrying-capability
+
+Rand, J., Cheyette, A., Gorman, W., Wiser, R., Seel, J., Kahrl, F., Talley, C. and Zhang, S. (2026, May).
+*Interconnection Queue Dataset and Summarized Data Files, through 2025.* Berkeley, CA: Lawrence Berkeley National
+Laboratory, with Interconnection.fyi. https://emp.lbl.gov/queues
 
 Rennert, K. and Bergman, A. (2026, 29 October). Projected effects of the Bipartisan American Affordability and Jobs
 Act on the power sector. Resources for the Future issue brief.
 https://www.rff.org/publications/issue-briefs/projected-effects-of-the-bipartisan-american-affordability-and-jobs-act-on-the-power-sector/
-
-Rhodium Group (2026, 2 November). BAAJA: US energy system impacts.
-https://rhg.com/research/baaja-us-energy-system-impacts/
 
 Saltelli, A., Ratto, M., Andres, T., Campolongo, F., Cariboni, J., Gatelli, D., Saisana, M. and Tarantola, S.
 (2008). *Global Sensitivity Analysis: The Primer.* Chichester: Wiley. https://doi.org/10.1002/9780470725184
@@ -479,6 +522,10 @@ https://www.solarpowerworldonline.com/2026/11/senate-advances-federal-energy-per
 https://www.pv-tech.org/us-permitting-bill-moves-ahead-environment-opposition-grows/ ; and Bhambhani, A. (2026,
 20 November), US BAAJA permitting bill could unlock 167 GW of solar, *TaiyangNews*,
 https://taiyangnews.info/markets/us-baaja-permitting-bill-could-unlock-167-gw-solar
+
+U.S. Senate (2026). Amendment No. 6883 to H.R. 2347 (floor copy KAT26804 V62), as passed 19 November 2026; and
+engrossed Senate amendment, BILLS-119hr2347eas, GovInfo.
+https://www.govinfo.gov/content/pkg/BILLS-119hr2347eas/html/BILLS-119hr2347eas.htm
 
 Windrum, P., Fagiolo, G. and Moneta, A. (2007). Empirical validation of agent-based models: alternatives and
 prospects. *Journal of Artificial Societies and Social Simulation* 10(2): 8. https://www.jasss.org/10/2/8.html
