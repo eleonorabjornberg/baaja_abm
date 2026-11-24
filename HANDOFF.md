@@ -183,12 +183,34 @@ The brief now names three key assumptions (adoption, the re-study round, the scr
 the Summary, says the joint interval is conditional on the relative screen, and adds a validation paragraph on
 completion by cost (model 0.30 to 0.01 by bin vs LBNL 0.80 to 0.07) and PJM's zero-cost share in the data.
 
+## New data: re-study round, failure share, approved transmission (24 Nov 2026)
+Eleonora asked for the data behind the brief's limits to be downloaded. What came in and what it changed:
+- SPP DISIS results workbooks, clusters 2016-1 to 2023-1, every posting (`data/extract_spp_restudy.py` ->
+  `data/spp_restudy.json`): the current-law re-study round is now fitted, not assumed. `restudy_rho` 0.1 (s.e. about
+  0.8), `restudy_mu` -0.08, `restudy_sd` 0.6, `restudy_months` 17 (range 5 = Order No. 2023's 150-day deadline, to 29).
+- LBNL's completion fit has a share of requests that fail at any cost; `value_a` (0.772 ISO, 0.493 non-ISO) makes
+  those requests leave whatever their cost, so a zero-cost draw no longer guarantees completion (PJM's earlier null).
+- Approved transmission (MISO LRTP Tranches 1 and 2.1, SPP 2025 ITP, PJM 2025 RTEP 500 kV+) enters as hosting room in
+  both runs (`data/planned_tx.json`, `PLAN_TX`; `planned_tx` = 0 for the sensitivity).
+- FERC Order No. 2023 compliance orders (CAISO, ISO-NE, NYISO, PJM, SPP) and PJM's queue XML and ERCOT GIS reports are
+  checks only (parameter notes; brief sections 6 and 8). Not obtained (HTTP 403): MISO's compliance order ER24-2046 and
+  MISO's LRTP project lists; upload them to `raw/`.
+- Recalibrated (`run.py --recalibrate-grid`), rerun Sim 7, decomposition and joint uncertainty; brief rewritten.
+
+**Current results** (supersede the two sections above): grid agents, current law 972 GW new by 2041. BAAJA +36.5 GW
+[+11.2, +60.5] (renewables +25.3, gas +6.4, storage +4.8); no RTO adopts +6.5; every RTO adopts +65.0 (no screen +72.1,
+absolute screen +41.0). MISO +20.2 (+39.1 every RTO), PJM +4.6 (+7.6). Single decision point +61.6 over BAAJA without
+Sec.2106 (every RTO); with a five-month re-study round Sec.2106 adds +34.2; with none +1.2. Joint ranges +37.7
+[+4.6, +90.1]; realized adoption 54% of variance, Sec.2110 12%. Shortfall, current law 68 GW in 2035 and 112 in 2041;
+BAAJA cuts it by 4.9 [0.4, 9.7] in 2035 (9.0 every RTO). Backcast: agents 0.67 / 0.83 / 0.80 / 0.41 of EIA-860
+solar / wind / gas / storage 2018-25; regional log error 0.52 (exogenous 0.42).
+
 ## Known issues carried forward
 - Grid agents: completed projects take too long from request to operation (a longer wait does not raise withdrawal,
   so no selection for short waits). In the backcast, 2020-22 storage and solar requests take 62-66 months to operate
-  (exogenous model 39-60), so the agents build only 0.42 (storage), 0.67 (solar) and 0.81 (wind) of EIA-860's
+  (exogenous model 39-60), so the agents build only 0.41 (storage), 0.67 (solar) and 0.83 (wind) of EIA-860's
   2018-25 additions, most of the gap in CAISO and ERCOT; near-term current-law build with agents is conservative.
-  In CAISO, ERCOT, ISO-NE, MISO and NYISO the fitted hold after an adverse result reaches its 20-year bound (the data cannot
+  In CAISO, ISO-NE and MISO the fitted hold after an adverse result reaches its 20-year bound (the data cannot
   tell a long hold from never withdrawing); MISO's 60-month share stays high (0.75 vs 0.62). The 2020-23 withdrawal
   holdout is mixed by region (PJM and CAISO withdraw less early in the data than the model; SPP, West and NYISO more).
   SPP and West use pooled operator settings. ERCOT's LBNL withdrawal shares are probably too low (thin early data).
