@@ -59,7 +59,7 @@ With grid agents, developers respond to their region's projected shortfall, so s
 | Southeast | 29% / 29% | 0.0 / 0.0 |
 | West | 40% / 30% | 0.0 / 0.0 |
 
-## By region (requests made 2026-30; mean across runs)
+## By region (requests made in the first five model years, Nov 2026 to Oct 2031; mean across runs)
 
 | region | law: requests/yr | law: months to agreement | law: share signed | law: withdrawn at results | law: GW online 2041 | BAAJA: requests/yr | BAAJA: months | BAAJA: share signed | BAAJA: GW | 2106 everywhere: GW |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -91,9 +91,9 @@ Fitted on 2010-19 cohorts; 2020-24 cohorts are a holdout. Error: mean squared lo
 | Southeast | pooled (MISO+CAISO) | 12/serial | 24 | 0.52 | 0.00 |  | - |
 | West | pooled (MISO+CAISO) | 12/serial | 24 | 0.72 | 0.46 | 2010: 36/12; 2014: 31/12; 2017: 43/27; 2019: 50/27 | 2020: 49/22; 2021: 50/22 |
 
-### Developers: share of requests withdrawn by months after request (2015-19 cohorts vs model 2026-30)
+### Developers: share of requests withdrawn by months after request (2015-19 cohorts vs model requests of Nov 2026 to Oct 2031)
 
-Withdrawal is fitted in the 2010-25 backcast, where model and data cohorts are the same requests (Phase 3; results/backcast.md): a first-year hazard, a later hazard and a hold after an adverse study result, by region, to LBNL's 12-, 36- and 60-month shares; 24 months is a check. This table shows the forward 2026-30 cohorts under current law next to the 2015-19 data for comparison only: the queue they face is different, so they need not match. In CAISO, ISO-NE, MISO and NYISO the fitted hold reaches its 20-year bound: developers with an adverse result stay in the queue past 2025, and the data cannot tell a long hold from never withdrawing. Sec.2106(a)(3)'s single decision point and withdrawal penalties shorten the hold (lag_2106).
+Withdrawal is fitted in the 2010-25 backcast, where model and data cohorts are the same requests (Phase 3; results/backcast.md): a first-year hazard, a later hazard and a hold after an adverse study result, by region, to LBNL's 12-, 36- and 60-month shares; 24 months is a check. This table shows the forward cohorts of the first five model years under current law next to the 2015-19 data for comparison only: the queue they face is different, so they need not match. In CAISO, ERCOT, ISO-NE, MISO and NYISO the fitted hold reaches its 20-year bound: developers with an adverse result stay in the queue past 2025, and the data cannot tell a long hold from never withdrawing. Sec.2106(a)(3)'s single decision point and withdrawal penalties shorten the hold (lag_2106).
 
 | region | withdrawn by 12 months: model / data | withdrawn by 24 months: model / data | withdrawn by 36 months: model / data | withdrawn by 60 months: model / data |
 |---|---|---|---|---|

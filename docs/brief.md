@@ -23,7 +23,7 @@ non-refundable security and withdrawal penalties keep out. If they keep out half
 quarter, Sec.2106 adds nothing. How the screen is specified matters too: I first specified it as an absolute
 threshold on each request's chance of completing, and under that version the bill reduces capacity by 2 GW. I
 changed to the relative version after seeing those results (section 2), and report both. Drawing every assumption
-range together gives a median of 26.5 GW [4.9, 64.0].
+range together gives a median of 26.5 GW [4.9, 64.0] (5th-95th percentile of 400 joint samples).
 
 Little changes before the early 2030s. The model assumes reformed interconnection studies start about three years
 after enactment (range two to four; the bill gives FERC 18 months for the rule and RTOs two years to file), and that
@@ -39,7 +39,7 @@ in 2041, most of it in PJM, where NERC's margin rises from 18.6% to 35.1%. BAAJA
 [0.3, 6.4]. The shortfall is a benchmark against NERC's planning margins, not a forecast of outages, and the bill
 does not close it.
 
-The bill's gain in clean capacity here, 16.9 GW of renewables and storage by November 2041, is at the low end of
+The bill's gain in clean capacity here, 16.9 GW of renewables and storage by November 2041, is just below the low end of
 Rhodium Group's 17 to 249 GW through 2040 and well below Resources for the Future's figure of about 60 GW by 2028.
 The difference has several sources that cannot be separated from outside: both studies expand transmission under
 the bill and this model does not plan any; RFF attributes its near-term gain mainly to permit certainty; and each
@@ -55,7 +55,7 @@ BAAJA is a permitting and transmission bill. The provisions that bear on generat
 | group | main sections modelled | what changes in the model |
 |---|---|---|
 | Permitting | 1105-1106 and 1108 (level of review; one-year EA and two-year EIS deadlines), 1202 (one-year Clean Water Act s.401 clock), 1302 (ESA consultation timeline), 2213 (federal-land rights-of-way clocks), 2229 | months to a federal permit |
-| Courts | 1110 and 2201 (150-day limit to sue, comment exhaustion, remand without vacatur); 1134, 1205 and 1305 extend the same limits to other statutes | how many suits are filed and how many halt a project |
+| Courts | 1110 and 2201 (150-day limit to sue, comment exhaustion, remand without vacatur); 1134 extends the same limit to FAST-41 claims (1205 and 1305, for s.404 and ESA opinions, are listed but not modelled separately) | how many suits are filed and how many halt a project |
 | Permit certainty | 1401 | whether a permit can be revoked or suspended after issue |
 | Grid access | 2106 (interconnection reform in RTOs/ISOs), 2110 (study automation), 2109 (advanced transmission technologies), 2101, 2102(a) and 2214 (transmission permitting) | who enters the interconnection queue, who leaves it, how long studies take, how much hosting room the grid has |
 
@@ -128,14 +128,15 @@ from the queue. Its results appear alongside as a check and are labelled as such
 All inputs are public. Sources, retrieval dates and file hashes are in `data/SOURCES.md`.
 
 - Interconnection: LBNL *Queued Up* workbook (requests through 2025) and LBNL interconnection-cost studies for MISO,
-  PJM, SPP, NYISO and ISO-NE. The CAISO, MISO and NYISO queue files were downloaded for cross-checks but are not
+  PJM, SPP, NYISO, ISO-NE and non-ISO balancing areas (used for the Southeast and West). The CAISO, MISO and NYISO queue files were downloaded for cross-checks but are not
   used.
 - Permitting: CEQ EIS timelines, BLM MLRS rights-of-way cases, Army Corps permit data.
-- Courts: 1,821 NEPA cases decided 2001-22; Sabin Center renewable-opposition database.
+- Courts: 1,821 NEPA cases filed 2001-22; Sabin Center renewable-opposition database.
 - Fleet, retirements and generation: EIA-860 (2015-2025), EIA-860M, EIA-923.
 - Demand and adequacy: NERC 2025 Long-Term Reliability Assessment; PJM ELCC class ratings.
 - Bill text: the Senate floor copy of S.Amdt. 6883 (KAT26804 V62), checked against the engrossed Senate amendment to
-  H.R. 2347 (GovInfo, BILLS-119hr2347eas). Every modelled section is identical word for word.
+  H.R. 2347 (GovInfo, BILLS-119hr2347eas). Sections 1105, 1106, 1108, 1110, 1202, 1302, 1401, 2106-2110, 2201, 2213 and 2229
+  are identical word for word; the other modelled sections were not compared.
 
 ## 4. Results
 
@@ -152,8 +153,8 @@ excludes relicensed hydro, which is reported separately.
 | BAAJA, every RTO changes its process | +37.0 [+32.0, +42.8] | +24.7 | +9.2 | +3.1 |
 | BAAJA, central, plus a 25% study-throughput gain under Sec.2110 | +37.4 [+26.1, +49.3] | +23.3 | +8.4 | +5.8 |
 
-Current law brings about 954 GW of new capacity online by November 2041 [939, 972]. The bill adds 2% to 4% to that,
-depending on how many RTOs change their process. The first row, which keeps every provision except Sec.2106, contains
+Current law brings about 954 GW of new capacity online by November 2041 [939, 972]. The bill adds 0.7% to 3.9% to that
+(2.3% in the central case), depending on how many RTOs change their process. The first row, which keeps every provision except Sec.2106, contains
 Titles I and II (permitting and courts), Sec.2109 and Sec.2110 at zero; Sec.2109's extra hosting room adds about 4 GW
 to the central case (+17.8 GW without it). Relicensed hydro that returns to service sooner adds a further 1.8 GW in
 every bill scenario.
@@ -179,7 +180,7 @@ first row.
 The bill adds under 1 GW before 2033. The permitting and court provisions add a little each year from the start.
 Sec.2106 applies only to requests made after the rule takes effect (late 2029 in the central case), and the first of
 those come online in 2033. Current-law additions peak at 118 GW in 2029, while the queue standing at the end of 2025
-is being built, then settle around 45 to 60 GW a year.
+is being built, then settle at 44 to 62 GW a year.
 
 ### 4.3 Where
 
@@ -190,10 +191,10 @@ GW. ERCOT, the Southeast and the non-ISO West gain 0.5 to 1.9 GW each from the p
 
 PJM gains almost nothing from Sec.2106: 0.5 GW in the central case and 0.7 GW if every RTO changes its process, the
 same as with Sec.2106 off. If every RTO changes its process, Sec.2106 does shorten PJM's studies (from 30 to 28 months to
-agreement) and raise the share of requests that sign, but the entry screen offsets it. The screen keeps out the requests least likely to complete as
+agreement, median for requests made in the first five years) and raise the share of requests that sign, but the entry screen offsets it. The screen keeps out the requests least likely to complete as
 ranked by their private value. In PJM, whether a request completes depends more on its upgrade-cost draw than on its
-value: 13.7% of PJM requests in LBNL's cost study pay no network upgrade, and PJM's cost spread is the widest of the
-regions with LBNL cost studies. So in PJM the screen also keeps out requests that would have completed. In a diagnostic run
+value: 13.7% of PJM requests in LBNL's cost study pay no upgrade cost at all, and PJM's cost spread is the widest of the
+five ISOs with LBNL cost studies (log standard deviation 1.50, against 1.39 or less). So in PJM the screen also keeps out requests that would have completed. In a diagnostic run
 without the screen, PJM gains from Sec.2106 as MISO does. This is a property of the modelled screen, which treats a
 deposit as screening on value, and a deposit that screened on cost information would behave differently.
 
@@ -230,8 +231,9 @@ BAAJA reduces the 2035 shortfall by 3.1 GW [0.3, 6.4] in the central case and by
 process; by 2041 the reductions are 5.7 and 10.3 GW. The bill does not close the gap. Most of the shortfall is in PJM,
 where the bill adds little (section 4.3). The simpler model, with historical study times (Sim 6,
 `results/sim6_supply.md`), shows MISO and ISO-NE first falling below their margins in 2027 (median first year across
-runs) and staying close to them: in 2035 MISO's reserve margin is 8.4% against a Reference Margin Level of 8.9%, and
-ISO-NE's 11.8% against 13.0%, below the level in 66% and 71% of runs.
+runs; MISO's margin is 0.8% against 8.3% that year) and close to them by 2035: MISO's reserve margin is then 8.4%
+against a Reference Margin Level of 8.9%, and ISO-NE's 11.8% against 13.0%, below the level in 66% and 71% of runs.
+With the grid agents the 2035 margins are lower, 5.2% in MISO and 11.0% in ISO-NE.
 
 These figures are a benchmark against planning margins. They are not a forecast of outages: apart from developers entering faster where a shortfall is projected,
 the model has no response from prices, no demand response beyond NERC's forecast and no delayed retirements, all of
@@ -258,6 +260,10 @@ draws every assumption at once, 400 Latin-hypercube samples, and splits the vari
 | cost rise for remaining requests per withdrawn MW (0.1 / 0.6) | +13.6 / +21.5 |
 | share able to use a published location (0.25 / 0.9) | +16.9 / +18.3 |
 | fee as a multiple of expected upgrade cost (1.5 / 0.8) | +16.8 / +18.4 |
+| hosting room added per transmission project, GW (0.5 / 3.0) | +14.4 / +22.0 |
+| entry response to the region's projected shortfall (0 / 3) | +18.0 / +14.7 |
+| entry response to the published wait (0 / 1) | +16.7 / +18.4 |
+| hold after an adverse study result under Sec.2106, relative to current law (0 / 1) | +17.4 / +17.4 |
 
 The bill's effect is most sensitive to the assumptions about how Sec.2106 and Sec.2110 are carried out, none of which
 the statute sizes. Upgrade-cost growth (`kappa`) matters more for the level of current law than for the bill's
@@ -272,7 +278,7 @@ in RTOs that changed their process in that sample, followed by the Sec.2110 gain
 upgrade-cost growth (6%) and Sec.2109 hosting room (6%). Split by the adoption that happened, the median is +13.3 GW
 when no RTO changed its process, +26.5 GW when some did and +39.3 GW when all did.
 
-In the simpler model, with Sec.2106 and Sec.2110 at zero, the result is +8.0 GW [+4.6, +13.1], and 52% of its
+In the simpler model, with Sec.2106 and Sec.2110 at zero, the result is a median of +8.0 GW [+4.6, +13.1], and 52% of its
 variance comes from one assumption: the share of new applications for rights-of-way on federal land whose Sec.2213
 intake deadlines are met. When that model's study-time cut for Sec.2106 is instead drawn from zero to ERCOT's pace, the range becomes
 +33.5 GW [+6.5, +188.7], with 76% of the variance from that cut alone. That is the gap the grid-agent model was built
@@ -282,8 +288,9 @@ data, and narrows the upper end from 189 to 64 GW.
 ## 6. Validation
 
 The model was run from January 2010 to December 2025 under current law and compared with what happened
-(`results/backcast.md`, `results/calibration.json`). It passes some tests and fails others, and the failures bear on
-the result.
+(`results/backcast.md`, `results/calibration.json`). Following the pattern-oriented approach (Grimm et al. 2005;
+Windrum et al. 2007), it is checked against several patterns at once, some of them left out of the fit. It passes some
+tests and fails others, and the failures bear on the result.
 
 What was fitted, and to what. Grid operators' study throughput was fitted to LBNL request-to-agreement times for
 2010-19 cohorts; CAISO, ERCOT and MISO have their own fit, and the other six regions, which lack reliable agreement
@@ -297,14 +304,17 @@ National additions, 2018-25 (EIA-860, not used in fitting). The agents produce 6
 127.2 GW), 82% of onshore wind, 80% of gas and 45% of storage (19.5 vs 43.1 GW). The simpler model with historical
 study times does better (82%, 100%, 84% and 108%). Both miss the 2024-25 jump in solar (31 and 30 GW in EIA); the agents also miss the jump in storage. By region, the
 weighted mean absolute log ratio of model to EIA additions is 0.51 for the agents and 0.42 for the simpler model;
-MISO, where much of the Sec.2106 effect sits, has a ratio of 0.51, and storage in PJM is 3.9 GW in the model against
+MISO, where much of the Sec.2106 effect sits, builds 0.51 of EIA's additions (24.0 against 46.8 GW), and storage in PJM is 3.9 GW in the model against
 0.4 GW in EIA.
 
 ![Backcast: model vs EIA-860 additions, 2018-25](../figures/brief_5_backcast.png)
 
-Completion by technology and region. All but one cell fits within a third of the LBNL rate. ERCOT storage completes
-at 18.4% in the model against 11.7% in the data. Its value scale is at the lower bound of its range, and 17% of
-ERCOT requests have no network-upgrade cost, so even the lowest value leaves too many completing. Five value scales
+Completion by technology and region. Of the 28 cells with an LBNL completion rate of at least 5%, all but two are
+within 35% of it. ERCOT storage completes at 18.4% in the model against 11.7% in the data: its value scale is at the
+lower bound of its range, and 17% of requests in the pooled ISO cost sample that stands in for ERCOT (LBNL has no
+ERCOT cost study) have no upgrade cost, so even the lowest value leaves too many completing. Geothermal outside the
+West completes at 25.3% against 13.7%. Below 5%, storage in SPP and MISO and offshore wind miss by more than a third,
+each by under 2 points. Five value scales
 sit at that lower bound (solar in SPP; storage in ERCOT, PJM and SPP; offshore wind), so in those cells the fitted
 value is a corner, not an estimate.
 
@@ -313,8 +323,8 @@ by at most 0.05 in every region. The 2020-23 cohorts, used in no fit, are a diff
 0.59 in CAISO against 0.12 in the data, 0.30 in PJM against 0.13, 0.40 in NYISO against 0.72 and 0.09 in the West
 against 0.33. The data's withdrawal rates for these cohorts differ from 2015-19 in both directions, and the model's
 hazards, fixed at their 2015-19 values, do not follow them. The fitted hold after an adverse study result is at its
-240-month upper bound in five of nine regions, which means the model finds no hold short enough to fit those regions'
-60-month shares; it delays when a withdrawal is recorded rather than whether it happens.
+240-month upper bound in five of nine regions, which means no hold within the bound is long enough to bring those regions' 60-month withdrawal shares
+down to the data (MISO 0.74 against 0.62); it delays when a withdrawal is recorded rather than whether it happens.
 
 Study times out of sample. MISO's lengthening from about 21 to 45 months, between the 2010 and 2019 cohorts, falls within the fitted
 cohorts. For the

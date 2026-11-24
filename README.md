@@ -164,7 +164,7 @@ on the same requests; EIA-860 additions by region use nameplate capacity (region
 | 2018-25 additions, model / EIA-860 | solar | onshore wind | gas | storage |
 |---|---|---|---|---|
 | Exogenous grid (Sims 1-6) | 0.82 | 1.00 | 0.84 | 1.08 |
-| Grid agents (Sim 7) | 0.67 | 0.81 | 0.80 | 0.42 |
+| Grid agents (Sim 7) | 0.68 | 0.82 | 0.80 | 0.45 |
 
 - **By region** the error is larger than nationally: weighted mean absolute log ratio across regions 0.42 (exogenous)
   and 0.51 (agents). Both models put too little solar and storage in ERCOT and CAISO and too much in PJM, ISO-NE and
@@ -174,7 +174,7 @@ on the same requests; EIA-860 additions by region use nameplate capacity (region
   request to operation in the agents (39-60 with the exogenous grid), so many finish after 2025. Most of the gap is
   in CAISO and ERCOT and is the same gap as "completed projects are not selected for short waits" (known limits).
 - **Withdrawal timing of 2015-19 requests** (fitted at 12, 36 and 60 months): the agents match LBNL by region within
-  0.03 at 12 and 36 months, and within 0.05 at 24 months (not fitted). At 60 months MISO is 0.75 vs 0.62 even with its
+  0.01 at 12 and 36 months, and within 0.05 at 24 months (not fitted). At 60 months MISO is 0.74 vs 0.62 even with its
   hold at the bound. The exogenous model withdraws about 65% of requests by month 12 everywhere (data 9-58%).
 - **Holdout (2020-23 requests, used in no fit)** is mixed: the agents withdraw too fast in CAISO (0.59 vs 0.12 by month
   12) and too slowly in SPP (0.13 vs 0.30).
@@ -251,7 +251,7 @@ the JSON summaries in `data/` from them.
 | `demand_growth_mult` | 0.5 | 1.0 | 1.5 | Supply: multiplier on NERC's forecast demand growth |
 | `entry_wait_elast` | 0 | 0.3 | 1.0 | Grid agents: elasticity of new requests to the published wait |
 | `scarcity_beta` | 0 | 1 | 3 | Grid agents: developer value and entry rise with the region's projected shortfall (4 years ahead) |
-| `kappa` | 1.56 | 2.17 | 5.14 | Grid agents: growth of upgrade cost with capacity signed. **From data**: LBNL cost studies, 2018+ vs 2010-17 requests |
+| `kappa` | 0 | 2.17 | 5.14 | Grid agents: growth of upgrade cost with capacity signed (0 in ERCOT, which does not allocate network upgrades to generators). **From data**: LBNL cost studies, 2018+ vs 2010-17 requests |
 | `restudy_rho`, `restudy_months` | 0.1, 3 | 0.3, 6 | 0.6, 12 | Grid agents: re-study cost rise after withdrawals; months from first result to agreement in cluster regions |
 | `tx_hosting_gw` | 0.5 | 1.5 | 3.0 | Grid agents: GW of interconnection room added by one transmission project |
 | `adopt_2106` | 0 | 0.5 | 1.0 | Sec.2106(d): chance that an RTO's process changes rather than being found compliant, drawn per RTO |
@@ -271,7 +271,7 @@ of a truncated review (1.6); halt probabilities other than offshore wind.
   7-9%; FWS publishes no list of specific eagle permits, so the true share is somewhat higher.
 - **EA/CE data are BLM and DOE only.** Corps, USFS and FWS reviews are missing, so EA/CE suit rates are scaled down by a range.
 - **Backcast fit is national, not regional** (Validation): regional additions miss by about 40-50% on average, and the
-  grid agents' 2018-25 storage is 0.42 of EIA's.
+  grid agents' 2018-25 storage is 0.45 of EIA's.
 - **Gas pipelines and LNG are not simulated**; Sim 2 compares their litigation (10 NEPA cases a year vs 4 for renewables) from data.
 - **No prices or emissions.** In Sims 1-6 arrivals stay at the 2021-25 average (or 2025's mix); only Sim 7's grid
   agents let new requests respond to waits and regional scarcity. Demand is NERC's forecast, not modelled.
@@ -285,7 +285,7 @@ of a truncated review (1.6); halt probabilities other than offshore wind.
     raise withdrawal in the model, so completed projects are not selected for short waits; in the backcast this
     pushes 2020-22 storage and solar past 2025;
   - withdrawal timing is fitted in the backcast with a first-year and a later background hazard and a hold after an
-    adverse study result; the hold sits at its 20-year bound in CAISO, ISO-NE, MISO and NYISO, i.e. those requests
+    adverse study result; the hold sits at its 20-year bound in CAISO, ERCOT, ISO-NE, MISO and NYISO, i.e. those requests
     stay in the queue rather than withdraw, and MISO still withdraws too much by month 60;
   - MISO's modelled wait to agreement (about 27-35 months) is shorter than recent cohorts (45-50);
   - SPP and the West have no queue data of their own and use pooled operator settings that fit poorly.

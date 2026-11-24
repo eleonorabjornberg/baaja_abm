@@ -84,7 +84,8 @@ agreements are issued on their dates, and developers decide.
   emerges from which RTOs adopt and how many requests are deterred or kept.
 - **Adaptation.** Developers stay if their allocated cost is below their value (raised by regional scarcity); they
   enter less when the published wait is longer and more when their region's projected shortfall grows; under
-  Sec.2106(a)(3) they do not enter when their chance of completing is below a threshold. Operators adapt throughput to
+  Sec.2106(a)(3), in an RTO that changes its process, the share `screen_2106` of new requests least likely to complete
+  within their technology and region do not enter (requests at published locations are exempt). Operators adapt throughput to
   the arrival rate.
 - **Objectives.** Developers: proceed while expected value exceeds cost. Operators have no objective; they follow
   fitted rules.

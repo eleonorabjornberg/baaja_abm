@@ -215,6 +215,9 @@ def run(n_runs, cal, res_dir, fig_dir, sweep_runs=None):
     t_vm = table(["technology", "region", "value scale (fitted to completion)"],
                  [[*(k.split("|") if "|" in k else (k, "all (pooled)")), f"{v:.2f}"]
                   for k, v in sorted((gc.get("value_mult") or {}).items())])
+    lags = gc.get("exit_lag") or {}
+    bound = [r for r, v in lags.items() if v >= 239.5]
+    at_bound = ", ".join(bound[:-1]) + " and " + bound[-1] if len(bound) > 1 else (bound[0] if bound else "no region")
     t_hz = table(["region", "background withdrawal hazard, %/month: first 12 months", "after 12 months, to construction",
                   "mean hold after an adverse study result, months"],
                  [[r, *(f"{100 * x:.2f}" for x in (v if np.ndim(v) else (v, v))),
@@ -292,7 +295,7 @@ def run(n_runs, cal, res_dir, fig_dir, sweep_runs=None):
         "longer fixed by the 2021-25 request mix, but fewer projects get through the queue overall.",
         t_adq,
         t_adr,
-        "## By region (requests made 2026-30; mean across runs)",
+        "## By region (requests made in the first five model years, Nov 2026 to Oct 2031; mean across runs)",
         t_reg,
         "## Validation",
         "### Grid operators: months from request to signed agreement, by request year (LBNL)",
@@ -300,12 +303,12 @@ def run(n_runs, cal, res_dir, fig_dir, sweep_runs=None):
         "squared difference in the share signed by Dec 2025, by cohort. Regions without reliable agreement dates take "
         "the joint MISO+CAISO fit.",
         t_ops,
-        "### Developers: share of requests withdrawn by months after request (2015-19 cohorts vs model 2026-30)",
+        "### Developers: share of requests withdrawn by months after request (2015-19 cohorts vs model requests of Nov 2026 to Oct 2031)",
         "Withdrawal is fitted in the 2010-25 backcast, where model and data cohorts are the same requests (Phase 3; "
         "results/backcast.md): a first-year hazard, a later hazard and a hold after an adverse study result, by region, "
-        "to LBNL's 12-, 36- and 60-month shares; 24 months is a check. This table shows the forward 2026-30 cohorts under "
+        "to LBNL's 12-, 36- and 60-month shares; 24 months is a check. This table shows the forward cohorts of the first five model years under "
         "current law next to the 2015-19 data for comparison only: the queue they face is different, so they need not match. "
-        "In CAISO, ISO-NE, MISO and NYISO the fitted hold reaches its 20-year bound: developers with an adverse result stay "
+        f"In {at_bound} the fitted hold reaches its 20-year bound: developers with an adverse result stay "
         "in the queue past 2025, and the data cannot tell a long hold from never withdrawing. Sec.2106(a)(3)'s single "
         "decision point and withdrawal penalties shorten the hold (lag_2106).",
         t_wd,

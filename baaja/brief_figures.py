@@ -36,7 +36,7 @@ def headline(res_dir, path):
         mid = b.get("p50", b["mean"])
         ax.plot([b["p5"], b["p95"]], [i, i], color=c, lw=6 if kind == "joint" else 3, solid_capstyle="butt", alpha=.9)
         ax.plot(mid, i, "o", color=INK, ms=5)
-        ax.text(b["p95"] + (hi - lo) * .01, i, f"{mid:+.0f} [{b['p5']:+.0f}, {b['p95']:+.0f}]", va="center", fontsize=8, color=INK2)
+        ax.text(b["p95"] + (hi - lo) * .01, i, f"{mid:+.1f} [{b['p5']:+.1f}, {b['p95']:+.1f}]", va="center", fontsize=8, color=INK2)
     ax.set_yticks(range(len(rows)), [x[0] for x in rows[::-1]], fontsize=8)
     ax.axvline(0, color=INK2, lw=.8)
     ax.set_xlim(min(lo, 0) - (hi - lo) * .03, hi + (hi - lo) * .22); ax.grid(axis="y", visible=False)
@@ -62,7 +62,7 @@ def regions(res_dir, path):
         x = np.arange(len(regs)) + (j - 1) * w
         ax.bar(x, v, w * .95, color=c, label=lab)
         for xi, vi in zip(x, v):
-            ax.text(xi, vi + (.3 if vi >= 0 else -1.2), f"{vi:.0f}", ha="center", fontsize=6.5, color=INK2)
+            ax.text(xi, vi + (.3 if vi >= 0 else -1.2), f"{vi:.1f}", ha="center", fontsize=6, color=INK2)
     ax.set_xticks(range(len(regs)), regs, fontsize=8); ax.grid(axis="x", visible=False); ax.axhline(0, color=INK2, lw=.8)
     ax.set_ylabel("new GW by 2041 vs current law")
     ax.set_title("Grid agents, by region (Sec.2106 applies only in RTO/ISO markets, not ERCOT, the Southeast or the West)",

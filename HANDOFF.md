@@ -174,7 +174,7 @@ outputs had been from Phase 1).
   so no selection for short waits). In the backcast, 2020-22 storage and solar requests take 62-66 months to operate
   (exogenous model 39-60), so the agents build only 0.42 (storage), 0.67 (solar) and 0.81 (wind) of EIA-860's
   2018-25 additions, most of the gap in CAISO and ERCOT; near-term current-law build with agents is conservative.
-  In CAISO, ISO-NE, MISO and NYISO the fitted hold after an adverse result reaches its 20-year bound (the data cannot
+  In CAISO, ERCOT, ISO-NE, MISO and NYISO the fitted hold after an adverse result reaches its 20-year bound (the data cannot
   tell a long hold from never withdrawing); MISO's 60-month share stays high (0.75 vs 0.62). The 2020-23 withdrawal
   holdout is mixed by region (PJM and CAISO withdraw less early in the data than the model; SPP, West and NYISO more).
   SPP and West use pooled operator settings. ERCOT's LBNL withdrawal shares are probably too low (thin early data).
