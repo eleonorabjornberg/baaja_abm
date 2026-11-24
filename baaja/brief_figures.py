@@ -40,8 +40,8 @@ def headline(res_dir, path):
     ax.set_yticks(range(len(rows)), [x[0] for x in rows[::-1]], fontsize=8)
     ax.axvline(0, color=INK2, lw=.8)
     ax.set_xlim(min(lo, 0) - (hi - lo) * .03, hi + (hi - lo) * .22); ax.grid(axis="y", visible=False)
-    ax.set_xlabel("new GW online by Nov 2041, BAAJA minus current law. Thin bars: 5th-95th percentile across 100 paired "
-                  "runs, dot = mean;\nthick bars: across 400 joint samples of all assumption ranges, dot = median",
+    ax.set_xlabel("new GW online by Nov 2041, BAAJA minus current law\nthin bars: 5th-95th percentile across 100 paired "
+                  "runs, dot = mean; thick bars: 400 joint samples\nof all assumption ranges, dot = median",
                   fontsize=8)
     law = r["Current law"]["totals"][G]["mean"]
     ax.set_title(f"BAAJA by 2041: {d('BAAJA without Sec.2106')['mean']:+.0f} GW if no RTO adopts Sec.2106, "
