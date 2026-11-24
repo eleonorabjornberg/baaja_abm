@@ -5,6 +5,7 @@
   python run.py --recalibrate-grid --sim 7 # refit only the grid agents (Phase 2), then Sim 7
   python run.py --sim 2 --runs 50         # one simulation (reuses results/calibration.json if present)
   python run.py --uncertainty 400         # joint uncertainty over all assumption ranges (reuses calibration)
+  python run.py --decomposition --runs 40 # where the Sec.2106 gain comes from (grid agents)
   python run.py --brief-figures           # figures for docs/brief.md from the committed results (in --all)
 Outputs: results/simN_*.md|json, results/calibration.json, results/backcast.md, figures/simN_*.png, figures/brief_*.png
 """
@@ -28,6 +29,7 @@ ap.add_argument("--recalibrate", action="store_true")
 ap.add_argument("--recalibrate-grid", action="store_true", help="refit only the grid agents (keeps the rest)")
 ap.add_argument("--uncertainty", type=int, default=0, help="joint-uncertainty samples (0 = skip)")
 ap.add_argument("--backcast", action="store_true", help="backcast 2010-25 by region, both grid models (in --all)")
+ap.add_argument("--decomposition", action="store_true", help="where the Sec.2106 gain comes from (uses --runs)")
 ap.add_argument("--brief-figures", action="store_true", help="figures for docs/brief.md from results/*.json (in --all)")
 a = ap.parse_args()
 os.makedirs("results", exist_ok=True); os.makedirs("figures", exist_ok=True)
@@ -65,6 +67,11 @@ if a.uncertainty:
     from baaja.uncertainty import report
     md, _ = report(a.uncertainty, cal, "results")
     print(md.split("\n\n## What drives")[0])
+
+if a.decomposition:
+    from baaja.sims import sec2106_decomposition
+    md, _ = sec2106_decomposition.run(a.runs, cal, "results")
+    print(md)
 
 if a.brief_figures or a.all:
     from baaja import brief_figures
