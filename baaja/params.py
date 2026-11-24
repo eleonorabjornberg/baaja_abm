@@ -104,7 +104,10 @@ ASSUMPTIONS = {
                           "Sec.2106: interconnection study time cut from consolidated planning, Transmission Organizations "
                           "(RTO/ISO markets) only [floor: no measured effect of past reforms, and FERC may find existing "
                           "processes compliant (2106(d)); ceiling: ERCOT's pace, data/interconnection_benchmark.json]"),
-    "ix_rule_month":     (24, 36, 48, "months until Sec.2106/2110 rules affect studies"),
+    "ix_rule_month":     (24, 36, 48, "months until Sec.2106/2110 rules affect studies [A; check: Order No. 2023 (28 Jul "
+                          "2023) took 20-24 months to the first compliance orders for CAISO, ISO-NE, NYISO, PJM and SPP, "
+                          "each accepted in part with further filings; filings at 24 months under s.228 plus 11-14 months "
+                          "to an order gives 35-38]"),
     "build_months":      (None, None, None, "post-IA months to operation: calibrated to LBNL time to COD, not assumed"),
 }
 A = {k: v[1] for k, v in ASSUMPTIONS.items()}   # central values
@@ -248,10 +251,15 @@ GRID_LAW = {
 }
 GRID_BILL = {
     "adopt_2106":         (0.0, 0.5, 1.0, "Sec.2106(d): probability that an RTO's process changes rather than being "
-                           "found compliant, drawn per RTO"),
+                           "found compliant, drawn per RTO [A; check: under Order No. 2023 FERC let every RTO keep its "
+                           "existing cluster process through variations and accepted all five filings in part, so "
+                           "outcomes were alike across RTOs; independence per RTO understates that]"),
     "planned_share_2106": (0.25, 0.5, 0.9, "Sec.2106(a)(2): share of requests able to use a published location"),
     "screen_2106":        (0.1, 0.25, 0.5, "Sec.2106(a)(3): share of requests that non-refundable security and withdrawal "
-                           "penalties keep out, those least likely to complete within their technology and region"),
+                           "penalties keep out, those least likely to complete within their technology and region [A; check: "
+                           "LBNL 12-month withdrawal shares of 2015-19 requests in FERC RTOs run 0.14 (SPP) to 0.58 "
+                           "(CAISO), median about 0.29; Johnston, Liu and Yang find deposits deter mainly such quick "
+                           "leavers]"),
     "lag_2106":           (0.0, 0.5, 1.0, "Sec.2106(a)(3): months a developer holds its queue position after an "
                            "adverse study result, relative to current law, with a single decision point and withdrawal "
                            "penalties (0 = leaves at once)"),
