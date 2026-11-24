@@ -133,11 +133,21 @@ with an agent-based queue that sizes the bill's actual mechanisms (below).
      brings the central case to +37.4 GW.
    - The entry screen in 2106(a)(3) keeps out the quarter of new requests least likely to complete within their
      technology and region (range 10-50%). This relative screen replaced an absolute probability threshold after the
-     results were seen: the absolute version, whose threshold the recalibration moved, gives -2.2 GW (-4.6 GW if every
-     RTO adopts). Keeping out half the requests gives +6.4 GW; a tenth, +21.0 GW.
+     results were seen: the absolute version gives -0.1 GW (-4.4 GW if every RTO adopts), no screen +26.5 GW
+     (+44.2 GW), 100 paired runs (`results/sec2106_decomposition.md`). Keeping out half the requests gives +6.4 GW;
+     a tenth, +21.0 GW (20 runs).
+   - What Sec.2106 does (every RTO adopts, `python run.py --decomposition`): the single decision point adds +35.0 GW
+     over BAAJA without Sec.2106, published locations +2.5, the relative screen -7.2. The single decision point is
+     worth that much because it removes the assumed current-law re-study round (`restudy_rho` 0.3, `restudy_months`
+     6): with `restudy_rho` 0 and 1 month in both runs, Sec.2106 adds +0.5 GW; with no re-study round, -2.6 GW.
+     Titles I-II alone (no Sec.2106, no Sec.2109) give +2.9 GW.
    - Timing: the gain is +0.3 GW in 2030 and +10.8 GW in 2035, because the rules apply to studies from month 36.
-   - Most of the gain is in **MISO** (+12.4 GW; +23.5 GW if every RTO adopts). PJM gains about 0.5 GW: the screen
-     there keeps out requests that would have completed, because PJM's upgrade costs are the most dispersed.
+   - Most of the gain is in **MISO** (+12.4 GW; +23.5 GW if every RTO adopts; 73% of the Sec.2106 increment). With
+     PJM's study throughput relative to arrivals (0.97 against MISO's fitted 0.59), MISO's every-RTO gain is +13.6 GW.
+     PJM gains about 0.5 GW: most PJM solar and storage that signs pays no upgrade cost (zero-cost share 13.7%, at or
+     above PJM's completion rates), so the value-ranked screen removes completers. Without the screen PJM gains
+     +9.0 GW; with MISO's zero-cost share +5.6 GW; with MISO's cost spread +0.9 GW. LBNL's PJM cost data do not show
+     zero cost as the route to completion (12% of completed solar vs 14% of withdrawn).
    - **Adequacy**: BAAJA cuts the 2035 national shortfall by 3.1 GW [0.3, 6.4] (5.7 GW in 2041); 5.8 GW if every RTO
      adopts. With agents, the current-law shortfall is **69 GW in 2035** (59 with the exogenous grid) and 122 GW in
      2041, still mostly PJM (57 GW in 2035).
@@ -303,6 +313,7 @@ python run.py --all --runs 100    # calibrate, backcast, seven simulations -> re
 python run.py --recalibrate-grid --sim 7 --runs 100   # refit the grid agents only, then Sim 7
 python run.py --uncertainty 400   # all assumption ranges at once -> results/uncertainty.md
 python run.py --backcast          # 2010-25 backcast, both grid models -> results/backcast.md
+python run.py --decomposition --runs 100   # where the Sec.2106 gain comes from -> results/sec2106_decomposition.md
 python run.py --brief-figures     # figures for docs/brief.md from results/*.json -> figures/brief_*.png
 python run.py --sim 3 --runs 50   # one simulation, reusing results/calibration.json
 python -m pytest -q

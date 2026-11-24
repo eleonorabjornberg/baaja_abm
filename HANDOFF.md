@@ -169,6 +169,20 @@ have completed). Joint ranges +26.5 [+4.9, +64.0]. Shortfall below reference mar
 (exogenous 59), 122 in 2041; BAAJA cuts it by 3.1 GW in 2035 and 5.7 in 2041. Sim 6 regenerated (its committed
 outputs had been from Phase 1).
 
+## Second review and Sec.2106 decomposition (24 Nov 2026)
+Three more reviewers (numbers, bill and sources, methods). The methods review found that most of the Sec.2106 gain is
+the single decision point removing the assumed current-law re-study round, and that the PJM null comes from PJM's
+zero-cost share, not its cost spread. `baaja/sims/sec2106_decomposition.py` (`python run.py --decomposition --runs
+100`, `results/sec2106_decomposition.md|json`) makes those diagnostics reproducible; its central rows match Sim 7.
+Every RTO adopts: single decision point +35.0 GW over BAAJA without Sec.2106, published locations +2.5, relative
+screen -7.2; no screen +44.2, relative +37.0, absolute -4.4 (p = 0.5: +26.5 / +21.9 / -0.1). Re-study off in both
+runs (`restudy_rho` 0, `restudy_months` 1): Sec.2106 adds +0.5 GW; no re-study round: -2.6. Titles I-II alone +2.9.
+The screen costs capacity in every RTO but MISO (+5.3, whose fitted throughput is 0.59 of arrivals). About 4.5 of
+the 33.6 GW in RTO regions is sooner, not more. Under the calibration of commit b6c291c: relative +42.9, absolute +9.5.
+The brief now names three key assumptions (adoption, the re-study round, the screen), reports the screen range in
+the Summary, says the joint interval is conditional on the relative screen, and adds a validation paragraph on
+completion by cost (model 0.30 to 0.01 by bin vs LBNL 0.80 to 0.07) and PJM's zero-cost share in the data.
+
 ## Known issues carried forward
 - Grid agents: completed projects take too long from request to operation (a longer wait does not raise withdrawal,
   so no selection for short waits). In the backcast, 2020-22 storage and solar requests take 62-66 months to operate

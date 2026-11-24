@@ -223,7 +223,8 @@ def report(res):
                f"{A(name)['diff_cohort_online']:+.1f}", f"{A(name)['diff_cohort_ever']:+.1f}"]
               for name in ("without Sec.2106", "+ published locations (no screen)", "+ relative screen (central)",
                            "p=0.5: relative screen (central)")]
-    t_e = table(["case", "new RTO requests online by Nov 2041, GW", "that ever complete, GW", "sooner, not more"], rows_e)
+    t_e = table(["case", "new RTO requests online by Nov 2041, GW", "that ever complete, GW", "sooner, not more",
+                 "requests made in the rule's first six years: online by Nov 2041", "that ever complete"], rows_e)
     parts = [
         "# Where the Sec.2106 gain comes from (grid agents)",
         f"Mean [5th, 95th percentile] across {n} paired runs; every case is paired with current law under the same seeds, "

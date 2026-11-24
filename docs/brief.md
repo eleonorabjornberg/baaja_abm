@@ -13,43 +13,58 @@ bring online in the United States by 2041,
 in which regions, and what that does to regional reserve margins.
 
 By November 2041 the bill adds 6.7 GW of new capacity if no RTO/ISO changes its interconnection process under
-Sec.2106, and 37.0 GW if every one does, against about 954 GW that comes online under current law. With each RTO
-changing its process with probability one half, the result is 21.9 GW [5th-95th percentile 7.5 to 37.2] across 100
-paired runs; that interval mostly reflects which RTOs happen to change, and the one-half probability is an
-assumption, not an estimate. Of the 21.9 GW, 14.9 GW are renewables, 5.0 GW gas and 2.0 GW storage. Existing hydro
-whose new licence comes sooner accounts for a further 1.8 GW; this is retained capacity, not added supply, and is not
-counted as new capacity.
+Sec.2106, and 37.0 GW if every one does, against about 954 GW that comes online under current law. Where between the
+two it lands depends on how many RTOs change their process, which nothing in the record predicts. The central case,
+with each RTO changing with probability one half, gives 21.9 GW; it is close to the midpoint of the two bounds and is
+a convention. Of the 21.9 GW, 14.9 GW are renewables, 5.0 GW gas and 2.0 GW storage. About 4 GW of
+the 6.7 GW comes from the extra hosting room the model credits to Sec.2109 (advanced transmission technologies); the
+permitting, court and permit-certainty provisions on their own add 2.9 GW. Existing hydro whose new licence comes
+sooner accounts for a further 1.8 GW; this is existing capacity kept in service and is not counted as new
+capacity.
 
-The size of the Sec.2106 effect rests on assumed parameters. The two that matter most are whether an RTO's process
-actually changes (FERC may find existing processes compliant under Sec.2106(d)) and how many requests the
-non-refundable security and withdrawal penalties keep out. If they keep out half of new requests instead of a
-quarter, Sec.2106 adds nothing. How the screen is specified matters too: I first specified it as an absolute
-threshold on each request's chance of completing, and under that version the bill reduces capacity by 2 GW. I
-changed to the relative version after seeing those results (section 2), and report both. Drawing every assumption
-range together gives a median of 26.5 GW [4.9, 64.0] (5th-95th percentile of 400 joint samples).
+The size of the Sec.2106 effect rests on three assumptions the statute does not settle. The first is whether an
+RTO's process changes at all (FERC may find existing processes compliant under Sec.2106(d)). The second is what the
+single decision point removes. In the model it removes a re-study round that under current law adds six months
+before an agreement and raises the costs of the requests that stay when others withdraw; both are assumptions. With
+no such round under current law, Sec.2106 adds between -2.6 and +0.5 GW even if every RTO changes its process
+(section 4.5). The third is the entry screen that stands for the non-refundable security. With every RTO changing its
+process, the bill adds 44.2 GW with no screen, 37.0 GW with the relative screen used here, and -4.4 GW with the
+absolute threshold I first specified. I changed from the absolute to the relative version after seeing those results
+(section 2). Drawing the assumption ranges of section 5 together, with the relative screen and the calibration held
+fixed, gives a median of 26.5 GW [4.9, 64.0] (5th-95th percentile of 400 joint samples).
 
 Little changes before the early 2030s. The model assumes reformed interconnection studies start about three years
 after enactment (range two to four; the bill gives FERC 18 months for the rule and RTOs two years from enactment to file), and that
 requests already in the queue keep their current terms. By 2030 the bill has added 0.3 GW; by 2035, 10.8 GW.
 
-The gain is concentrated in MISO, with 12.4 of the 21.9 GW. PJM gains almost nothing, because in PJM the modelled
-entry screen keeps out requests that would have completed (section 4.3). ERCOT is outside FERC's rate and interconnection
+The gain is concentrated in MISO, with 12.4 of the 21.9 GW, and MISO accounts for about three quarters of what
+Sec.2106 adds, so the result is close to a question about whether MISO's process changes. MISO gains because its
+fitted study capacity falls short of the requests arriving; with PJM's ratio of study capacity to arrivals, MISO's
+gain with every RTO changing falls from 23.5 to 13.6 GW. PJM gains almost nothing (0.7 GW with every RTO changing).
+That result is a property of the model: there, most PJM solar and storage that completes
+pays no upgrade cost, so the entry screen removes completers, and without the screen PJM gains 9.0 GW. In LBNL's PJM
+cost data, completed solar projects are no more likely to have zero upgrade cost than withdrawn ones (sections 4.3
+and 6). ERCOT is outside FERC's rate and interconnection
 jurisdiction, and the Southeast and most of the non-ISO West have no RTO, so Sec.2106 does not reach them. ERCOT gains
 from the permitting and court provisions only; the Southeast and the non-ISO West also gain from Sec.2109, which
 applies to FERC-jurisdictional public utilities, not only to RTOs.
 
-Under current law the national shortfall below NERC's Reference Margin Levels reaches about 69 GW in 2035 and 122 GW
-in 2041, most of it in PJM, whose installed reserve margin, as reported by NERC, rises from 18.6% in 2026 to 35.1% in
+Under current law the national shortfall below NERC's Reference Margin Levels reaches about 69 GW in 2035 (70 GW
+[25, 132] when demand growth, retirements and accreditation are drawn jointly) and 122 GW in 2041, most of it in PJM, whose installed reserve margin, as reported by NERC, rises from 18.6% in 2026 to 35.1% in
 2034. NERC's forecast ends in 2035; the 2041 figure extends demand at its 2030-35 growth rate and holds margins at
 their 2035 levels. BAAJA reduces the 2035 shortfall by 3.1 GW
-[0.3, 6.4]. The shortfall is a benchmark against NERC's planning margins, not a forecast of outages, and the bill
-does not close it.
+[0.3, 6.4]. The shortfall is a benchmark against NERC's planning margins and says nothing about outages. The bill does
+not close it, with or without the entry screen.
 
-The bill's gain in clean capacity here, 16.9 GW of renewables and storage by November 2041, is just below the low end of
-Rhodium Group's 17 to 249 GW through 2040 (King et al. 2026) and well below Resources for the Future's figure of about 60 GW by 2028 (Rennert and Bergman 2026).
-The difference has several sources that cannot be separated from outside: both studies expand transmission under
-the bill and this model does not plan any; RFF names permit certainty and faster interconnection as the primary drivers of its near-term gain; and each
-study, including this one, sets the extent of interconnection relief by assumption.
+The published estimates measure different things. Resources for the Future reports about 60 GW more clean capacity
+in 2028 (Rennert and Bergman 2026); this model's gain by 2028 is zero, because reformed studies start about three
+years after enactment. Rhodium Group reports 17 to 249 GW more clean capacity through 2040, a range across technology
+costs and fuel prices (King et al. 2026); this model's gain in renewables and storage by November 2041 runs from
+5.9 GW if no RTO changes its process to 27.8 GW if all do. Both studies are capacity-expansion models that report net
+changes in a fleet that meets demand, and both expand transmission under the bill; this model counts gross additions
+from the queue and plans no transmission. RFF names permit certainty and faster interconnection as the primary
+drivers of its near-term gain, and each study, including this one, sets the extent of interconnection relief by
+assumption.
 
 ![Headline: BAAJA minus current law by 2041](../figures/brief_1_headline.png)
 
@@ -98,8 +113,11 @@ request-to-agreement times. They allocate network-upgrade costs drawn from LBNL'
 with the capacity signed in a region (by a rate fitted to LBNL cost data for requests made since 2018 against 2010-17; zero in ERCOT, which did not allocate network upgrades to generators through 2025) and fall as transmission is finished.
 
 Developers enter on the published wait and on their region's projected capacity shortfall. At each study result they
-compare the allocated upgrade cost with the project's private value (both from LBNL cost data) and stay or leave.
-They also withdraw over time at background rates fitted by region.
+compare the allocated upgrade cost with the project's value and stay or leave. The shape of the value distribution
+comes from LBNL cost and completion data; its level is one scale per technology and region, fitted so that
+completion matches LBNL's rates. The scales run from 0.007 to 3.9, so value here stands for every reason a project
+completes or not that the model does not otherwise represent; it is not revenue, and the model has no prices.
+Developers also withdraw over time at background rates fitted by region.
 
 Supply. What comes online is added to the EIA-860 fleet, less announced and age-based retirements, and compared with
 NERC's 2025 peak-demand forecast and reference margin levels (NERC 2026). Wind, solar and batteries count at on-peak
@@ -109,23 +127,34 @@ accredited capacity below).
 The bill enters as mechanisms. Under Sec.2106 a reformed RTO publishes planned interconnection locations
 with "an upfront, fixed, subregional, per-megawatt fee" (new FPA s.228(a)(2)(B)), holds a single decision point, and
 requires "meaningful and nonrefundable financial security" and "withdrawal penalties after the determination of total
-costs of interconnection ... are provided to the customer" (s.228(a)(3)(B) and (C)). Three choices here are model
-assumptions, not statute: the fee is set at the region's expected upgrade cost, so requests at a published location
-face no cost shock at the study result and no re-study; those requests are exempt from the screen; and the security
+costs of interconnection ... are provided to the customer" (s.228(a)(3)(B) and (C)). Four choices here are model
+assumptions, not statute. The single decision point removes the current-law re-study round for every request made
+after the rule in an RTO whose process changes: requests that stay sign at the cost in their first study result, six
+months sooner, and the cost that other requests' withdrawals would have shifted onto them is assumed to be covered by
+forfeited security and penalties, which the model does not check. The fee is set at the region's expected upgrade
+cost, so requests at a published location face no cost shock at the study result; those requests are exempt from the
+screen; and the security
 in (B) is represented as an entry screen, applied before costs are known, while the penalty in (C), which applies once
 costs are known, is not modelled separately. Within each technology and region, the quarter of new
 requests least likely to complete (range a tenth to a half) do not enter; requests using a published location are
-exempt. Johnston, Liu and Yang (2023, revised 2026) find, for PJM, that higher queue-entry costs mainly deter
-low-value requests that would have left quickly, with little change in completed capacity (-1.2% to +0.8%) or in
-waiting time, which is what a screen on the least likely requests implies.
+exempt. Johnston, Liu and Yang (2023, revised 2026) find, for PJM, that higher queue-entry costs have little effect
+on completed capacity (-1.2% to +0.8%) or on waiting time, because they mainly deter requests that would have left
+quickly. The modelled screen is harsher than that: it removes 8.3 GW of completions in PJM and shortens the queue in
+MISO, so their result is closer to the no-screen case in section 4.4 than to my central case.
 Each RTO's process changes with probability 0.5 in the central case.
 
 The screen was first specified as an absolute threshold: requests whose modelled chance of completing was below
 0.25 did not enter. After the calibration was refitted, that threshold kept out nearly all new storage requests in PJM.
 The refit had put developer values for storage in PJM, SPP and ERCOT, solar in SPP and offshore wind at the bottom of
 their allowed range, where few requests clear an absolute threshold.
-The threshold's units moved with the calibration, so I changed the specification to the relative screen after seeing
-those results. The absolute version is reported as a sensitivity in section 4. Sec.2110 is a study-throughput
+An absolute threshold on the modelled chance of completing depends on those fitted scales, and where a scale sits at
+its bound the modelled chance carries little information. A screen defined as a share does not depend on the scale:
+under the calibration before the refit, with every RTO changing its process, the relative screen gives +42.9 GW
+against +37.0 now, and the absolute one +9.5 against -4.4. I changed to the relative screen after seeing the results;
+I should have specified it that way before running. The relative screen is a quota, though: it fixes the share kept
+out instead of deriving it from the size of the deposit, and where value says little about completing it is close to
+a random cut (in PJM storage, 133 of the 135 requests per run that sign after the rule pay no upgrade cost). Both
+versions, and no screen, are reported in section 4.4. Sec.2110 is a study-throughput
 gain, zero in the central case because the bill sets no target. Sec.2109 adds hosting room per transmission line
 finished after the rule.
 
@@ -148,8 +177,8 @@ All inputs are public. Sources, retrieval dates and file hashes are in `data/SOU
 - Fleet, retirements and generation: EIA-860 (2015-2025), EIA-860M, EIA-923.
 - Demand and adequacy: NERC 2025 Long-Term Reliability Assessment; PJM ELCC class ratings.
 - Bill text: the Senate floor copy of S.Amdt. 6883 (KAT26804 V62), checked against the engrossed Senate amendment to
-  H.R. 2347 (GovInfo, BILLS-119hr2347eas). Sections 1105, 1106, 1108, 1110, 1202, 1302, 1401, 2106-2110, 2201, 2213 and 2229
-  are identical word for word; the other modelled sections were not compared.
+  H.R. 2347 (GovInfo, BILLS-119hr2347eas). All 83 sections are identical in letters and digits, apart from two section
+  labels in Sec.2301-2302 and the attestation at the end.
 
 ## 4. Results
 
@@ -170,14 +199,22 @@ Current law brings about 954 GW of new capacity online by November 2041 [939, 97
 (2.3% in the central case), depending on how many RTOs change their process. The first row, which keeps every provision except Sec.2106, contains
 the permitting, court and permit-certainty provisions (Division A, Titles I-IV; Division B, Title II), Sec.2109, and
 Sec.2110 at zero; Sec.2109's extra hosting room adds about 4 GW
-to the central case (+17.8 GW without it). Existing hydro whose new licence comes sooner accounts for a further 1.8 GW
-in every bill scenario; it is retained capacity, not added supply.
+to the central case (+17.8 GW without it). With Sec.2106 and Sec.2109 both off, the remaining provisions add
+2.9 GW [1.6, 4.5] (`results/sec2106_decomposition.json`). Existing hydro whose new licence comes sooner accounts for a
+further 1.8 GW in every bill scenario; it is existing capacity kept in service.
 
 The interval on the central row is wide because it mostly records which RTOs happen to change their process in each
 run. The two rows around it bound it, and the probability of one half is an assumption: Sec.2106(d) lets FERC find an
-existing process compliant, and nothing in the record says how often it will. The simpler model, with study times
-drawn from history and Sec.2106 and Sec.2110 set to zero, gives +8.0 GW [+6.1, +9.6] for the same bill, close to the
-first row.
+existing process compliant, and nothing in the record says how often it will. Adoption is drawn independently for
+each RTO, although one FERC rule sets the standard for all six, so the central row's spread understates the chance of
+all-or-nothing outcomes. The simpler model, with study times drawn from history and Sec.2106 and Sec.2110 set to
+zero, gives +8.0 GW [+6.1, +9.6] for the permitting, court and certainty provisions, and has no Sec.2109. With the
+grid agents the same provisions give 2.9 GW. The first row's total is close to the simpler model's by coincidence;
+on the provisions the two models share they differ by a factor of almost three.
+
+Part of the gain is timing. With every RTO changing its process, new requests in RTO regions add 33.6 GW online by
+November 2041, but only 29.2 GW more of them ever complete; the difference, about 4.5 GW, would have come online after
+2041 anyway and arrives earlier under the bill (`results/sec2106_decomposition.json`).
 
 ### 4.2 When
 
@@ -194,7 +231,8 @@ first row.
 The bill adds under 1 GW before 2033. The permitting and court provisions add a little each year from the start.
 The model applies Sec.2106 only to requests made after reformed studies start (late 2029 in the central case, an
 assumption; the statute is silent on requests already queued), and the first of those come online in 2033. Current-law additions peak at 118 GW in 2029, while the queue standing at the end of 2025
-is being built, then settle at 44 to 62 GW a year.
+is being built, then settle at 44 to 62 GW a year. The peak is about twice the largest year in EIA-860 for these
+technologies (57.5 GW in 2025); the model puts no supply-chain or labor limit on construction.
 
 ### 4.3 Where
 
@@ -205,39 +243,80 @@ GW. ERCOT, the Southeast and the non-ISO West gain 0.5 to 1.9 GW each from the p
 
 PJM gains almost nothing from Sec.2106: 0.5 GW in the central case and 0.7 GW if every RTO changes its process, the
 same as with Sec.2106 off. If every RTO changes its process, Sec.2106 does shorten PJM's studies (from 30 to 28 months to
-agreement, median for requests made in the first five years) and raise the share of requests that sign, but the entry screen offsets it. The screen keeps out the requests least likely to complete as
-ranked by their private value. In PJM, whether a request completes depends more on its upgrade-cost draw than on its
-value: 13.7% of PJM requests in LBNL's cost study pay no upgrade cost at all, and PJM's cost spread is the widest of the
-five ISOs with LBNL cost studies (log standard deviation 1.50, against 1.39 or less). So in PJM the screen also keeps out requests that would have completed. In a diagnostic run
-without the screen, PJM gains from Sec.2106 as MISO does. This is a property of the modelled screen, which treats a
-deposit as screening on value, and a deposit that screened on cost information would behave differently.
+agreement, median for requests made in the first five years) and raise the share of requests that sign, but the
+entry screen offsets it. The screen keeps out the requests least likely to complete, ranked by value within
+technology and region, and in PJM that ranking carries little information. In LBNL's cost study 13.7% of PJM requests
+pay no upgrade cost, as many as the 13.7% of PJM solar requests that complete and more than the 7.5% of storage
+requests. The calibration therefore sets low values for both, and completing in the model depends mostly on drawing a
+zero cost: per run, 216 of the 427 PJM solar requests and 133 of the 135 storage requests that sign after the rule pay
+nothing. A screen on value then removes completers almost in proportion.
+
+The numbers below are from `results/sec2106_decomposition.json` (every RTO changes its process, 100 paired runs).
+Without the screen PJM gains 9.0 GW (MISO 18.3). Giving PJM MISO's zero-cost share of 2.5% raises PJM's gain with the
+screen from 0.7 to 5.6 GW; giving it MISO's narrower cost spread changes nothing (0.9 GW). The screen lowers the gain
+in every RTO except MISO: PJM by 8.3 GW, SPP 1.7, CAISO 1.1, NYISO 1.0 and ISO-NE 0.5. In MISO it adds 5.3 GW,
+because MISO's fitted study capacity at the end of 2025 is 0.59 of the requests arriving, so fewer entrants shorten
+the queue. With PJM's ratio of 0.97, MISO's gain falls from 23.5 to 13.6 GW and the screen costs MISO capacity too.
+The PJM result is a property of the modelled screen and of how the calibration reads PJM's cost data, and LBNL's PJM
+data do not show zero cost as the route to completion (section 6).
 
 ### 4.4 The entry screen
 
-| entry screen | current law GW | BAAJA central vs current law | every RTO changes |
-|---|---|---|---|
-| Sec.2106 keeps out the bottom quarter within technology and region (central) | 956 | +17.4 | +37.3 |
-| as above, and current law already screens out a tenth (FERC Order No. 2023 readiness deposits) | 957 | +19.4 | +39.8 |
-| Sec.2106 keeps out requests whose chance of completing is below 0.25 (previous specification) | 956 | -2.2 | -4.6 |
+| entry screen | BAAJA central vs current law | every RTO changes |
+|---|---|---|
+| no entry screen | +26.5 [+11.6, +42.0] | +44.2 [+39.9, +48.8] |
+| Sec.2106 keeps out the bottom quarter within technology and region (central) | +21.9 [+7.5, +37.2] | +37.0 [+32.0, +42.8] |
+| Sec.2106 keeps out requests whose chance of completing is below 0.25 (previous specification) | -0.1 [-17.7, +18.8] | -4.4 [-11.4, +1.0] |
 
-These rows use 20 paired runs each, so the central case is +17.4 GW instead of +21.9 GW with 100 runs; the difference
-is which RTOs adopt in the smaller sample. Assuming current law already screens out a tenth of requests, as Order
-2023's readiness deposits may, raises the bill's effect slightly, because fewer marginal requests are left for
-Sec.2106 to remove. Under the previous, absolute specification the bill reduces capacity, because the screen removes
-most storage requests in regions where the fitted developer value is at its lower bound (section 2). Which
-specification is right is not something the data here can settle, and the result depends on it.
+These rows are from `results/sec2106_decomposition.json`, 100 paired runs. The relative screen is not the most
+favorable of the three; no screen gives more. Under the previous, absolute specification the bill reduces capacity,
+because the screen removes most storage requests in regions where the fitted developer value is at its lower bound
+(section 2). Which specification is right is not something the data here can settle, and the result depends on it.
+Assuming current law already screens out a tenth of requests, as FERC Order No. 2023's readiness deposits may, raises
+the bill's effect slightly (+19.4 GW central and +39.8 GW with every RTO, against +17.4 and +37.3 in the same 20 paired
+runs, `results/sim7_grid_agents.json`), because fewer marginal requests are left for Sec.2106 to remove.
 
 A stricter relative screen also matters: keeping out half of new requests instead of a quarter brings the central
 case to +6.4 GW, below the +7.3 GW with Sec.2106 off in the same 20 runs, so a strict enough screen cancels the rest of
 Sec.2106. Keeping out a tenth gives +21.0 GW.
 
-### 4.5 Adequacy
+### 4.5 What the single decision point does
+
+Taking Sec.2106 apart, with every RTO changing its process (`results/sec2106_decomposition.json`, 100 paired runs),
+the single decision point alone adds 35.0 GW over the bill without Sec.2106, published locations add 2.5 GW more, and
+the relative screen takes 7.2 GW away, for 30.3 GW in all. Published locations add little because the fee is set at
+the region's expected upgrade cost, which with skewed costs is more than most requests would pay, so few use them; a
+published location is presumably one with room, and its fee could be lower.
+
+The single decision point is worth so much because of what it removes. Under current law in cluster regions the
+model has one re-study round: when requests withdraw at the first study result, the costs of those who stay rise by
+0.3 times the share of capacity that withdrew, and the agreement comes six months after the first result. Both
+numbers are assumptions, with no data behind them. The table changes them in current law and in the bill alike.
+
+| current-law re-study round (law and bill) | current law GW | no RTO changes | every RTO, single decision point only | every RTO, full Sec.2106 | central (p = 0.5) |
+|---|---|---|---|---|---|
+| cost rise 0.3, 6 months (central) | 954 | +6.7 | +41.7 | +37.0 | +21.9 |
+| cost rise 0 | 988 | +7.2 | +27.7 | +22.9 | +14.8 |
+| 1 month | 955 | +6.7 | +24.2 | +21.7 | +13.9 |
+| cost rise 0, 1 month | 988 | +7.2 | +10.2 | +7.7 | +6.7 |
+| no re-study round | 988 | +7.2 | +7.2 | +4.6 | +5.1 |
+
+About half of the effect comes from the cost shift and half from the six months. With neither the cost shift nor more
+than a month of re-study, Sec.2106 adds 0.5 GW with every RTO changing its process; with no re-study round at all it
+lowers capacity by 2.6 GW, because the screen's cost then outweighs what is left. The sensitivity ranges in section 5
+(0.1 to 0.6 for the cost shift, 3 to 12 months) stop short of these values. The model also lets the requests that
+stay at the single decision point sign at their first-result cost; who pays for upgrades that withdrawn requests
+would have shared is not modelled.
+
+### 4.6 Adequacy
 
 ![Shortfall below NERC reference margin levels](../figures/brief_3_shortfall.png)
 
 The adequacy account compares on-peak accredited capacity with NERC's 2025 peak-demand forecast plus each region's
 Reference Margin Level, the reserve margin NERC uses as its planning benchmark. Under current law the national
-shortfall below those levels is 9 GW in 2027, 69 GW [66, 73] in 2035 and 122 GW [118, 127] in 2041. In 2035, 57 GW of
+shortfall below those levels is 9 GW in 2027, 69 GW [66, 73] in 2035 and 122 GW [118, 127] in 2041; those brackets are
+the spread across runs, and drawing demand growth, retirements and accreditation jointly gives 70 GW [25, 132] in 2035
+(median, `results/uncertainty.json`). In 2035, 57 GW of
 the shortfall is in PJM, whose Reference Margin Level, an installed reserve margin, rises in NERC's assessment from
 18.6% in 2026 to 35.1% in 2034. PJM explains the rise by resources added having lower accredited value than those
 retiring (PJM 2026). PJM's own October 2026 study projects a lower path, 24.4% for 2034/35; on NERC's 2035 PJM peak of
@@ -247,7 +326,9 @@ at its 2035 level, so the 2041 figures rest on that extension.
 
 BAAJA reduces the 2035 shortfall by 3.1 GW [0.3, 6.4] in the central case and by 5.8 GW if every RTO changes its
 process; by 2041 the reductions are 5.7 and 10.3 GW. The bill does not close the gap. Most of the shortfall is in PJM,
-where the bill adds little (section 4.3). The simpler model, with historical study times (Sim 6,
+where the bill adds little (section 4.3); without the entry screen PJM gains 9.0 GW of nameplate capacity, mostly solar
+and storage, against a 57 GW gap there, so this conclusion does not rest on the screen. MISO's 2035 shortfall is 5 GW,
+so MISO capacity beyond that does not reduce the national figure. The simpler model, with historical study times (Sim 6,
 `results/sim6_supply.md`), shows MISO and ISO-NE first falling below their margins in 2027 (median first year across
 runs; MISO's margin is 0.8% against 8.3% that year) and close to them by 2035: MISO's reserve margin is then 8.4%
 against a Reference Margin Level of 8.9%, and ISO-NE's 11.8% against 13.0%, below the level in 66% and 71% of runs.
@@ -284,24 +365,33 @@ draws every assumption at once, 400 Latin-hypercube samples, and splits the vari
 | hold after an adverse study result under Sec.2106, relative to current law (0 / 1) | +17.4 / +17.4 |
 
 The bill's effect is most sensitive to the assumptions about how Sec.2106 and Sec.2110 are carried out, none of which
-the statute sizes. Upgrade-cost growth (`kappa`) matters more for the level of current law than for the bill's
+the statute sizes; section 4.5 takes the two re-study assumptions below these ranges. The hold row has no effect by
+construction, since the hold only delays when a withdrawal is recorded. Upgrade-cost growth (`kappa`) matters more for the level of current law than for the bill's
 effect: at zero, current law brings 1,118 GW online, against 842 GW at the high end.
 
 ![What drives the result](../figures/brief_4_drivers.png)
 
-Drawing every range together gives a median of +26.5 GW [+4.9, +64.0] of new capacity. The median is above the
+Drawing every range in the table together, with the relative screen and the calibration held fixed, gives a median
+of +26.5 GW [+4.9, +64.0] of new capacity. The median is above the
 central +21.9 GW because the joint draw includes Sec.2110 gains above zero, while the central case sets them to zero.
 Rank regression explains 67% of the variance. The largest share, 23% [14, 31], is how much of the RTOs' capacity sits
 in RTOs that changed their process in that sample, followed by the Sec.2110 gain (12%), the screen's share (7%),
 upgrade-cost growth (6%) and Sec.2109 hosting room (6%). Split by the adoption that happened, the median is +13.3 GW
-when no RTO changed its process, +26.5 GW when some did and +39.3 GW when all did.
+when no RTO changed its process, +26.5 GW when some did and +39.3 GW when all did. The probability that an RTO
+changes is drawn uniformly from 0 to 1, so the joint samples hold more cases with no RTO or every RTO changing than the
+central case does. The joint draw leaves out the screen's specification (section 4.4), re-study values below the
+ranges in the table (section 4.5), every fitted parameter (value scales, withdrawal hazards, the hold, study
+throughput, among them MISO's shortfall of study capacity), the structural errors the backcast shows (section 6) and
+any correlation in adoption across RTOs. No drawn assumption makes the effect negative, so the lower bound of +4.9 GW
+is positive by construction.
 
 In the simpler model, with Sec.2106 and Sec.2110 at zero, the result is a median of +8.0 GW [+4.6, +13.1], and 52% of its
 variance comes from one assumption: the share of new applications for rights-of-way on federal land whose Sec.2213
 intake deadlines are met. When that model's study-time cut for Sec.2106 is instead drawn from zero to ERCOT's pace, the range becomes
-+33.5 GW [+6.5, +188.7], with 76% of the variance from that cut alone. That is the gap the grid-agent model was built
-to close: it replaces an assumed cut in study time with operators and developers whose behavior is fitted to queue
-data, and narrows the upper end from 189 to 64 GW.
++33.5 GW [+6.5, +188.7], with 76% of the variance from that cut alone. The grid-agent model replaces that single assumed
+cut with operators and developers whose current-law behavior is fitted to queue data. The bill's effect on them is
+still set by assumption, so the narrower range (64 against 189 GW at the upper end) reflects the ranges I chose for
+those assumptions.
 
 ## 6. Validation
 
@@ -334,7 +424,17 @@ ERCOT cost study) have no upgrade cost, so even the lowest value leaves too many
 West completes at 25.3% against 13.7%. Below 5%, storage in SPP and MISO and offshore wind miss by more than a third,
 each by under 2 points. Five value scales
 sit at that lower bound (solar in SPP; storage in ERCOT, PJM and SPP; offshore wind), so in those cells the fitted
-value is a corner, not an estimate.
+value is a corner of the search range.
+
+Completion by upgrade cost. Sec.2106 acts on how completion responds to the allocated cost. Across cost bins from
+$0-10/kW to over $400/kW, the model completes 0.30, 0.16, 0.12, 0.08, 0.04 and 0.01 of the requests that receive a study
+result, against 0.80, 0.67, 0.59, 0.42, 0.18 and 0.07 of LBNL's resolved requests (`results/sim7_grid_agents.md`).
+LBNL counts only resolved requests, so the levels are not comparable, but the model's completion halves between the
+first two bins and LBNL's falls by a sixth. In PJM, completion in the model runs mostly through zero-cost draws
+(section 4.3). In LBNL's PJM cost study, 12% of completed solar projects queued since 2010 have no upgrade cost,
+against 14% of withdrawn ones (my tabulation of the latest study for each project; 15% and 16% for requests since
+2018), so in the data zero cost is not the route to completion. Waiting longer also does not raise withdrawal in the
+agents, which leaves out one route by which a faster process raises completion.
 
 Withdrawal timing. In the fitted cohorts the 24-month shares, which were left out of the fit, differ from the data
 by at most 0.05 in every region. The 2020-23 cohorts, used in no fit, are a different matter. The model's 12-month withdrawal shares are
@@ -342,7 +442,7 @@ by at most 0.05 in every region. The 2020-23 cohorts, used in no fit, are a diff
 against 0.33. The data's withdrawal rates for these cohorts differ from 2015-19 in both directions, and the model's
 hazards, fixed at their 2015-19 values, do not follow them. The fitted hold after an adverse study result is at its
 240-month upper bound in five of nine regions, which means no hold within the bound is long enough to bring those regions' 60-month withdrawal shares
-down to the data (MISO 0.74 against 0.62); it delays when a withdrawal is recorded rather than whether it happens.
+down to the data (MISO 0.74 against 0.62); it only delays when a withdrawal is recorded.
 
 Study times out of sample. MISO's lengthening from about 21 to 45 months, between the 2010 and 2019 cohorts, falls within the fitted
 cohorts. For the
@@ -355,21 +455,25 @@ from 2020 have an agreement date at all.
 What follows for the result. The model underpredicts recent solar and storage additions, holds recent withdrawal
 rates at their 2015-19 levels, and signs agreements faster than the 2020s queues did. The first makes current-law
 additions too low; the other two work in opposite directions on how many requests reach a decision. The Sec.2106
-effect is measured as a difference from the same current-law run, so these errors enter it through how many
-requests are in the queue when the rule takes effect, and the uncertainty intervals do not include them.
+effect is a difference from the same current-law run, which removes errors in the level but not errors in how
+completion responds to cost and waiting, and section 4.3 shows that the regional result rests on fitted values that
+are corners. The headline also comes from the variant that validates worse (0.51 against 0.42 by region). I use it
+because the simpler model cannot represent Sec.2106; the simpler model's +8.0 GW for the permitting and court
+provisions is the better-validated part of the result. The uncertainty intervals include none of this.
 
 ## 7. Comparison with published estimates
 
 | study | model | bill text | headline | how interconnection is treated |
 |---|---|---|---|---|
-| This brief | queue model with operator and developer rules, plus permitting and courts | Senate-passed (19 Nov) | 21.9 GW new capacity by Nov 2041 (6.7 if no RTO changes, 37.0 if all do); renewables and storage 16.9 GW | Sec.2106 only in FERC-jurisdictional RTOs; whether each changes its process, and how strictly it screens, are assumptions |
+| This brief | queue model with operator and developer rules, plus permitting and courts | Senate-passed (19 Nov) | 6.7 GW new capacity by Nov 2041 if no RTO changes, 37.0 if all do (21.9 central); renewables and storage 5.9 to 27.8 GW; 0.0 GW by 2028 | Sec.2106 only in FERC-jurisdictional RTOs; whether each changes its process, and how strictly it screens, are assumptions |
 | Rhodium Group (2 Nov 2026) | RHG-NEMS, capacity expansion | as introduced | 17 to 249 GW more clean capacity through 2040 across its high-, mid- and low-emissions scenarios (technology costs, fuel prices); mid case 56 GW | "we reduce barriers in the existing interconnection process" |
 | Resources for the Future (Rennert and Bergman, 29 Oct 2026) | ReEDS, capacity expansion | as introduced | about 60 GW more clean capacity in 2028; transmission about 30% above baseline in 2041 | baseline interconnection limits removed in the policy cases; results reported as robust to that representation |
 | SEIA (10 Nov 2026) | not retrieved | not stated | 167 GW more solar, 2028-35 | not retrieved |
 
-Comparing like with like, this model's gain in clean capacity (new renewables and storage) by November 2041 is
-16.9 GW in the central case, against Rhodium's 17 to 249 GW through 2040. The difference has four
-sources, and from the published material they cannot be separated.
+Comparing the closest available quantities, this model's gain in clean capacity (new renewables and storage) by
+November 2041 is 5.9 GW if no RTO changes its process and 27.8 GW if all do (16.9 GW in the central case), against
+Rhodium's 17 to 249 GW through 2040. Rhodium's range spans technology costs and fuel prices and holds the bill's implementation fixed, so the overlap at its low end says little. Against RFF's figure for 2028, this model's gain by 2028 is
+zero. The difference has five sources, and from the published material they cannot be separated.
 
 1. Transmission. Rhodium projects 1.9 to 2.6 TW-miles of new interregional transmission a year under the bill, against 0.9 to 1.9
    in its baseline and 0.7 in 2015-24, and RFF's transmission is about 30% above baseline by 2041. Both let new lines
@@ -390,6 +494,9 @@ sources, and from the published material they cannot be separated.
    which already excluded ERCOT but also covered the Southeast and most of the non-ISO West. Those two regions account for
    34% of current-law new capacity here (323 of 954 GW). The statute's own clock (rule in 18 months, filings two years from enactment)
    makes a large interconnection effect by 2028 unlikely, whatever the model.
+5. Quantity. Rhodium and RFF run capacity-expansion models in which demand is met with and without the bill, so their
+   figures are net changes in an installed fleet, with other capacity and retirements adjusting. This model counts
+   gross additions that reach operation, with nothing displaced; gas rises too, by 5.0 GW in the central case.
 
 Neither published study estimates the NEPA and court provisions separately, so they neither confirm nor contradict
 the small effect found for them here. The Clean Air Task Force (12 Nov 2026) argues that Sec.1401's
@@ -398,22 +505,25 @@ authorizations, leave near-term risk to permitted projects. That points the same
 assumed here, though the model's residual rests on a different exception, 1401(b)(1)(F) (action "taken pursuant to any
 applicable law or regulation").
 
-SEIA's 167 GW of additional solar between 2028 and 2035 is about 19 times this model's solar gain by November 2041
-(9.0 GW in the central case). SEIA's method page could not be retrieved, so the comparison stops at the figure.
+SEIA's 167 GW of additional solar between 2028 and 2035 compares with this model's gain of 10.8 GW in all
+technologies by 2035 and 9.0 GW of solar by November 2041 (central case). SEIA's method page could not be retrieved, so the comparison stops at the figure.
 
 ## 8. Limits
 
-The largest limit is that the Sec.2106 effect rests on two assumptions with no data behind them: whether each RTO's
-process changes, and how many requests the non-refundable security and withdrawal penalties keep out. The entry
-screen was also respecified after the first results were seen (section 2). Reading the result as a range across
-those assumptions is safer than reading the central number.
+The largest limit is that the Sec.2106 effect rests on three assumptions with no data behind them: whether each RTO's
+process changes, what the single decision point removes (the current-law re-study round, section 4.5), and how the
+non-refundable security and withdrawal penalties screen entry. The entry screen was also respecified after the first
+results were seen (section 2). Reading the result as a range across those assumptions is safer than reading the
+central number. MISO carries about three quarters of the Sec.2106 effect, and its gain depends on its fitted shortfall
+of study capacity persisting to 2041.
 
 The model plans no transmission. Sec.2103 (new interregional planning with cost allocation) is, in my reading, the
 bill's main route to new lines, and both published studies credit the bill with more transmission. Upgrade
 costs here rise with capacity signed and fall only as transmission already in the queue is finished and with Sec.2109's added hosting room, so the model
 understates what the bill does if Sec.2103 works as intended.
 
-Several fitted values are corners. Five developer value scales sit at the lower bound of their range, ERCOT storage
+Several fitted values are corners. Five developer value scales sit at the lower bound of their range, PJM's
+completion runs through zero-cost draws that the data do not show (section 6), ERCOT storage
 does not fit its completion rate, and the hold after an adverse study result is at its 240-month upper bound in five
 regions. The NEPA EIS probabilities were refitted with the agents on, which ties the permitting side to the queue
 side of the calibration. The backcast fails out of sample on withdrawal timing and on the share of requests signed
@@ -458,6 +568,10 @@ python run.py --uncertainty 400
 ```
 
 ```bash
+python run.py --decomposition --runs 100
+```
+
+```bash
 python run.py --brief-figures
 ```
 
@@ -466,7 +580,8 @@ python -m pytest -q
 ```
 
 `--all` recalibrates, runs the 2010-25 backcast and all seven simulations, and writes `results/*.md|json` and
-`figures/`. Runs are seeded, so the same commands reproduce the committed results. Every parameter is tagged in
+`figures/`; `--decomposition` writes `results/sec2106_decomposition.md|json`, the breakdown of Sec.2106 in
+sections 4.3 to 4.5. Runs are seeded, so the same commands reproduce the committed results. Every parameter is tagged in
 `baaja/params.py` as data (with source) or assumption (with range). Raw downloads are not committed; extractors in
 `data/` rebuild the JSON summaries from them, and `data/SOURCES.md` lists where each file comes from.
 
