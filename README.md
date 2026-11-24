@@ -27,16 +27,17 @@ Each one maps a research question to bill sections (`docs/bill_question_map.md`)
 
 ## Results
 
-Numbers updated 23 Nov 2026 for the Senate-passed text (see `docs/bill_question_map.md`) and Phases 0-3 in
+Numbers updated 24 Nov 2026 for the Senate-passed text (see `docs/bill_question_map.md`) and Phases 0-3 in
 `HANDOFF.md`. Intervals in Sims 1-6 are seed noise at central assumption values; `results/uncertainty.md` draws every
 assumption range at once (below).
 
-**Current law.** About 1,105 GW of new capacity online by Nov 2041: renewables 657 GW, gas 178 GW, storage 255 GW (plus
-retained hydro). Renewables are 64% of new-build generation.
+**Current law.** About 1,090 GW of new capacity online by Nov 2041 in the simpler model (954 GW with the grid agents of
+Sim 7): renewables 657 GW, gas 178 GW, storage 255 GW (relicensed hydro excluded). Renewables are 64% of new-build generation.
 
-**Everything in the bill that the data can size** (Sims 1, 2, 4 together, central values): **+10 GW** [+8, +12]:
-renewables +6.6 GW, gas +1.0 GW, storage +0.3 GW (plus retained hydro). That is under 1% more capacity than current
-law, about 6:1 renewables to gas. Across all assumption ranges at once: **+10 GW [+6, +16]**. If 2025's request mix continues, renewables +4.6 GW and gas +2.4 GW (about 2:1).
+**Everything in the bill that the data can size** (Sims 1, 2, 4 together, central values): **+8.0 GW of new
+capacity** [+6.1, +9.6] (+9.7 GW with relicensed hydro): renewables +6.6 GW, gas +1.0 GW, storage +0.3 GW. That is
+under 1% more capacity than current law, about 6:1 renewables to gas. Across all assumption ranges at once:
+**+8.0 GW [+4.6, +13.1]**. If 2025's request mix continues, renewables +4.6 GW and gas +2.4 GW (about 2:1).
 
 Change from the 20 Nov version (+15 GW, renewables +11.2): Sec.2213's deadlines are no longer assumed always met
 (-3.9 GW renewables), and the Senate-passed Sec.1401 protects permits less (-0.4 GW).
@@ -48,7 +49,7 @@ Change from the 20 Nov version (+15 GW, renewables +11.2): Sec.2213's deadlines 
      (n=60; 90% CI 8.3-16.0), with a long tail (a quarter take over two years).
    - Check: 9.6% of resolved BLM solar applications were authorized (MLRS); the model has 8.9% of federal-nexus solar
      projects reaching operation.
-   - Median months to a federal permit: **renewables 9.3 -> 7.2**, gas 9.6 -> 9.1. Months from request to operation
+   - Median months to a federal permit: **renewables 9.4 -> 7.2**, gas 9.6 -> 9.1. Months from request to operation
      barely move (renewables 61 -> 61, gas 37 -> 37): interconnection is the binding gate.
    - Gas has more federal exposure than wind or solar (~33% of new gas MW has a federal hook, mostly Army Corps
      individual permits, vs ~5% wind and ~11% solar), but its reviews are short Corps EAs, so deadlines barely bind.
@@ -93,65 +94,67 @@ technology at its 2025 request rate.
 | BAAJA, data-sized provisions: renewables / gas / storage | +6.6 / +1.0 / +0.3 | +4.5 / +2.3 / +0.2 |
 | BAAJA + 10% Sec.2106 cut (FERC RTOs): renewables / gas / storage | +27 / +4 / +8 | +19 / +9 / +6 |
 
-**Bottom line for renewables vs gas.** The provisions the data can size favour renewables (about 5:1 in GW), mainly
-through federal-land rights-of-way and the court changes that hit local opposition, but they are small: about +10 GW
-on 1,105. Sim 7's grid agents put the bill as a whole at +32 GW [+14, +53] (about 2:1), with Sec.2106 the largest
-part and RTO adoption the largest uncertainty. Whether BAAJA matters for supply depends on what FERC does under Sec.2106 in RTO/ISO markets: the data
-bracket it between no change and ERCOT's pace (+209 GW), and nothing measured picks a point inside. Sim 7 replaces
-this dial with an agent-based queue that sizes the bill's actual mechanisms (below).
+**Bottom line for renewables vs gas.** The provisions the data can size favor renewables (about 6:1 in GW), mainly
+through federal-land rights-of-way and the court changes that hit local opposition, but they are small: +8 GW of new
+capacity on about 1,090. Sim 7's grid agents put the bill as a whole at +22 GW [+7, +37] by 2041 (about 3:1
+renewables to gas) when each RTO adopts Sec.2106 with probability 0.5, between +6.7 GW if none does and +37 GW if all
+do. Whether BAAJA matters for supply depends on what RTOs and FERC do under Sec.2106: the simpler model's dial brackets
+it between no change and ERCOT's pace (+209 GW), and nothing measured picks a point inside. Sim 7 replaces this dial
+with an agent-based queue that sizes the bill's actual mechanisms (below).
 
-6. **Supply and adequacy (Sim 6, Phase 1)**. The model's additions are placed in the nine LBNL regions and added to
-   the EIA-860 fleet less retirements, against NERC's 2025 peak-demand forecast and reference margin levels.
-   - **Current law: the national shortfall below planning reserve margins grows from 8 GW (2027) to 68 GW (2035) and
-     129 GW (2041).** Almost all of it is **PJM** (63 GW in 2035, below its reference margin from about 2028, because
-     NERC's PJM margin rises to 35% as more of its supply is wind, solar and batteries) and later **CAISO** (5 GW in
-     2035). ERCOT, the West, the Southeast and SPP stay well above their margins.
-   - **BAAJA's data-sized provisions cut the 2035 shortfall by 0.3 GW** (0.6 GW in 2041). A 10% Sec.2106 cut takes off
-     2.1 GW (5.3 in 2041); ERCOT's pace takes off 11.5 GW (28 in 2041), mostly in PJM and CAISO.
-   - What moves the shortfall most is outside the bill: demand growth (28-120 GW in 2035 across 0.5-1.5x NERC's
-     growth) and how far the capacity credit of wind, solar and batteries falls (51-91 GW).
+6. **Supply and adequacy (Sim 6)**. The model's additions are placed in the nine LBNL regions and added to the EIA-860
+   fleet less retirements, against NERC's 2025 peak-demand forecast and Reference Margin Levels.
+   - **Current law: the national shortfall below planning reserve margins grows from 9 GW (2027) to 59 GW (2035) and
+     107 GW (2041).** Almost all of it is **PJM** (53 GW in 2035, below its reference margin from about 2028, because
+     PJM's installed-capacity margin rises to 35% as more of its supply is wind, solar and batteries) and later
+     **CAISO** (5 GW in 2035). MISO and ISO-NE first fall below their margins in 2027 (median across runs) and stay
+     close to them. ERCOT, the West, the Southeast and SPP stay well above their margins.
+   - **BAAJA's data-sized provisions cut the 2035 shortfall by 0.5 GW** (0.9 GW in 2041). A 10% Sec.2106 cut takes off
+     3.2 GW (8.0 in 2041); ERCOT's pace takes off 14.7 GW (39 in 2041), mostly in PJM, MISO and CAISO.
+   - What moves the shortfall most is outside the bill: demand growth (18-121 GW in 2035 across 0.5-1.5x NERC's
+     growth) and how far the capacity credit of wind, solar and batteries falls (53-78 GW).
    - Check: with the fleet put on NERC's existing-certain basis for 2026 (a per-region factor, 0.77-1.13), the model's
      margins follow NERC's anticipated margins where NERC counts the same resources; CAISO sits lower because NERC
      counts its Tier 1 batteries and uses a wider California area.
-   - Without feedback from scarcity to new requests (Phase 2), surpluses are not self-correcting (ERCOT 80% in 2035)
-     and shortfalls are not filled by new entry, so the shortfall is an upper bound on what current law delivers.
+   - Without feedback from scarcity to new requests, surpluses are not self-correcting (ERCOT 66% in 2035) and
+     shortfalls are not filled by new entry; Sim 7 adds that feedback.
 
-7. **Grid access as interacting agents (Sim 7, Phase 2)**. Each region's grid operator studies requests in clusters
-   (ERCOT one by one) at a throughput fitted to LBNL request -> agreement times (2010-19 cohorts; 2020-24 held out);
-   developers enter on the published wait and their region's projected shortfall, and leave at study results when the
-   allocated upgrade cost exceeds their value. Sec.2106 is published locations with a fixed fee and a single decision
-   point with non-refundable security, in RTOs that change their process (drawn per RTO, 2106(d)); Sec.2109 adds
-   hosting room per transmission line; Sec.2110 is a throughput gain the bill does not size (central 0).
-   - **BAAJA as a whole: +32 GW [+14, +53] by 2041** (renewables +19, gas +8, storage +3.5), against +10 GW with the
-     exogenous grid. About 2:1 renewables to gas, because Sec.2106 helps gas far more than the permitting provisions
-     do (gas is +7 of Sec.2106's +22 GW; the mechanism behind that is not yet broken down).
-   - **Sec.2106 alone: +22 GW [+3, +41]**; if every RTO changes its process, BAAJA gives +52 GW [+46, +58]. Whether
-     RTOs adopt (`adopt_2106`) moves the result from +10 to +52 GW, the largest single range. Read structurally,
-     Sec.2106 is worth far less than the ERCOT-pace ceiling of Sim 3 (+209 GW): fewer speculative requests enter
-     (MISO -15%), waits fall by 1-3 months and the signed share rises 1.5-3 points, which is not a 42% cut in study time.
-   - Sec.2109's hosting room adds about +5.5 GW; a 25% Sec.2110 throughput gain would add another +13 GW.
-   - Most of the gain is in **MISO** (+12 GW; +23 GW if every RTO adopts), then PJM (+7) and CAISO (+2).
-   - **Adequacy**: BAAJA cuts the 2035 national shortfall by 1.8 GW [0.0, 3.6] (5.1 GW in 2041); 3.1 GW if every RTO
-     adopts. With agents, the current-law shortfall is **71 GW in 2035** (68 with the exogenous grid) and
-     137 GW in 2041, still almost all PJM (65 GW in 2035). Scarcity pulls in some entry but does not close it:
-     fewer projects clear the queue overall, and ERCOT (64% margin) and the West (42%) keep large surpluses.
-   - The current-law level is uncertain: the growth of upgrade cost with capacity signed (`kappa`, from LBNL cost data)
-     moves current-law GW from 743 to 965 (central 910); strict entry rules under 2106(a)(3) (`q_min_2106` 0.5) would cut
-     the gain to +6 GW, because they also keep out requests that would have finished.
-   - Fit: request -> agreement times by cohort fit MISO, CAISO and ERCOT well, including the 2020-21 holdouts (MISO
-     45 vs 51 and 45 vs 48 months; ERCOT within 2 months every year); regions without their own data fit poorly.
-     Withdrawal timing is now fitted in the 2010-25 backcast, on the same request cohorts as the data (Validation);
-     forward 2026-30 cohorts land within 0.03 of the 2015-19 shares at 12-36 months in every region but SPP.
-   - Completed projects still take longer than LBNL's medians from request to operation (wind 64 vs 52 months, gas 48
-     vs 37), so current law with agents (910 GW) is conservative.
+7. **Grid access as interacting agents (Sim 7)**. Each region's grid operator studies requests in clusters (ERCOT one
+   by one) at a throughput fitted to LBNL request -> agreement times (2010-19 cohorts; 2020-24 held out); developers
+   enter on the published wait and their region's projected shortfall, and leave at study results when the allocated
+   upgrade cost exceeds their value. Sec.2106 is published locations with a fixed fee (set on the expected upgrade
+   cost) and a single decision point with non-refundable security, in RTOs that change their process (drawn per RTO,
+   2106(d)); Sec.2109 adds hosting room per transmission line; Sec.2110 is a throughput gain the bill does not size
+   (central 0). New capacity below excludes relicensed hydro (+1.8 GW in every BAAJA scenario).
+   - **BAAJA as a whole: +21.9 GW [+7.5, +37.2] by 2041** (renewables +14.9, gas +5.0, storage +2.0) on a current law
+     of 954 GW, against +8.0 GW with the exogenous grid.
+   - **If no RTO adopts Sec.2106: +6.7 GW [+5.0, +8.8]; if every RTO adopts: +37.0 GW [+32.0, +42.8].** Sec.2106 alone
+     (no other provision) gives +14.6 GW. Sec.2109's hosting room adds about +4 GW; a 25% Sec.2110 throughput gain
+     brings the central case to +37.4 GW.
+   - The entry screen in 2106(a)(3) keeps out the quarter of new requests least likely to complete within their
+     technology and region (range 10-50%). This relative screen replaced an absolute probability threshold after the
+     results were seen: the absolute version, whose threshold the recalibration moved, gives -2.2 GW (-4.6 GW if every
+     RTO adopts). Keeping out half the requests gives +6.4 GW; a tenth, +21.0 GW.
+   - Timing: the gain is +0.3 GW in 2030 and +10.8 GW in 2035, because the rules apply to studies from month 36.
+   - Most of the gain is in **MISO** (+12.4 GW; +23.5 GW if every RTO adopts). PJM gains about 0.5 GW: the screen
+     there keeps out requests that would have completed, because PJM's upgrade costs are the most dispersed.
+   - **Adequacy**: BAAJA cuts the 2035 national shortfall by 3.1 GW [0.3, 6.4] (5.7 GW in 2041); 5.8 GW if every RTO
+     adopts. With agents, the current-law shortfall is **69 GW in 2035** (59 with the exogenous grid) and 122 GW in
+     2041, still mostly PJM (57 GW in 2035).
+   - The current-law level is uncertain: the growth of upgrade cost with capacity signed (`kappa`, from LBNL cost
+     data) moves current-law GW from 842 to 1,118 (central 954) and BAAJA's gain from +13.5 to +24.2 GW.
+   - Fit: see Validation and `results/backcast.md`. Storage in ERCOT is a documented calibration miss (model 0.18 vs
+     data 0.12 completion; 17% of ERCOT requests have zero POI cost).
 
 **All assumption ranges at once (`results/uncertainty.md`).** 400 Latin-hypercube samples per row, each paired
-(including the post-*Seven County* court range). Data-sized provisions: **+10 GW [+6, +15]**, 2035 shortfall
--0.3 GW [-0.7, -0.0]; Sec.2213's compliance range explains about half of the variance in GW. Drawing the two
-interconnection dials across their ranges as well: +34 GW [+8, +190], and Sec.2106's dial explains 76% of the
-variance. **With the grid agents and all their assumptions drawn: +31 GW [+7, +77]** (renewables +17, gas +7.5,
-storage +4), 2035 shortfall -1.5 GW [-7.9, -0.1]; the 2106(a)(3) entry threshold (19%) and RTO adoption (17%) explain
-the most. Current-law shortfall in 2035: 65-73 GW [28, 139] across the three samples, driven by demand growth.
+(including the post-*Seven County* court range). Data-sized provisions: **+8.0 GW of new capacity [+4.6, +13.1]**
+(median, 5th-95th percentile), 2035 shortfall -0.4 GW [-0.9, -0.1]; Sec.2213's compliance range explains about half
+of the variance. Drawing the two interconnection dials across their ranges as well: +33.5 GW [+6.5, +188.7], and
+Sec.2106's dial explains 76% of the variance. **With the grid agents and all their assumptions drawn: +26.5 GW [+4.9,
++64.0]** (renewables +16.8, gas +5.3, storage +3.5), 2035 shortfall -2.0 GW [-8.8, -0.1]; realised RTO adoption
+explains the most (23%), then Sec.2110 throughput (12%), the entry screen (7%), `kappa` (6%) and Sec.2109 hosting
+(6%). By adoption: +13.3 GW if no RTO adopts, +26.5 if some do, +39.3 if all do (medians). Current-law shortfall in
+2035: 59-70 GW (medians) [21, 132] across the three samples, driven by demand growth.
 
 ## Validation
 Backcast, current law, Jan 2010 to Dec 2025, with LBNL requests by year and each request's region drawn from LBNL's

@@ -3,7 +3,7 @@
 Personal research project (not thesis work), aimed at a policy brief or paper: how S.5653, the Bipartisan American
 Affordability and Jobs Act of 2026 (BAAJA, introduced 30 Sep 2026, passed by the Senate 19 Nov 2026), would change US electricity supply.
 
-## State (23 Nov 2026)
+## State (24 Nov 2026)
 - Branch `claude/vibrant-carson-9aw3xo` carries all work (v5 from `claude/epic-carson-9rxakw`, plus Phases 0-4 below).
 - `README.md` has the current results, data register and assumption register. `docs/bill_question_map.md` maps every
   bill section to the model (modelled / listed / out of scope). `data/SOURCES.md` lists every raw source.
@@ -147,6 +147,28 @@ whenever `grid_cal` exists.
   adoption drawn per RTO. With a pure study-time dial this model spans +8 to +190 GW, close to Rhodium's range.
 - `baaja/brief_figures.py` + `run.py --brief-figures` (also in `--all`): `figures/brief_1..5_*.png` from results JSON.
 
+## Review fixes and relative entry screen (24 Nov 2026)
+Three reviewers challenged the Phase 4 brief. Fixes, in commits adb1f68 to 1e4f7d3:
+- Grid agents: zero-cost requests pay nothing; the Sec.2106 fee is set on the expected upgrade cost; `kappa` is
+  0 / 2.17 / 5.14 (0 in ERCOT, which does not allocate network upgrades to generators); new capacity is reported as
+  `GW_new`, without relicensed hydro; Sim 7 has a timing table, a `q_min_law` row and a PJM adequacy fix; the
+  uncertainty analysis adds realised adoption as a regressor and bootstrap intervals. Full recalibration and rerun.
+- The recalibration took the headline to about 0 GW, because the absolute Sec.2106 entry screen (`q_min_2106`, a
+  threshold on calibrated P(cost <= value)) moved with the calibration. After seeing that, the screen was made
+  relative: `screen_2106` (0.1 / 0.25 / 0.5) keeps out that share of new requests, those least likely to complete
+  within their technology and region (`baaja/grid.py`). The absolute version is `q_abs_2106` (default 0), a
+  sensitivity only. The brief says the change was made after seeing results. Phase 2-4 numbers above that mention
+  `q_min_2106` are superseded.
+- Storage in ERCOT is exempted from the calibration-tolerance test (value scale at its lower bound; 17% zero-POI-cost
+  share against a 12% completion target).
+
+**Current results** (`docs/brief.md`, `README.md`): grid agents, current law 954 GW new by 2041 (exogenous 1,090).
+BAAJA +21.9 GW [+7.5, +37.2] (renewables +14.9, gas +5.0, storage +2.0); no RTO adopts Sec.2106 +6.7; every RTO
+adopts +37.0; absolute screen -2.2. MISO +12.4, PJM about 0.5 (the relative screen keeps out PJM requests that would
+have completed). Joint ranges +26.5 [+4.9, +64.0]. Shortfall below reference margins, current law: 69 GW in 2035
+(exogenous 59), 122 in 2041; BAAJA cuts it by 3.1 GW in 2035 and 5.7 in 2041. Sim 6 regenerated (its committed
+outputs had been from Phase 1).
+
 ## Known issues carried forward
 - Grid agents: completed projects take too long from request to operation (a longer wait does not raise withdrawal,
   so no selection for short waits). In the backcast, 2020-22 storage and solar requests take 62-66 months to operate
@@ -175,4 +197,4 @@ requests; LBNL files need an upload. api.eia.gov needs a free key.
 ## History
 v1: generic projects with an agency queue (`legacy/`). v3: technologies, two gates, assumed parameters. v4: LBNL
 calibration, challenger agents. v5 (18-20 Nov): federal nexus, EIS counts, court parameters, seeded queue, backcast,
-five simulations, measured federal-land intake. Phases 0-2 (23 Nov): as above.
+five simulations, measured federal-land intake. Phases 0-2 (23 Nov), Phases 3-4 and review fixes (24 Nov): as above.
