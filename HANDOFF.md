@@ -30,7 +30,8 @@ the calibrated permitting and court pipeline; rebuild grid access as interacting
   target, so Sim 5's current law matches Sims 1-4.
 - CI (`.github/workflows/tests.yml`), `data/SOURCES.md`, every bill section classified in the bill map.
 - **Bill version**: the model now follows the Senate-passed text (substitute to H.R. 2347, KAT26804 V62, passed
-  19 Nov 2026, 62-33 per committee press releases). Sec.2106 covers RTOs/ISOs only (`ix_cut_rto`); Sec.1401 gains
+  19 Nov 2026, 62-33; S.Amdt. 6883; modelled sections checked word for word against GovInfo's engrossed text,
+  BILLS-119hr2347eas). Sec.2106 covers RTOs/ISOs only (`ix_cut_rto`); Sec.1401 gains
   an exception for action "pursuant to any applicable law or regulation" (`halt_mult_1401` 0.1 / 0.5 / 1.0).
 - Before any change, all five simulations and the backcast reproduced the committed 20 Nov results exactly.
 - Headline: data-sized provisions **+10 GW** by 2041 (renewables +6.7, gas +1.2, storage +0.4), down from +15;

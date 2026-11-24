@@ -111,3 +111,10 @@ def test_joint_uncertainty_is_reproducible_and_wider_than_seed_noise(cal):
     seed_only = [sum(z[t]["GW_online"] - b[t]["GW_online"] for t in TYPES)
                  for z, b in zip(ex.run_scenario(BAAJA, 12, cal), ex.run_scenario({}, 12, cal))]
     assert np.std([r["GW total"] for r in r1]) >= 0.8 * np.std(seed_only)
+
+
+def test_pjm_onpeak_not_double_counted():
+    from baaja import supply as sp
+    hi = dict(sp.SA, elcc_decline=1.0)
+    assert sp.onpeak("Solar", 2041, hi, "PJM") == sp.onpeak("Solar", 2026, hi, "PJM")
+    assert sp.onpeak("Solar", 2041, hi, "MISO") < sp.onpeak("Solar", 2026, hi, "MISO")

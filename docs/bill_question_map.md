@@ -2,8 +2,9 @@
 
 **Bill version.** The model follows the **Senate-passed text**: the amendment in the nature of a substitute to H.R. 2347
 offered by Sens. Capito, Lee, Whitehouse and Heinrich (Senate file KAT26804 V62), which carries BAAJA as Divisions A and
-B. The Senate passed it on 19 Nov 2026, 62-33, per the Environment and Public Works and Energy and Natural Resources
-committee press releases; it now goes to the House. Not yet checked on congress.gov, which refuses automated requests.
+B (S.Amdt. 6883). The Senate passed H.R. 2347 with this amendment on 19 Nov 2026, 62-33; it now goes to the House.
+The engrossed Senate amendment (GovInfo, BILLS-119hr2347eas) was checked against the floor copy: every modelled
+section is identical word for word.
 The introduced bill was S.5653 (30 Sep 2026); section numbers below are the same in both unless noted. Scope: US
 electricity, renewables vs gas. Model code: `baaja/sims/simN_*.py`; results: `results/simN_*.md`. Status: **modelled**
 (with data or an assumption range), **listed** (in the bill, not simulated, reason given).

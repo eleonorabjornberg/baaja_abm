@@ -29,7 +29,9 @@ def run_scenario(over, n_runs, cal, politics=None):
 def totals(run):
     gw = {t: run[t]["GW_online"] for t in TYPES}
     twh = {t: gw[t] * CF[t] * 8.766 for t in gw}
-    out = {"GW_total": sum(gw.values()), "harm_total": sum(run[t]["harm"] for t in TYPES),
+    out = {"GW_total": sum(gw.values()),
+           "GW_new": sum(v for t, v in gw.items() if t not in ("Hydro relicense", "Transmission")),   # new capacity only
+           "harm_total": sum(run[t]["harm"] for t in TYPES),
            "suits_total": sum(run[t]["suits"] for t in TYPES), "EIS_per_year_total": sum(run[t]["EIS_per_year"] for t in TYPES),
            "halted_GW_total": sum(run[t]["halted_GW"] for t in TYPES)}
     for g, members in GROUPS.items():

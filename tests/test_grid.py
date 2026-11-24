@@ -111,3 +111,43 @@ def test_withdrawal_curve_data_shape():
     for v in d.values():
         x = [v[m] for m in gr.WD_MONTHS]
         assert all(0 <= a <= b <= 1 for a, b in zip(x, x[1:]))
+
+
+def test_zero_cost_requests_pay_nothing_and_never_leave_at_results(cal):
+    c = cal["calibration"]
+    G = _gen(simulate(ex.params(dict(grid="agents"), c), 4, POL))
+    cost = np.concatenate([r["cost"] for r in G.values()]); gwd = np.concatenate([r["gwd"] for r in G.values()])
+    reg = np.concatenate([r["region"] for r in G.values()])
+    pjm = (reg == REGIONS.index("PJM")) & np.isfinite(cost)
+    z = cost == 0
+    assert 0.5 * gr.COST[REGIONS.index("PJM")]["zero_share"] < z[pjm].mean() < 1.5 * gr.COST[REGIONS.index("PJM")]["zero_share"]
+    assert not np.isfinite(gwd[z]).any()
+
+
+def test_sec2106_fee_is_a_multiple_of_expected_cost(cal):
+    c = cal["calibration"]
+    p = ex.params(dict(BAAJA, grid="agents", adopt_2106=1.0, kappa=0.0, fee_mult_2106=1.2), c)
+    G = _gen(simulate(p, 1, POL))
+    m = REGIONS.index("MISO"); cs = gr.COST[m]
+    want = 1.2 * (1 - cs["zero_share"]) * np.exp(cs["mu"] + cs["sigma"] ** 2 / 2)
+    fees = np.concatenate([r["cost"][r["planned"] & (r["region"] == m) & np.isfinite(r["cost"])] for r in G.values()])
+    assert len(fees) and np.allclose(fees, want)
+
+
+def test_ercot_upgrade_costs_do_not_grow(cal):
+    c = cal["calibration"]
+    a = _gen(simulate(ex.params(dict(grid="agents", kappa=0.0), c), 2, POL))
+    b = _gen(simulate(ex.params(dict(grid="agents", kappa=10.0), c), 2, POL))
+    e = REGIONS.index("ERCOT")
+    for t in a:
+        ia, ib = a[t]["region"] == e, b[t]["region"] == e
+        assert np.array_equal(a[t]["tIA"][ia], b[t]["tIA"][ib]), t
+
+
+def test_new_capacity_excludes_relicensed_hydro(cal):
+    c = cal["calibration"]
+    p = ex.params(dict(grid="agents"), c)
+    s = summarize(simulate(p, 1, POL), p)
+    tot = ex.totals(s)
+    assert np.isclose(tot["GW_new"], tot["GW_total"] - s["Hydro relicense"]["GW_online"] - s["Transmission"]["GW_online"])
+    assert s["Hydro relicense"]["GW_online"] > 0

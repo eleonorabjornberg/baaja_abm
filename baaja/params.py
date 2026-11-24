@@ -216,7 +216,13 @@ UTILITY_OWNED = {t: FED["types"][t]["utility_owned_share_MW"] for t in GEN}   # 
 
 # ---- grid agents (Phase 2, baaja/grid.py): used only when p['grid'] == 'agents' -------------------------------
 _K = _load("grid_targets.json")["kappa"]["by_region"]
-KAPPA = sorted(_K[r]["kappa"] for r in ("MISO", "SPP", "PJM"))      # [D] low, central, high
+# [D] MISO, SPP and PJM: the three cluster markets with many connected GW and a rise in cost between 2010-17 and 2018+
+# requests. NYISO (-3.2, 2.8 GW connected) and the Southeast (-2.8) give a negative growth rate, and the West (21.9,
+# 3.7 GW over a 183 GW fleet) an implausibly large one, so they are not used. The low end is 0 (no growth in cost with
+# capacity signed), because three regions cannot pin the rate down. ERCOT is set to 0 in grid.py: it does not allocate
+# network upgrades to generators (data/grid_targets.json, cost note).
+_K3 = sorted(_K[r]["kappa"] for r in ("MISO", "SPP", "PJM"))
+KAPPA = [0.0, _K3[1], _K3[2]]                                        # low, central (median of 3), high (PJM)
 
 # (low, central, high, note). Current-law behaviour (vary in both runs of a pair) and bill design (BAAJA only).
 GRID_LAW = {
@@ -225,7 +231,8 @@ GRID_LAW = {
                          "capacity shortfall as a share of peak demand, 4 years ahead)"),
     "kappa":            (round(KAPPA[0], 2), round(KAPPA[1], 2), round(KAPPA[2], 2),
                          "growth of network-upgrade cost with capacity signed, per share of the regional fleet [D: LBNL "
-                         "cost data, 2018+ vs 2010-17 requests; MISO, SPP, PJM]"),
+                         "cost data, 2018+ vs 2010-17 requests; central = median of MISO, SPP, PJM, high = PJM, low = 0; "
+                         "not ERCOT]"),
     "restudy_rho":      (0.1, 0.3, 0.6, "re-study: cost rise for remaining requests per unit withdrawn MW share"),
     "restudy_months":   (3, 6, 12, "months from first study result to agreement in cluster regions (re-study, facilities)"),
     "tx_hosting_gw":    (0.5, 1.5, 3.0, "GW of interconnection room added by one transmission project"),
@@ -239,12 +246,14 @@ GRID_BILL = {
     "lag_2106":           (0.0, 0.5, 1.0, "Sec.2106(a)(3): months a developer holds its queue position after an "
                            "adverse study result, relative to current law, with a single decision point and withdrawal "
                            "penalties (0 = leaves at once)"),
-    "fee_mult_2106":      (0.8, 1.0, 1.5, "Sec.2106(a)(2): fixed fee as a multiple of the region's median upgrade cost"),
+    "fee_mult_2106":      (0.8, 1.0, 1.5, "Sec.2106(a)(2): fixed fee as a multiple of the region's expected (mean) "
+                           "upgrade cost, zero-cost requests included; 1 = the fee recovers expected upgrade cost"),
     "g_2110":             (0.0, 0.0, 0.25, "Sec.2110: study throughput gain (rulemaking with no target)"),
     "hosting_2109":       (0.0, 0.1, 0.3, "Sec.2109: extra hosting room per transmission project (advanced "
                            "transmission technologies)"),
 }
 GRID_BASE = dict(grid="exogenous", grid_cal=None, region_by_year=False, entry_max=2.0, scarcity_ahead=48,
+                 q_min_law=0.0,     # current-law entry screen: 0 central; 0.1 in Sim 7's sensitivity (Order 2023 deposits)
                  **{k: v[1] for k, v in GRID_LAW.items()},
                  grid_2106=False, grid_2110=0.0, grid_2109=0.0,
                  **{k: v[1] for k, v in GRID_BILL.items() if k not in ("g_2110", "hosting_2109")})

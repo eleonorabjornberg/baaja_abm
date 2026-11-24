@@ -1,7 +1,7 @@
 """Supply and resource adequacy by region and year (Phase 1).
 
 Installed capacity = existing fleet (EIA-860, end-2025) - retirements + model additions (projects reaching operation
-from the interconnection queue, by region). Firm capacity follows NERC's reserve-margin convention: dispatchable
+from the interconnection queue, by region). On-peak accredited capacity ('firm' in the code) follows NERC's reserve-margin convention: dispatchable
 resources at net summer capacity; wind, solar and batteries at an on-peak share; plus NERC's net firm transfers.
 Reserve margin = firm / net internal demand - 1, compared with NERC's reference margin level (RML).
 
@@ -27,7 +27,8 @@ SUPPLY_ASSUMPTIONS = {
     "ret_announced":    (0.6, 1.0, 1.0, "share of announced retirements (EIA-860/860M) that happen on schedule; low = "
                          "delays such as the 2025 DOE 202(c) orders keeping coal units open"),
     "elcc_decline":     (0.0, 0.5, 1.0, "how far on-peak shares of wind, solar and batteries fall by 2041: 0 = NERC 2025 "
-                         "national values throughout, 1 = PJM's 2041/42 preliminary ELCC ratings, linear in time"),
+                         "national values throughout, 1 = PJM's 2041/42 preliminary ELCC class ratings, linear in time "
+                         "(not in PJM, whose installed reserve margin already rises with the mix)"),
     "demand_growth_mult": (0.5, 1.0, 1.5, "multiplier on NERC's forecast growth in net internal demand (2026-35 path, "
                            "extended to 2041 at the 2030-35 rate)"),
 }
@@ -52,11 +53,20 @@ CLASS = {"Renewable": ["Solar", "Onshore wind", "Offshore wind", "Geothermal", "
          "Coal and oil": ["Coal", "Oil"], "Nuclear": ["Nuclear"], "Other": ["Other"]}
 
 
-def onpeak(group, year, sa):
+# PJM's NERC reference margin is an installed reserve margin (LTRA 2025, RML summary table) that rises from 18.6% to
+# 35.1% (2026-34) as the mix shifts to resources with low accredited value, and NERC counts PJM's solar and wind near
+# installed capacity rights (11.3 and 5.3 GW in 2026 vs EIA nameplate 18.0 and 11.7). The falling value of those
+# resources is therefore already in PJM's RML: in PJM the on-peak shares are held at their 2026 values, so the
+# decline is not counted twice. Elsewhere the RML is flat and on-peak shares carry the decline (elcc_decline).
+INSTALLED_RML = ("PJM",)
+
+
+def onpeak(group, year, sa, region=None):
     if group not in ONPEAK_2026:
         return 1.0
     f = (year - 2026) / 15
-    c41 = ONPEAK_2026[group] + sa["elcc_decline"] * (ONPEAK_2041_PJM[group] - ONPEAK_2026[group])
+    dec = 0.0 if region in INSTALLED_RML else sa["elcc_decline"]
+    c41 = ONPEAK_2026[group] + dec * (ONPEAK_2041_PJM[group] - ONPEAK_2026[group])
     return ONPEAK_2026[group] + min(max(f, 0), 1) * (c41 - ONPEAK_2026[group])
 
 
@@ -115,9 +125,12 @@ def supply(run, sa=SA, fleet=None, dem=None):
     nid, rml, tr = demand(sa) if dem is None else dem
     add = additions(run)
     inst = fleet + add
-    fac = np.array([[onpeak(g, y, sa) for y in YEARS] for g in GROUPS])          # [group, year]
-    # existing fleet scaled to NERC's existing-certain basis (FIRM_SCALE); additions at NERC on-peak shares
-    firm = (fleet * fac[None]).sum(axis=1) * FIRM_SCALE[:, None] + (add * fac[None]).sum(axis=1) + tr
+    fac = np.array([[[onpeak(g, y, sa, r) for y in YEARS] for g in GROUPS] for r in REGIONS])   # [region, group, year]
+    # existing fleet scaled to NERC's existing-certain basis (FIRM_SCALE). Additions take the same scale where it is
+    # below 1 (MISO counts accredited capacity, and the derating applies to new units too), but are not scaled up
+    # where it is above 1 (CAISO, SPP: area boundaries and imports, which do not apply to new units).
+    firm = ((fleet * fac).sum(axis=1) * FIRM_SCALE[:, None] + (add * fac).sum(axis=1) * np.minimum(FIRM_SCALE, 1.0)[:, None]
+            + tr)
     cf = np.array([[FLEET["capacity_factor"].get(r, {}).get(_cfkey(g), FLEET["meta"]["national_cf"].get(_cfkey(g), 0.0))
                     for g in GROUPS] for r in REGIONS]).clip(min=0)
     twh = (inst * cf[:, :, None]).sum(axis=1) * 8.766 / 1e3
@@ -130,7 +143,7 @@ def supply(run, sa=SA, fleet=None, dem=None):
 
 
 def _fleet_firm_2026(sa=SA):
-    return np.array([sum(FLEET["capacity"].get(r, {}).get(g, 0.0) * onpeak(g, 2026, sa) for g in GROUPS) for r in REGIONS])
+    return np.array([sum(FLEET["capacity"].get(r, {}).get(g, 0.0) * onpeak(g, 2026, sa, r) for g in GROUPS) for r in REGIONS])
 
 
 # [D] per-region factor putting the existing fleet on NERC's 2026 "existing-certain" basis (NERC excludes uncommitted

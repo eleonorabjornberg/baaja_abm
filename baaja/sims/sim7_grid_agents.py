@@ -118,16 +118,33 @@ def run(n_runs, cal, res_dir, fig_dir, sweep_runs=None):
         z = nat[k]
         dfirm = (z["firm"] - lawn["firm"])[:, k35] / 1000
         dsh = (z["shortfall"] - lawn["shortfall"]) / 1000
-        rows.append([k] + [fmt(d[f"GW {g}"], 1, True) for g in G3] + [fmt(d["GW_total"], 1, True),
+        rows.append([k] + [fmt(d[f"GW {g}"], 1, True) for g in G3] + [fmt(d["GW_new"], 1, True),
+                     fmt(d["GW Renewable (retained hydro)"], 1, True),
                      fmt(ex.band(dfirm), 1, True), fmt(ex.band(dsh[:, k35]), 1, True), fmt(ex.band(dsh[:, k41]), 1, True)])
-    t_head = table(["scenario (grid agents)", "renewable GW", "gas GW", "storage GW", "total GW", "firm GW 2035",
-                    "shortfall GW 2035", "shortfall GW 2041"], rows)
+    t_head = table(["scenario (grid agents)", "renewable GW", "gas GW", "storage GW", "new capacity GW",
+                    "relicensed hydro GW (not new)", "on-peak accredited GW 2035", "shortfall GW 2035", "shortfall GW 2041"], rows)
+
+    # ---- timing: cumulative new capacity online, BAAJA minus current law, by year; current-law additions by year ----
+    NEWT = [t for t in TYPES if t not in ("Hydro relicense", "Transmission")]
+    cum = lambda runs: np.array([np.cumsum(np.sum([r["_online_by_year"][t] for t in NEWT], axis=0)) for r in runs])
+    cl = cum(raw["Current law"])
+    yrs = [2027 + i for i in range(cl.shape[1])]
+    timing = {"years": yrs, "current_law_additions": [float(x) for x in np.diff(cl, axis=1, prepend=0).mean(0)]}
+    for k in ("BAAJA", "BAAJA without Sec.2106", "BAAJA, Sec.2106 adopted by every RTO"):
+        dd = cum(raw[k]) - cl
+        timing[k] = [ex.band(dd[:, i]) for i in range(dd.shape[1])]
+    show = [y for y in (2028, 2030, 2032, 2033, 2035, 2038, 2041) if y in yrs]
+    t_time = table(["year (to Nov)", "current law: new GW online that year"]
+                   + [f"{k}: cumulative GW vs current law" for k in ("BAAJA", "BAAJA without Sec.2106", "BAAJA, Sec.2106 adopted by every RTO")],
+                   [[y, f"{timing['current_law_additions'][yrs.index(y)]:.0f}"]
+                    + [fmt(timing[k][yrs.index(y)], 1, True) for k in ("BAAJA", "BAAJA without Sec.2106", "BAAJA, Sec.2106 adopted by every RTO")]
+                    for y in show])
     dx = res_exo["BAAJA (exogenous grid)"]["diff_vs_baseline"]
-    t_cmp = table(["grid model", "current law total GW 2041", "BAAJA minus current law, total GW", "renewable GW", "gas GW", "storage GW"],
-                  [["exogenous study times (Sims 1-6)", fmt(res_exo["Current law (exogenous grid)"]["totals"]["GW_total"], 0),
-                    fmt(dx["GW_total"], 1, True)] + [fmt(dx[f"GW {g}"], 1, True) for g in G3],
-                   ["grid agents (this simulation)", fmt(res["Current law"]["totals"]["GW_total"], 0),
-                    fmt(res["BAAJA"]["diff_vs_baseline"]["GW_total"], 1, True)]
+    t_cmp = table(["grid model", "current law new GW 2041", "BAAJA minus current law, new GW", "renewable GW", "gas GW", "storage GW"],
+                  [["exogenous study times (Sims 1-6)", fmt(res_exo["Current law (exogenous grid)"]["totals"]["GW_new"], 0),
+                    fmt(dx["GW_new"], 1, True)] + [fmt(dx[f"GW {g}"], 1, True) for g in G3],
+                   ["grid agents (this simulation)", fmt(res["Current law"]["totals"]["GW_new"], 0),
+                    fmt(res["BAAJA"]["diff_vs_baseline"]["GW_new"], 1, True)]
                    + [fmt(res["BAAJA"]["diff_vs_baseline"][f"GW {g}"], 1, True) for g in G3]])
 
     # ---- current-law adequacy: exogenous study times vs grid agents (scarcity feedback on) ----
@@ -222,13 +239,23 @@ def run(n_runs, cal, res_dir, fig_dir, sweep_runs=None):
             else:
                 Ls = base_s["law"]
             Bs = run_set(bill_o, ns, cal)[0]
-            d = [ex.totals(b)["GW_total"] - ex.totals(a)["GW_total"] for a, b in zip(Ls, Bs)]
-            lt = np.mean([ex.totals(a)["GW_total"] for a in Ls])
+            d = [ex.totals(b)["GW_new"] - ex.totals(a)["GW_new"] for a, b in zip(Ls, Bs)]
+            lt = np.mean([ex.totals(a)["GW_new"] for a in Ls])
             cells.append((float(np.mean(d)), float(lt)))
         sdata[key] = dict(low=lo, high=hi, diff_low=cells[0][0], diff_high=cells[1][0], law_low=cells[0][1], law_high=cells[1][1])
         srows.append([key + (" (current law)" if key in GRID_LAW else " (bill)"), f"{lo} / {hi}",
                       f"{cells[0][0]:+.1f} / {cells[1][0]:+.1f}", f"{cells[0][1]:.0f} / {cells[1][1]:.0f}", note])
-    t_sens = table(["assumption", "low / high", "BAAJA minus current law, total GW", "current law total GW", "what it is"], srows)
+    # current law already screens requests (Order 2023 readiness deposits): both runs with an entry screen of 0.1
+    scr = {}
+    for lab, q in (("none (central)", 0.0), ("0.1 (Order 2023 deposits)", 0.1)):
+        Ls = run_set(dict(AG, q_min_law=q), ns, cal)[0]
+        Bs = run_set(dict(scen["BAAJA"], q_min_law=q), ns, cal)[0]
+        As = run_set(dict(scen["BAAJA, Sec.2106 adopted by every RTO"], q_min_law=q), ns, cal)[0]
+        g = lambda R: np.array([ex.totals(x)["GW_new"] for x in R])
+        scr[lab] = dict(law=float(g(Ls).mean()), baaja=float((g(Bs) - g(Ls)).mean()), every_rto=float((g(As) - g(Ls)).mean()))
+    t_scr = table(["current-law entry screen", "current law new GW", "BAAJA minus current law", "every RTO adopts Sec.2106"],
+                  [[k, f"{v['law']:.0f}", f"{v['baaja']:+.1f}", f"{v['every_rto']:+.1f}"] for k, v in scr.items()])
+    t_sens = table(["assumption", "low / high", "BAAJA minus current law, new GW", "current law new GW", "what it is"], srows)
 
     md = "\n\n".join([
         "# Simulation 7: grid access as an agent-based system",
@@ -242,10 +269,20 @@ def run(n_runs, cal, res_dir, fig_dir, sweep_runs=None):
         "the rule. Every scenario is paired with current law under the same agents. Numbers: mean [5th, 95th percentile] "
         f"across {n_runs} runs, GW online by Nov 2041.",
         "## What the grid sections add (difference from current law, grid agents)",
+        "New capacity excludes relicensed hydro (existing plants kept in service), shown separately. 'BAAJA' draws "
+        "each RTO's adoption of a new Sec.2106 process with probability 0.5, so its interval mostly reflects which RTOs "
+        "adopt; the 'without Sec.2106' and 'adopted by every RTO' rows bound it. 'Without Sec.2106' keeps Sec.2109's "
+        "extra hosting room and Titles I-II.",
         t_head,
+        "## Timing: new capacity online, cumulative difference from current law",
+        "Sec.2106 and Sec.2110 apply from the rule month (ix_rule_month, central 36 months after enactment: an "
+        "assumption; the statute gives FERC 18 months for the rule and providers 2 years to file), to requests made "
+        "from then on; requests already in the queue keep the current process.",
+        t_time,
         "## Exogenous study times vs grid agents",
-        "Sims 1-6 draw each request's study time; here it comes out of the queue. The agents' current law is lower "
-        "because study results now remove projects whose upgrade costs exceed their value, on top of the fitted hazards.",
+        "Sims 1-6 draw each request's study time; here it comes out of the queue. The two current laws differ mainly "
+        "through upgrade-cost growth with capacity signed (kappa: compare its low end, 0, in the sensitivity table) and "
+        "through study results that remove projects whose upgrade costs exceed their value.",
         t_cmp,
         "### Current law: capacity shortfall below reference margins",
         "With grid agents, developers respond to their region's projected shortfall, so surpluses and shortfalls are no "
@@ -285,7 +322,14 @@ def run(n_runs, cal, res_dir, fig_dir, sweep_runs=None):
         "received a study result, so the level differs; the gradient is the check.",
         t_cost,
         f"## Sensitivity: grid assumptions at the low and high end of their ranges ({ns} paired runs each)",
+        "kappa's low end is 0 (upgrade cost does not rise with capacity signed): it shows how much of the gap between "
+        "the agents' current law and the exogenous model comes from cost growth.",
         t_sens,
+        "### Current law with an entry screen",
+        "Order 2023 already requires readiness deposits and withdrawal penalties. The central current law has no "
+        "entry screen; this row gives both runs one (requests enter only if their chance of completing is at least "
+        "0.1), to show how much of Sec.2106's screening effect is already in place.",
+        t_scr,
     ])
     data = dict(results={k: v for k, v in res.items()}, exogenous=res_exo,
                 regions={k: {r: {m: _m(v, r, m) for m in v[0][r]} for r in REGIONS} for k, v in gst.items()},
@@ -293,7 +337,10 @@ def run(n_runs, cal, res_dir, fig_dir, sweep_runs=None):
                 withdrawal={"data": wdd, "model": {r: {m: float(np.nanmean([x["wd"].get(r, {}).get(m, np.nan) for x in xtra]))
                                                        for m in gr.WD_MONTHS} for r in REGIONS}},
                 cost_completion={"model": cc, "data": vb}, sensitivity=sdata, adequacy_current_law=adq,
-                supply={k: {"firm_2035": ex.band((nat[k]["firm"] - lawn["firm"])[:, k35] / 1000),
+                timing=timing, screen_sensitivity=scr,
+                supply={k: {"firm_2030": ex.band((nat[k]["firm"] - lawn["firm"])[:, sp.YEARS.index(2030)] / 1000),
+                            "firm_2035": ex.band((nat[k]["firm"] - lawn["firm"])[:, k35] / 1000),
+                            "shortfall_2041": ex.band((nat[k]["shortfall"] - lawn["shortfall"])[:, k41] / 1000),
                             "shortfall_2035": ex.band((nat[k]["shortfall"] - lawn["shortfall"])[:, k35] / 1000)}
                         for k in list(scen)[1:]})
     save("sim7_grid_agents", data, md, res_dir)

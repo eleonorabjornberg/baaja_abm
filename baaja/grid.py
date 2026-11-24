@@ -195,8 +195,8 @@ def _supply_context():
     if "ctx" not in _SCARCITY:
         from . import supply as sp
         fleet = sp.existing_fleet(sp.SA)
-        fac = np.array([[sp.onpeak(g, y, sp.SA) for y in sp.YEARS] for g in sp.GROUPS])
-        firm = (fleet * fac[None]).sum(axis=1) * sp.FIRM_SCALE[:, None]
+        fac = np.array([[[sp.onpeak(g, y, sp.SA, r) for y in sp.YEARS] for g in sp.GROUPS] for r in REGIONS])
+        firm = (fleet * fac).sum(axis=1) * sp.FIRM_SCALE[:, None]
         nid, rml, tr = sp.demand(sp.SA)
         onpk = {t: sp.ONPEAK_2026.get(t, 1.0) for t in TYPES}
         _SCARCITY["ctx"] = dict(need=(1 + rml) * nid - tr - firm, nid=nid, onpeak=onpk, years=len(sp.YEARS))
@@ -347,7 +347,10 @@ def _region(r, idx, F, out, p, op, U, onpk, ctx, tx, u_adopt, T, T_ext, backcast
     cmed = np.exp(cst["mu"])
     zv, zc, uc0, zs, uloc, uacc = (U[k][idx] for k in ("Zv", "Zc", "Uc0", "Zs", "Uloc", "Uacc"))
     v0 = np.exp(val["mu"] + val["sigma"] * zv) * F["vmult"][idx]   # private value, $/kW (technology x region scale)
-    craw = np.where(uc0 < cst["zero_share"], 1.0, np.exp(cst["sigma"] * zc))   # cost relative to the regional median
+    # cost relative to the regional median of non-zero costs; LBNL's zero-cost share pays nothing
+    craw = np.where(uc0 < cst["zero_share"], 0.0, np.exp(cst["sigma"] * zc))
+    # expected upgrade cost (zero-cost share included): what a fee meant to recover upgrade costs has to charge
+    cmean = (1 - cst["zero_share"]) * np.exp(cst["mu"] + cst["sigma"] ** 2 / 2)
     rule = p["ix_rule_month"]
     in_rto = r in RTO_IDX
     adopt = p["grid_2106"] and in_rto and (u_adopt < p["adopt_2106"])
@@ -356,6 +359,8 @@ def _region(r, idx, F, out, p, op, U, onpk, ctx, tx, u_adopt, T, T_ext, backcast
     # decision point and withdrawal penalties the hold shrinks by lag_2106
     lag = np.ceil(U["Elag"][idx] * exit_lag * (p["lag_2106"] if adopt else 1.0)) if exit_lag > 0 else np.zeros(len(idx))
     g2110 = p["grid_2110"] if r != ERCOT else 0.0
+    # current-law entry screen (sensitivity only; Order 2023 readiness deposits), FERC-jurisdictional providers
+    q_law = p.get("q_min_law", 0.0) if (r != ERCOT and not backcast) else 0.0
     R = p["restudy_months"] if serial else 0
     # ---- throughput: start from end-2025 (scaled to the model's request units) or, in a backcast, from 2010 ----
     base_new = ~seeded & ~cand
@@ -384,7 +389,7 @@ def _region(r, idx, F, out, p, op, U, onpk, ctx, tx, u_adopt, T, T_ext, backcast
     beta = 0.0 if backcast else p["scarcity_beta"]
     s0 = scar(0)
     A = np.zeros(T_ext + 2)                                         # GW signed since month 0, by month (increments)
-    kappa = p["kappa"]
+    kappa = 0.0 if r == ERCOT else p["kappa"]                       # ERCOT does not allocate network upgrades [D]
 
     def cong(t):
         a = A[: t + 1].sum()
@@ -461,13 +466,19 @@ def _region(r, idx, F, out, p, op, U, onpk, ctx, tx, u_adopt, T, T_ext, backcast
                 mult = (Wref / Wpub) ** (0.0 if backcast else p["entry_wait_elast"]) * np.exp(beta * sc)   # backcast: requests as recorded
                 mult = min(max(mult, 0.2), p["entry_max"])
                 ok = np.where(cand[ii], uacc[ii] < (mult - 1) / max(p["entry_max"] - 1, 1e-9), uacc[ii] < min(mult, 1.0))
-                if adopt and t >= rule:
-                    cb = cmed * cong(t)
+                b2106 = adopt and t >= rule
+                if b2106 or q_law > 0:
+                    cg = cong(t); cb = cmed * cg
                     vm = v0[ii] * np.exp(beta * sc)
-                    pl = (uloc[ii] < p["planned_share_2106"]) & (vm >= p["fee_mult_2106"] * cb)
+                    # chance that the upgrade cost comes in below the request's value
                     qv = cst["zero_share"] + (1 - cst["zero_share"]) * ndtr((np.log(np.maximum(vm, 1e-9)) - np.log(cb)) / cst["sigma"])
-                    ok &= pl | (qv >= p["q_min_2106"])
-                    planned[ii] = ok & pl; fee[ii] = p["fee_mult_2106"] * cb
+                    if b2106:
+                        fe = p["fee_mult_2106"] * cmean * cg             # fixed fee: a multiple of the expected cost
+                        pl = (uloc[ii] < p["planned_share_2106"]) & (vm >= fe)
+                        ok &= pl | (qv >= max(p["q_min_2106"], q_law))
+                        planned[ii] = ok & pl; fee[ii] = fe
+                    else:
+                        ok &= qv >= q_law
                 entered[ii] = ok
                 cnt[t] += ok.sum()
         # throughput adapts to the arrival rate
