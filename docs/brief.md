@@ -655,17 +655,36 @@ approved transmission), and `data/SOURCES.md` lists where each file comes from.
 
 ## References
 
-Clean Air Task Force (2026, 12 November). Even after the manager's amendment, BAAJA's permitting certainty provisions
-may not prevent near-term actions to stop clean energy projects.
-https://www.catf.us/2026/11/even-after-managers-amendment-baajas-permitting-certainty-provisions-may-not-prevent-near-term-actions-stop-clean-energy-projects/
+Bipartisan American Affordability and Jobs Act of 2026. S.5653, 119th Congress, introduced 30 September 2026;
+adopted as S.Amdt. 6883 to H.R. 2347 and passed by the Senate on 19 November 2026 (engrossed amendment,
+BILLS-119hr2347eas). https://www.congress.gov
 
 Federal Energy Regulatory Commission (2023, 28 July). Improvements to Generator Interconnection Procedures and
 Agreements, Order No. 2023. 184 FERC ¶ 61,054.
 
-Federal Energy Regulatory Commission (2025a-e; 2026). Orders on Order No. 2023 compliance filings: ISO New England
-(Docket ER24-2007/ER24-2009, 4 April 2025); New York ISO (ER24-1915, 17 April 2025); California ISO (ER24-2042,
-15 May 2025); Southwest Power Pool (ER24-2026, 26 June 2025, and a further order in 2026); PJM Interconnection
-(ER24-2045, 24 July 2025). https://www.ferc.gov
+Federal Energy Regulatory Commission (2025a, 4 April). Order on compliance filing, ISO New England Inc., Docket
+Nos. ER24-2007 and ER24-2009.
+
+Federal Energy Regulatory Commission (2025b, 17 April). Order on compliance filing, New York Independent System
+Operator, Inc., Docket No. ER24-1915.
+
+Federal Energy Regulatory Commission (2025c, 15 May). Order on compliance filing, California Independent System
+Operator Corporation, Docket No. ER24-2042.
+
+Federal Energy Regulatory Commission (2025d, 26 June). Order on compliance filing, Southwest Power Pool, Inc.,
+Docket No. ER24-2026. 191 FERC ¶ 61,230 (known to me from FERC 2026a; not retrieved).
+
+Federal Energy Regulatory Commission (2025e, 24 July). Order on compliance filing, PJM Interconnection, L.L.C.,
+Docket No. ER24-2045.
+
+Federal Energy Regulatory Commission (2025f, 16 October). Order on compliance filing, New York Independent System
+Operator, Inc., Docket No. ER24-1915-002.
+
+Federal Energy Regulatory Commission (2026a, 22 January). Order on compliance filing, Southwest Power Pool, Inc.,
+Docket No. ER24-2026.
+
+Federal Energy Regulatory Commission (2026b, 16 April). Order on compliance filing, PJM Interconnection, L.L.C.,
+Docket No. ER24-2045. 195 FERC ¶ 61,031.
 
 Grimm, V., Revilla, E., Berger, U., Jeltsch, F., Mooij, W.M., Railsback, S.F., Thulke, H.-H., Weiner, J.,
 Wiegand, T. and DeAngelis, D.L. (2005). Pattern-oriented modeling of agent-based complex systems: lessons from
@@ -680,22 +699,26 @@ Artificial Societies and Social Simulation* 23(2): 7. https://doi.org/10.18564/j
 Johnston, S., Liu, Y. and Yang, C. (2023, revised November 2026). An empirical analysis of the interconnection
 queue. NBER Working Paper 31946. https://doi.org/10.3386/w31946
 
-King, B., Bower, G., Case, R., Kolus, H., Larsen, J., Pastorek, N. and Wiens, M. (2026, 2 November). Estimating
+King, B., Bower, G., Case, P., Kolus, H., Larsen, J., Pastorek, N. and Wiens, N. (2026, 2 November). Estimating
 the US energy system impacts of the Bipartisan American Affordability and Jobs Act. Rhodium Group.
 https://rhg.com/research/baaja-us-energy-system-impacts/
 
-Midcontinent Independent System Operator (2025). *MTEP25*, Chapter 2: Regional Long Range Transmission Planning.
+Lawrence Berkeley National Laboratory (2021-24). Interconnection cost analysis data files: MISO (2021), PJM
+(2022), NYISO (2022), SPP (2023), ISO-NE, and non-ISO balancing areas (2024). Berkeley, CA: LBNL.
+https://emp.lbl.gov/interconnection_costs
+
+Midcontinent Independent System Operator (2025). *MTEP25*, Chapter 2: Regional/Long Range Transmission Planning.
 Carmel, IN: MISO.
 
 North American Electric Reliability Corporation (2026). *2025 Long-Term Reliability Assessment* (January 2026,
 errata February 2026). Atlanta: NERC.
 https://www.nerc.com/pa/RAPA/ra/Reliability%20Assessments%20DL/NERC_LTRA_2025.pdf
 
-PJM Interconnection (2026). *2025 Regional Transmission Expansion Plan.* Audubon, PA: PJM.
+PJM Interconnection (2026a, 17 April). *2025 Regional Transmission Expansion Plan.* Audubon, PA: PJM.
 https://www.pjm.com/planning
 
-PJM Interconnection (2026, 30 October). *2026 PJM Effective Load Carrying Capability and Reserve Requirement Study
-(ELCC/RRS)*; and preliminary ELCC class ratings for delivery years 2028/29-2041/42.
+PJM Interconnection (2026b, 30 October). *2026 PJM Effective Load Carrying Capability and Reserve Requirement Study
+(ELCC/RRS)*; and preliminary ELCC class ratings for delivery years 2028/29-2042/43.
 https://www.pjm.com/planning/resource-adequacy-planning/effective-load-carrying-capability
 
 Rand, J., Cheyette, A., Gorman, W., Wiser, R., Seel, J., Kahrl, F., Talley, C. and Zhang, S. (2026, May).
@@ -709,14 +732,23 @@ https://www.rff.org/publications/issue-briefs/projected-effects-of-the-bipartisa
 Saltelli, A., Ratto, M., Andres, T., Campolongo, F., Cariboni, J., Gatelli, D., Saisana, M. and Tarantola, S.
 (2008). *Global Sensitivity Analysis: The Primer.* Chichester: Wiley.
 
-Solar Energy Industries Association (2026, 10 November). BAAJA impact on the electricity sector.
-https://seia.org/research-resources/baaja-impact-on-the-electricity-sector/
+*Seven County Infrastructure Coalition v. Eagle County*, 605 U.S. ___ (2025), decided 29 May 2025.
 
-Southwest Power Pool (2025). *2025 Integrated Transmission Plan Report.* Little Rock, AR: SPP.
-https://spp.org/documents/75192/2025%20integrated%20transmission%20plan%20report.pdf
+Solar Energy Industries Association (2026, 10 November). BAAJA impact on the electricity sector: capacity,
+generation, emissions and public health.
+https://seia.org/research-resources/baaja-impact-on-the-electricity-sector/
 
 Southwest Power Pool (2020-26). Definitive Interconnection System Impact Study results, clusters DISIS-2016-002 to
 DISIS-2023-001. https://opsportal.spp.org/Studies/Gen
+
+Southwest Power Pool (2025a). *2025 Integrated Transmission Plan Report.* Little Rock, AR: SPP.
+https://spp.org/documents/75192/2025%20integrated%20transmission%20plan%20report.pdf
+
+Southwest Power Pool (2025b). *2025 Integrated Transmission Plan* fact sheet. Little Rock, AR: SPP.
+
+Sturges, F. (2026, 12 November). Even after the manager's amendment, BAAJA's permitting certainty provisions
+may not prevent near-term actions to stop clean energy projects. Clean Air Task Force.
+https://www.catf.us/2026/11/even-after-managers-amendment-baajas-permitting-certainty-provisions-may-not-prevent-near-term-actions-stop-clean-energy-projects/
 
 Windrum, P., Fagiolo, G. and Moneta, A. (2007). Empirical validation of agent-based models: alternatives and
 prospects. *Journal of Artificial Societies and Social Simulation* 10(2): 8.
