@@ -31,7 +31,7 @@ Numbers updated 24 Nov 2026 for the Senate-passed text (see `docs/bill_question_
 `HANDOFF.md`. Intervals in Sims 1-6 are seed noise at central assumption values; `results/uncertainty.md` draws every
 assumption range at once (below).
 
-**Current law.** About 1,090 GW of new capacity online by Nov 2041 in the simpler model (972 GW with the grid agents of
+**Current law.** About 1,090 GW of new capacity online by Nov 2041 in the simpler model (983 GW with the grid agents of
 Sim 7): renewables 657 GW, gas 178 GW, storage 255 GW (relicensed hydro excluded). Renewables are 64% of new-build generation.
 
 **Everything in the bill that the data can size** (Sims 1, 2, 4 together, central values): **+8.0 GW of new
@@ -79,8 +79,8 @@ Change from the 20 Nov version (+15 GW, renewables +11.2): Sec.2213's deadlines 
    (range 10-100%), halted GW fall from ~5 to ~3, worth +0.3 GW of renewables in a random political future and
    +0.7 GW if every administration is hostile to renewables.
 5. **Decision control (Sim 5)**: about 80% of the gain goes to merchant-owned capacity. With Sec.2106 limited to
-   RTOs/ISOs, its gain falls almost entirely in ISO markets. Sim 5's current law is now within ~4% of Sims 1-4
-   (gas 173 vs 178 GW, storage 276 vs 285; it was 158 GW of gas before).
+   RTOs/ISOs, its gain falls almost entirely in ISO markets. Sim 5's current law matches Sims 1-4
+   (gas 178 GW, storage 255 GW; it was 158 GW of gas before).
 
 **Does the 2025-26 build-out have to continue? (regime comparison)** 2025 requests broke from 2021-25: gas x2.1 and
 geothermal x2.2 (firm power for data centers), solar x0.65, storage x0.69, offshore wind x0.10. That mixes data-center
