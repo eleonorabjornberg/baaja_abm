@@ -6,7 +6,8 @@ docs/brief_src.md is the brief with each model number written as a placeholder t
     {{dec:A|+ relative screen (central)/diff_GW_new/mean - dec:A|without Sec.2106/diff_GW_new/mean ; +.1f}}
 
 A placeholder is one or more paths joined by " - " or " + ", then " ; " and a Python format spec. A path is
-`file:key/key/...`; list items are addressed by index. Files:
+`file:key/key/...`; list items are addressed by index, and a last key `A..B` sums the numeric keys from A to B
+(`back:eia/national/Solar/2018..2025`). A format spec starting with "abs" prints the absolute value. Files:
 
     sim7 results/sim7_grid_agents.json      dec  results/sec2106_decomposition.json
     unc  results/uncertainty.json           cal  results/calibration.json
@@ -44,7 +45,12 @@ def lookup(path):
     alias, rest = path.split(":", 1)
     x = _load(alias.strip())
     for k in rest.strip().split("/"):
-        x = x[int(k)] if isinstance(x, list) else x[k]
+        rng = re.fullmatch(r"(\d+)\.\.(\d+)", k)
+        if rng and isinstance(x, dict):
+            lo, hi = int(rng.group(1)), int(rng.group(2))
+            x = sum(float(v) for kk, v in x.items() if kk.isdigit() and lo <= int(kk) <= hi)
+        else:
+            x = x[int(k)] if isinstance(x, list) else x[k]
     return float(x)
 
 

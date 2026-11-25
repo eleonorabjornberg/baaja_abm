@@ -38,3 +38,12 @@ def test_expression_arithmetic(tmp_path):
     out, nums = bn.render(str(p))
     v = list(nums.values())[0]["value"]
     assert out == f"x {v:+.1f} y"
+
+
+def test_range_sum():
+    if not os.path.exists(os.path.join(bn.ROOT, bn.FILES["back"])):
+        pytest.skip("no backcast results")
+    bn._cache.clear()
+    d = bn._load("back")["eia"]["national"]["Solar"]
+    want = sum(v for k, v in d.items() if 2018 <= int(k) <= 2025)
+    assert abs(bn.lookup("back:eia/national/Solar/2018..2025") - want) < 1e-9

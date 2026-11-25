@@ -1,0 +1,1382 @@
+{
+ "sim7:results/Current law/totals/GW_new/mean ; .0f": {
+  "value": 983.3893400000001,
+  "text": "983"
+ },
+ "sim7:results/BAAJA, Sec.2106 adopted by every RTO/diff_vs_baseline/GW_new/mean ; abs.1f": {
+  "value": 20.41792,
+  "text": "20.4"
+ },
+ "dec:B months=8 (Order No. 2023 pro forma)|full Sec.2106/diff_GW_new/mean ; abs.1f": {
+  "value": 23.369140000000005,
+  "text": "23.4"
+ },
+ "dec:A|only published locations skip the round/diff_GW_new/mean ; .1f": {
+  "value": 11.056919999999996,
+  "text": "11.1"
+ },
+ "dec:A|re-study cost change kept/diff_GW_new/mean ; .1f": {
+  "value": 41.36936000000001,
+  "text": "41.4"
+ },
+ "sim7:results/BAAJA without Sec.2106/diff_vs_baseline/GW_new/mean ; .1f": {
+  "value": 5.21894,
+  "text": "5.2"
+ },
+ "sim7:results/BAAJA without Sec.2106/diff_vs_baseline/GW_new/p5 ; .1f": {
+  "value": 3.4185000000000683,
+  "text": "3.4"
+ },
+ "sim7:results/BAAJA without Sec.2106/diff_vs_baseline/GW_new/p95 ; .1f": {
+  "value": 7.2791,
+  "text": "7.3"
+ },
+ "sim7:results/BAAJA/diff_vs_baseline/GW_new/mean ; +.1f": {
+  "value": -9.11254000000001,
+  "text": "-9.1"
+ },
+ "sim7:results/BAAJA/diff_vs_baseline/GW_new/p5 ; +.1f": {
+  "value": -20.33269999999997,
+  "text": "-20.3"
+ },
+ "sim7:results/BAAJA/diff_vs_baseline/GW_new/p95 ; +.1f": {
+  "value": 2.8070000000000443,
+  "text": "+2.8"
+ },
+ "sim7:timing/BAAJA, Sec.2106 adopted by every RTO/7/mean ; .1f": {
+  "value": 6.476420000000002,
+  "text": "6.5"
+ },
+ "dec:A|+ relative screen (central)/diff_new_rto_online ; abs.1f": {
+  "value": 22.586400000000005,
+  "text": "22.6"
+ },
+ "dec:A|+ relative screen (central)/diff_new_rto_ever ; abs.1f": {
+  "value": 56.363780000000006,
+  "text": "56.4"
+ },
+ "dec:A|+ relative screen (central)/diff_region/PJM ; abs.1f": {
+  "value": 9.04218,
+  "text": "9.0"
+ },
+ "dec:A|+ relative screen (central)/diff_region/MISO ; +.1f": {
+  "value": 0.4833599999999981,
+  "text": "+0.5"
+ },
+ "dec:A|re-study cost change kept/diff_region/MISO ; .1f": {
+  "value": 25.62316,
+  "text": "25.6"
+ },
+ "sim7:adequacy_current_law/grid agents (this simulation)/national/2035/mean ; .0f": {
+  "value": 69.96957317545841,
+  "text": "70"
+ },
+ "sim7:adequacy_current_law/grid agents (this simulation)/region_2035/PJM ; .0f": {
+  "value": 57.23839343888984,
+  "text": "57"
+ },
+ "sim7:supply/BAAJA/shortfall_2035/mean ; abs.1f": {
+  "value": 1.6395345389078508,
+  "text": "1.6"
+ },
+ "sim7:supply/BAAJA, Sec.2106 adopted by every RTO/shortfall_2035/mean ; abs.1f": {
+  "value": 3.011437544338566,
+  "text": "3.0"
+ },
+ "sim7:sensitivity/restudy_scale/diff_low ; +.1f": {
+  "value": 4.5601,
+  "text": "+4.6"
+ },
+ "dec:B costs unchanged by re-study|full Sec.2106/diff_GW_new/mean ; .1f": {
+  "value": 29.335340000000006,
+  "text": "29.3"
+ },
+ "sim7:results/BAAJA without Sec.2106/diff_vs_baseline/GW_new/mean ; +.1f": {
+  "value": 5.21894,
+  "text": "+5.2"
+ },
+ "sim7:results/BAAJA without Sec.2106/diff_vs_baseline/GW_new/p5 ; +.1f": {
+  "value": 3.4185000000000683,
+  "text": "+3.4"
+ },
+ "sim7:results/BAAJA without Sec.2106/diff_vs_baseline/GW_new/p95 ; +.1f": {
+  "value": 7.2791,
+  "text": "+7.3"
+ },
+ "sim7:results/BAAJA without Sec.2106/diff_vs_baseline/GW Renewable (new)/mean ; +.1f": {
+  "value": 4.201839999999993,
+  "text": "+4.2"
+ },
+ "sim7:results/BAAJA without Sec.2106/diff_vs_baseline/GW Fossil (gas)/mean ; +.1f": {
+  "value": 0.42846000000000034,
+  "text": "+0.4"
+ },
+ "sim7:results/BAAJA without Sec.2106/diff_vs_baseline/GW Storage/mean ; +.1f": {
+  "value": 0.5886400000000012,
+  "text": "+0.6"
+ },
+ "sim7:results/BAAJA/diff_vs_baseline/GW Renewable (new)/mean ; +.1f": {
+  "value": -7.260560000000009,
+  "text": "-7.3"
+ },
+ "sim7:results/BAAJA/diff_vs_baseline/GW Fossil (gas)/mean ; +.1f": {
+  "value": 3.318900000000001,
+  "text": "+3.3"
+ },
+ "sim7:results/BAAJA/diff_vs_baseline/GW Storage/mean ; +.1f": {
+  "value": -5.170880000000002,
+  "text": "-5.2"
+ },
+ "sim7:results/BAAJA, Sec.2106 adopted by every RTO/diff_vs_baseline/GW_new/mean ; +.1f": {
+  "value": -20.41792,
+  "text": "-20.4"
+ },
+ "sim7:results/BAAJA, Sec.2106 adopted by every RTO/diff_vs_baseline/GW_new/p5 ; +.1f": {
+  "value": -26.97320000000001,
+  "text": "-27.0"
+ },
+ "sim7:results/BAAJA, Sec.2106 adopted by every RTO/diff_vs_baseline/GW_new/p95 ; +.1f": {
+  "value": -13.338099999999997,
+  "text": "-13.3"
+ },
+ "sim7:results/BAAJA, Sec.2106 adopted by every RTO/diff_vs_baseline/GW Renewable (new)/mean ; +.1f": {
+  "value": -16.545720000000003,
+  "text": "-16.5"
+ },
+ "sim7:results/BAAJA, Sec.2106 adopted by every RTO/diff_vs_baseline/GW Fossil (gas)/mean ; +.1f": {
+  "value": 6.344760000000001,
+  "text": "+6.3"
+ },
+ "sim7:results/BAAJA, Sec.2106 adopted by every RTO/diff_vs_baseline/GW Storage/mean ; +.1f": {
+  "value": -10.216959999999998,
+  "text": "-10.2"
+ },
+ "sim7:results/BAAJA + Sec.2110 throughput +25%/diff_vs_baseline/GW_new/mean ; +.1f": {
+  "value": 11.481439999999996,
+  "text": "+11.5"
+ },
+ "sim7:results/BAAJA + Sec.2110 throughput +25%/diff_vs_baseline/GW_new/p5 ; +.1f": {
+  "value": -5.9304000000000086,
+  "text": "-5.9"
+ },
+ "sim7:results/BAAJA + Sec.2110 throughput +25%/diff_vs_baseline/GW_new/p95 ; +.1f": {
+  "value": 28.45689999999999,
+  "text": "+28.5"
+ },
+ "sim7:results/BAAJA + Sec.2110 throughput +25%/diff_vs_baseline/GW Renewable (new)/mean ; +.1f": {
+  "value": 4.455619999999991,
+  "text": "+4.5"
+ },
+ "sim7:results/BAAJA + Sec.2110 throughput +25%/diff_vs_baseline/GW Fossil (gas)/mean ; +.1f": {
+  "value": 7.49694,
+  "text": "+7.5"
+ },
+ "sim7:results/BAAJA + Sec.2110 throughput +25%/diff_vs_baseline/GW Storage/mean ; +.1f": {
+  "value": -0.4711199999999994,
+  "text": "-0.5"
+ },
+ "sim7:results/Current law/totals/GW_new/p5 ; .0f": {
+  "value": 964.1861,
+  "text": "964"
+ },
+ "sim7:results/Current law/totals/GW_new/p95 ; .0f": {
+  "value": 1004.4725,
+  "text": "1004"
+ },
+ "dec:A|Titles I-II only (no Sec.2106, no Sec.2109)/diff_GW_new/mean ; .1f": {
+  "value": 3.2930599999999948,
+  "text": "3.3"
+ },
+ "dec:A|Titles I-II only (no Sec.2106, no Sec.2109)/diff_GW_new/p5 ; .1f": {
+  "value": 1.8050000000000352,
+  "text": "1.8"
+ },
+ "dec:A|Titles I-II only (no Sec.2106, no Sec.2109)/diff_GW_new/p95 ; .1f": {
+  "value": 5.196900000000028,
+  "text": "5.2"
+ },
+ "sim7:results/BAAJA/diff_vs_baseline/GW_new/mean - sim7:results/BAAJA without Sec.2109 hosting/diff_vs_baseline/GW_new/mean ; .1f": {
+  "value": 2.025879999999992,
+  "text": "2.0"
+ },
+ "sim7:results/BAAJA/diff_vs_baseline/GW Renewable (retained hydro)/mean ; .1f": {
+  "value": 1.7665,
+  "text": "1.8"
+ },
+ "dec:A|+ relative screen (central)/diff_GW_new/mean ; +.1f": {
+  "value": -20.41792,
+  "text": "-20.4"
+ },
+ "dec:A|+ relative screen (central)/diff_GW_new/p5 ; +.1f": {
+  "value": -26.97320000000001,
+  "text": "-27.0"
+ },
+ "dec:A|+ relative screen (central)/diff_GW_new/p95 ; +.1f": {
+  "value": -13.338099999999997,
+  "text": "-13.3"
+ },
+ "dec:A|p=0.5: relative screen (central)/diff_GW_new/mean ; +.1f": {
+  "value": -9.11254000000001,
+  "text": "-9.1"
+ },
+ "dec:B months=8 (Order No. 2023 pro forma)|full Sec.2106/diff_GW_new/mean ; +.1f": {
+  "value": -23.369140000000005,
+  "text": "-23.4"
+ },
+ "dec:B months=8 (Order No. 2023 pro forma)|full Sec.2106/diff_GW_new/p5 ; +.1f": {
+  "value": -29.70989999999991,
+  "text": "-29.7"
+ },
+ "dec:B months=8 (Order No. 2023 pro forma)|full Sec.2106/diff_GW_new/p95 ; +.1f": {
+  "value": -16.18240000000008,
+  "text": "-16.2"
+ },
+ "dec:B months=8 (Order No. 2023 pro forma)|p=0.5/diff_GW_new/mean ; +.1f": {
+  "value": -10.76684,
+  "text": "-10.8"
+ },
+ "dec:A|only published locations skip the round/diff_GW_new/mean ; +.1f": {
+  "value": 11.056919999999996,
+  "text": "+11.1"
+ },
+ "dec:A|only published locations skip the round/diff_GW_new/p5 ; +.1f": {
+  "value": 7.001199999999988,
+  "text": "+7.0"
+ },
+ "dec:A|only published locations skip the round/diff_GW_new/p95 ; +.1f": {
+  "value": 15.896599999999982,
+  "text": "+15.9"
+ },
+ "dec:A|p=0.5: only published locations skip the round/diff_GW_new/mean ; +.1f": {
+  "value": 7.531799999999993,
+  "text": "+7.5"
+ },
+ "dec:A|re-study cost change kept/diff_GW_new/mean ; +.1f": {
+  "value": 41.36936000000001,
+  "text": "+41.4"
+ },
+ "dec:A|re-study cost change kept/diff_GW_new/p5 ; +.1f": {
+  "value": 35.84139999999996,
+  "text": "+35.8"
+ },
+ "dec:A|re-study cost change kept/diff_GW_new/p95 ; +.1f": {
+  "value": 47.452300000000015,
+  "text": "+47.5"
+ },
+ "dec:A|p=0.5: re-study cost change kept/diff_GW_new/mean ; +.1f": {
+  "value": 23.610780000000005,
+  "text": "+23.6"
+ },
+ "sim7:exogenous/BAAJA (exogenous grid)/diff_vs_baseline/GW_new/mean ; +.1f": {
+  "value": 7.958100000000004,
+  "text": "+8.0"
+ },
+ "sim7:exogenous/BAAJA (exogenous grid)/diff_vs_baseline/GW_new/p5 ; +.1f": {
+  "value": 6.111000000000115,
+  "text": "+6.1"
+ },
+ "sim7:exogenous/BAAJA (exogenous grid)/diff_vs_baseline/GW_new/p95 ; +.1f": {
+  "value": 9.561899999999866,
+  "text": "+9.6"
+ },
+ "sim7:timing/current_law_additions/1 ; .0f": {
+  "value": 89.54975999999995,
+  "text": "90"
+ },
+ "sim7:timing/BAAJA/1/mean ; +.1f": {
+  "value": 0.04716000000000065,
+  "text": "+0.0"
+ },
+ "sim7:timing/BAAJA without Sec.2106/1/mean ; +.1f": {
+  "value": 0.04716000000000065,
+  "text": "+0.0"
+ },
+ "sim7:timing/BAAJA, Sec.2106 adopted by every RTO/1/mean ; +.1f": {
+  "value": 0.04716000000000065,
+  "text": "+0.0"
+ },
+ "sim7:timing/current_law_additions/3 ; .0f": {
+  "value": 106.84609999999996,
+  "text": "107"
+ },
+ "sim7:timing/BAAJA/3/mean ; +.1f": {
+  "value": 0.2495999999999998,
+  "text": "+0.2"
+ },
+ "sim7:timing/BAAJA without Sec.2106/3/mean ; +.1f": {
+  "value": 0.2495999999999998,
+  "text": "+0.2"
+ },
+ "sim7:timing/BAAJA, Sec.2106 adopted by every RTO/3/mean ; +.1f": {
+  "value": 0.2495999999999998,
+  "text": "+0.2"
+ },
+ "sim7:timing/current_law_additions/5 ; .0f": {
+  "value": 56.32673999999998,
+  "text": "56"
+ },
+ "sim7:timing/BAAJA/5/mean ; +.1f": {
+  "value": 0.6674799999999976,
+  "text": "+0.7"
+ },
+ "sim7:timing/BAAJA without Sec.2106/5/mean ; +.1f": {
+  "value": 0.6696999999999974,
+  "text": "+0.7"
+ },
+ "sim7:timing/BAAJA, Sec.2106 adopted by every RTO/5/mean ; +.1f": {
+  "value": 0.6674799999999976,
+  "text": "+0.7"
+ },
+ "sim7:timing/current_law_additions/7 ; .0f": {
+  "value": 61.32284000000001,
+  "text": "61"
+ },
+ "sim7:timing/BAAJA/7/mean ; +.1f": {
+  "value": 4.092360000000006,
+  "text": "+4.1"
+ },
+ "sim7:timing/BAAJA without Sec.2106/7/mean ; +.1f": {
+  "value": 1.502379999999996,
+  "text": "+1.5"
+ },
+ "sim7:timing/BAAJA, Sec.2106 adopted by every RTO/7/mean ; +.1f": {
+  "value": 6.476420000000002,
+  "text": "+6.5"
+ },
+ "sim7:timing/current_law_additions/8 ; .0f": {
+  "value": 56.88192,
+  "text": "57"
+ },
+ "sim7:timing/BAAJA/8/mean ; +.1f": {
+  "value": 3.7886200000000074,
+  "text": "+3.8"
+ },
+ "sim7:timing/BAAJA/8/p5 ; +.1f": {
+  "value": 1.1810000000000287,
+  "text": "+1.2"
+ },
+ "sim7:timing/BAAJA/8/p95 ; +.1f": {
+  "value": 7.46570000000014,
+  "text": "+7.5"
+ },
+ "sim7:timing/BAAJA without Sec.2106/8/mean ; +.1f": {
+  "value": 1.8670199999999977,
+  "text": "+1.9"
+ },
+ "sim7:timing/BAAJA, Sec.2106 adopted by every RTO/8/mean ; +.1f": {
+  "value": 5.556360000000001,
+  "text": "+5.6"
+ },
+ "sim7:timing/current_law_additions/11 ; .0f": {
+  "value": 54.426140000000004,
+  "text": "54"
+ },
+ "sim7:timing/BAAJA/11/mean ; +.1f": {
+  "value": -1.8588399999999774,
+  "text": "-1.9"
+ },
+ "sim7:timing/BAAJA without Sec.2106/11/mean ; +.1f": {
+  "value": 3.2922400000000094,
+  "text": "+3.3"
+ },
+ "sim7:timing/BAAJA, Sec.2106 adopted by every RTO/11/mean ; +.1f": {
+  "value": -5.667879999999984,
+  "text": "-5.7"
+ },
+ "sim7:timing/current_law_additions/14 ; .0f": {
+  "value": 51.993479999999984,
+  "text": "52"
+ },
+ "sim7:timing/BAAJA/14/mean ; +.1f": {
+  "value": -9.112539999999974,
+  "text": "-9.1"
+ },
+ "sim7:timing/BAAJA without Sec.2106/14/mean ; +.1f": {
+  "value": 5.218940000000021,
+  "text": "+5.2"
+ },
+ "sim7:timing/BAAJA, Sec.2106 adopted by every RTO/14/mean ; +.1f": {
+  "value": -20.41791999999998,
+  "text": "-20.4"
+ },
+ "sim7:timing/current_law_additions/2 ; .0f": {
+  "value": 114.36999999999998,
+  "text": "114"
+ },
+ "sim7:regions/Current law/CAISO/GW_online ; .0f": {
+  "value": 38.83062,
+  "text": "39"
+ },
+ "sim7:regions/BAAJA/CAISO/GW_online - sim7:regions/Current law/CAISO/GW_online ; +.1f": {
+  "value": -1.1812200000000033,
+  "text": "-1.2"
+ },
+ "dec:A|+ relative screen (central)/diff_region/CAISO ; +.1f": {
+  "value": -2.2741000000000007,
+  "text": "-2.3"
+ },
+ "dec:A|only published locations skip the round/diff_region/CAISO ; +.1f": {
+  "value": -0.2241399999999995,
+  "text": "-0.2"
+ },
+ "dec:A|re-study cost change kept/diff_region/CAISO ; +.1f": {
+  "value": 1.7407399999999995,
+  "text": "+1.7"
+ },
+ "sim7:regions/Current law/ISO-NE/GW_online ; .0f": {
+  "value": 22.691799999999997,
+  "text": "23"
+ },
+ "sim7:regions/BAAJA/ISO-NE/GW_online - sim7:regions/Current law/ISO-NE/GW_online ; +.1f": {
+  "value": -1.1567800000000013,
+  "text": "-1.2"
+ },
+ "dec:A|+ relative screen (central)/diff_region/ISO-NE ; +.1f": {
+  "value": -2.5853199999999994,
+  "text": "-2.6"
+ },
+ "dec:A|only published locations skip the round/diff_region/ISO-NE ; +.1f": {
+  "value": 0.013959999999999511,
+  "text": "+0.0"
+ },
+ "dec:A|re-study cost change kept/diff_region/ISO-NE ; +.1f": {
+  "value": 1.7620999999999998,
+  "text": "+1.8"
+ },
+ "sim7:regions/Current law/MISO/GW_online ; .0f": {
+  "value": 157.43652000000003,
+  "text": "157"
+ },
+ "sim7:regions/BAAJA/MISO/GW_online - sim7:regions/Current law/MISO/GW_online ; +.1f": {
+  "value": 0.7346999999999753,
+  "text": "+0.7"
+ },
+ "dec:A|only published locations skip the round/diff_region/MISO ; +.1f": {
+  "value": 14.15626,
+  "text": "+14.2"
+ },
+ "dec:A|re-study cost change kept/diff_region/MISO ; +.1f": {
+  "value": 25.62316,
+  "text": "+25.6"
+ },
+ "sim7:regions/Current law/NYISO/GW_online ; .0f": {
+  "value": 29.983399999999993,
+  "text": "30"
+ },
+ "sim7:regions/BAAJA/NYISO/GW_online - sim7:regions/Current law/NYISO/GW_online ; +.1f": {
+  "value": -2.0543799999999983,
+  "text": "-2.1"
+ },
+ "dec:A|+ relative screen (central)/diff_region/NYISO ; +.1f": {
+  "value": -4.1299399999999995,
+  "text": "-4.1"
+ },
+ "dec:A|only published locations skip the round/diff_region/NYISO ; +.1f": {
+  "value": 0.12726000000000023,
+  "text": "+0.1"
+ },
+ "dec:A|re-study cost change kept/diff_region/NYISO ; +.1f": {
+  "value": 2.20128,
+  "text": "+2.2"
+ },
+ "sim7:regions/Current law/PJM/GW_online ; .0f": {
+  "value": 125.22072,
+  "text": "125"
+ },
+ "sim7:regions/BAAJA/PJM/GW_online - sim7:regions/Current law/PJM/GW_online ; +.1f": {
+  "value": -4.934820000000002,
+  "text": "-4.9"
+ },
+ "dec:A|+ relative screen (central)/diff_region/PJM ; +.1f": {
+  "value": -9.04218,
+  "text": "-9.0"
+ },
+ "dec:A|only published locations skip the round/diff_region/PJM ; +.1f": {
+  "value": -2.7888199999999994,
+  "text": "-2.8"
+ },
+ "dec:A|re-study cost change kept/diff_region/PJM ; +.1f": {
+  "value": 3.4650800000000004,
+  "text": "+3.5"
+ },
+ "sim7:regions/Current law/SPP/GW_online ; .0f": {
+  "value": 61.645360000000004,
+  "text": "62"
+ },
+ "sim7:regions/BAAJA/SPP/GW_online - sim7:regions/Current law/SPP/GW_online ; +.1f": {
+  "value": -2.5968599999999995,
+  "text": "-2.6"
+ },
+ "dec:A|+ relative screen (central)/diff_region/SPP ; +.1f": {
+  "value": -4.946560000000002,
+  "text": "-4.9"
+ },
+ "dec:A|only published locations skip the round/diff_region/SPP ; +.1f": {
+  "value": -2.3044200000000004,
+  "text": "-2.3"
+ },
+ "dec:A|re-study cost change kept/diff_region/SPP ; +.1f": {
+  "value": 4.500179999999999,
+  "text": "+4.5"
+ },
+ "sim7:regions/Current law/ERCOT/GW_online ; .0f": {
+  "value": 214.08962,
+  "text": "214"
+ },
+ "sim7:regions/BAAJA/ERCOT/GW_online - sim7:regions/Current law/ERCOT/GW_online ; +.1f": {
+  "value": 0.4876000000000147,
+  "text": "+0.5"
+ },
+ "dec:A|+ relative screen (central)/diff_region/ERCOT ; +.1f": {
+  "value": 0.48759999999999676,
+  "text": "+0.5"
+ },
+ "dec:A|only published locations skip the round/diff_region/ERCOT ; +.1f": {
+  "value": 0.48759999999999676,
+  "text": "+0.5"
+ },
+ "dec:A|re-study cost change kept/diff_region/ERCOT ; +.1f": {
+  "value": 0.48759999999999676,
+  "text": "+0.5"
+ },
+ "sim7:regions/Current law/Southeast/GW_online ; .0f": {
+  "value": 139.85110000000003,
+  "text": "140"
+ },
+ "sim7:regions/BAAJA/Southeast/GW_online - sim7:regions/Current law/Southeast/GW_online ; +.1f": {
+  "value": 0.46815999999995483,
+  "text": "+0.5"
+ },
+ "dec:A|+ relative screen (central)/diff_region/Southeast ; +.1f": {
+  "value": 0.4681599999999992,
+  "text": "+0.5"
+ },
+ "dec:A|only published locations skip the round/diff_region/Southeast ; +.1f": {
+  "value": 0.4681599999999992,
+  "text": "+0.5"
+ },
+ "dec:A|re-study cost change kept/diff_region/Southeast ; +.1f": {
+  "value": 0.4681599999999992,
+  "text": "+0.5"
+ },
+ "sim7:regions/Current law/West/GW_online ; .0f": {
+  "value": 193.6402,
+  "text": "194"
+ },
+ "sim7:regions/BAAJA/West/GW_online - sim7:regions/Current law/West/GW_online ; +.1f": {
+  "value": 1.12106,
+  "text": "+1.1"
+ },
+ "dec:A|+ relative screen (central)/diff_region/West ; +.1f": {
+  "value": 1.1210599999999986,
+  "text": "+1.1"
+ },
+ "dec:A|only published locations skip the round/diff_region/West ; +.1f": {
+  "value": 1.1210599999999986,
+  "text": "+1.1"
+ },
+ "dec:A|re-study cost change kept/diff_region/West ; +.1f": {
+  "value": 1.1210599999999986,
+  "text": "+1.1"
+ },
+ "dec:_meta/throughput_over_arrivals/MISO ; .2f": {
+  "value": 0.5906406143917856,
+  "text": "0.59"
+ },
+ "dec:_meta/throughput_over_arrivals/PJM ; .2f": {
+  "value": 0.9688157466570524,
+  "text": "0.97"
+ },
+ "dec:C MISO throughput = PJM's|full Sec.2106/diff_region/MISO ; +.1f": {
+  "value": -11.468260000000004,
+  "text": "-11.5"
+ },
+ "dec:C MISO throughput = PJM's|full Sec.2106/diff_GW_new/mean ; +.1f": {
+  "value": -32.369539999999986,
+  "text": "-32.4"
+ },
+ "dec:A|+ relative screen (central)/zero_cost/PJM|Solar/1 ; .0f": {
+  "value": 226.24,
+  "text": "226"
+ },
+ "dec:A|+ relative screen (central)/zero_cost/PJM|Solar/0 ; .0f": {
+  "value": 322.29,
+  "text": "322"
+ },
+ "dec:A|+ relative screen (central)/zero_cost/PJM|Storage/1 ; .0f": {
+  "value": 139.89,
+  "text": "140"
+ },
+ "dec:A|+ relative screen (central)/zero_cost/PJM|Storage/0 ; .0f": {
+  "value": 142.59,
+  "text": "143"
+ },
+ "dec:_meta/cost/PJM/zero_share ; .1%": {
+  "value": 0.13665389527458494,
+  "text": "13.7%"
+ },
+ "cal:grid_fit/completion/Solar|PJM/1 ; .1%": {
+  "value": 0.13662642144141496,
+  "text": "13.7%"
+ },
+ "cal:grid_fit/completion/Storage|PJM/1 ; .1%": {
+  "value": 0.07496926929464318,
+  "text": "7.5%"
+ },
+ "dec:_meta/cost/MISO/zero_share ; .1%": {
+  "value": 0.02466367713004484,
+  "text": "2.5%"
+ },
+ "dec:C PJM zero-cost share = MISO's|full Sec.2106/diff_region/PJM ; +.1f": {
+  "value": -11.41644,
+  "text": "-11.4"
+ },
+ "dec:A|+ published locations (no screen)/diff_GW_new/mean ; +.1f": {
+  "value": -21.640200000000007,
+  "text": "-21.6"
+ },
+ "dec:A|p=0.5: no screen/diff_GW_new/mean ; +.1f": {
+  "value": -9.308300000000001,
+  "text": "-9.3"
+ },
+ "dec:A|screen ranked by value/diff_GW_new/mean ; +.1f": {
+  "value": -30.371780000000005,
+  "text": "-30.4"
+ },
+ "dec:A|p=0.5: screen ranked by value/diff_GW_new/mean ; +.1f": {
+  "value": -14.595200000000002,
+  "text": "-14.6"
+ },
+ "dec:A|+ absolute screen instead/diff_GW_new/mean ; +.1f": {
+  "value": -69.3477,
+  "text": "-69.3"
+ },
+ "dec:A|p=0.5: absolute screen/diff_GW_new/mean ; +.1f": {
+  "value": -35.66424,
+  "text": "-35.7"
+ },
+ "dec:A|+ relative screen (central)/diff_GW_new/mean - dec:A|+ published locations (no screen)/diff_GW_new/mean ; +.1f": {
+  "value": 1.2222800000000085,
+  "text": "+1.2"
+ },
+ "sim7:screen_sensitivity/current law: none; Sec.2106: relative 0.25 (central)/baaja ; +.1f": {
+  "value": -8.021799999999995,
+  "text": "-8.0"
+ },
+ "sim7:screen_sensitivity/current law: none; Sec.2106: relative 0.25 (central)/every_rto ; +.1f": {
+  "value": -20.25909999999999,
+  "text": "-20.3"
+ },
+ "sim7:screen_sensitivity/current law: 0.1 share screened (Order 2023 deposits)/baaja ; +.1f": {
+  "value": -9.301800000000004,
+  "text": "-9.3"
+ },
+ "sim7:screen_sensitivity/current law: 0.1 share screened (Order 2023 deposits)/every_rto ; +.1f": {
+  "value": -23.901699999999998,
+  "text": "-23.9"
+ },
+ "sim7:sensitivity/screen_2106/diff_high ; +.1f": {
+  "value": -18.15500000000001,
+  "text": "-18.2"
+ },
+ "sim7:sensitivity/screen_2106/diff_low ; +.1f": {
+  "value": -6.4335999999999895,
+  "text": "-6.4"
+ },
+ "dec:A|law/GW_new/mean ; .0f": {
+  "value": 983.3893400000001,
+  "text": "983"
+ },
+ "dec:A|without Sec.2106/diff_GW_new/mean ; +.1f": {
+  "value": 5.21894,
+  "text": "+5.2"
+ },
+ "dec:A|single decision point only/diff_GW_new/mean ; +.1f": {
+  "value": -23.50330000000001,
+  "text": "-23.5"
+ },
+ "dec:B months=8 (Order No. 2023 pro forma)|law/GW_new/mean ; .0f": {
+  "value": 985.2998999999999,
+  "text": "985"
+ },
+ "dec:B months=8 (Order No. 2023 pro forma)|without Sec.2106/diff_GW_new/mean ; +.1f": {
+  "value": 5.187620000000005,
+  "text": "+5.2"
+ },
+ "dec:B months=8 (Order No. 2023 pro forma)|single decision point only/diff_GW_new/mean ; +.1f": {
+  "value": -27.24922,
+  "text": "-27.2"
+ },
+ "dec:B no request-level cost change (scale 0)|law/GW_new/mean ; .0f": {
+  "value": 871.4449400000001,
+  "text": "871"
+ },
+ "dec:B no request-level cost change (scale 0)|without Sec.2106/diff_GW_new/mean ; +.1f": {
+  "value": 4.522740000000003,
+  "text": "+4.5"
+ },
+ "dec:B no request-level cost change (scale 0)|single decision point only/diff_GW_new/mean ; +.1f": {
+  "value": 27.441980000000004,
+  "text": "+27.4"
+ },
+ "dec:B no request-level cost change (scale 0)|full Sec.2106/diff_GW_new/mean ; +.1f": {
+  "value": 31.258419999999987,
+  "text": "+31.3"
+ },
+ "dec:B no request-level cost change (scale 0)|p=0.5/diff_GW_new/mean ; +.1f": {
+  "value": 18.12035999999999,
+  "text": "+18.1"
+ },
+ "dec:B costs unchanged by re-study|law/GW_new/mean ; .0f": {
+  "value": 876.2161199999998,
+  "text": "876"
+ },
+ "dec:B costs unchanged by re-study|without Sec.2106/diff_GW_new/mean ; +.1f": {
+  "value": 4.626560000000004,
+  "text": "+4.6"
+ },
+ "dec:B costs unchanged by re-study|single decision point only/diff_GW_new/mean ; +.1f": {
+  "value": 25.535599999999995,
+  "text": "+25.5"
+ },
+ "dec:B costs unchanged by re-study|full Sec.2106/diff_GW_new/mean ; +.1f": {
+  "value": 29.335340000000006,
+  "text": "+29.3"
+ },
+ "dec:B costs unchanged by re-study|p=0.5/diff_GW_new/mean ; +.1f": {
+  "value": 17.113199999999996,
+  "text": "+17.1"
+ },
+ "dec:B no re-study round|law/GW_new/mean ; .0f": {
+  "value": 876.2161199999998,
+  "text": "876"
+ },
+ "dec:B no re-study round|without Sec.2106/diff_GW_new/mean ; +.1f": {
+  "value": 4.626560000000004,
+  "text": "+4.6"
+ },
+ "dec:B no re-study round|single decision point only/diff_GW_new/mean ; +.1f": {
+  "value": 4.626560000000004,
+  "text": "+4.6"
+ },
+ "dec:B no re-study round|full Sec.2106/diff_GW_new/mean ; +.1f": {
+  "value": 11.72453999999999,
+  "text": "+11.7"
+ },
+ "dec:B no re-study round|p=0.5/diff_GW_new/mean ; +.1f": {
+  "value": 7.9010600000000055,
+  "text": "+7.9"
+ },
+ "dec:H no background withdrawal during the round|law/GW_new/mean ; .0f": {
+  "value": 1019.1055600000001,
+  "text": "1019"
+ },
+ "dec:H no background withdrawal during the round|without Sec.2106/diff_GW_new/mean ; +.1f": {
+  "value": 5.5159400000000005,
+  "text": "+5.5"
+ },
+ "dec:H no background withdrawal during the round|single decision point only/diff_GW_new/mean ; +.1f": {
+  "value": -38.35472,
+  "text": "-38.4"
+ },
+ "dec:H no background withdrawal during the round|full Sec.2106/diff_GW_new/mean ; +.1f": {
+  "value": -35.33317999999999,
+  "text": "-35.3"
+ },
+ "dec:H no background withdrawal during the round|p=0.5/diff_GW_new/mean ; +.1f": {
+  "value": -16.7372,
+  "text": "-16.7"
+ },
+ "dec:H MISO later hazard = PJM's|law/GW_new/mean ; .0f": {
+  "value": 998.1547599999999,
+  "text": "998"
+ },
+ "dec:H MISO later hazard = PJM's|without Sec.2106/diff_GW_new/mean ; +.1f": {
+  "value": 5.182960000000006,
+  "text": "+5.2"
+ },
+ "dec:H MISO later hazard = PJM's|single decision point only/diff_GW_new/mean ; +.1f": {
+  "value": -33.04053999999999,
+  "text": "-33.0"
+ },
+ "dec:H MISO later hazard = PJM's|full Sec.2106/diff_GW_new/mean ; +.1f": {
+  "value": -26.005879999999994,
+  "text": "-26.0"
+ },
+ "dec:H MISO later hazard = PJM's|p=0.5/diff_GW_new/mean ; +.1f": {
+  "value": -11.905300000000002,
+  "text": "-11.9"
+ },
+ "dec:A|law/GW_new/mean - dec:B costs unchanged by re-study|law/GW_new/mean ; .0f": {
+  "value": 107.17322000000024,
+  "text": "107"
+ },
+ "sim7:adequacy_current_law/grid agents (this simulation)/national/2027/mean ; .0f": {
+  "value": 9.452759450045244,
+  "text": "9"
+ },
+ "sim7:adequacy_current_law/grid agents (this simulation)/national/2035/p5 ; .0f": {
+  "value": 66.35051943323218,
+  "text": "66"
+ },
+ "sim7:adequacy_current_law/grid agents (this simulation)/national/2035/p95 ; .0f": {
+  "value": 73.87985747237272,
+  "text": "74"
+ },
+ "sim7:adequacy_current_law/grid agents (this simulation)/national/2041/mean ; .0f": {
+  "value": 114.71527907209142,
+  "text": "115"
+ },
+ "unc:grid agents (Phase 2), their assumptions drawn/bands/law shortfall GW 2035/p50 ; .0f": {
+  "value": 68.43971735976473,
+  "text": "68"
+ },
+ "unc:grid agents (Phase 2), their assumptions drawn/bands/law shortfall GW 2035/p5 ; .0f": {
+  "value": 25.39301871496175,
+  "text": "25"
+ },
+ "unc:grid agents (Phase 2), their assumptions drawn/bands/law shortfall GW 2035/p95 ; .0f": {
+  "value": 132.56673779786314,
+  "text": "133"
+ },
+ "sim7:adequacy_current_law/grid agents (this simulation)/region_2035/CAISO ; .0f": {
+  "value": 7.363792386546104,
+  "text": "7"
+ },
+ "sim7:adequacy_current_law/grid agents (this simulation)/region_2035/MISO ; .0f": {
+  "value": 4.9145573495501775,
+  "text": "5"
+ },
+ "sim7:supply/BAAJA without Sec.2106/shortfall_2035/mean ; +.1f": {
+  "value": -0.24248258406807058,
+  "text": "-0.2"
+ },
+ "sim7:supply/BAAJA without Sec.2106/shortfall_2041/mean ; +.1f": {
+  "value": -0.8397839083977933,
+  "text": "-0.8"
+ },
+ "sim7:supply/BAAJA/shortfall_2035/mean ; +.1f": {
+  "value": -1.6395345389078508,
+  "text": "-1.6"
+ },
+ "sim7:supply/BAAJA/shortfall_2035/p5 ; +.1f": {
+  "value": -3.843923783084758,
+  "text": "-3.8"
+ },
+ "sim7:supply/BAAJA/shortfall_2035/p95 ; +.1f": {
+  "value": -0.07288443196960516,
+  "text": "-0.1"
+ },
+ "sim7:supply/BAAJA/shortfall_2041/mean ; +.1f": {
+  "value": 3.8757504463553976,
+  "text": "+3.9"
+ },
+ "sim7:supply/BAAJA, Sec.2106 adopted by every RTO/shortfall_2035/mean ; +.1f": {
+  "value": -3.011437544338566,
+  "text": "-3.0"
+ },
+ "sim7:supply/BAAJA, Sec.2106 adopted by every RTO/shortfall_2041/mean ; +.1f": {
+  "value": 7.262403932477549,
+  "text": "+7.3"
+ },
+ "unc:grid agents (Phase 2), their assumptions drawn/bands/shortfall change GW 2035/p50 ; +.1f": {
+  "value": -1.0812879143634637,
+  "text": "-1.1"
+ },
+ "unc:grid agents (Phase 2), their assumptions drawn/bands/shortfall change GW 2035/p5 ; +.1f": {
+  "value": -5.102512270612857,
+  "text": "-5.1"
+ },
+ "unc:grid agents (Phase 2), their assumptions drawn/bands/shortfall change GW 2035/p95 ; +.1f": {
+  "value": 0.4069671538044142,
+  "text": "+0.4"
+ },
+ "sim7:sensitivity/g_2110/diff_low ; +.1f": {
+  "value": -8.021799999999995,
+  "text": "-8.0"
+ },
+ "sim7:sensitivity/adopt_2106/diff_low ; +.1f": {
+  "value": 5.600100000000009,
+  "text": "+5.6"
+ },
+ "sim7:sensitivity/adopt_2106/diff_high ; +.1f": {
+  "value": -20.25909999999999,
+  "text": "-20.3"
+ },
+ "sim7:sensitivity/g_2110/diff_high ; +.1f": {
+  "value": 16.308399999999995,
+  "text": "+16.3"
+ },
+ "sim7:sensitivity/restudy_scale/diff_high ; +.1f": {
+  "value": -19.366300000000013,
+  "text": "-19.4"
+ },
+ "sim7:sensitivity/kappa/diff_low ; +.1f": {
+  "value": -10.640199999999982,
+  "text": "-10.6"
+ },
+ "sim7:sensitivity/kappa/diff_high ; +.1f": {
+  "value": -4.6208999999999945,
+  "text": "-4.6"
+ },
+ "sim7:sensitivity/tx_hosting_gw/diff_low ; +.1f": {
+  "value": -10.131200000000012,
+  "text": "-10.1"
+ },
+ "sim7:sensitivity/tx_hosting_gw/diff_high ; +.1f": {
+  "value": -3.487200000000013,
+  "text": "-3.5"
+ },
+ "sim7:sensitivity/hosting_2109/diff_low ; +.1f": {
+  "value": -10.087299999999994,
+  "text": "-10.1"
+ },
+ "sim7:sensitivity/hosting_2109/diff_high ; +.1f": {
+  "value": -3.979099999999994,
+  "text": "-4.0"
+ },
+ "sim7:sensitivity/restudy_rho/diff_low ; +.1f": {
+  "value": -8.675999999999993,
+  "text": "-8.7"
+ },
+ "sim7:sensitivity/restudy_rho/diff_high ; +.1f": {
+  "value": -4.253300000000001,
+  "text": "-4.3"
+ },
+ "sim7:sensitivity/scarcity_beta/diff_low ; +.1f": {
+  "value": -7.414699999999994,
+  "text": "-7.4"
+ },
+ "sim7:sensitivity/scarcity_beta/diff_high ; +.1f": {
+  "value": -10.541499999999996,
+  "text": "-10.5"
+ },
+ "sim7:sensitivity/entry_wait_elast/diff_low ; +.1f": {
+  "value": -9.47729999999998,
+  "text": "-9.5"
+ },
+ "sim7:sensitivity/entry_wait_elast/diff_high ; +.1f": {
+  "value": -5.856499999999983,
+  "text": "-5.9"
+ },
+ "sim7:sensitivity/restudy_months/diff_low ; +.1f": {
+  "value": -9.408199999999994,
+  "text": "-9.4"
+ },
+ "sim7:sensitivity/restudy_months/diff_high ; +.1f": {
+  "value": -7.8799000000000206,
+  "text": "-7.9"
+ },
+ "sim7:sensitivity/planned_share_2106/diff_low ; +.1f": {
+  "value": -8.482799999999997,
+  "text": "-8.5"
+ },
+ "sim7:sensitivity/planned_share_2106/diff_high ; +.1f": {
+  "value": -7.368,
+  "text": "-7.4"
+ },
+ "sim7:sensitivity/fee_mult_2106/diff_low ; +.1f": {
+  "value": -7.596800000000007,
+  "text": "-7.6"
+ },
+ "sim7:sensitivity/fee_mult_2106/diff_high ; +.1f": {
+  "value": -8.41939999999999,
+  "text": "-8.4"
+ },
+ "sim7:sensitivity/lag_2106/diff_low ; +.1f": {
+  "value": -8.021799999999995,
+  "text": "-8.0"
+ },
+ "sim7:sensitivity/lag_2106/diff_high ; +.1f": {
+  "value": -8.021799999999995,
+  "text": "-8.0"
+ },
+ "sim7:sensitivity/kappa/law_low ; .0f": {
+  "value": 1064.7016,
+  "text": "1065"
+ },
+ "sim7:sensitivity/kappa/law_high ; .0f": {
+  "value": 915.7097000000001,
+  "text": "916"
+ },
+ "sim7:planned_tx_sensitivity/with SPP's 2025 ITP and PJM's 2025 RTEP/baaja ; +.1f": {
+  "value": -7.831000000000006,
+  "text": "-7.8"
+ },
+ "sim7:planned_tx_sensitivity/with SPP's 2025 ITP and PJM's 2025 RTEP/every_rto ; +.1f": {
+  "value": -20.290899999999993,
+  "text": "-20.3"
+ },
+ "sim7:planned_tx_sensitivity/left out/baaja ; +.1f": {
+  "value": -9.062400000000007,
+  "text": "-9.1"
+ },
+ "sim7:planned_tx_sensitivity/left out/every_rto ; +.1f": {
+  "value": -23.775800000000004,
+  "text": "-23.8"
+ },
+ "unc:grid agents (Phase 2), their assumptions drawn/bands/GW new/p50 ; +.1f": {
+  "value": 2.0840000000000742,
+  "text": "+2.1"
+ },
+ "unc:grid agents (Phase 2), their assumptions drawn/bands/GW new/p5 ; +.1f": {
+  "value": -33.52150000000009,
+  "text": "-33.5"
+ },
+ "unc:grid agents (Phase 2), their assumptions drawn/bands/GW new/p95 ; +.1f": {
+  "value": 26.96329999999988,
+  "text": "+27.0"
+ },
+ "unc:grid agents (Phase 2), their assumptions drawn/variance/GW new/top/0/1 ; .0%": {
+  "value": 0.24095424993061557,
+  "text": "24%"
+ },
+ "unc:grid agents (Phase 2), their assumptions drawn/variance/GW new/top/1/1 ; .0%": {
+  "value": 0.23005546601783483,
+  "text": "23%"
+ },
+ "unc:grid agents (Phase 2), their assumptions drawn/variance/GW new/top/2/1 ; .0%": {
+  "value": 0.1323093964754341,
+  "text": "13%"
+ },
+ "unc:grid agents (Phase 2), their assumptions drawn/by_adoption/no RTO adopts/p50 ; +.1f": {
+  "value": 9.424000000000035,
+  "text": "+9.4"
+ },
+ "unc:grid agents (Phase 2), their assumptions drawn/by_adoption/no RTO adopts/p5 ; +.1f": {
+  "value": 2.375200000000052,
+  "text": "+2.4"
+ },
+ "unc:grid agents (Phase 2), their assumptions drawn/by_adoption/no RTO adopts/p95 ; +.1f": {
+  "value": 34.19159999999993,
+  "text": "+34.2"
+ },
+ "unc:grid agents (Phase 2), their assumptions drawn/by_adoption/some adopt/p50 ; +.1f": {
+  "value": 0.8649999999999238,
+  "text": "+0.9"
+ },
+ "unc:grid agents (Phase 2), their assumptions drawn/by_adoption/some adopt/p5 ; +.1f": {
+  "value": -28.761600000000083,
+  "text": "-28.8"
+ },
+ "unc:grid agents (Phase 2), their assumptions drawn/by_adoption/some adopt/p95 ; +.1f": {
+  "value": 24.376099999999997,
+  "text": "+24.4"
+ },
+ "unc:grid agents (Phase 2), their assumptions drawn/by_adoption/every RTO adopts/p50 ; +.1f": {
+  "value": -10.763999999999925,
+  "text": "-10.8"
+ },
+ "unc:grid agents (Phase 2), their assumptions drawn/by_adoption/every RTO adopts/p5 ; +.1f": {
+  "value": -52.62759999999999,
+  "text": "-52.6"
+ },
+ "unc:grid agents (Phase 2), their assumptions drawn/by_adoption/every RTO adopts/p95 ; +.1f": {
+  "value": 20.15760000000006,
+  "text": "+20.2"
+ },
+ "unc:grid dials at 0 (data-sized provisions)/bands/GW new/p50 ; +.1f": {
+  "value": 7.967000000000056,
+  "text": "+8.0"
+ },
+ "unc:grid dials at 0 (data-sized provisions)/bands/GW new/p5 ; +.1f": {
+  "value": 4.580500000000052,
+  "text": "+4.6"
+ },
+ "unc:grid dials at 0 (data-sized provisions)/bands/GW new/p95 ; +.1f": {
+  "value": 13.128499999999992,
+  "text": "+13.1"
+ },
+ "unc:grid dials at 0 (data-sized provisions)/variance/GW new/top/0/1 ; .0%": {
+  "value": 0.520914069980868,
+  "text": "52%"
+ },
+ "unc:grid dials across their ranges/bands/GW new/p50 ; +.1f": {
+  "value": 33.490000000000066,
+  "text": "+33.5"
+ },
+ "unc:grid dials across their ranges/bands/GW new/p5 ; +.1f": {
+  "value": 6.4629000000001104,
+  "text": "+6.5"
+ },
+ "unc:grid dials across their ranges/bands/GW new/p95 ; +.1f": {
+  "value": 188.65829999999983,
+  "text": "+188.7"
+ },
+ "unc:grid dials across their ranges/variance/GW new/top/0/1 ; .0%": {
+  "value": 0.7644718151941241,
+  "text": "76%"
+ },
+ "cal:grid_fit/cost_completion/ISO/zero/0 ; .3f": {
+  "value": 0.7708812579467138,
+  "text": "0.771"
+ },
+ "cal:grid_fit/cost_completion/ISO/zero/1 ; .3f": {
+  "value": 0.7722480871056785,
+  "text": "0.772"
+ },
+ "cal:grid_fit/cost_completion/non-ISO/zero/0 ; .3f": {
+  "value": 0.4239557226399332,
+  "text": "0.424"
+ },
+ "cal:grid_fit/cost_completion/non-ISO/zero/1 ; .3f": {
+  "value": 0.4932785100424814,
+  "text": "0.493"
+ },
+ "cal:grid_fit/completion/Storage|ERCOT/0 ; .1%": {
+  "value": 0.15850485148142401,
+  "text": "15.9%"
+ },
+ "cal:grid_fit/completion/Storage|ERCOT/1 ; .1%": {
+  "value": 0.11718880516057378,
+  "text": "11.7%"
+ },
+ "cal:grid_fit/completion/Geothermal|*West/0 ; .1%": {
+  "value": 0.23601615704556883,
+  "text": "23.6%"
+ },
+ "cal:grid_fit/completion/Geothermal|*West/1 ; .1%": {
+  "value": 0.13675213675213677,
+  "text": "13.7%"
+ },
+ "cal:grid_fit/withdrawn_by_month/MISO/60/0 ; .2f": {
+  "value": 0.7439187392137215,
+  "text": "0.74"
+ },
+ "cal:grid_fit/withdrawn_by_month/MISO/60/1 ; .2f": {
+  "value": 0.6193765772761307,
+  "text": "0.62"
+ },
+ "cal:grid_fit/withdrawn_by_month/SPP/24/0 ; .2f": {
+  "value": 0.1516727119749726,
+  "text": "0.15"
+ },
+ "cal:grid_fit/withdrawn_by_month/SPP/24/1 ; .2f": {
+  "value": 0.22792159354233024,
+  "text": "0.23"
+ },
+ "cal:grid_fit/cost_completion/ISO/by_bin/0 ; .2f": {
+  "value": 0.6359801972991155,
+  "text": "0.64"
+ },
+ "cal:grid_fit/cost_completion/ISO/by_bin/1 ; .2f": {
+  "value": 0.2933379418957015,
+  "text": "0.29"
+ },
+ "cal:grid_fit/cost_completion/ISO/by_bin/2 ; .2f": {
+  "value": 0.15765276559582186,
+  "text": "0.16"
+ },
+ "cal:grid_fit/cost_completion/ISO/by_bin/3 ; .2f": {
+  "value": 0.09186595183118924,
+  "text": "0.09"
+ },
+ "cal:grid_fit/cost_completion/ISO/by_bin/4 ; .2f": {
+  "value": 0.04913776919494806,
+  "text": "0.05"
+ },
+ "cal:grid_fit/cost_completion/ISO/by_bin/5 ; .2f": {
+  "value": 0.014259085681839565,
+  "text": "0.01"
+ },
+ "cal:grid_fit/cost_completion/ISO/lbnl_by_bin/0 ; .2f": {
+  "value": 0.795774647887324,
+  "text": "0.80"
+ },
+ "cal:grid_fit/cost_completion/ISO/lbnl_by_bin/1 ; .2f": {
+  "value": 0.6659663865546218,
+  "text": "0.67"
+ },
+ "cal:grid_fit/cost_completion/ISO/lbnl_by_bin/2 ; .2f": {
+  "value": 0.5917808219178082,
+  "text": "0.59"
+ },
+ "cal:grid_fit/cost_completion/ISO/lbnl_by_bin/3 ; .2f": {
+  "value": 0.4208754208754209,
+  "text": "0.42"
+ },
+ "cal:grid_fit/cost_completion/ISO/lbnl_by_bin/4 ; .2f": {
+  "value": 0.18222222222222223,
+  "text": "0.18"
+ },
+ "cal:grid_fit/cost_completion/ISO/lbnl_by_bin/5 ; .2f": {
+  "value": 0.06862745098039216,
+  "text": "0.07"
+ },
+ "back:model/agents/national/Solar/2018..2025 ; .1f": {
+  "value": 86.71860000000001,
+  "text": "86.7"
+ },
+ "back:eia/national/Solar/2018..2025 ; .1f": {
+  "value": 127.1561,
+  "text": "127.2"
+ },
+ "back:model/agents/national/Onshore wind/2018..2025 ; .1f": {
+  "value": 59.8416,
+  "text": "59.8"
+ },
+ "back:eia/national/Onshore wind/2018..2025 ; .1f": {
+  "value": 71.75280000000001,
+  "text": "71.8"
+ },
+ "back:model/agents/national/Gas/2018..2025 ; .1f": {
+  "value": 55.89959999999999,
+  "text": "55.9"
+ },
+ "back:eia/national/Gas/2018..2025 ; .1f": {
+  "value": 69.2523,
+  "text": "69.3"
+ },
+ "back:model/agents/national/Storage/2018..2025 ; .1f": {
+  "value": 18.4808,
+  "text": "18.5"
+ },
+ "back:eia/national/Storage/2018..2025 ; .1f": {
+  "value": 43.1231,
+  "text": "43.1"
+ },
+ "back:model/exogenous/national/Solar/2018..2025 ; .1f": {
+  "value": 104.0814,
+  "text": "104.1"
+ },
+ "back:model/exogenous/national/Storage/2018..2025 ; .1f": {
+  "value": 46.4256,
+  "text": "46.4"
+ },
+ "back:regional_error/agents ; .2f": {
+  "value": 0.5241830805317863,
+  "text": "0.52"
+ },
+ "back:regional_error/exogenous ; .2f": {
+  "value": 0.4170583726522064,
+  "text": "0.42"
+ },
+ "back:model/agents/region/Solar/MISO + back:model/agents/region/Onshore wind/MISO + back:model/agents/region/Gas/MISO + back:model/agents/region/Storage/MISO ; .1f": {
+  "value": 23.3822,
+  "text": "23.4"
+ },
+ "back:eia/region/Solar/MISO + back:eia/region/Onshore wind/MISO + back:eia/region/Gas/MISO + back:eia/region/Storage/MISO ; .1f": {
+  "value": 46.836000000000006,
+  "text": "46.8"
+ },
+ "back:model/agents/region/Storage/PJM ; .1f": {
+  "value": 3.9311999999999996,
+  "text": "3.9"
+ },
+ "back:eia/region/Storage/PJM ; .1f": {
+  "value": 0.356,
+  "text": "0.4"
+ },
+ "back:model/agents/withdrawal_holdout/CAISO/12 ; .2f": {
+  "value": 0.5886370456312285,
+  "text": "0.59"
+ },
+ "back:lbnl_withdrawal_holdout/CAISO/12 ; .2f": {
+  "value": 0.12019826517967783,
+  "text": "0.12"
+ },
+ "back:model/agents/withdrawal_holdout/PJM/12 ; .2f": {
+  "value": 0.30413397471990566,
+  "text": "0.30"
+ },
+ "back:lbnl_withdrawal_holdout/PJM/12 ; .2f": {
+  "value": 0.13174804139020838,
+  "text": "0.13"
+ },
+ "back:model/agents/withdrawal_holdout/NYISO/12 ; .2f": {
+  "value": 0.40229136614531624,
+  "text": "0.40"
+ },
+ "back:lbnl_withdrawal_holdout/NYISO/12 ; .2f": {
+  "value": 0.7231191767487136,
+  "text": "0.72"
+ },
+ "back:model/agents/withdrawal_holdout/West/12 ; .2f": {
+  "value": 0.0945697678409007,
+  "text": "0.09"
+ },
+ "back:lbnl_withdrawal_holdout/West/12 ; .2f": {
+  "value": 0.33273640226131534,
+  "text": "0.33"
+ },
+ "sim7:operators/MISO/holdout/2020/model_median ; .0f": {
+  "value": 44.77859346661367,
+  "text": "45"
+ },
+ "sim7:operators/MISO/holdout/2021/model_median ; .0f": {
+  "value": 45.11043168260589,
+  "text": "45"
+ },
+ "sim7:operators/MISO/holdout/2020/data_median ; .0f": {
+  "value": 51.0,
+  "text": "51"
+ },
+ "sim7:operators/MISO/holdout/2021/data_median ; .0f": {
+  "value": 48.0,
+  "text": "48"
+ },
+ "sim7:operators/MISO/holdout/2021/model_share ; .0%": {
+  "value": 0.6176470588235294,
+  "text": "62%"
+ },
+ "sim7:operators/MISO/holdout/2021/data_share ; .0%": {
+  "value": 0.3602941176470588,
+  "text": "36%"
+ },
+ "sim7:operators/ERCOT/holdout/2020/model_share ; .0%": {
+  "value": 0.9444444444444444,
+  "text": "94%"
+ },
+ "sim7:operators/ERCOT/holdout/2021/model_share ; .0%": {
+  "value": 0.8934426229508197,
+  "text": "89%"
+ },
+ "sim7:operators/ERCOT/holdout/2022/model_share ; .0%": {
+  "value": 0.6986754966887417,
+  "text": "70%"
+ },
+ "sim7:operators/ERCOT/holdout/2023/model_share ; .0%": {
+  "value": 0.5205479452054794,
+  "text": "52%"
+ },
+ "sim7:operators/ERCOT/holdout/2020/data_share ; .0%": {
+  "value": 0.6728395061728395,
+  "text": "67%"
+ },
+ "sim7:operators/ERCOT/holdout/2021/data_share ; .0%": {
+  "value": 0.5327868852459017,
+  "text": "53%"
+ },
+ "sim7:operators/ERCOT/holdout/2022/data_share ; .0%": {
+  "value": 0.4370860927152318,
+  "text": "44%"
+ },
+ "sim7:operators/ERCOT/holdout/2023/data_share ; .0%": {
+  "value": 0.3150684931506849,
+  "text": "32%"
+ },
+ "sim7:operators/PJM/holdout/2020/model_share ; .0%": {
+  "value": 0.9945054945054945,
+  "text": "99%"
+ },
+ "sim7:operators/PJM/holdout/2020/data_share ; .0%": {
+  "value": 0.03296703296703297,
+  "text": "3%"
+ },
+ "sim7:timing/BAAJA/1/mean ; .1f": {
+  "value": 0.04716000000000065,
+  "text": "0.0"
+ },
+ "sim7:results/BAAJA without Sec.2106/diff_vs_baseline/GW Renewable (new)/mean + sim7:results/BAAJA without Sec.2106/diff_vs_baseline/GW Storage/mean ; +.1f": {
+  "value": 4.790479999999993,
+  "text": "+4.8"
+ },
+ "sim7:results/BAAJA/diff_vs_baseline/GW Renewable (new)/mean + sim7:results/BAAJA/diff_vs_baseline/GW Storage/mean ; +.1f": {
+  "value": -12.431440000000011,
+  "text": "-12.4"
+ },
+ "sim7:results/BAAJA, Sec.2106 adopted by every RTO/diff_vs_baseline/GW Renewable (new)/mean + sim7:results/BAAJA, Sec.2106 adopted by every RTO/diff_vs_baseline/GW Storage/mean ; +.1f": {
+  "value": -26.762680000000003,
+  "text": "-26.8"
+ }
+}
