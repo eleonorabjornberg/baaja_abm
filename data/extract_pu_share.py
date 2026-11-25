@@ -10,7 +10,8 @@ Delivery, which count each MWh once, by its wires utility; rows reported by reta
 behind-the-meter rows are left out because their wires utility is not given). Rows are assigned to a region by balancing authority code
 (CISO, ERCO, ISNE, MISO, NYIS, PJM, SWPP); other rows go to West (western states) or Southeast (the rest).
 ERCOT's utilities are intrastate and outside FERC's FPA jurisdiction over transmission, so ERCOT's share is set to 0
-(my reading); its computed investor-owned share is kept for reference.
+(my reading). Its computed share in `detail` is not meaningful: Texas retail sales are reported by retail marketers,
+whose rows are left out.
 """
 import io, json, os, sys, zipfile
 
@@ -36,7 +37,7 @@ def run(path):
         out[r] = dict(iou_share=float(g.loc[g.iou, "mwh"].sum() / g.mwh.sum()), twh=float(g.mwh.sum() / 1e6))
     share = {r: (0.0 if r == "ERCOT" else round(v["iou_share"], 3)) for r, v in out.items()}
     return dict(meta=dict(source="EIA-861 2025, Sales_Ult_Cust_2025.xlsx (States), Bundled + Delivery",
-                          note=__doc__.split("\n\n")[1].replace("\n", " ")),
+                          note=__doc__.split("\n\n")[2].replace("\n", " ")),
                 share=share, detail=out)
 
 

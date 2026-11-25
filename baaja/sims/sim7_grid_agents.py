@@ -358,8 +358,9 @@ def run(n_runs, cal, res_dir, fig_dir, sweep_runs=None):
         "MISO's LRTP Tranches 1 and 2.1 (data/planned_tx.json) add hosting room in both runs from July of their "
         "in-service years, converted to transmission project-equivalents at the average cost of a Tranche 1 project. "
         "They are a step above MISO's historical pace. SPP's 2025 ITP and PJM's 2025 RTEP (500 kV and above) are "
-        "counted only in the second row, because upgrade-cost growth (kappa) is fitted to 2010-21 data that already "
-        "include recurring regional expansion. The third row leaves approved transmission out.",
+        "counted only in the second row, because upgrade-cost growth (kappa) is fitted to the cost of 2018 and later "
+        "requests against 2010-17 requests, per GW reaching operation in 2014-21, which already includes recurring regional "
+        "expansion. The third row leaves approved transmission out.",
         t_ptx,
     ])
     data = dict(results={k: v for k, v in res.items()}, exogenous=res_exo,

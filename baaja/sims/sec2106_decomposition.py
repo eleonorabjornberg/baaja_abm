@@ -127,7 +127,9 @@ def _cases(cal):
     for tag, x, ck in (("H no background withdrawal during the round", dict(hazard_pause_ia=True), "now"),
                        ("H MISO later hazard = PJM's", None, "miso_hz")):
         law(tag, x, ck)
-        for name, o in (("without Sec.2106", dict(EV, grid_2106=False)), ("full Sec.2106", EV), ("p=0.5", B)):
+        for name, o in (("without Sec.2106", dict(EV, grid_2106=False)),
+                        ("single decision point only", dict(EV, screen_2106=0.0, planned_share_2106=0.0)),
+                        ("full Sec.2106", EV), ("p=0.5", B)):
             bill(tag, name, dict(o, **(x or {})), ck)
     # D. permitting and courts only
     bill("A", "Titles I-II only (no Sec.2106, no Sec.2109)", dict(B, grid_2106=False, grid_2109=0.0))

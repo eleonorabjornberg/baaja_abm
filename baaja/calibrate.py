@@ -302,29 +302,33 @@ def calibrate_grid(cal, seeds=tuple(range(7, 15)), iters=14, passes=3, operators
                     else:
                         hi[r] = d[r]
             d.update({r: (lo[r] + hi[r]) / 2 for r in wdd})
-        # value scales and the failure share a together: a so that zero-cost completion matches LBNL's a (the
-        # background hazard acts on top, so the fitted a is at or above LBNL's), the scales to completion targets
-        lo = {k: -5.0 for k in targets}; hi = {k: 5.0 for k in targets}
+        # the failure share a first, so that zero-cost completion matches LBNL's a (the background hazard acts on
+        # top, so the fitted a is at or above LBNL's); zero-cost completion does not depend on the value scales.
+        # Non-ISO zero-cost requests are few (Southeast has none in LBNL's cost data), so that fit is noisier
         alo = dict(a_t); ahi = {m: 1.0 for m in a_t}
         for _ in range(iters):
-            x = {k: (lo[k] + hi[k]) / 2 for k in targets}
             af.update({m: (alo[m] + ahi[m]) / 2 for m in a_t})
             zc = []
-            got, _ = run(cur(), seeds, zc)
-            for k in targets:
-                m = np.nanmean([g[k] for g in got])
-                if np.isnan(m) or m > targets[k]:
-                    hi[k] = x[k]
-                else:
-                    lo[k] = x[k]
+            run(cur(), seeds, zc)
             for mk in a_t:
                 z = np.nanmean([q[mk]["zero"] for q in zc])
                 if np.isnan(z) or z > a_t[mk]:
                     ahi[mk] = af[mk]
                 else:
                     alo[mk] = af[mk]
-        x = {k: (lo[k] + hi[k]) / 2 for k in targets}
         af.update({m: (alo[m] + ahi[m]) / 2 for m in a_t})
+        # then the value scales to the completion targets
+        lo = {k: -5.0 for k in targets}; hi = {k: 5.0 for k in targets}
+        for _ in range(iters):
+            x = {k: (lo[k] + hi[k]) / 2 for k in targets}
+            got, _ = run(cur(), seeds)
+            for k in targets:
+                m = np.nanmean([g[k] for g in got])
+                if np.isnan(m) or m > targets[k]:
+                    hi[k] = x[k]
+                else:
+                    lo[k] = x[k]
+        x = {k: (lo[k] + hi[k]) / 2 for k in targets}
     gc = cur()
     gc["p_eis"] = fit_eis(gc)
     zc = []
@@ -336,6 +340,7 @@ def calibrate_grid(cal, seeds=tuple(range(7, 15)), iters=14, passes=3, operators
     od, od_t = calibrate_overdue(dict(cal, grid_cal=gc), base=dict(grid="agents"))
     gc["overdue"] = od["overdue"]
     cc = {mk: dict(zero=(float(np.nanmean([q[mk]["zero"] for q in zc])), a_t[mk]), fitted_a=af[mk],
+                   n_zero=float(np.sum([q[mk]["n_zero"] for q in zc])),
                    by_bin=[float(np.nanmean([q[mk]["by_bin"][i] for q in zc])) for i in range(len(COST_BINS) - 1)],
                    n_bin=[float(np.mean([q[mk]["n_bin"][i] for q in zc])) for i in range(len(COST_BINS) - 1)],
                    lbnl_by_bin=[v[0] for v in VALUE[0 if mk == "ISO" else NON_ISO[0]]["completion_by_cost_bin"].values()])

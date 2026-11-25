@@ -224,7 +224,10 @@ def test_zero_cost_completion_matches_lbnl(cal):
         pytest.skip("calibration predates the fitted failure share")
     for mk, v in f.items():
         got, want = v["zero"]
-        assert abs(got - want) < 0.05, mk
+        # check seeds are not the fit seeds: allow sampling error (non-ISO zero-cost requests are few, West only)
+        n = v.get("n_zero", 0)
+        tol = max(0.05, 3 * np.sqrt(want * (1 - want) / n)) if n else 0.05
+        assert abs(got - want) < tol, (mk, got, want, n)
 
 
 def test_restudy_shock_follows_spp_quantiles():

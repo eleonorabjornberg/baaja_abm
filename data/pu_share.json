@@ -1,7 +1,7 @@
 {
  "meta": {
   "source": "EIA-861 2025, Sales_Ult_Cust_2025.xlsx (States), Bundled + Delivery",
-  "note": "Usage: python -I data/extract_pu_share.py EIA861_ZIP   -> data/pu_share.json"
+  "note": "BAAJA Sec.2109 adds FPA s.232, whose subsection (d) applies \"only to public utilities\". The FPA's public utilities are, for transmission, mainly investor-owned utilities; municipal, state, federal and most cooperative systems are not. As a proxy for the share of a region's new transmission that s.232 reaches, this takes the investor-owned share of retail sales delivered over each utility's own wires (EIA-861 Sales to Ultimate Customers, service types Bundled and Delivery, which count each MWh once, by its wires utility; rows reported by retail marketers, as in Texas, and behind-the-meter rows are left out because their wires utility is not given). Rows are assigned to a region by balancing authority code (CISO, ERCO, ISNE, MISO, NYIS, PJM, SWPP); other rows go to West (western states) or Southeast (the rest). ERCOT's utilities are intrastate and outside FERC's FPA jurisdiction over transmission, so ERCOT's share is set to 0 (my reading). Its computed share in `detail` is not meaningful: Texas retail sales are reported by retail marketers, whose rows are left out. "
  },
  "share": {
   "CAISO": 0.895,

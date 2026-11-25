@@ -396,8 +396,9 @@ def _region(r, idx, F, out, p, op, U, onpk, ctx, tx, u_adopt, T, T_ext, backcast
     adopt = p["grid_2106"] and in_rto and (u_adopt < p["adopt_2106"])
     # a developer whose study result makes it unprofitable holds its queue position for a while before withdrawing
     # (mean exit_lag months, fitted by region to LBNL's 60-month withdrawal share); under Sec.2106(a)(3)'s single
-    # decision point and withdrawal penalties the hold shrinks by lag_2106
-    lag = np.ceil(U["Elag"][idx] * exit_lag * (p["lag_2106"] if adopt else 1.0)) if exit_lag > 0 else np.zeros(len(idx))
+    # decision point and withdrawal penalties the hold shrinks by lag_2106, for requests made from the rule month
+    lag = (np.ceil(U["Elag"][idx] * exit_lag * np.where(adopt & (t0 >= rule), p["lag_2106"], 1.0)) if exit_lag > 0
+           else np.zeros(len(idx)))
     g2110 = p["grid_2110"] if r != ERCOT else 0.0
     # current-law entry screen (sensitivity only; Order 2023 readiness deposits), FERC-jurisdictional providers
     q_law = p.get("q_min_law", 0.0) if (r != ERCOT and not backcast) else 0.0
@@ -433,7 +434,8 @@ def _region(r, idx, F, out, p, op, U, onpk, ctx, tx, u_adopt, T, T_ext, backcast
 
     # planned current-law lines (same in both runs of a pair), July of their in-service year. Central: MISO's LRTP
     # only, a step above MISO's historical pace; SPP's ITP and PJM's RTEP are a sensitivity (planned_tx_scope="all"),
-    # since kappa, fitted to 2010-21 cost growth, already nets out recurring transmission expansion
+    # since kappa (cost of 2018+ against 2010-17 requests, per GW reaching operation 2014-21) already nets out
+    # recurring transmission expansion
     scope = p.get("planned_tx_scope", "miso")
     plan = ([(month_of(y), k) for y, k in PLAN_TX.get(r, [])]
             if not backcast and (scope == "all" or REGIONS[r] == "MISO") else [])
@@ -463,30 +465,35 @@ def _region(r, idx, F, out, p, op, U, onpk, ctx, tx, u_adopt, T, T_ext, backcast
     def restudied(c, wsh):
         return np.where(planned, c, c * max(1 + p["restudy_rho"] * (wsh - RESTUDY_WSH), 0.0) * shock)
 
-    def decide(sel, t_res, t_sign, c, single, tnow, sdp_cost=False):
+    def decide(sel, t_res, t_sign, c, single, tnow, sdp_cost=False, pool=None, w_extra=0.0):
         """Study results at t_res; agreements at t_sign. Cluster regions under the current process: one re-study
         round between them. A request whose first cost exceeds its value holds its position for `lag` months and
         then withdraws; if the re-study result comes within the hold and brings the cost to its value or below, it
         stays and signs. A request whose cost rises above its value at re-study withdraws at the agreement stage.
         Under a single decision point (single) the decision is at the first result on the first cost; with sdp_cost
-        the cost change of re-study still applies (decided at the first result)."""
+        the cost change of re-study still applies (decided at the first result).
+        The withdrawn share that sets the re-study cost change is the MW deciding to leave at the first result over
+        the MW alive at it, both over the whole cluster (`pool`; `w_extra` adds the MW of cluster-mates decided in an
+        earlier call). A request counts as leaving when it decides to, even if its hold records the withdrawal after
+        the re-study: the hold is fitted to when withdrawals are recorded. In the legacy queue the share is taken
+        over each month's batch. Returns the MW leaving at the first result."""
         vm = v0 * np.exp(beta * (scar(tnow) - s0))
         alive1 = sel & (W >= t_res - t0)
-        tot = mw[alive1].sum()
-        if (single and not sdp_cost) or (not single and R == 0):
+        tot = mw[(sel if pool is None else pool) & (W >= t_res - t0)].sum()
+        if R == 0 or (single and not sdp_cost):
             stay1 = alive1 & ((c <= vm) | planned)
             gwd[alive1 & ~stay1] = (t_res + lag)[alive1 & ~stay1]
-            sign(stay1, t_sign); cost[alive1] = c[alive1]; return
+            sign(stay1, t_sign); cost[alive1] = c[alive1]; return mw[alive1 & ~stay1].sum()
         bad1 = alive1 & ~planned & (c > vm)
-        w0 = mw[bad1].sum() / tot if tot > 0 else 0.0
+        w0 = (mw[bad1].sum() + w_extra) / tot if tot > 0 else 0.0
         if single:                                                    # sdp_cost: one decision, re-studied cost
             c2 = restudied(c, w0)
             stay1 = alive1 & ((c2 <= vm) | planned)
             gwd[alive1 & ~stay1] = (t_res + lag)[alive1 & ~stay1]
-            sign(stay1, t_sign); cost[alive1] = c2[alive1]; return
+            sign(stay1, t_sign); cost[alive1] = c2[alive1]; return mw[alive1 & ~stay1].sum()
         held = (t_res + lag >= t_sign)                                # still holding when the re-study comes
         leave1 = bad1 & ~(held & (restudied(c, w0) <= vm))
-        wsh = mw[leave1].sum() / tot if tot > 0 else 0.0
+        wsh = (mw[leave1].sum() + w_extra) / tot if tot > 0 else 0.0
         c2 = restudied(c, wsh)
         gwd[leave1] = (t_res + lag)[leave1]
         rest = alive1 & ~leave1
@@ -496,6 +503,7 @@ def _region(r, idx, F, out, p, op, U, onpk, ctx, tx, u_adopt, T, T_ext, backcast
         stay2 = alive2 & ((c2 <= vm) | planned)
         gwd[alive2 & ~stay2] = (t_sign + lag)[alive2 & ~stay2]
         sign(stay2, t_sign); cost[alive1] = c2[alive1]
+        return mw[leave1].sum()
 
     # ---- legacy requests (in the queue at end-2025, no agreement) ----
     leg = np.where(seeded & ~ia_done)[0]
@@ -608,8 +616,8 @@ def _region(r, idx, F, out, p, op, U, onpk, ctx, tx, u_adopt, T, T_ext, backcast
             if serial and adopt:
                 # requests from the rule month: one decision at the first result; earlier ones: current process
                 s1 = mem & single
-                decide(s1, tres, tres, c, True, t, p.get("sdp_cost_2106", False))
-                decide(mem & ~single, tres, tsig, c, False, t)
+                w1 = decide(s1, tres, tres, c, True, t, p.get("sdp_cost_2106", False), pool=mem)
+                decide(mem & ~single, tres, tsig, c, False, t, pool=mem, w_extra=w1)
             else:
                 decide(mem, tres, tsig, c, not serial, t)
             if serial:
