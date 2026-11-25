@@ -197,7 +197,7 @@ Eleonora asked for the data behind the brief's limits to be downloaded. What cam
   MISO's LRTP project lists; upload them to `raw/`.
 - Recalibrated (`run.py --recalibrate-grid`), rerun Sim 7, decomposition and joint uncertainty; brief rewritten.
 
-**Current results** (supersede the two sections above): grid agents, current law 972 GW new by 2041. BAAJA +36.5 GW
+**Results before the third review** (superseded; see the next section): grid agents, current law 972 GW new by 2041. BAAJA +36.5 GW
 [+11.2, +60.5] (renewables +25.3, gas +6.4, storage +4.8); no RTO adopts +6.5; every RTO adopts +65.0 (no screen +72.1,
 absolute screen +41.0). MISO +20.2 (+39.1 every RTO), PJM +4.6 (+7.6). Single decision point +61.6 over BAAJA without
 Sec.2106 (every RTO); with a five-month re-study round Sec.2106 adds +34.2; with none +1.1. Joint ranges +37.7
@@ -216,7 +216,7 @@ reopen the model).
 - Bugs fixed: legacy requests in cluster regions now go through current law's re-study round; approved lines enter in
   July of their in-service year (`month_of`); Sec.2109 reaches only the public-utility share of each region's load
   (`data/extract_pu_share.py` -> `data/pu_share.json`, EIA-861 2025 investor-owned share, ERCOT 0); the first result
-  comes no sooner than five months after the cluster study starts.
+  comes no sooner than five months (150 days) after the cluster study starts.
 - Re-study round: the cost change of each request is drawn from SPP's 325 request-level changes after Phase 2
   (`after_P2.logchange_q`, median -17%, skewed toward falls), scaled by `restudy_scale` (0.5 / 1 / 1.5); `restudy_rho`
   is relative to SPP's median withdrawn share 0.446. A request with an adverse first result that is still holding when
@@ -235,11 +235,23 @@ reopen the model).
 - Finding from the smoke test, before the refit: with every RTO adopting and the single decision fixing the cost at the
   first result, the bill lowers new capacity, because in SPP's data most stayers' costs fall at re-study as others
   withdraw. The sign depends on what the single decision point removes; the frozen frame reports that range.
+- Rerun (100 paired runs; `results/sim7_grid_agents.md`, `results/sec2106_decomposition.md`, `results/uncertainty.md`):
+  current law 983 GW new by Nov 2041. Every RTO changing: first-result reading -20.4 GW (17-month round), -23.4
+  (8-month); only published locations skip the round +11.1; re-studied cost known at the single decision +41.4. No RTO
+  changes +5.2 [3.4, 7.3]; p = 0.5 on the first-result reading -9.1 [-20.3, +2.8]. Peak +6.5 GW in 2034, negative by
+  2037. PJM -9.0, MISO +0.5 (MISO 25.6 of the 41.4 on the cost-kept reading). Shortfall 70 GW in 2035 (PJM 57); BAAJA
+  cuts it by 1.6 (p = 0.5) to 3.0 (every RTO). Joint ranges +2.1 [-33.5, +27.0]; adoption 24%, Sec.2110 23%,
+  restudy_scale 13%. Halving the re-study changes gives +4.6 (20 runs). Calibration: 26 of 28 completion cells within
+  35% (ERCOT storage 0.159 vs 0.117 and geothermal outside the West miss; `tests/test_grid.py` records the ERCOT miss);
+  zero-cost completion 0.771 vs 0.772 (RTO) and 0.424 vs 0.493 (non-ISO, `value_a` at its lower bound).
+- Brief: `docs/brief_src.md` is the source; `python -m baaja.brief_numbers` renders `docs/brief.md` (345 numbers from
+  results). Edit the source, never the rendered brief.
+- Stopping rule applied: the final review is verification only (numbers, quotes, code against text).
 
 ## Known issues carried forward
 - Grid agents: completed projects take too long from request to operation (a longer wait does not raise withdrawal,
   so no selection for short waits). In the backcast, 2020-22 storage and solar requests take 62-66 months to operate
-  (exogenous model 39-60), so the agents build only 0.41 (storage), 0.67 (solar) and 0.83 (wind) of EIA-860's
+  (exogenous model 39-60), so the agents build only 0.43 (storage), 0.68 (solar) and 0.83 (wind) of EIA-860's
   2018-25 additions, most of the gap in CAISO and ERCOT; near-term current-law build with agents is conservative.
   In CAISO, ISO-NE and MISO the fitted hold after an adverse result reaches its 20-year bound (the data cannot
   tell a long hold from never withdrawing); MISO's 60-month share stays high (0.74 vs 0.62). The 2020-23 withdrawal

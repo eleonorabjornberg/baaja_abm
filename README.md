@@ -96,10 +96,12 @@ technology at its 2025 request rate.
 
 **Bottom line for renewables vs gas.** The provisions the data can size favor renewables (about 6:1 in GW), mainly
 through federal-land rights-of-way and the court changes that hit local opposition, but they are small: +8 GW of new
-capacity on about 1,090. Sim 7's grid agents put the bill as a whole at +36.5 GW [+11.2, +60.5] by 2041 (about 4:1
-renewables to gas) when each RTO adopts Sec.2106 with probability 0.5, between +6.5 GW if none does and +65.0 GW if all
-do. Whether BAAJA matters for supply depends on what RTOs and FERC do under Sec.2106: the simpler model's dial brackets
-it between no change and ERCOT's pace (+209 GW), and nothing measured picks a point inside. Sim 7 replaces this dial
+capacity on about 1,090. Sim 7's grid agents find that the sign of the bill's effect depends on what Sec.2106's
+"single decision point" removes: with every RTO changing its process, -20.4 GW by 2041 if requests decide once on
+their first-result cost, +11.1 GW if only published locations skip the re-study, +41.4 GW if the re-studied cost is
+known at the single decision; +5.2 GW if no RTO changes. Whether BAAJA matters for supply depends on what RTOs and
+FERC do under Sec.2106: the simpler model's dial brackets it between no change and ERCOT's pace (+209 GW), and nothing
+measured picks a point inside. Sim 7 replaces this dial
 with an agent-based queue that sizes the bill's actual mechanisms (below).
 
 6. **Supply and adequacy (Sim 6)**. The model's additions are placed in the nine LBNL regions and added to the EIA-860
@@ -126,46 +128,43 @@ with an agent-based queue that sizes the bill's actual mechanisms (below).
    cost) and a single decision point with non-refundable security, in RTOs that change their process (drawn per RTO,
    2106(d)); Sec.2109 adds hosting room per transmission line; Sec.2110 is a throughput gain the bill does not size
    (central 0). New capacity below excludes relicensed hydro (+1.8 GW in every BAAJA scenario).
-   - Current law includes the transmission MISO (LRTP Tranches 1 and 2.1), SPP (2025 ITP) and PJM (2025 RTEP, 500 kV
-     and above) have already approved, as hosting room in both runs (`data/planned_tx.json`); a re-study round fitted
-     to SPP's cluster postings (`data/spp_restudy.json`: cost change 0.1 per withdrawn share, request-level change
-     median -8% with spread 0.6, agreement 17 months after the first result); and LBNL's share of requests that fail
-     at any cost (`value_a`: 23% in RTO regions, 51% elsewhere).
-   - **BAAJA as a whole: +36.5 GW [+11.2, +60.5] by 2041** (renewables +25.3, gas +6.4, storage +4.8) on a current law
-     of 972 GW, against +8.0 GW with the exogenous grid.
-   - **If no RTO adopts Sec.2106: +6.5 GW [+4.6, +8.3]; if every RTO adopts: +65.0 GW [+57.7, +71.1].** Sec.2109's
-     hosting room adds about +3.8 GW in the central case; a 25% Sec.2110 throughput gain brings it to +57.5 GW. Without
-     the approved transmission, current law is 948 GW and the central gain +24.7 GW (against 973 and +29.3 in the same 20 runs).
-   - The entry screen in 2106(a)(3) keeps out the quarter of new requests least likely to complete within their
-     technology and region (range 10-50%; LBNL's 12-month withdrawal shares of 2015-19 requests have a median of about 0.3
-     across RTOs). This relative screen replaced an absolute probability threshold after the results were seen. Every
-     RTO adopts: no screen +72.1 GW, relative +65.0, absolute +41.0 (p = 0.5: +41.0 / +36.5 / +23.9; 100 paired runs,
-     `results/sec2106_decomposition.md`). Keeping out half the requests gives +15.0 GW; a tenth, +32.6 GW (20 runs).
-   - What Sec.2106 does (every RTO adopts, `python run.py --decomposition`): the single decision point adds +61.6 GW
-     over BAAJA without Sec.2106, published locations +4.0, the relative screen -7.1. The single decision point is
-     worth that much because it removes the current-law re-study round. With costs unchanged by re-study Sec.2106 adds
-     +43.1 GW; with a five-month round (Order No. 2023's 150-day restudy deadline) +34.2 GW; with no re-study round
-     +1.1 GW. Titles I-II alone (no Sec.2106, no Sec.2109) give +3.0 GW.
-   - Timing: the gain is +0.3 GW in 2030 and +19.0 GW in 2035, because the rules apply to studies from month 36.
-   - Most of the gain is in **MISO** (+20.2 GW; +39.1 GW if every RTO adopts; 62-64% of the Sec.2106
-     increment). With PJM's study throughput relative to arrivals (0.97 against MISO's fitted 0.59), MISO's every-RTO
-     gain is +24.7 GW. PJM gains +4.6 GW (+7.6 if every RTO adopts, +15.4 without the screen).
-   - **Adequacy**: BAAJA cuts the 2035 national shortfall by 4.9 GW [0.4, 9.7] (5.3 GW in 2041); 9.0 GW if every RTO
-     adopts. With agents, the current-law shortfall is **68 GW in 2035** and 112 GW in 2041, mostly PJM (56 GW in 2035).
-   - The current-law level is uncertain: the growth of upgrade cost with capacity signed (`kappa`, from LBNL cost
-     data) moves current-law GW from 900 to 1,060 (central 973 in these 20 runs) and BAAJA's gain from +25.4 to +35.0 GW (20 runs).
-   - Fit: see Validation and `results/backcast.md`. Storage in ERCOT now fits (0.145 vs 0.117 completion); geothermal
-     outside the West misses (0.20 vs 0.14); five value scales sit at a bound of their range.
+   - Current law includes MISO's approved Long Range Transmission Plan (Tranches 1 and 2.1) as hosting room in both
+     runs, from July of each in-service year (`data/planned_tx.json`; SPP's 2025 ITP and PJM's 2025 RTEP are a
+     sensitivity). In cluster regions it has one re-study round between the first result (no sooner than 150 days
+     after the cluster study starts) and the agreement: each request's cost changes by a draw from SPP's 325
+     request-level changes after Phase 2 (`data/spp_restudy.json`, median -17%), and a request decides on the
+     re-studied cost, so one whose cost falls can stay. The agreement comes 17 months after the first result (range
+     8-29). A fitted share of requests fails at any cost (`value_a`), so that zero-cost completion matches LBNL.
+     Sec.2109 reaches only the public-utility share of each region (`data/pu_share.json`).
+   - Current law brings 983 GW online by Nov 2041. **The sign of Sec.2106 depends on what the single decision point
+     removes** (every RTO changing, 100 paired runs, `results/sec2106_decomposition.md`): deciding once on the
+     first-result cost, -20.4 GW (17-month round) and -23.4 GW (8-month round); only published locations skip the
+     round, +11.1 GW; re-studied cost known at the single decision, +41.4 GW. **No RTO changes: +5.2 GW [+3.4, +7.3].**
+     Each RTO with probability 0.5, first-result reading: -9.1 GW [-20.3, +2.8] (a convention, not a forecast).
+   - Timing (every RTO, first-result reading): the gain peaks at +6.5 GW in 2034 and turns negative by 2037; 22.6 GW
+     fewer new RTO requests are online by 2041 but 56.4 GW fewer ever complete. PJM -9.0 GW, MISO +0.5; on the
+     cost-kept reading MISO gains 25.6 of the 41.4.
+   - Adequacy: current-law shortfall below NERC's Reference Margin Levels about 70 GW in 2035 (PJM 57); BAAJA reduces
+     it by 1.6 GW (p = 0.5) to 3.0 GW (every RTO) in 2035 and raises it in 2041 on the first-result reading.
+   - Likely too negative: SPP's changes are measured on survivors (halving them gives +4.6 GW at p = 0.5), and the
+     model's completion falls more steeply with upgrade cost than LBNL's (brief section 6).
+   - The screen in 2106(a)(3) keeps out the quarter of new requests least likely to complete within their technology
+     and region (range 10-50%), ranked by the chance of completing; it replaced an absolute threshold after results
+     were seen (brief section 4.4).
+   - Previous version: +36.5 GW (p = 0.5) and +65.0 GW (every RTO). The third review found three bugs and a re-study
+     round that could only push requests out (HANDOFF.md).
+   - Fit: see Validation and `results/backcast.md`. 26 of 28 completion cells within 35% (misses: ERCOT storage
+     0.159 vs 0.117, geothermal outside the West); eight value scales at a bound.
 
 **All assumption ranges at once (`results/uncertainty.md`).** 400 Latin-hypercube samples per row, each paired
 (including the post-*Seven County* court range). Data-sized provisions: **+8.0 GW of new capacity [+4.6, +13.1]**
 (median, 5th-95th percentile), 2035 shortfall -0.4 GW [-0.9, -0.1]; Sec.2213's compliance range explains about half
 of the variance. Drawing the two interconnection dials across their ranges as well: +33.5 GW [+6.5, +188.7], and
-Sec.2106's dial explains 76% of the variance. **With the grid agents and all their assumptions drawn: +37.7 GW [+4.6,
-+90.1]** (renewables +25.5, gas +6.9, storage +5.7), 2035 shortfall -3.2 GW [-12.0, -0.1]; realized RTO adoption
-explains the most (54%), then Sec.2110 throughput (12%); nothing else above 3%. By adoption: +11.2 GW if no RTO
-adopts, +38.0 if some do, +67.2 if all do (medians). Current-law shortfall in 2035: 59-68 GW (medians) [21, 132]
-across the three samples, driven by demand growth.
+Sec.2106's dial explains 76% of the variance. **With the grid agents and all their assumptions drawn (first-result reading): +2.1 GW [-33.5,
++27.0]** (renewables +0.9, gas +3.8, storage -1.8), 2035 shortfall -1.1 GW [-5.1, +0.4]; realized RTO adoption
+explains 24% of the variance, Sec.2110 throughput 23% and the re-study cost scale 13%; nothing else above 3%. By
+adoption: +9.4 GW if no RTO adopts, +0.9 if some do, -10.8 if all do (medians). Current-law shortfall in 2035: 59-68 GW
+(medians) [21, 133] across the three samples, driven by demand growth.
 
 ## Validation
 Backcast, current law, Jan 2010 to Dec 2025, with LBNL requests by year and each request's region drawn from LBNL's
@@ -175,7 +174,7 @@ on the same requests; EIA-860 additions by region use nameplate capacity (region
 | 2018-25 additions, model / EIA-860 | solar | onshore wind | gas | storage |
 |---|---|---|---|---|
 | Exogenous grid (Sims 1-6) | 0.82 | 1.00 | 0.84 | 1.08 |
-| Grid agents (Sim 7) | 0.67 | 0.83 | 0.80 | 0.41 |
+| Grid agents (Sim 7) | 0.68 | 0.83 | 0.81 | 0.43 |
 
 - **By region** the error is larger than nationally: weighted mean absolute log ratio across regions 0.42 (exogenous)
   and 0.52 (agents). Both models put too little solar and storage in ERCOT and CAISO and too much in PJM, ISO-NE and
@@ -185,7 +184,7 @@ on the same requests; EIA-860 additions by region use nameplate capacity (region
   request to operation in the agents (39-60 with the exogenous grid), so many finish after 2025. Most of the gap is
   in CAISO and ERCOT and is the same gap as "completed projects are not selected for short waits" (known limits).
 - **Withdrawal timing of 2015-19 requests** (fitted at 12, 36 and 60 months): the agents match LBNL by region within
-  0.01 at 12 and 36 months, and within 0.07 at 24 months (not fitted). At 60 months MISO is 0.74 vs 0.62 even with its
+  0.02 at 12 and 36 months, and within 0.08 at 24 months (not fitted). At 60 months MISO is 0.74 vs 0.62 even with its
   hold at the bound (CAISO, ISO-NE and MISO hold at the 240-month bound). The exogenous model withdraws 0.42-0.73 of requests by month 12 (data 0.09-0.58).
 - **Holdout (2020-23 requests, used in no fit)** is mixed: the agents withdraw too fast in CAISO (0.59 vs 0.12 by month
   12) and PJM (0.30 vs 0.13), too slowly in NYISO (0.40 vs 0.72) and the West (0.09 vs 0.33). PJM's own queue file
@@ -320,6 +319,7 @@ python run.py --uncertainty 400   # all assumption ranges at once -> results/unc
 python run.py --backcast          # 2010-25 backcast, both grid models -> results/backcast.md
 python run.py --decomposition --runs 100   # where the Sec.2106 gain comes from -> results/sec2106_decomposition.md
 python run.py --brief-figures     # figures for docs/brief.md from results/*.json -> figures/brief_*.png
+python -m baaja.brief_numbers      # renders docs/brief.md from docs/brief_src.md and results/*.json
 python run.py --sim 3 --runs 50   # one simulation, reusing results/calibration.json
 python -m pytest -q
 ```
