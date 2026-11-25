@@ -132,7 +132,7 @@ with an agent-based queue that sizes the bill's actual mechanisms (below).
      runs, from July of each in-service year (`data/planned_tx.json`; SPP's 2025 ITP and PJM's 2025 RTEP are a
      sensitivity). In cluster regions it has one re-study round between the first result (no sooner than 150 days
      after the cluster study starts) and the agreement: each request's cost changes by a draw from SPP's 325
-     request-level changes after Phase 2 (`data/spp_restudy.json`, median -17%), and a request decides on the
+     request-level changes after Phase 2 (`data/spp_restudy.json`, median -15%), and a request decides on the
      re-studied cost, so one whose cost falls can stay. The agreement comes 17 months after the first result (range
      8-29). A fitted share of requests fails at any cost (`value_a`), so that zero-cost completion matches LBNL.
      Sec.2109 reaches only the public-utility share of each region (`data/pu_share.json`).

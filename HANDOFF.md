@@ -218,7 +218,7 @@ reopen the model).
   (`data/extract_pu_share.py` -> `data/pu_share.json`, EIA-861 2025 investor-owned share, ERCOT 0); the first result
   comes no sooner than five months (150 days) after the cluster study starts.
 - Re-study round: the cost change of each request is drawn from SPP's 325 request-level changes after Phase 2
-  (`after_P2.logchange_q`, median -17%, skewed toward falls), scaled by `restudy_scale` (0.5 / 1 / 1.5); `restudy_rho`
+  (`after_P2.logchange_q`, median -15%, skewed toward falls), scaled by `restudy_scale` (0.5 / 1 / 1.5); `restudy_rho`
   is relative to SPP's median withdrawn share 0.446. A request with an adverse first result that is still holding when
   the re-study comes, and whose re-studied cost is at or below its value, stays; one whose cost rises above its value
   leaves at the agreement. `restudy_months` 8 / 17 / 29 (8 = pro forma on-time path; 17 = SPP Phase 2 to the latest

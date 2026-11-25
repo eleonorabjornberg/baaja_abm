@@ -91,6 +91,14 @@
   "value": 29.335340000000006,
   "text": "29.3"
  },
+ "cal:calibration/grid_cal/value_a/ISO ; .0%": {
+  "value": 0.8350730852945142,
+  "text": "84%"
+ },
+ "cal:calibration/grid_cal/value_a/non-ISO ; .0%": {
+  "value": 0.49329397395513885,
+  "text": "49%"
+ },
  "sim7:results/BAAJA without Sec.2106/diff_vs_baseline/GW_new/mean ; +.1f": {
   "value": 5.21894,
   "text": "+5.2"

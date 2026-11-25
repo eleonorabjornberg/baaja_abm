@@ -125,12 +125,14 @@ storage, fuel cells and generators of 5 kW to 5 MW each from wholesale markets, 
 interconnection queue. Sec.2102(b) exempts interstate gas pipeline looping and compression in existing corridors from
 NEPA review. Sec.2109 (new FPA s.232) requires public utilities to evaluate advanced transmission technologies on
 their systems (s.232(b)(1)) and to use them on new and upgraded lines where benefits exceed costs (s.232(b)(2)); the
-model credits only the second, as extra hosting room on lines finished after the rule month, and only for the
-public-utility share of each region (s.232(d) applies "only to public utilities"). Sec.2103 adds interregional
+model credits only the second, as extra hosting room from the rule month on, and only for the public-utility share
+of each region (s.232(d) applies "only to public utilities"). In the code the extra room applies to every
+transmission request the model completes from November 2026, including lines finished before the rule month, and not
+to MISO's approved Long Range Transmission Plan lines (section 8). Sec.2103 adds interregional
 planning with cost allocation; its new FPA s.225(h) deems FERC's orders published in the Federal Register on 11 June
 2024, 6 December 2024 and 28 April 2025 (by their dates, Order No. 1920 and its two orders on rehearing) to satisfy
 the regional planning requirements. In my reading Sec.2103 is the bill's main route to new transmission, and the model
-adds no transmission in response to the bill. Sec.1501-1504 (nuclear licensing) are listed but not modeled, because
+plans no new lines in response to the bill. Sec.1501-1504 (nuclear licensing) are listed but not modeled, because
 no new reactor reaches operation through the queue data by 2041.
 
 ## 2. The model
@@ -160,7 +162,7 @@ Regional Transmission Expansion Plan lines of 500 kV and above ($9.8 billion) ar
 Under current law in cluster regions, the operator runs one re-study round between the first complete study result
 and the agreement. The first result comes no sooner than five months (150 days) after the cluster study starts. Each
 request's upgrade cost then changes by a factor drawn from the 325 request-level changes in SPP's posted results
-between Phase 2 and the latest posting, for its 2016-23 clusters (median -17%, with more falls than rises; SPP
+between Phase 2 and the latest posting, for its eight clusters from 2017-1 to 2023-1 (median -15%, with more falls than rises; SPP
 2020-26, `data/spp_restudy.json`), and by 0.1 times the amount by which the share of capacity that withdrew exceeds
 SPP's median of 0.45 (standard error about 0.8, so not distinguishable from zero). A request whose first result
 made it unprofitable, and which is still holding its position when the re-study comes, stays if the new cost is
@@ -174,8 +176,9 @@ Developers enter on the published wait and on their region's projected capacity 
 compare the allocated upgrade cost with the project's value and stay or leave. The shape of the value distribution
 comes from my fit of completion on upgrade cost to LBNL's cost data, which also says that a share of requests do not
 complete at any cost: 23% in RTO regions and 51% elsewhere. In the model those requests leave whatever their cost. The
-share is fitted so that, in the 2010-25 backcast, requests with no upgrade cost complete at the fitted rate (77% and
-49%), since background withdrawal also acts on them. The level of value is one scale per technology and region,
+share is refitted so that, in the 2010-25 backcast, requests with no upgrade cost complete at the fitted rate (77% and
+49%), since background withdrawal also acts on them; the refitted share that can complete is
+84% in RTO regions and 49% elsewhere. The level of value is one scale per technology and region,
 fitted so that completion matches LBNL's rates. Value here stands for every reason a project completes or not that the
 model does not otherwise represent; it is not revenue, and the model has no prices. Developers also withdraw over time
 at background rates fitted by region, including while they wait for the re-study. A developer whose result is adverse
@@ -185,7 +188,9 @@ still in the queue when the re-study comes.
 Supply. What comes online is added to the EIA-860 fleet, less announced and age-based retirements, and compared with
 NERC's 2025 peak-demand forecast and reference margin levels (NERC 2026). Wind, solar and batteries count at on-peak
 shares that start at NERC's national values and fall halfway to PJM's 2041/42 ELCC class ratings by 2041 (on-peak
-accredited capacity below).
+accredited capacity below). PJM is the exception: its reference margin is an installed reserve margin that already
+rises (18.6% to 35.1%, 2026-34) as its mix shifts to these resources, so its shares stay at their 2026 values and the
+decline is not counted twice.
 
 The bill enters as mechanisms. Under Sec.2106 a reformed RTO publishes planned interconnection locations with "an
 upfront, fixed, subregional, per-megawatt fee" (new FPA s.228(a)(2)(B)) and establishes a study process with "(A) a
@@ -267,7 +272,7 @@ reported separately. "Sec.2106 is worth" a number means the bill with Sec.2106 m
 Current law brings 983 GW of new capacity online by November 2041
 [964, 1004]. The first
 row keeps every provision except Sec.2106: the permitting, court and permit-certainty provisions (Division A, Titles
-I-IV; Division B, Title II), Sec.2109, and Sec.2110 at zero. On their own, with Sec.2109 also off, the permitting,
+I-IV; Division B, Titles I and II, apart from Sec.2106, 2109 and 2110), Sec.2109, and Sec.2110 at zero. On their own, with Sec.2109 also off, the permitting,
 court and certainty provisions add 3.3 GW
 [1.8,
 5.2]. Sec.2109's extra hosting room is worth
@@ -366,7 +371,7 @@ PJM cost study 13.7% of requests pay no upgrade cost, against
 13.7% of PJM solar requests and
 7.5% of storage requests that complete, so the calibration sets low values
 for both, and the storage value scale sits at its lower bound (section 6). The data do not show that route to
-completion: in PJM's queue file, 12% of completed solar projects queued since 2010 have no upgrade cost, against 14%
+completion: in LBNL's PJM cost data, 12% of completed solar projects queued since 2010 have no upgrade cost, against 14%
 of withdrawn ones (latest study for each project; my tabulation). With MISO's zero-cost share of
 2.5%, PJM's result with every RTO changing is
 -11.4 GW, so this corner does not explain PJM's
@@ -425,8 +430,8 @@ first result later. Background withdrawal during the round works for the bill: w
 the bill's loss grows.
 
 The SPP fit is the only data behind the round. It covers clusters studied before Order No. 2023, and its 17 months is
-the median time from the Phase 2 posting to the latest restudy posting, censored because two clusters were still
-being restudied in 2026 and SPP's results workbooks give no agreement dates. Order No. 2023's pro forma study work runs
+the median time from the Phase 2 posting to the latest restudy posting, censored because three clusters still
+had restudy postings in 2026 and SPP's results workbooks give no agreement dates. Order No. 2023's pro forma study work runs
 390 to 480 days in all (150-day cluster study, 150-day restudy, 90- or 180-day facilities study), and it "could be
 further extended by restudies" (FERC 2025e); FERC accepted about 540 days for PJM, 460 for NYISO, 270 plus 90 for
 ISO-NE and SPP's existing DISIS timeframes. The 8-month row is the on-time path from a first result to an agreement
@@ -470,7 +475,8 @@ margin at its 2035 level, so the 2041 figures rest on that extension.
 
 A negative number is a smaller shortfall. In 2035 the bill's capacity that comes sooner reduces the shortfall a
 little; by 2041, on the first-result reading, the requests lost at the first result raise it. Most of the shortfall
-is in PJM, where the bill adds least on every reading, so the bill does not close the gap. Under the joint
+is in PJM, where the bill adds least on the first-result and published-location readings, so the bill does not close
+the gap. Under the joint
 uncertainty analysis the 2035 shortfall change is
 -1.1 GW
 [-5.1,
@@ -508,7 +514,7 @@ Latin-hypercube samples, and splits the variance of the result by rank regressio
 
 Whether RTOs change their process matters most, then the Sec.2110 gain, which the bill does not size, and then the
 scale of the re-study cost changes: halving SPP's measured changes turns the central case positive, and raising them
-by half doubles the loss. The hold row has no effect by construction: with a single
+by half more than doubles the loss. The hold row has no effect by construction: with a single
 decision point a held request has no later stage at which it could stay, so the hold only delays when its withdrawal
 is recorded. Upgrade-cost growth matters more for the level of current law than
 for the bill's effect: at zero, current law brings 1065 GW online, against
@@ -579,7 +585,7 @@ independent of the fit.
 
 How well the fit worked. Zero-cost completion in RTO regions is
 0.771 against a target of 0.772.
-Outside RTOs the fitted failure share sits at the lower bound of its range, which is the value from my fit to LBNL's
+Outside RTOs the fitted failure share sits at the upper bound of its range, which is the value from my fit to LBNL's
 data, and zero-cost completion is 0.424 against
 0.493, on few requests; that value is a corner. Of the 28 technology
 and region cells with an LBNL completion rate of at least 5%, 26 are within 35% of it; ERCOT storage completes at
@@ -666,7 +672,7 @@ provisions is the better-validated part of the result. The uncertainty intervals
 
 | study | model | bill text | headline | how interconnection is treated |
 |---|---|---|---|---|
-| This brief | queue model with operator and developer rules, plus permitting and courts | Senate-passed (19 Nov) | with every RTO changing, -20.4 to +41.4 GW of new capacity by Nov 2041 across readings of the single decision point; +5.2 GW if no RTO changes; 0.0 GW by 2028 | Sec.2106 only in FERC-jurisdictional RTOs; whether each changes its process, what the single decision point removes, and how strictly the security screens are assumptions |
+| This brief | queue model with operator and developer rules, plus permitting and courts | Senate-passed (19 Nov) | with every RTO changing, -23.4 to +41.4 GW of new capacity by Nov 2041 across readings of the single decision point; +5.2 GW if no RTO changes; 0.0 GW by 2028 | Sec.2106 only in FERC-jurisdictional RTOs; whether each changes its process, what the single decision point removes, and how strictly the security screens are assumptions |
 | Rhodium Group (2 Nov 2026) | RHG-NEMS, capacity expansion | as introduced | 17 to 249 GW more clean capacity through 2040 across its high-, mid- and low-emissions scenarios (technology costs, fuel prices); mid case 56 GW | "we reduce barriers in the existing interconnection process" |
 | Resources for the Future (Rennert and Bergman, 29 Oct 2026) | ReEDS, capacity expansion | as introduced | about 60 GW more clean capacity in 2028; transmission about 30% above baseline in 2041 | baseline interconnection limits removed in the policy cases; results reported as robust to that representation |
 | SEIA (10 Nov 2026) | not retrieved | not stated | 167 GW more solar, 2028-35 | not retrieved |
@@ -748,8 +754,13 @@ Developers respond to upgrade costs, published waits and their region's projecte
 credits or offtake contracts, so the model says nothing about how the bill interacts with federal tax credits or
 power prices. Demand is NERC's 2025 forecast and does not respond to the bill; the s.229(c)(1)(D) authority for
 states on data-center supply is outside the model. On-peak shares of wind, solar and batteries start at NERC's
-national values and fall halfway to PJM's ELCC class ratings for 2041/42 by 2041; they do not respond to how much of
-each is built.
+national values and fall halfway to PJM's ELCC class ratings for 2041/42 by 2041, except in PJM, where they stay at
+2026 values; they do not respond to how much of each is built.
+
+Sec.2109's extra hosting room is applied, from the rule month, to every transmission request the model completes from
+November 2026, so lines finished before the rule month get it too, while MISO's approved Long Range Transmission Plan
+lines, Tranche 2.1 included (in service 2032-34), get none. The two errors go in opposite directions; Sec.2109 is worth
+2.0 GW in the central case.
 
 Requests already in the queue when the rule takes effect keep the current process, because the new s.228 has no
 transition clause; if FERC moved them into the reformed process, the effect would come sooner. The rule month (three
@@ -833,13 +844,15 @@ Docket No. ER24-2026. 191 FERC ¶ 61,230 (known to me from FERC 2026a; not retri
 Federal Energy Regulatory Commission (2025e, 24 July). Order on compliance filing, PJM Interconnection, L.L.C.,
 Docket No. ER24-2045.
 
-Federal Energy Regulatory Commission (2025f, 16 October). Order on compliance filing, New York Independent System
+Federal Energy Regulatory Commission (2025f, 16 October). Order addressing arguments raised on rehearing, and setting
+aside prior order, in part, and on compliance, New York Independent System
 Operator, Inc., Docket No. ER24-1915-002.
 
 Federal Energy Regulatory Commission (2026a, 22 January). Order on compliance filing, Southwest Power Pool, Inc.,
 Docket No. ER24-2026.
 
-Federal Energy Regulatory Commission (2026b, 16 April). Order on compliance filing, PJM Interconnection, L.L.C.,
+Federal Energy Regulatory Commission (2026b, 16 April). Order accepting compliance in part and directing further
+compliance, PJM Interconnection, L.L.C.,
 Docket No. ER24-2045. 195 FERC ¶ 61,031.
 
 Grimm, V., Revilla, E., Berger, U., Jeltsch, F., Mooij, W.M., Railsback, S.F., Thulke, H.-H., Weiner, J.,
