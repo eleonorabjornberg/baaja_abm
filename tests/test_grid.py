@@ -261,3 +261,4 @@ def test_sec2109_covers_only_lines_finished_from_the_rule_month():
     assert gr.covered_2109(6, 3, plan, scn) == (2.0, 4.0)   # the approved line of month 2 predates the rule
     assert gr.covered_2109(60, 3, plan, scn) == (2.0, 4.0)  # past the end of the count: last value
     assert gr.covered_2109(6, 0, plan, None) == (3.5, 0.0)
+    assert gr.covered_2109(3, 2.4, plan, scn) == gr.covered_2109(3, 3, plan, scn)   # fractional rule month

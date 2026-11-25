@@ -85,7 +85,8 @@ def covered_2109(t, rule, plan, scn=None):
     if scn is None:
         return cp, 0.0
     tt = min(t, len(scn) - 1)
-    before = scn[min(rule - 1, len(scn) - 1)] if rule >= 1 else 0.0
+    r0 = int(np.ceil(rule))                       # rule may be fractional (uncertainty samples); months are whole
+    before = scn[min(r0 - 1, len(scn) - 1)] if r0 >= 1 else 0.0
     return cp, float(scn[tt] - before)
 
 

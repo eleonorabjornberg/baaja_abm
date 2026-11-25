@@ -8,12 +8,12 @@ New capacity excludes relicensed hydro (existing plants kept in service), shown 
 
 | scenario (grid agents) | renewable GW | gas GW | storage GW | new capacity GW | relicensed hydro GW (not new) | on-peak accredited GW 2035 | shortfall GW 2035 | shortfall GW 2041 |
 |---|---|---|---|---|---|---|---|---|
-| BAAJA | -7.3 [-17.8, +3.3] | +3.3 [-0.9, +8.4] | -5.2 [-8.6, -0.7] | -9.1 [-20.3, +2.8] | +1.8 [+1.2, +2.4] | +2.3 [+0.4, +4.7] | -1.6 [-3.8, -0.1] | +3.9 [-1.3, +9.0] |
-| BAAJA without Sec.2106 | +4.2 [+2.5, +6.2] | +0.4 [+0.0, +1.1] | +0.6 [+0.2, +1.0] | +5.2 [+3.4, +7.3] | +1.8 [+1.2, +2.4] | +0.7 [+0.3, +1.1] | -0.2 [-0.5, -0.0] | -0.8 [-1.4, -0.3] |
+| BAAJA | -6.4 [-16.8, +4.1] | +3.5 [-0.7, +8.9] | -5.1 [-8.6, -0.7] | -8.0 [-19.2, +3.4] | +1.8 [+1.2, +2.4] | +2.4 [+0.4, +4.8] | -1.7 [-3.8, -0.1] | +3.7 [-1.3, +9.0] |
+| BAAJA without Sec.2106 | +4.9 [+3.3, +7.0] | +0.6 [+0.0, +1.1] | +0.7 [+0.2, +1.1] | +6.2 [+4.5, +8.2] | +1.8 [+1.2, +2.4] | +0.7 [+0.3, +1.1] | -0.3 [-0.5, -0.0] | -1.0 [-1.8, -0.4] |
 | BAAJA without Sec.2109 hosting | -8.6 [-19.0, +1.9] | +3.0 [-0.9, +8.4] | -5.6 [-9.2, -1.0] | -11.1 [-22.6, +0.1] | +1.8 [+1.2, +2.4] | +2.3 [+0.3, +4.6] | -1.6 [-3.8, -0.1] | +4.2 [-0.8, +9.1] |
 | Sec.2106 only | -11.5 [-21.7, -1.2] | +2.8 [-1.3, +8.0] | -5.7 [-9.3, -1.0] | -14.4 [-25.7, -2.6] | +0.0 [+0.0, +0.0] | +1.6 [-0.3, +3.9] | -1.4 [-3.6, +0.0] | +4.7 [-0.4, +9.4] |
-| BAAJA, Sec.2106 adopted by every RTO | -16.5 [-21.8, -10.8] | +6.3 [+3.1, +9.1] | -10.2 [-13.4, -8.1] | -20.4 [-27.0, -13.3] | +1.8 [+1.2, +2.4] | +3.9 [+1.9, +5.8] | -3.0 [-4.5, -1.7] | +7.3 [+4.1, +10.1] |
-| BAAJA + Sec.2110 throughput +25% | +4.5 [-9.5, +19.0] | +7.5 [+3.6, +12.0] | -0.5 [-5.0, +4.6] | +11.5 [-5.9, +28.5] | +1.8 [+1.2, +2.4] | +7.8 [+5.8, +10.6] | -3.8 [-5.9, -2.1] | +3.0 [-2.2, +8.2] |
+| BAAJA, Sec.2106 adopted by every RTO | -15.5 [-20.9, -9.8] | +6.6 [+3.3, +9.3] | -10.2 [-13.3, -7.9] | -19.1 [-25.7, -12.0] | +1.8 [+1.2, +2.4] | +4.0 [+2.0, +5.8] | -3.0 [-4.7, -1.8] | +7.2 [+4.0, +10.1] |
+| BAAJA + Sec.2110 throughput +25% | +5.3 [-8.8, +19.9] | +7.7 [+3.8, +12.4] | -0.4 [-5.0, +4.7] | +12.7 [-4.9, +29.9] | +1.8 [+1.2, +2.4] | +7.9 [+5.8, +10.6] | -3.8 [-6.0, -2.1] | +3.0 [-2.2, +8.2] |
 
 ## Timing: new capacity online, cumulative difference from current law
 
@@ -25,9 +25,9 @@ Sec.2106 and Sec.2110 apply from the rule month (ix_rule_month, central 36 month
 | 2030 | 107 | +0.2 [+0.0, +0.7] | +0.2 [+0.0, +0.7] | +0.2 [+0.0, +0.7] |
 | 2032 | 56 | +0.7 [+0.2, +1.5] | +0.7 [+0.2, +1.5] | +0.7 [+0.2, +1.5] |
 | 2033 | 64 | +1.5 [+0.4, +2.9] | +1.1 [+0.5, +2.0] | +1.9 [+0.7, +4.1] |
-| 2035 | 57 | +3.8 [+1.2, +7.5] | +1.9 [+0.9, +2.9] | +5.6 [+2.6, +9.7] |
-| 2038 | 54 | -1.9 [-8.9, +3.5] | +3.3 [+2.1, +4.8] | -5.7 [-11.3, -0.4] |
-| 2041 | 52 | -9.1 [-20.3, +2.8] | +5.2 [+3.4, +7.3] | -20.4 [-27.0, -13.3] |
+| 2035 | 57 | +3.9 [+1.3, +7.5] | +1.9 [+0.9, +3.0] | +5.6 [+2.7, +10.1] |
+| 2038 | 54 | -1.3 [-8.7, +4.2] | +3.7 [+2.4, +5.5] | -5.0 [-10.8, +0.5] |
+| 2041 | 52 | -8.0 [-19.2, +3.4] | +6.2 [+4.5, +8.2] | -19.1 [-25.7, -12.0] |
 
 ## Exogenous study times vs grid agents
 
@@ -36,7 +36,7 @@ Sims 1-6 draw each request's study time; here it comes out of the queue. The two
 | grid model | current law new GW 2041 | BAAJA minus current law, new GW | renewable GW | gas GW | storage GW |
 |---|---|---|---|---|---|
 | exogenous study times (Sims 1-6) | 1090 [1070, 1113] | +8.0 [+6.1, +9.6] | +6.6 [+4.7, +8.2] | +1.0 [+0.4, +1.6] | +0.3 [+0.1, +0.6] |
-| grid agents (this simulation) | 983 [964, 1004] | -9.1 [-20.3, +2.8] | -7.3 [-17.8, +3.3] | +3.3 [-0.9, +8.4] | -5.2 [-8.6, -0.7] |
+| grid agents (this simulation) | 983 [964, 1004] | -8.0 [-19.2, +3.4] | -6.4 [-16.8, +4.1] | +3.5 [-0.7, +8.9] | -5.1 [-8.6, -0.7] |
 
 ### Current law: capacity shortfall below reference margins
 
@@ -66,7 +66,7 @@ With grid agents, developers respond to their region's projected shortfall, so s
 | CAISO | 174 | 38 | 0.10 | 0.24 | 39 | -11 | -1.3 | +0.000 | -1.2 | -2.3 |
 | ERCOT | 504 | 26 | 0.19 | 0.62 | 214 | +0 | +0.0 | +0.000 | +0.5 | +0.5 |
 | ISO-NE | 117 | 30 | 0.15 | 0.46 | 23 | -6 | -1.0 | -0.000 | -1.2 | -2.6 |
-| MISO | 574 | 31 | 0.09 | 0.49 | 157 | -27 | -1.0 | -0.001 | +0.7 | +0.5 |
+| MISO | 574 | 31 | 0.09 | 0.49 | 157 | -27 | -1.0 | -0.001 | +1.8 | +1.8 |
 | NYISO | 232 | 30 | 0.07 | 0.45 | 30 | -13 | -1.0 | -0.003 | -2.1 | -4.1 |
 | PJM | 447 | 30 | 0.13 | 0.50 | 125 | -26 | -1.4 | -0.001 | -4.9 | -9.0 |
 | SPP | 231 | 32 | 0.08 | 0.76 | 62 | -12 | -1.1 | -0.001 | -2.6 | -4.9 |
@@ -189,20 +189,20 @@ kappa's low end is 0 (upgrade cost does not rise with capacity signed): it shows
 
 | assumption | low / high | BAAJA minus current law, new GW | current law new GW | what it is |
 |---|---|---|---|---|
-| entry_wait_elast (current law) | 0.0 / 1.0 | -9.5 / -5.9 | 983 / 995 | elasticity of new requests to the published wait for a study result |
-| scarcity_beta (current law) | 0.0 / 3.0 | -7.4 / -10.5 | 988 / 988 | developer value and entry rise by exp(beta x change in the region's projected capacity shortfall as a share of peak demand, 4 years ahead) |
-| kappa (current law) | 0.0 / 5.14 | -10.6 / -4.6 | 1065 / 916 | growth of network-upgrade cost with capacity signed, per share of the regional fleet [D: LBNL cost data, 2018+ vs 2010-17 requests; central = median of MISO, SPP, PJM, high = PJM, low = 0; not ERCOT] |
-| restudy_rho (current law) | 0.0 / 0.6 | -8.7 / -4.3 | 990 / 966 | re-study: cost change for remaining requests per unit withdrawn MW share above SPP's median (0.45), on top of SPP's request-level changes [D: SPP, slope of cluster cost ratio on withdrawn share through the origin, 0.11, s.e. about 0.8; zero not excluded] |
-| restudy_scale (current law) | 0.5 / 1.5 | +4.6 / -19.4 | 927 / 1036 | re-study: scale on the request-level log change in upgrade cost, drawn from SPP's changes from Phase 2 to the latest posting [D: data/spp_restudy.json, 325 requests; median -0.17, 10th and 90th percentiles -2.85 and +0.51] |
-| restudy_months (current law) | 8 / 29 | -9.4 / -7.9 | 988 / 986 | months from the first complete study result to the agreement in cluster regions under the current process [D: SPP, Phase 2 to the latest restudy posting, censored, median of 8 clusters 16.8, high 28.7 (SPP's active-queue file gives no agreement dates); low 8 = Order No. 2023's pro forma 150-day cluster restudy plus 90-day facilities study] |
-| tx_hosting_gw (current law) | 0.5 / 3.0 | -10.1 / -3.5 | 975 / 1005 | GW of interconnection room added by one transmission project |
-| adopt_2106 (bill) | 0.0 / 1.0 | +5.6 / -20.3 | 986 / 986 | Sec.2106(d): probability that an RTO's process changes rather than being found compliant, drawn per RTO [A; check: under Order No. 2023 FERC let every RTO keep its existing cluster process through variations and accepted all five filings in part, so outcomes were alike across RTOs; independence per RTO understates that] |
-| planned_share_2106 (bill) | 0.25 / 0.9 | -8.5 / -7.4 | 986 / 986 | Sec.2106(a)(2): share of requests able to use a published location |
-| screen_2106 (bill) | 0.1 / 0.5 | -6.4 / -18.2 | 986 / 986 | Sec.2106(a)(3): share of requests that non-refundable security and withdrawal penalties keep out, those least likely to complete within their technology and region [A; check: LBNL 12-month withdrawal shares of 2015-19 requests in FERC RTOs run 0.14 (SPP) to 0.58 (CAISO), median about 0.3; Johnston, Liu and Yang find deposits deter mainly such quick leavers] |
-| lag_2106 (bill) | 0.0 / 1.0 | -8.0 / -8.0 | 986 / 986 | Sec.2106(a)(3): months a developer holds its queue position after an adverse study result, relative to current law, with a single decision point and withdrawal penalties (0 = leaves at once) |
-| fee_mult_2106 (bill) | 0.8 / 1.5 | -7.6 / -8.4 | 986 / 986 | Sec.2106(a)(2): fixed fee as a multiple of the region's expected (mean) upgrade cost, zero-cost requests included; 1 = the fee recovers expected upgrade cost |
-| g_2110 (bill) | 0.0 / 0.25 | -8.0 / +16.3 | 986 / 986 | Sec.2110: study throughput gain (rulemaking with no target) |
-| hosting_2109 (bill) | 0.0 / 0.3 | -10.1 / -4.0 | 986 / 986 | Sec.2109: extra hosting room per transmission project (advanced transmission technologies) |
+| entry_wait_elast (current law) | 0.0 / 1.0 | -8.5 / -4.6 | 983 / 995 | elasticity of new requests to the published wait for a study result |
+| scarcity_beta (current law) | 0.0 / 3.0 | -6.1 / -9.6 | 988 / 988 | developer value and entry rise by exp(beta x change in the region's projected capacity shortfall as a share of peak demand, 4 years ahead) |
+| kappa (current law) | 0.0 / 5.14 | -10.6 / -2.3 | 1065 / 916 | growth of network-upgrade cost with capacity signed, per share of the regional fleet [D: LBNL cost data, 2018+ vs 2010-17 requests; central = median of MISO, SPP, PJM, high = PJM, low = 0; not ERCOT] |
+| restudy_rho (current law) | 0.0 / 0.6 | -7.7 / -3.3 | 990 / 966 | re-study: cost change for remaining requests per unit withdrawn MW share above SPP's median (0.45), on top of SPP's request-level changes [D: SPP, slope of cluster cost ratio on withdrawn share through the origin, 0.11, s.e. about 0.8; zero not excluded] |
+| restudy_scale (current law) | 0.5 / 1.5 | +5.7 / -18.4 | 927 / 1036 | re-study: scale on the request-level log change in upgrade cost, drawn from SPP's changes from Phase 2 to the latest posting [D: data/spp_restudy.json, 325 requests; median -0.17, 10th and 90th percentiles -2.85 and +0.51] |
+| restudy_months (current law) | 8 / 29 | -8.5 / -6.9 | 988 / 986 | months from the first complete study result to the agreement in cluster regions under the current process [D: SPP, Phase 2 to the latest restudy posting, censored, median of 8 clusters 16.8, high 28.7 (SPP's active-queue file gives no agreement dates); low 8 = Order No. 2023's pro forma 150-day cluster restudy plus 90-day facilities study] |
+| tx_hosting_gw (current law) | 0.5 / 3.0 | -9.9 / -0.7 | 975 / 1005 | GW of interconnection room added by one transmission project |
+| adopt_2106 (bill) | 0.0 / 1.0 | +6.5 / -19.0 | 986 / 986 | Sec.2106(d): probability that an RTO's process changes rather than being found compliant, drawn per RTO [A; check: under Order No. 2023 FERC let every RTO keep its existing cluster process through variations and accepted all five filings in part, so outcomes were alike across RTOs; independence per RTO understates that] |
+| planned_share_2106 (bill) | 0.25 / 0.9 | -7.5 / -6.4 | 986 / 986 | Sec.2106(a)(2): share of requests able to use a published location |
+| screen_2106 (bill) | 0.1 / 0.5 | -5.4 / -17.2 | 986 / 986 | Sec.2106(a)(3): share of requests that non-refundable security and withdrawal penalties keep out, those least likely to complete within their technology and region [A; check: LBNL 12-month withdrawal shares of 2015-19 requests in FERC RTOs run 0.14 (SPP) to 0.58 (CAISO), median about 0.3; Johnston, Liu and Yang find deposits deter mainly such quick leavers] |
+| lag_2106 (bill) | 0.0 / 1.0 | -7.1 / -7.1 | 986 / 986 | Sec.2106(a)(3): months a developer holds its queue position after an adverse study result, relative to current law, with a single decision point and withdrawal penalties (0 = leaves at once) |
+| fee_mult_2106 (bill) | 0.8 / 1.5 | -6.6 / -7.5 | 986 / 986 | Sec.2106(a)(2): fixed fee as a multiple of the region's expected (mean) upgrade cost, zero-cost requests included; 1 = the fee recovers expected upgrade cost |
+| g_2110 (bill) | 0.0 / 0.25 | -7.1 / +17.3 | 986 / 986 | Sec.2110: study throughput gain (rulemaking with no target) |
+| hosting_2109 (bill) | 0.0 / 0.3 | -10.1 / -0.6 | 986 / 986 | Sec.2109: extra hosting room per transmission project (advanced transmission technologies) |
 
 ### Current law with an entry screen
 
@@ -210,9 +210,9 @@ Sec.2106(a)(3)'s non-refundable security and withdrawal penalties are modelled a
 
 | entry screens | current law new GW | BAAJA minus current law | every RTO adopts Sec.2106 |
 |---|---|---|---|
-| current law: none; Sec.2106: relative 0.25 (central) | 986 | -8.0 | -20.3 |
-| current law: 0.1 share screened (Order 2023 deposits) | 995 | -9.3 | -23.9 |
-| Sec.2106: absolute screen at 0.25 (previous specification) | 986 | -31.9 | -69.4 |
+| current law: none; Sec.2106: relative 0.25 (central) | 986 | -7.1 | -19.0 |
+| current law: 0.1 share screened (Order 2023 deposits) | 995 | -8.2 | -22.6 |
+| Sec.2106: absolute screen at 0.25 (previous specification) | 986 | -30.9 | -68.0 |
 
 ## Planned transmission under current law
 
@@ -220,6 +220,6 @@ MISO's LRTP Tranches 1 and 2.1 (data/planned_tx.json) add hosting room in both r
 
 | approved transmission (both runs) | current law new GW | BAAJA minus current law | every RTO adopts Sec.2106 |
 |---|---|---|---|
-| MISO LRTP Tranches 1 and 2.1 (central) | 986 | -8.0 | -20.3 |
-| with SPP's 2025 ITP and PJM's 2025 RTEP | 993 | -7.8 | -20.3 |
+| MISO LRTP Tranches 1 and 2.1 (central) | 986 | -7.1 | -19.0 |
+| with SPP's 2025 ITP and PJM's 2025 RTEP | 993 | -6.3 | -18.5 |
 | left out | 969 | -9.1 | -23.8 |
