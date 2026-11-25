@@ -187,7 +187,7 @@ completion by cost (model 0.30 to 0.01 by bin vs LBNL 0.80 to 0.07) and PJM's ze
 Eleonora asked for the data behind the brief's limits to be downloaded. What came in and what it changed:
 - SPP DISIS results workbooks, clusters 2016-1 to 2023-1, every posting (`data/extract_spp_restudy.py` ->
   `data/spp_restudy.json`): the current-law re-study round is now fitted, not assumed. `restudy_rho` 0.1 (s.e. about
-  0.8), `restudy_mu` -0.08, `restudy_sd` 0.6, `restudy_months` 17 (range 5 = Order No. 2023's 150-day deadline, to 29).
+  0.8), `restudy_mu` -0.08, `restudy_sd` 0.6, `restudy_months` 17 (range 5 to 29). Superseded on 25 Nov: see below.
 - LBNL's completion fit has a share of requests that fail at any cost; `value_a` (0.772 ISO, 0.493 non-ISO) makes
   those requests leave whatever their cost, so a zero-cost draw no longer guarantees completion (PJM's earlier null).
 - Approved transmission (MISO LRTP Tranches 1 and 2.1, SPP 2025 ITP, PJM 2025 RTEP 500 kV+) enters as hosting room in
@@ -204,6 +204,37 @@ Sec.2106 (every RTO); with a five-month re-study round Sec.2106 adds +34.2; with
 [+4.6, +90.1]; realized adoption 54% of variance, Sec.2110 12%. Shortfall, current law 68 GW in 2035 and 112 in 2041;
 BAAJA cuts it by 4.9 [0.4, 9.7] in 2035 (9.0 every RTO). Backcast: agents 0.67 / 0.83 / 0.80 / 0.41 of EIA-860
 solar / wind / gas / storage 2018-25; regional log error 0.52 (exogenous 0.42).
+
+## Third review: model revision with guards (25 Nov 2026)
+Three reviewers found two bugs and a re-study round that could only destroy completions. Eleonora chose a full model
+revision and asked how to stop another rewrite. The revision plan set five guards: the brief's frame is frozen (a range set by adoption, what the single decision point
+removes and the screen); every model number in the brief comes from results (`docs/brief_src.md` ->
+`python -m baaja.brief_numbers` -> `docs/brief.md`, tested); behavior tests for each claim the text makes; one
+specification review before the long rerun; and a stopping rule (the final review checks numbers, quotes and code
+against text only; a methods disagreement becomes a sensitivity row or a stated limit, and only bugs and factual errors
+reopen the model).
+- Bugs fixed: legacy requests in cluster regions now go through current law's re-study round; approved lines enter in
+  July of their in-service year (`month_of`); Sec.2109 reaches only the public-utility share of each region's load
+  (`data/extract_pu_share.py` -> `data/pu_share.json`, EIA-861 2025 investor-owned share, ERCOT 0); the first result
+  comes no sooner than five months after the cluster study starts.
+- Re-study round: the cost change of each request is drawn from SPP's 325 request-level changes after Phase 2
+  (`after_P2.logchange_q`, median -17%, skewed toward falls), scaled by `restudy_scale` (0.5 / 1 / 1.5); `restudy_rho`
+  is relative to SPP's median withdrawn share 0.446. A request with an adverse first result that is still holding when
+  the re-study comes, and whose re-studied cost is at or below its value, stays; one whose cost rises above its value
+  leaves at the agreement. `restudy_months` 8 / 17 / 29 (8 = pro forma on-time path; 17 = SPP Phase 2 to the latest
+  posting, censored; SPP's active-queue file has no agreement dates).
+- Failure share: `calibrate_grid` fits `value_a` per ISO and non-ISO so that zero-cost completion in the backcast equals
+  LBNL's 0.772 / 0.493, in its own loop before the value scales. Non-ISO zero-cost requests are West only (about 12 per
+  seed), so that fit is noisier.
+- Screen ranks by the chance of completing (fail-at-any-cost requests at the bottom); `screen_rank="value"` is a row.
+- Approved transmission: MISO LRTP only in the central case; SPP's ITP and PJM's RTEP are a sensitivity
+  (`planned_tx_scope="all"`), since kappa already nets out recurring expansion.
+- New Sec.2106 readings (decomposition section G): only published locations skip the round (`sdp_scope_2106`), the
+  re-study cost change kept at the single decision (`sdp_cost_2106`), screen by value. Hazard rows (section H): no
+  background withdrawal during the round, MISO's later hazard set to PJM's.
+- Finding from the smoke test, before the refit: with every RTO adopting and the single decision fixing the cost at the
+  first result, the bill lowers new capacity, because in SPP's data most stayers' costs fall at re-study as others
+  withdraw. The sign depends on what the single decision point removes; the frozen frame reports that range.
 
 ## Known issues carried forward
 - Grid agents: completed projects take too long from request to operation (a longer wait does not raise withdrawal,
