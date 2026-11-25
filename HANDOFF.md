@@ -236,12 +236,13 @@ reopen the model).
   first result, the bill lowers new capacity, because in SPP's data most stayers' costs fall at re-study as others
   withdraw. The sign depends on what the single decision point removes; the frozen frame reports that range.
 - Rerun (100 paired runs; `results/sim7_grid_agents.md`, `results/sec2106_decomposition.md`, `results/uncertainty.md`):
-  current law 983 GW new by Nov 2041. Every RTO changing: first-result reading -20.4 GW (17-month round), -23.4
-  (8-month); only published locations skip the round +11.1; re-studied cost known at the single decision +41.4. No RTO
-  changes +5.2 [3.4, 7.3]; p = 0.5 on the first-result reading -9.1 [-20.3, +2.8]. Peak +6.5 GW in 2034, negative by
-  2037. PJM -9.0, MISO +0.5 (MISO 25.6 of the 41.4 on the cost-kept reading). Shortfall 70 GW in 2035 (PJM 57); BAAJA
-  cuts it by 1.6 (p = 0.5) to 3.0 (every RTO). Joint ranges +2.1 [-33.5, +27.0]; adoption 24%, Sec.2110 23%,
-  restudy_scale 13%. Halving the re-study changes gives +4.6 (20 runs). Calibration: 26 of 28 completion cells within
+  current law 983 GW new by Nov 2041. Every RTO changing: first-result reading -19.1 GW (17-month round), -22.1
+  (8-month); only published locations skip the round +12.2; re-studied cost known at the single decision +42.7. No RTO
+  changes +6.2 [4.5, 8.2]; p = 0.5 on the first-result reading -8.0 [-19.2, +3.4]. Peak +6.5 GW in 2034, negative by
+  2037. PJM -9.0, MISO +1.8 (MISO 26.9 of the 42.7 on the cost-kept reading). Shortfall 70 GW in 2035 (PJM 57); BAAJA
+  cuts it by 1.7 (p = 0.5) to 3.0 (every RTO). Joint ranges +3.0 [-32.9, +30.5]; Sec.2110 23%, adoption 22%,
+  restudy_scale 13%. Halving the re-study changes gives +5.7 (20 runs). Sec.2109 +3.1 (rerun 25 Nov with Sec.2109
+  credited only to lines, model and approved MISO, reaching operation from the rule month on; it had been 2.0). Calibration: 26 of 28 completion cells within
   35% (ERCOT storage 0.159 vs 0.117 and geothermal outside the West miss; `tests/test_grid.py` records the ERCOT miss);
   zero-cost completion 0.771 vs 0.772 (RTO) and 0.424 vs 0.493 (non-ISO, `value_a` at its lower bound).
 - Brief: `docs/brief_src.md` is the source; `python -m baaja.brief_numbers` renders `docs/brief.md` (345 numbers from

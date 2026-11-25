@@ -57,8 +57,8 @@ keeps growing after 2041. Of the new requests in RTO regions,
 {{dec:A|+ relative screen (central)/diff_new_rto_ever ; abs.1f}} GW fewer ever complete.
 
 PJM loses most on the first-result reading
-({{dec:A|+ relative screen (central)/diff_region/PJM ; abs.1f}} GW less with every RTO changing), and MISO is close to
-zero ({{dec:A|+ relative screen (central)/diff_region/MISO ; +.1f}} GW), because MISO's study capacity falls well short
+({{dec:A|+ relative screen (central)/diff_region/PJM ; abs.1f}} GW less with every RTO changing), and MISO gains a
+little ({{dec:A|+ relative screen (central)/diff_region/MISO ; +.1f}} GW), because MISO's study capacity falls well short
 of the requests arriving and a single decision shortens its queue. On the reading that keeps the re-studied cost,
 MISO gains {{dec:A|re-study cost change kept/diff_region/MISO ; .1f}} of the
 {{dec:A|re-study cost change kept/diff_GW_new/mean ; .1f}} GW.
@@ -530,11 +530,12 @@ Drawing every range in the table together, on the first-result reading, with the
 held fixed, gives a median of
 {{unc:grid agents (Phase 2), their assumptions drawn/bands/GW new/p50 ; +.1f}} GW
 [{{unc:grid agents (Phase 2), their assumptions drawn/bands/GW new/p5 ; +.1f}},
-{{unc:grid agents (Phase 2), their assumptions drawn/bands/GW new/p95 ; +.1f}}]. Realized adoption, the share of RTO
-capacity whose process changes, accounts for
-{{unc:grid agents (Phase 2), their assumptions drawn/variance/GW new/top/0/1 ; .0%}} of the variance, the Sec.2110
-gain for {{unc:grid agents (Phase 2), their assumptions drawn/variance/GW new/top/1/1 ; .0%}} and the scale of the
-re-study cost changes for {{unc:grid agents (Phase 2), their assumptions drawn/variance/GW new/top/2/1 ; .0%}}; no other
+{{unc:grid agents (Phase 2), their assumptions drawn/bands/GW new/p95 ; +.1f}}]. The Sec.2110 gain accounts for
+{{unc:grid agents (Phase 2), their assumptions drawn/variance/GW new/top/0/1 ; .0%}} of the variance and realized
+adoption, the share of RTO capacity whose process changes, for
+{{unc:grid agents (Phase 2), their assumptions drawn/variance/GW new/top/1/1 ; .0%}}, a tie within sampling error; the
+scale of the re-study cost changes accounts for
+{{unc:grid agents (Phase 2), their assumptions drawn/variance/GW new/top/2/1 ; .0%}}, and no other
 assumption accounts for more than 3%. When no RTO changes its process the median is
 {{unc:grid agents (Phase 2), their assumptions drawn/by_adoption/no RTO adopts/p50 ; +.1f}} GW
 [{{unc:grid agents (Phase 2), their assumptions drawn/by_adoption/no RTO adopts/p5 ; +.1f}},

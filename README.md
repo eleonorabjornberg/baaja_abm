@@ -97,9 +97,9 @@ technology at its 2025 request rate.
 **Bottom line for renewables vs gas.** The provisions the data can size favor renewables (about 6:1 in GW), mainly
 through federal-land rights-of-way and the court changes that hit local opposition, but they are small: +8 GW of new
 capacity on about 1,090. Sim 7's grid agents find that the sign of the bill's effect depends on what Sec.2106's
-"single decision point" removes: with every RTO changing its process, -20.4 GW by 2041 if requests decide once on
-their first-result cost, +11.1 GW if only published locations skip the re-study, +41.4 GW if the re-studied cost is
-known at the single decision; +5.2 GW if no RTO changes. Whether BAAJA matters for supply depends on what RTOs and
+"single decision point" removes: with every RTO changing its process, -19.1 GW by 2041 if requests decide once on
+their first-result cost, +12.2 GW if only published locations skip the re-study, +42.7 GW if the re-studied cost is
+known at the single decision; +6.2 GW if no RTO changes. Whether BAAJA matters for supply depends on what RTOs and
 FERC do under Sec.2106: the simpler model's dial brackets it between no change and ERCOT's pace (+209 GW), and nothing
 measured picks a point inside. Sim 7 replaces this dial
 with an agent-based queue that sizes the bill's actual mechanisms (below).
@@ -135,18 +135,19 @@ with an agent-based queue that sizes the bill's actual mechanisms (below).
      request-level changes after Phase 2 (`data/spp_restudy.json`, median -15%), and a request decides on the
      re-studied cost, so one whose cost falls can stay. The agreement comes 17 months after the first result (range
      8-29). A fitted share of requests fails at any cost (`value_a`), so that zero-cost completion matches LBNL.
-     Sec.2109 reaches only the public-utility share of each region (`data/pu_share.json`).
+     Sec.2109 reaches only the public-utility share of each region (`data/pu_share.json`), on lines (model and
+     approved MISO lines) reaching operation from the rule month on; worth +3.1 GW.
    - Current law brings 983 GW online by Nov 2041. **The sign of Sec.2106 depends on what the single decision point
      removes** (every RTO changing, 100 paired runs, `results/sec2106_decomposition.md`): deciding once on the
-     first-result cost, -20.4 GW (17-month round) and -23.4 GW (8-month round); only published locations skip the
-     round, +11.1 GW; re-studied cost known at the single decision, +41.4 GW. **No RTO changes: +5.2 GW [+3.4, +7.3].**
-     Each RTO with probability 0.5, first-result reading: -9.1 GW [-20.3, +2.8] (a convention, not a forecast).
-   - Timing (every RTO, first-result reading): the gain peaks at +6.5 GW in 2034 and turns negative by 2037; 22.6 GW
-     fewer new RTO requests are online by 2041 but 56.4 GW fewer ever complete. PJM -9.0 GW, MISO +0.5; on the
-     cost-kept reading MISO gains 25.6 of the 41.4.
+     first-result cost, -19.1 GW (17-month round) and -22.1 GW (8-month round); only published locations skip the
+     round, +12.2 GW; re-studied cost known at the single decision, +42.7 GW. **No RTO changes: +6.2 GW [+4.5, +8.2].**
+     Each RTO with probability 0.5, first-result reading: -8.0 GW [-19.2, +3.4] (a convention, not a forecast).
+   - Timing (every RTO, first-result reading): the gain peaks at +6.5 GW in 2034 and turns negative by 2037; 21.3 GW
+     fewer new RTO requests are online by 2041 but 54.4 GW fewer ever complete. PJM -9.0 GW, MISO +1.8; on the
+     cost-kept reading MISO gains 26.9 of the 42.7.
    - Adequacy: current-law shortfall below NERC's Reference Margin Levels about 70 GW in 2035 (PJM 57); BAAJA reduces
-     it by 1.6 GW (p = 0.5) to 3.0 GW (every RTO) in 2035 and raises it in 2041 on the first-result reading.
-   - Likely too negative: SPP's changes are measured on survivors (halving them gives +4.6 GW at p = 0.5), and the
+     it by 1.7 GW (p = 0.5) to 3.0 GW (every RTO) in 2035 and raises it in 2041 on the first-result reading.
+   - Likely too negative: SPP's changes are measured on survivors (halving them gives +5.7 GW at p = 0.5), and the
      model's completion falls more steeply with upgrade cost than LBNL's (brief section 6).
    - The screen in 2106(a)(3) keeps out the quarter of new requests least likely to complete within their technology
      and region (range 10-50%), ranked by the chance of completing; it replaced an absolute threshold after results
@@ -160,10 +161,10 @@ with an agent-based queue that sizes the bill's actual mechanisms (below).
 (including the post-*Seven County* court range). Data-sized provisions: **+8.0 GW of new capacity [+4.6, +13.1]**
 (median, 5th-95th percentile), 2035 shortfall -0.4 GW [-0.9, -0.1]; Sec.2213's compliance range explains about half
 of the variance. Drawing the two interconnection dials across their ranges as well: +33.5 GW [+6.5, +188.7], and
-Sec.2106's dial explains 76% of the variance. **With the grid agents and all their assumptions drawn (first-result reading): +2.1 GW [-33.5,
-+27.0]** (renewables +0.9, gas +3.8, storage -1.8), 2035 shortfall -1.1 GW [-5.1, +0.4]; realized RTO adoption
-explains 24% of the variance, Sec.2110 throughput 23% and the re-study cost scale 13%; nothing else above 3%. By
-adoption: +9.4 GW if no RTO adopts, +0.9 if some do, -10.8 if all do (medians). Current-law shortfall in 2035: 59-68 GW
+Sec.2106's dial explains 76% of the variance. **With the grid agents and all their assumptions drawn (first-result reading): +3.0 GW [-32.9,
++30.5]** (renewables +1.8, gas +4.0, storage -1.7), 2035 shortfall -1.1 GW [-5.2, +0.4]; Sec.2110 throughput
+explains 23% of the variance, realized RTO adoption 22% and the re-study cost scale 13%; nothing else above 3%. By
+adoption: +13.8 GW if no RTO adopts, +2.3 if some do, -7.9 if all do (medians). Current-law shortfall in 2035: 59-68 GW
 (medians) [21, 133] across the three samples, driven by demand growth.
 
 ## Validation

@@ -10,7 +10,7 @@ New GW excludes relicensed hydro (existing plants kept in service).
 |---|---|---|---|---|---|---|---|---|---|
 | grid dials at 0 (data-sized provisions) | +8.0 [+4.6, +13.1] | +6.6 [+3.5, +11.7] | +1.1 [+0.4, +2.0] | +0.3 [+0.0, +0.6] | -64.5 [-102.0, -30.0] | +1.6 [+0.8, +2.6] | -0.4 [-0.9, -0.1] | -0.9 [-2.5, -0.3] | 60 [21, 116] |
 | grid dials across their ranges | +33.5 [+6.5, +188.7] | +20.8 [+5.1, +123.8] | +4.0 [+0.7, +16.9] | +7.6 [+0.1, +49.6] | -64.0 [-102.0, -30.0] | +5.1 [+1.0, +29.4] | -1.4 [-13.6, -0.1] | -4.5 [-39.9, -0.5] | 59 [22, 119] |
-| grid agents (Phase 2), their assumptions drawn | +2.1 [-33.5, +27.0] | +0.9 [-24.6, +17.1] | +3.8 [-0.9, +12.2] | -1.8 [-16.3, +4.4] | -105.0 [-160.1, -56.0] | +3.3 [+0.1, +8.5] | -1.1 [-5.1, +0.4] | +0.5 [-5.6, +12.4] | 68 [25, 133] |
+| grid agents (Phase 2), their assumptions drawn | +3.0 [-32.9, +30.5] | +1.8 [-23.7, +19.3] | +4.0 [-0.7, +12.2] | -1.7 [-16.3, +4.7] | -105.0 [-160.1, -56.0] | +3.3 [+0.1, +8.6] | -1.1 [-5.2, +0.4] | +0.5 [-6.1, +12.0] | 68 [25, 133] |
 
 ## What drives the result (grid dials at 0 (data-sized provisions))
 
@@ -30,11 +30,11 @@ New GW excludes relicensed hydro (existing plants kept in service).
 
 | result | R^2 (rank regression) | largest shares of variance [bootstrap 90%] |
 |---|---|---|
-| GW new | 0.72 (without realised adoption 0.65; realised adoption alone 0.23) | adoption realised (share of RTO capacity) 24% [16, 33]; g_2110 23% [18, 29]; restudy_scale 13% [10, 18]; screen_2106 3% [1, 4]; entry_wait_elast 2% [1, 4]; tx_hosting_gw 2% [1, 3]; hosting_2109 1% [0, 3]; scarcity_beta 1% [0, 2] |
-| shortfall change GW 2035 | 0.58 (without realised adoption 0.53; realised adoption alone 0.17) | adoption realised (share of RTO capacity) 19% [11, 30]; demand_growth_mult 13% [9, 17]; g_2110 8% [5, 11]; screen_2106 5% [3, 8]; elcc_decline 4% [2, 7]; restudy_scale 4% [2, 7]; ret_announced 1% [0, 3]; planned_share_2106 1% [0, 3] |
+| GW new | 0.72 (without realised adoption 0.66; realised adoption alone 0.21) | g_2110 23% [17, 28]; adoption realised (share of RTO capacity) 22% [14, 31]; restudy_scale 13% [9, 17]; tx_hosting_gw 3% [2, 5]; hosting_2109 3% [1, 5]; screen_2106 2% [1, 4]; entry_wait_elast 2% [1, 4]; kappa 1% [0, 3] |
+| shortfall change GW 2035 | 0.58 (without realised adoption 0.53; realised adoption alone 0.16) | adoption realised (share of RTO capacity) 19% [10, 29]; demand_growth_mult 13% [9, 17]; g_2110 7% [4, 10]; screen_2106 5% [3, 9]; elcc_decline 5% [2, 7]; restudy_scale 4% [2, 7]; ret_announced 1% [0, 3]; planned_share_2106 1% [0, 3] |
 
 | realised Sec.2106 adoption | new GW, BAAJA minus current law: median [5th, 95th] |
 |---|---|
-| no RTO adopts | +9.4 [+2.4, +34.2] |
-| some adopt | +0.9 [-28.8, +24.4] |
-| every RTO adopts | -10.8 [-52.6, +20.2] |
+| no RTO adopts | +13.8 [+2.5, +34.4] |
+| some adopt | +2.3 [-28.2, +30.1] |
+| every RTO adopts | -7.9 [-52.4, +23.1] |

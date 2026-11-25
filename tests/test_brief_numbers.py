@@ -47,3 +47,18 @@ def test_range_sum():
     d = bn._load("back")["eia"]["national"]["Solar"]
     want = sum(v for k, v in d.items() if 2018 <= int(k) <= 2025)
     assert abs(bn.lookup("back:eia/national/Solar/2018..2025") - want) < 1e-9
+
+
+def test_variance_ranks_match_the_names_the_brief_gives_them():
+    """The brief names the assumptions behind variance shares it quotes by rank: a reorder must fail here, not
+    mislabel the text."""
+    import json
+    p = os.path.join(bn.ROOT, bn.FILES["unc"])
+    if not os.path.exists(p):
+        pytest.skip("no uncertainty results")
+    u = json.load(open(p))
+    top = lambda k: [n for n, *_ in u[k]["variance"]["GW new"]["top"]]
+    g = top("grid agents (Phase 2), their assumptions drawn")
+    assert g[0] == "g_2110" and g[1].startswith("adoption realised") and g[2] == "restudy_scale", g[:3]
+    assert top("grid dials at 0 (data-sized provisions)")[0] == "comply_2213"
+    assert top("grid dials across their ranges")[0] == "ix_2106"
