@@ -58,6 +58,21 @@ PLAN_TX = {}
 for _pf in _PTX["portfolios"]:
     for _y, _bn in _pf["isd"].items():
         PLAN_TX.setdefault(REGIONS.index(_pf["region"]), []).append((int(_y), _bn / _PTX["unit_cost_bn"]))
+# investor-owned share of retail sales by region: the part of new transmission that FPA s.232(d) (BAAJA Sec.2109)
+# reaches, which applies "only to public utilities" [D: EIA-861 2025, data/pu_share.json; ERCOT 0]
+PU_SHARE = np.array([json.load(open(os.path.join(_D, "pu_share.json")))["share"][r] for r in REGIONS])
+# re-study cost change: request-level log change in $/kW from SPP's Phase 2 to its latest posting, at percentiles 0..100
+# [D: data/spp_restudy.json, after_P2.logchange_q]; SPP's median MW share withdrawn over the same span
+_SR = json.load(open(os.path.join(_D, "spp_restudy.json")))["after_P2"]
+RESTUDY_Q = np.array(_SR["logchange_q"])
+RESTUDY_WSH = float(_SR["withdrawn_median"])
+
+
+def month_of(year, month=7):
+    """Model month (0 = Nov 2026) of a calendar month."""
+    return (year - 2008) * 12 + (month - 1) - FORWARD_OFFSET
+
+
 D_DATA = np.array([sum(GT["arrivals"][r].get(str(y), 0) for y in range(2021, 2026)) / 60 for r in REGIONS])
 from .params import GRID_BASE, GRID_LEVERS  # noqa: E402  (assumptions live in params)
 
@@ -359,13 +374,19 @@ def _region(r, idx, F, out, p, op, U, onpk, ctx, tx, u_adopt, T, T_ext, backcast
     cst, val = COST[r], VALUE[r]
     cmed = np.exp(cst["mu"])
     zv, zc, uc0, zs, uloc, uacc, zr = (U[k][idx] for k in ("Zv", "Zc", "Uc0", "Zs", "Uloc", "Uacc", "Zr"))
-    # re-study: each remaining request's cost moves by exp(mu + sd z) [D: SPP DISIS postings, Phase 2 to latest]
-    shock = np.exp(p["restudy_mu"] + p["restudy_sd"] * zr)
+    # re-study: each remaining request's cost moves by a draw from SPP's request-level changes, Phase 2 to the latest
+    # posting [D: data/spp_restudy.json], scaled by restudy_scale (the SPP changes already include the effect of
+    # withdrawals at SPP's median withdrawn share; restudy_rho adds the effect of a share above or below it)
+    shock = np.exp(p["restudy_scale"] * np.interp(ndtr(zr) * 100, np.arange(101), RESTUDY_Q))
     v0 = np.exp(val["mu"] + val["sigma"] * zv) * F["vmult"][idx]   # private value, $/kW (technology x region scale)
     # LBNL's P(complete | cost) = a x P(value >= cost): a share 1 - a of requests that receive a study result do not
     # complete at any cost, zero cost included [D: same fit as value mu, sigma; ISO 0.77, non-ISO 0.49]
-    if p.get("value_a", True):
-        v0 = np.where(U["Ua"][idx] < val["a"], v0, -1.0)
+    # The share a is fitted (calibrate_grid) so that model completion of zero-cost requests matches LBNL's a; the
+    # other withdrawal routes (background hazard) act on top, so the fitted a is above LBNL's
+    a_fit = ((p.get("grid_cal") or {}).get("value_a") or {}).get("non-ISO" if r in NON_ISO else "ISO", val["a"])
+    a_eff = a_fit if p.get("value_a", True) else 1.0
+    ua = U["Ua"][idx]
+    v0 = np.where(ua < a_eff, v0, -1.0)
     # cost relative to the regional median of non-zero costs; LBNL's zero-cost share pays nothing
     craw = np.where(uc0 < cst["zero_share"], 0.0, np.exp(cst["sigma"] * zc))
     # expected upgrade cost (zero-cost share included): what a fee meant to recover upgrade costs has to charge
@@ -410,15 +431,20 @@ def _region(r, idx, F, out, p, op, U, onpk, ctx, tx, u_adopt, T, T_ext, backcast
     A = np.zeros(T_ext + 2)                                         # GW signed since month 0, by month (increments)
     kappa = 0.0 if r == ERCOT else p["kappa"]                       # ERCOT does not allocate network upgrades [D]
 
-    # planned current-law lines (same in both runs of a pair), mid-year of their in-service year
-    plan = [(12 * (y - 2026) + 6, k) for y, k in PLAN_TX.get(r, [])] if not backcast else []
+    # planned current-law lines (same in both runs of a pair), July of their in-service year. Central: MISO's LRTP
+    # only, a step above MISO's historical pace; SPP's ITP and PJM's RTEP are a sensitivity (planned_tx_scope="all"),
+    # since kappa, fitted to 2010-21 cost growth, already nets out recurring transmission expansion
+    scope = p.get("planned_tx_scope", "miso")
+    plan = ([(month_of(y), k) for y, k in PLAN_TX.get(r, [])]
+            if not backcast and (scope == "all" or REGIONS[r] == "MISO") else [])
+    pu = PU_SHARE[r]
 
     def cong(t):
         a = A[: t + 1].sum()
         h = p["tx_hosting_gw"] * p.get("planned_tx", 1.0) * sum(k for m, k in plan if t >= m)
         if tx is not None:
             tt = min(t, tx["scn"].shape[1] - 1)
-            extra = 1 + (p["grid_2109"] if t >= rule else 0.0)
+            extra = 1 + (p["grid_2109"] * pu if t >= rule else 0.0)     # s.232(d): public utilities only
             h += p["tx_hosting_gw"] * (extra * tx["scn"][r, tt] - tx["law"][r, tt])
         return np.exp(kappa * (a - h) / FLEET_GW[r])
 
@@ -434,18 +460,39 @@ def _region(r, idx, F, out, p, op, U, onpk, ctx, tx, u_adopt, T, T_ext, backcast
             ev.setdefault(int(sm), []).append((int(min(max(cm, 0), len(known) - 1)), f))
         return ok
 
-    def decide(sel, t_res, t_sign, c, single, tnow):
-        """Study results at t_res; agreements at t_sign. Non-adopting cluster regions: one re-study round."""
+    def restudied(c, wsh):
+        return np.where(planned, c, c * max(1 + p["restudy_rho"] * (wsh - RESTUDY_WSH), 0.0) * shock)
+
+    def decide(sel, t_res, t_sign, c, single, tnow, sdp_cost=False):
+        """Study results at t_res; agreements at t_sign. Cluster regions under the current process: one re-study
+        round between them. A request whose first cost exceeds its value holds its position for `lag` months and
+        then withdraws; if the re-study result comes within the hold and brings the cost to its value or below, it
+        stays and signs. A request whose cost rises above its value at re-study withdraws at the agreement stage.
+        Under a single decision point (single) the decision is at the first result on the first cost; with sdp_cost
+        the cost change of re-study still applies (decided at the first result)."""
         vm = v0 * np.exp(beta * (scar(tnow) - s0))
         alive1 = sel & (W >= t_res - t0)
-        stay1 = alive1 & ((c <= vm) | planned)
-        gwd[alive1 & ~stay1] = (t_res + lag)[alive1 & ~stay1]
-        if single or R == 0:
-            sign(stay1, t_sign); cost[alive1] = c[alive1]; return
         tot = mw[alive1].sum()
-        wsh = mw[alive1 & ~stay1].sum() / tot if tot > 0 else 0.0
-        c2 = np.where(planned, c, c * (1 + p["restudy_rho"] * wsh) * shock)
-        alive2 = stay1 & (W >= t_sign - t0)
+        if (single and not sdp_cost) or (not single and R == 0):
+            stay1 = alive1 & ((c <= vm) | planned)
+            gwd[alive1 & ~stay1] = (t_res + lag)[alive1 & ~stay1]
+            sign(stay1, t_sign); cost[alive1] = c[alive1]; return
+        bad1 = alive1 & ~planned & (c > vm)
+        w0 = mw[bad1].sum() / tot if tot > 0 else 0.0
+        if single:                                                    # sdp_cost: one decision, re-studied cost
+            c2 = restudied(c, w0)
+            stay1 = alive1 & ((c2 <= vm) | planned)
+            gwd[alive1 & ~stay1] = (t_res + lag)[alive1 & ~stay1]
+            sign(stay1, t_sign); cost[alive1] = c2[alive1]; return
+        held = (t_res + lag >= t_sign)                                # still holding when the re-study comes
+        leave1 = bad1 & ~(held & (restudied(c, w0) <= vm))
+        wsh = mw[leave1].sum() / tot if tot > 0 else 0.0
+        c2 = restudied(c, wsh)
+        gwd[leave1] = (t_res + lag)[leave1]
+        rest = alive1 & ~leave1
+        if p.get("hazard_pause_ia", False):                          # no background withdrawal during the round
+            W[rest] = W[rest] + np.maximum(t_sign - t_res, 0.0)[rest]
+        alive2 = rest & (W >= t_sign - t0)
         stay2 = alive2 & ((c2 <= vm) | planned)
         gwd[alive2 & ~stay2] = (t_sign + lag)[alive2 & ~stay2]
         sign(stay2, t_sign); cost[alive1] = c2[alive1]
@@ -493,7 +540,12 @@ def _region(r, idx, F, out, p, op, U, onpk, ctx, tx, u_adopt, T, T_ext, backcast
                     # entry screen (security and withdrawal penalties): within a technology and region the chance that
                     # the upgrade cost comes in below value rises with the private-value draw, so the requests least
                     # likely to complete are the lowest value ranks; a share of them is kept out
-                    rank = ndtr(zv[ii])
+                    # rank by the chance of completing: requests that fail at any cost (Ua >= a) take the bottom
+                    # 1 - a in random order, the rest rank by value above them; screen_rank="value" ranks by value only
+                    if p.get("screen_rank", "completion") == "value" or a_eff >= 1:
+                        rank = ndtr(zv[ii])
+                    else:
+                        rank = np.where(ua[ii] >= a_eff, ua[ii] - a_eff, (1 - a_eff) + a_eff * ndtr(zv[ii]))
                     if b2106:
                         cg = cong(t)
                         vm = v0[ii] * np.exp(beta * sc)
@@ -527,7 +579,7 @@ def _region(r, idx, F, out, p, op, U, onpk, ctx, tx, u_adopt, T, T_ext, backcast
             if done_now:
                 sel = np.zeros(n, bool); sel[done_now] = True; started[done_now] = True
                 tt = np.full(n, t + 1.0)
-                decide(sel, tt, tt, cmed * cong(t) * craw, True, t)
+                decide(sel, tt, tt, cmed * cong(t) * craw, not serial, t)   # cluster regions: the round's costs apply
             if lp < len(leg):
                 continue
             budget = 0.0; busy = max(busy, t + 1)
@@ -546,13 +598,17 @@ def _region(r, idx, F, out, p, op, U, onpk, ctx, tx, u_adopt, T, T_ext, backcast
             Ti = close + (Tj - close) * np.exp(sig * zs)
             started |= mem
             single = adopt & (t0 >= rule)                            # Sec.2106: single decision point
-            tres = np.maximum(Ti - R, t + 1) if serial else Ti     # first study result
+            if p.get("sdp_scope_2106", "all") == "planned":         # only published-location requests skip the round
+                single = single & planned
+            # first study result: R months before the agreement, and no sooner than 5 months (150 days) after the
+            # cluster study starts
+            tres = np.maximum(Ti - R, t + 5) if serial else Ti
             tsig = np.maximum(Ti, tres)
             c = np.where(planned, fee, cmed * cong(t) * craw)
             if serial and adopt:
                 # requests from the rule month: one decision at the first result; earlier ones: current process
                 s1 = mem & single
-                decide(s1, tres, tres, c, True, t)
+                decide(s1, tres, tres, c, True, t, p.get("sdp_cost_2106", False))
                 decide(mem & ~single, tres, tsig, c, False, t)
             else:
                 decide(mem, tres, tsig, c, not serial, t)

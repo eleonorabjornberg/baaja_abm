@@ -261,16 +261,18 @@ def run(n_runs, cal, res_dir, fig_dir, sweep_runs=None):
         scr[lab] = dict(law=float(g(Ls).mean()), baaja=float((g(Bs) - g(Ls)).mean()), every_rto=float((g(As) - g(Ls)).mean()))
     t_scr = table(["entry screens", "current law new GW", "BAAJA minus current law", "every RTO adopts Sec.2106"],
                   [[k, f"{v['law']:.0f}", f"{v['baaja']:+.1f}", f"{v['every_rto']:+.1f}"] for k, v in scr.items()])
-    # current-law planned transmission (MISO LRTP, SPP ITP, PJM RTEP) left out, in both runs
-    Ls = run_set(dict(AG, planned_tx=0.0), ns, cal)[0]
-    Bs = run_set(dict(scen["BAAJA"], planned_tx=0.0), ns, cal)[0]
-    As = run_set(dict(scen["BAAJA, Sec.2106 adopted by every RTO"], planned_tx=0.0), ns, cal)[0]
+    # current-law approved transmission: MISO LRTP only (central); with SPP's ITP and PJM's RTEP; none (both runs)
     g = lambda R: np.array([ex.totals(x)["GW_new"] for x in R])
-    ptx = dict(law=float(g(Ls).mean()), baaja=float((g(Bs) - g(Ls)).mean()), every_rto=float((g(As) - g(Ls)).mean()))
-    t_ptx = table(["planned transmission", "current law new GW", "BAAJA minus current law", "every RTO adopts Sec.2106"],
-                  [["approved portfolios in both runs (central)", f"{scr[next(iter(scr))]['law']:.0f}",
-                    f"{scr[next(iter(scr))]['baaja']:+.1f}", f"{scr[next(iter(scr))]['every_rto']:+.1f}"],
-                   ["left out", f"{ptx['law']:.0f}", f"{ptx['baaja']:+.1f}", f"{ptx['every_rto']:+.1f}"]])
+    ptx = {}
+    for lab, o in (("with SPP's 2025 ITP and PJM's 2025 RTEP", dict(planned_tx_scope="all")), ("left out", dict(planned_tx=0.0))):
+        Ls = run_set(dict(AG, **o), ns, cal)[0]
+        Bs = run_set(dict(scen["BAAJA"], **o), ns, cal)[0]
+        As = run_set(dict(scen["BAAJA, Sec.2106 adopted by every RTO"], **o), ns, cal)[0]
+        ptx[lab] = dict(law=float(g(Ls).mean()), baaja=float((g(Bs) - g(Ls)).mean()), every_rto=float((g(As) - g(Ls)).mean()))
+    c0 = scr[next(iter(scr))]
+    t_ptx = table(["approved transmission (both runs)", "current law new GW", "BAAJA minus current law", "every RTO adopts Sec.2106"],
+                  [["MISO LRTP Tranches 1 and 2.1 (central)", f"{c0['law']:.0f}", f"{c0['baaja']:+.1f}", f"{c0['every_rto']:+.1f}"]]
+                  + [[k, f"{v['law']:.0f}", f"{v['baaja']:+.1f}", f"{v['every_rto']:+.1f}"] for k, v in ptx.items()])
     t_sens = table(["assumption", "low / high", "BAAJA minus current law, new GW", "current law new GW", "what it is"], srows)
 
     md = "\n\n".join([
@@ -344,7 +346,8 @@ def run(n_runs, cal, res_dir, fig_dir, sweep_runs=None):
         "### Current law with an entry screen",
         "Sec.2106(a)(3)'s non-refundable security and withdrawal penalties are modelled as an entry screen: in an RTO "
         "that changes its process, the share screen_2106 (central 0.25) of new requests least likely to complete, "
-        "ranked within their technology and region, do not enter. Order 2023 already requires readiness deposits and "
+        "ranked within their technology and region, do not enter (requests that fail at any cost rank lowest, the rest "
+        "by private value). Order 2023 already requires readiness deposits and "
         "withdrawal penalties; the second row screens out a 0.1 share in both runs, to show how much of Sec.2106's "
         "screening effect is already in place. The third row is the previous specification, an absolute threshold "
         "(enter only if the chance that upgrade cost comes in below value is at least 0.25). It was replaced after "
@@ -352,9 +355,11 @@ def run(n_runs, cal, res_dir, fig_dir, sweep_runs=None):
         "its lower bound, almost no request passes.",
         t_scr,
         "## Planned transmission under current law",
-        "Regional portfolios approved by 2025 (MISO LRTP Tranches 1 and 2.1, SPP 2025 ITP, PJM 2025 RTEP 500 kV and "
-        "above; data/planned_tx.json) add hosting room in both runs from their in-service years, converted to "
-        "transmission project-equivalents at the average cost of a Tranche 1 project. The second row leaves them out.",
+        "MISO's LRTP Tranches 1 and 2.1 (data/planned_tx.json) add hosting room in both runs from July of their "
+        "in-service years, converted to transmission project-equivalents at the average cost of a Tranche 1 project. "
+        "They are a step above MISO's historical pace. SPP's 2025 ITP and PJM's 2025 RTEP (500 kV and above) are "
+        "counted only in the second row, because upgrade-cost growth (kappa) is fitted to 2010-21 data that already "
+        "include recurring regional expansion. The third row leaves approved transmission out.",
         t_ptx,
     ])
     data = dict(results={k: v for k, v in res.items()}, exogenous=res_exo,

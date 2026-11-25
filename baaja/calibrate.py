@@ -186,6 +186,32 @@ def _completion_cells(rows, keys, window=(0, 60)):
     return out
 
 
+COST_BINS = (0, 10, 50, 100, 200, 400, np.inf)
+
+
+def _cost_completion(rows, window=(0, 60)):
+    """Eventual completion of requests made in `window` that received a study result, ISO vs non-ISO: at zero upgrade
+    cost (the calibration target for the failure share a) and by LBNL's cost bins, $/kW (the like-for-like check
+    against LBNL's resolved requests). Model 'done' is eventual completion, so no request is still active."""
+    from .grid import NON_ISO
+    out = {"ISO": {}, "non-ISO": {}}
+    for mk in out:
+        z = n = 0.0
+        bins = np.zeros((len(COST_BINS) - 1, 2))
+        for r in rows:
+            if "cost" not in r or not TYPES[r["type"]]["ix"]:
+                continue
+            reg = np.isin(r["region"], NON_ISO) if mk == "non-ISO" else ~np.isin(r["region"], NON_ISO) & (r["region"] >= 0)
+            sel = ~r["seeded"] & (r["t0"] >= window[0]) & (r["t0"] < window[1]) & np.isfinite(r["cost"]) & reg
+            c, d = r["cost"][sel], r["done"][sel]
+            z += d[c <= 0].sum(); n += (c <= 0).sum()
+            k = np.clip(np.searchsorted(COST_BINS, c, side="right") - 1, 0, len(COST_BINS) - 2)
+            np.add.at(bins, (k, 0), d); np.add.at(bins, (k, 1), 1)
+        out[mk] = dict(zero=float(z / n) if n else np.nan, n_zero=float(n),
+                       by_bin=[float(b[0] / b[1]) if b[1] else np.nan for b in bins], n_bin=[float(b[1]) for b in bins])
+    return out
+
+
 def calibrate_grid(cal, seeds=tuple(range(7, 15)), iters=14, passes=3, operators=None):
     """Grid agents, current law, fitted in the 2010-25 backcast so that model and data cohorts share an era (the
     Phase 2 fit used 2026-30 model cohorts against 2015-19 data and missed the timing; Phase 3 backcast).
@@ -229,11 +255,13 @@ def calibrate_grid(cal, seeds=tuple(range(7, 15)), iters=14, passes=3, operators
             v[t if reg.startswith("*") else k] = float(np.exp(val))
         return v
 
-    def run(gc, ss):
+    def run(gc, ss, zc=None):
         got, wd = [], []
         for s in ss:
             rows = simulate(dict(pb, grid_cal=gc), s, BACKCAST["politics"])
             got.append(_completion_cells(rows, targets, comp_win)); wd.append(withdrawal_by_region(rows, coh))
+            if zc is not None:
+                zc.append(_cost_completion(rows, comp_win))
         return got, wd
 
     def wdm(wd, r, m):
@@ -252,9 +280,12 @@ def calibrate_grid(cal, seeds=tuple(range(7, 15)), iters=14, passes=3, operators
                 else:
                     hi[t] = z[t]
         return {t: (lo[t] + hi[t]) / 2 for t in eis_t}
+    from .grid import VALUE, NON_ISO
+    a_t = {"ISO": VALUE[0]["a"], "non-ISO": VALUE[NON_ISO[0]]["a"]}   # LBNL zero-cost completion [D]
     x = {k: 0.0 for k in targets}; h1 = {r: 0.02 for r in wdd}; h2 = {r: 0.0 for r in wdd}; lg = {r: 0.0 for r in wdd}
+    af = dict(a_t)
     hp = lambda: {r: [h1[r], h2[r]] for r in wdd}
-    cur = lambda: dict(operators=ops, value_mult=vmult(x), h_pre=hp(), exit_lag=dict(lg))
+    cur = lambda: dict(operators=ops, value_mult=vmult(x), h_pre=hp(), exit_lag=dict(lg), value_a=dict(af))
     # each piece is bisected toward its target: (name, dict, LBNL target, month, upper bound, raising it raises the share)
     pieces = (("first-year hazard", h1, w1, m1, 0.2, True), ("hold after an adverse result", lg, w2, m2, 240.0, False),
               ("later hazard", h2, w3, m3, 0.05, True))
@@ -271,25 +302,43 @@ def calibrate_grid(cal, seeds=tuple(range(7, 15)), iters=14, passes=3, operators
                     else:
                         hi[r] = d[r]
             d.update({r: (lo[r] + hi[r]) / 2 for r in wdd})
+        # value scales and the failure share a together: a so that zero-cost completion matches LBNL's a (the
+        # background hazard acts on top, so the fitted a is at or above LBNL's), the scales to completion targets
         lo = {k: -5.0 for k in targets}; hi = {k: 5.0 for k in targets}
+        alo = dict(a_t); ahi = {m: 1.0 for m in a_t}
         for _ in range(iters):
             x = {k: (lo[k] + hi[k]) / 2 for k in targets}
-            got, _ = run(cur(), seeds)
+            af.update({m: (alo[m] + ahi[m]) / 2 for m in a_t})
+            zc = []
+            got, _ = run(cur(), seeds, zc)
             for k in targets:
                 m = np.nanmean([g[k] for g in got])
                 if np.isnan(m) or m > targets[k]:
                     hi[k] = x[k]
                 else:
                     lo[k] = x[k]
+            for mk in a_t:
+                z = np.nanmean([q[mk]["zero"] for q in zc])
+                if np.isnan(z) or z > a_t[mk]:
+                    ahi[mk] = af[mk]
+                else:
+                    alo[mk] = af[mk]
         x = {k: (lo[k] + hi[k]) / 2 for k in targets}
+        af.update({m: (alo[m] + ahi[m]) / 2 for m in a_t})
     gc = cur()
     gc["p_eis"] = fit_eis(gc)
-    got, wd = run(gc, tuple(range(20, 30)))                 # check on 10 seeds not used in the fit
+    zc = []
+    got, wd = run(gc, tuple(range(20, 30)), zc)             # check on 10 seeds not used in the fit
     chk = [summarize(simulate(dict(pf, grid_cal=gc), s, POL), pf) for s in range(20, 30)]
     eis_fit = {t: (float(np.nanmean([q[t]["EIS_per_year"] for q in chk])), eis_t[t]) for t in eis_t}
     fit = {k: (float(np.nanmean([g[k] for g in got])), targets[k]) for k in targets}
     wfit = {r: {m: (float(wdm(wd, r, m)), v[m]) for m in v} for r, v in wdd.items()}
     od, od_t = calibrate_overdue(dict(cal, grid_cal=gc), base=dict(grid="agents"))
     gc["overdue"] = od["overdue"]
-    return gc, dict(completion=fit, withdrawn_by_month=wfit, fitted_months=[m1, m3, m2], eis_per_year=eis_fit,
+    cc = {mk: dict(zero=(float(np.nanmean([q[mk]["zero"] for q in zc])), a_t[mk]), fitted_a=af[mk],
+                   by_bin=[float(np.nanmean([q[mk]["by_bin"][i] for q in zc])) for i in range(len(COST_BINS) - 1)],
+                   n_bin=[float(np.mean([q[mk]["n_bin"][i] for q in zc])) for i in range(len(COST_BINS) - 1)],
+                   lbnl_by_bin=[v[0] for v in VALUE[0 if mk == "ISO" else NON_ISO[0]]["completion_by_cost_bin"].values()])
+          for mk in a_t}
+    return gc, dict(completion=fit, withdrawn_by_month=wfit, cost_completion=cc, fitted_months=[m1, m3, m2], eis_per_year=eis_fit,
                     first_year_targets=od_t, regions=REGIONS, setting="backcast 2010-25")

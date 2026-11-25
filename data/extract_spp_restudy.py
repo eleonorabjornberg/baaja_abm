@@ -218,6 +218,14 @@ def run(dirs):
         dlog_mean_changed=float(d[ch].mean()), dlog_median_changed=float(np.median(d[ch])),
         share_up10=float((d > np.log(1.1)).mean()), share_down10=float((d < -np.log(1.1)).mean()),
         dlog_sd=float(d.std()), dlog_q=[float(np.quantile(d, q)) for q in (.1, .25, .5, .75, .9)])
+    # request-level log change in $/kW from Phase 2 to the latest posting, every request with a positive cost at
+    # Phase 2 (unchanged ones included; a cost that falls to zero is floored at $1/kW), at percentiles 0..100: the
+    # model draws a re-study cost change from these (grid.py, restudy shock). Zero-to-positive moves (share above)
+    # are left out: in the model a zero-cost request stays at zero.
+    a1 = a_ > 1
+    d1 = np.log(np.maximum(b_[a1], 1.0) / a_[a1])
+    out["after_P2"]["logchange_q"] = [float(np.quantile(d1, q / 100)) for q in range(101)]
+    out["after_P2"]["logchange_n"] = int(a1.sum())
     S = [s for s in steps if s["kind"] == "total"]
     first = {}
     for s in S:

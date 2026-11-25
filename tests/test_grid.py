@@ -124,8 +124,9 @@ def test_zero_cost_requests_pay_nothing_and_leave_only_for_cost_independent_reas
         zs = gr.COST[REGIONS.index("PJM")]["zero_share"]
         assert 0.5 * zs < z[pjm].mean() < 1.5 * zs
         left = np.isfinite(gwd[z & pjm]).mean()
-        if va:   # LBNL: a share 1 - a (0.23 in ISO regions) does not complete at any cost
-            assert 0.5 * (1 - gr.VALUE[REGIONS.index("PJM")]["a"]) < left < 1.5 * (1 - gr.VALUE[REGIONS.index("PJM")]["a"])
+        if va:   # a share 1 - a (fitted; LBNL's 0.23 in ISO regions before other withdrawal) fails at any cost
+            a = ((c.get("grid_cal") or {}).get("value_a") or {}).get("ISO", gr.VALUE[REGIONS.index("PJM")]["a"])
+            assert 0.5 * (1 - a) < left < 1.5 * (1 - a)
         else:
             assert left == 0
 
@@ -169,3 +170,76 @@ def test_relative_screen_removes_share(cal):
     n = lambda rows: sum(int(((r["region"] == m) & ~r["seeded"] & (r["t0"] >= rule)).sum()) for r in _gen(rows).values())
     a, b = n(simulate(p0, 2, POL)), n(simulate(p1, 2, POL))
     assert a > 200 and abs(b / a - 0.75) < 0.05, (a, b)
+
+
+@pytest.mark.parametrize("rank", ["completion", "value"])
+def test_relative_screen_removes_share_either_rank(cal, rank):
+    c = cal["calibration"]
+    m = REGIONS.index("PJM")
+    base = dict(BAAJA, grid="agents", adopt_2106=1.0, planned_share_2106=0.0, q_min_law=0.0, screen_rank=rank)
+    p0 = ex.params(dict(base, screen_2106=0.0), c)
+    p1 = ex.params(dict(base, screen_2106=0.25), c)
+    rule = p0["ix_rule_month"]
+    n = lambda rows: sum(int(((r["region"] == m) & ~r["seeded"] & (r["t0"] >= rule)).sum()) for r in _gen(rows).values())
+    a, b = n(simulate(p0, 2, POL)), n(simulate(p1, 2, POL))
+    assert a > 200 and abs(b / a - 0.75) < 0.05, (a, b)
+
+
+# ---- code matches text (guard 3): each test pins a behavior the brief and ODD state ----
+def test_legacy_queue_gets_the_restudy_round_in_cluster_regions(cal):
+    """Requests in the queue at end-2025 go through current law's re-study round: their recorded cost moves with it."""
+    c = cal["calibration"]
+    m = REGIONS.index("MISO")
+    get = lambda o: _gen(simulate(ex.params(dict(grid="agents", **o), c), 3, POL))
+    a, b = get(dict(restudy_scale=0.0, restudy_rho=0.0)), get(dict(restudy_scale=1.0))
+    moved = 0
+    for t in a:
+        sa, sb = a[t]["seeded"] & (a[t]["region"] == m), b[t]["seeded"] & (b[t]["region"] == m)
+        ca, cb = a[t]["cost"][sa], b[t]["cost"][sb]
+        ok = np.isfinite(ca) & np.isfinite(cb) & (ca > 0)
+        moved += int((~np.isclose(ca[ok], cb[ok])).sum())
+    assert moved > 20
+
+
+def test_planned_lines_enter_in_july_of_their_in_service_year():
+    assert gr.month_of(2026, 11) == 0
+    assert gr.month_of(2028) == 20                 # July 2028 is 20 months after Nov 2026
+    assert all(isinstance(y, int) for v in gr.PLAN_TX.values() for y, _ in v)
+
+
+def test_sec2109_reaches_only_public_utilities(cal, monkeypatch):
+    """FPA s.232(d) applies only to public utilities: with no public-utility share, Sec.2109 changes nothing."""
+    c = cal["calibration"]
+    assert gr.PU_SHARE[REGIONS.index("ERCOT")] == 0 and ((0 <= gr.PU_SHARE) & (gr.PU_SHARE <= 1)).all()
+    monkeypatch.setattr(gr, "PU_SHARE", np.zeros(len(REGIONS)))
+    o = dict(BAAJA, grid="agents", adopt_2106=0.0)
+    a = _gw(simulate(ex.params(dict(o, grid_2109=0.0), c), 5, POL), ex.params(o, c))
+    b = _gw(simulate(ex.params(dict(o, grid_2109=0.3), c), 5, POL), ex.params(o, c))
+    assert np.isclose(a, b)
+
+
+def test_zero_cost_completion_matches_lbnl(cal):
+    f = (cal.get("grid_fit") or {}).get("cost_completion")
+    if not f:
+        pytest.skip("calibration predates the fitted failure share")
+    for mk, v in f.items():
+        got, want = v["zero"]
+        assert abs(got - want) < 0.05, mk
+
+
+def test_restudy_shock_follows_spp_quantiles():
+    q = gr.RESTUDY_Q
+    assert len(q) == 101 and np.all(np.diff(q) >= 0)
+    assert q[50] < 0                                # SPP: the median request's cost falls at re-study
+
+
+def test_single_decision_scope_planned_leaves_others_in_the_round(cal):
+    """sdp_scope_2106='planned' with no published locations: the bill's single decision point applies to no one,
+    so with the screen off Sec.2106 changes nothing."""
+    c = cal["calibration"]
+    o = dict(BAAJA, grid="agents", adopt_2106=1.0, planned_share_2106=0.0, screen_2106=0.0, lag_2106=1.0,
+             grid_2109=0.0, grid_2110=0.0)
+    a = simulate(ex.params(dict(o, sdp_scope_2106="planned"), c), 6, POL)
+    b = simulate(ex.params(dict(o, grid_2106=False), c), 6, POL)
+    for x, y in zip(_gen(a).values(), _gen(b).values()):
+        assert np.array_equal(x["done"], y["done"])

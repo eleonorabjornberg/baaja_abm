@@ -5,17 +5,17 @@ draws and assumption changes. Writes results/sec2106_decomposition.md|json.
 
   A. Sec.2106 by component (every RTO adopts): single decision point (the re-study round removed), published locations,
      entry screen (relative, absolute, none); and the same screens with each RTO adopting with p = 0.5.
-  B. The current-law re-study round turned down in law and bill alike (restudy_rho, restudy_mu, restudy_sd,
-     restudy_months).
+  B. The current-law re-study round turned down in law and bill alike (restudy_rho, restudy_scale, restudy_months).
   C. PJM's upgrade-cost distribution given MISO's zero-cost share or MISO's spread; MISO given PJM's study throughput.
   D. Permitting and courts only (Sec.2106 and Sec.2109 off) with grid agents.
   E. More or sooner: RTO capacity online by Nov 2041 against capacity that ever completes.
-  F. The calibration before the Nov 2026 refit (commit b6c291c), relative against absolute screen.
+  G. Readings of Sec.2106: only published-location requests skip the round; the re-study cost change kept under the
+     single decision point; the screen ranked by value alone.
+  H. Background withdrawal: none during the round (hazard_pause_ia); MISO's later-year hazard set to PJM's.
 """
 import copy
 import json
 import os
-import subprocess
 from multiprocessing import Pool
 
 import numpy as np
@@ -97,10 +97,10 @@ def _cases(cal):
                     ("p=0.5: absolute screen", dict(B, screen_2106=0.0, q_abs_2106=0.25))):
         bill("A", name, o)
     # B. re-study round
-    flat = dict(restudy_rho=0.0, restudy_mu=0.0, restudy_sd=0.0)
-    for tag, x in (("B no cost shock (sd=0, mu=0)", dict(restudy_mu=0.0, restudy_sd=0.0)),
+    flat = dict(restudy_rho=0.0, restudy_scale=0.0)
+    for tag, x in (("B no request-level cost change (scale 0)", dict(restudy_scale=0.0)),
                    ("B costs unchanged by re-study", flat),
-                   ("B months=5 (Order No. 2023 restudy deadline)", dict(restudy_months=5)),
+                   ("B months=8 (Order No. 2023 pro forma)", dict(restudy_months=8)),
                    ("B no re-study round", dict(flat, restudy_months=0))):
         law(tag, x)
         for name, o in (("without Sec.2106", dict(EV, grid_2106=False)),
@@ -115,6 +115,20 @@ def _cases(cal):
         law(tag, ck=ck, cp=cp)
         for name, o in (("full Sec.2106", EV), ("no screen", dict(EV, screen_2106=0.0))):
             bill(tag, name, o, ck, cp)
+    # G. readings of Sec.2106 (bill only; paired with the central current law)
+    for name, o in (("only published locations skip the round", dict(EV, sdp_scope_2106="planned")),
+                    ("p=0.5: only published locations skip the round", dict(B, sdp_scope_2106="planned")),
+                    ("re-study cost change kept", dict(EV, sdp_cost_2106=True)),
+                    ("p=0.5: re-study cost change kept", dict(B, sdp_cost_2106=True)),
+                    ("screen ranked by value", dict(EV, screen_rank="value")),
+                    ("p=0.5: screen ranked by value", dict(B, screen_rank="value"))):
+        bill("A", name, o)
+    # H. background withdrawal hazard (law and bill)
+    for tag, x, ck in (("H no background withdrawal during the round", dict(hazard_pause_ia=True), "now"),
+                       ("H MISO later hazard = PJM's", None, "miso_hz")):
+        law(tag, x, ck)
+        for name, o in (("without Sec.2106", dict(EV, grid_2106=False)), ("full Sec.2106", EV), ("p=0.5", B)):
+            bill(tag, name, dict(o, **(x or {})), ck)
     # D. permitting and courts only
     bill("A", "Titles I-II only (no Sec.2106, no Sec.2109)", dict(B, grid_2106=False, grid_2109=0.0))
     bill("A", "p=0.5 without Sec.2109", dict(B, grid_2109=0.0))
@@ -137,11 +151,9 @@ def run(n_runs, cal, res_dir, procs=None):
     cm = copy.deepcopy(cal); o = cm["grid_cal"]["operators"]
     o["MISO"]["K_end"] = o["PJM"]["K_end"] / o["PJM"]["D_data"] * o["MISO"]["D_data"]
     cals["miso_tp"] = cm
-    try:
-        cals["pre"] = json.loads(subprocess.run(["git", "show", f"{PRE_REFIT}:results/calibration.json"], capture_output=True,
-                                                check=True, text=True).stdout)["calibration"]
-    except Exception:          # noqa: BLE001  (no git history: section F is skipped)
-        pass
+    ch = copy.deepcopy(cal); hp = ch["grid_cal"]["h_pre"]
+    hp["MISO"] = [hp["MISO"][0], hp["PJM"][1]]                      # MISO's later-year hazard (a corner) at PJM's
+    cals["miso_hz"] = ch
     _CAL.update(cals)
     cases = _cases(cal)
     jobs = [(k, o, ck, cp, s) for k, o, ck, cp in cases for s in range(n_runs)]
@@ -166,7 +178,7 @@ def run(n_runs, cal, res_dir, procs=None):
                       diff_cohort_ever=float(np.mean(d(lambda x: x["cohort_ever"]))),
                       zero_cost={z: [float(np.mean([R[k][s]["zero_cost"].get(z, [0, 0])[i] for s in seeds])) for i in (0, 1)]
                                  for z in R[k][seeds[0]]["zero_cost"]})
-    res["_meta"] = dict(n_runs=n_runs, pre_refit_commit=PRE_REFIT if "pre" in cals else None,
+    res["_meta"] = dict(n_runs=n_runs, pre_refit_commit=None, h_pre={g: cal["grid_cal"]["h_pre"].get(g) for g in ("MISO", "PJM")},
                         throughput_over_arrivals={g: o2["K_end"] / o2["D_data"] for g, o2 in cal["grid_cal"]["operators"].items()},
                         cost={g: dict(zero_share=gr.COST[REGIONS.index(g)]["zero_share"], sigma=gr.COST[REGIONS.index(g)]["sigma"])
                               for g in RTO})
@@ -192,17 +204,24 @@ def report(res):
     t_a = table(["case (every RTO adopts unless p=0.5)", "BAAJA minus current law, new GW", "of which Sec.2106",
                  "RTO regions, GW"], rows_a)
     rows_b = []
-    for tag in ("B no cost shock (sd=0, mu=0)", "B costs unchanged by re-study", "B months=5 (Order No. 2023 restudy deadline)",
-                "B no re-study round"):
+    for tag in ("B no request-level cost change (scale 0)", "B costs unchanged by re-study", "B months=8 (Order No. 2023 pro forma)",
+                "B no re-study round", "H no background withdrawal during the round", "H MISO later hazard = PJM's"):
         L = res[f"{tag}|law"]["GW_new"]["mean"]
         g = lambda nm: res[f"{tag}|{nm}"]["diff_GW_new"]["mean"]
         rows_b.append([tag[2:], f"{L:.0f}", f"{g('without Sec.2106'):+.1f}", f"{g('single decision point only'):+.1f}",
                        f"{g('full Sec.2106'):+.1f}", f"{g('p=0.5'):+.1f}"])
     g0 = lambda nm: A(nm)["diff_GW_new"]["mean"]
-    rows_b.insert(0, ["central (rho 0.1, mu -0.08, sd 0.6, 17 months)", f"{law:.0f}", f"{g0('without Sec.2106'):+.1f}",
+    rows_b.insert(0, ["central (rho 0.1, SPP cost changes at scale 1, 17 months)", f"{law:.0f}", f"{g0('without Sec.2106'):+.1f}",
                       f"{g0('single decision point only'):+.1f}", f"{g0('+ relative screen (central)'):+.1f}",
                       f"{g0('p=0.5: relative screen (central)'):+.1f}"])
-    t_b = table(["current-law re-study round (law and bill)", "current law new GW", "without Sec.2106",
+    rows_g = [[name, _f(A(name)["diff_GW_new"]), _f(A(name)["diff_RTO"])]
+              for name in ("+ relative screen (central)", "only published locations skip the round", "re-study cost change kept",
+                           "screen ranked by value", "p=0.5: relative screen (central)",
+                           "p=0.5: only published locations skip the round", "p=0.5: re-study cost change kept",
+                           "p=0.5: screen ranked by value")]
+    t_g = table(["reading of Sec.2106 (every RTO adopts unless p=0.5)", "BAAJA minus current law, new GW", "RTO regions, GW"],
+                rows_g)
+    t_b = table(["current-law re-study round or hazard (law and bill)", "current law new GW", "without Sec.2106",
                  "single decision point only", "every RTO, full Sec.2106", "p=0.5, full Sec.2106"], rows_b)
     reg = [g for g in RTO]
     scr = [[g, f"{A('+ published locations (no screen)')['diff_region'][g]:+.1f}", f"{A('+ relative screen (central)')['diff_region'][g]:+.1f}",
@@ -235,7 +254,8 @@ def report(res):
         "political draws and assumption changes. New capacity excludes relicensed hydro. GW online by Nov 2041.",
         "## A. Sec.2106 by component",
         "The single decision point removes the current-law re-study round (the cost of those who stay moves with the "
-        "withdrawn share, restudy_rho, and by a request-level shock, restudy_mu and restudy_sd, and the agreement comes "
+        "withdrawn share above SPP's, restudy_rho, and by a request-level change drawn from SPP's, scaled by restudy_scale, "
+        "and the agreement comes "
         "restudy_months later). Published locations add a share of requests at sites "
         "the provider has studied, at a fixed fee. The entry screen keeps out the requests least likely to complete.",
         t_a,
@@ -243,6 +263,13 @@ def report(res):
         "Both current law and the bill change. With no re-study round under current law, Sec.2106's single decision "
         "point has nothing to remove.",
         t_b,
+        "## G. Readings of Sec.2106",
+        "Paired with the central current law. 'Only published locations skip the round' reads the single decision point "
+        "as limited to requests at studied sites, where 'any limitations from contingencies' can be known in advance; "
+        "'re-study cost change kept' keeps current law's cost changes but takes the decision at the first result; "
+        "'screen ranked by value' ranks requests for the entry screen by private value alone, not by the chance of "
+        "completing.",
+        t_g,
         "## By region: the entry screen",
         t_r,
         "## C. PJM and MISO counterfactuals",

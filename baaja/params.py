@@ -237,17 +237,16 @@ GRID_LAW = {
                          "cost data, 2018+ vs 2010-17 requests; central = median of MISO, SPP, PJM, high = PJM, low = 0; "
                          "not ERCOT]"),
     # re-study round [D: SPP DISIS results workbooks, 9 clusters 2016-23, postings 2020-26; data/spp_restudy.json]
-    "restudy_rho":      (0.0, 0.1, 0.6, "re-study: cost change for remaining requests per unit withdrawn MW share [D: SPP, "
-                         "slope of cluster cost ratio on withdrawn share through the origin, 0.11, s.e. about 0.8; "
-                         "zero not excluded]"),
-    "restudy_mu":       (-0.4, -0.08, 0.0, "re-study: median log change in a remaining request's upgrade cost [D: SPP, "
-                         "Phase 2 to latest posting, -0.08; low = mean among changed, -0.39; high 0: requests whose "
-                         "cost rose most may have left]"),
-    "restudy_sd":       (0.3, 0.6, 1.0, "re-study: spread (s.d. of log change) of a remaining request's upgrade cost "
-                         "[D: SPP, interquartile range / 1.349 = 0.62; low = one posting step, 0.31; high = s.d., 0.97]"),
-    "restudy_months":   (5, 17, 29, "months from first complete study result to agreement in cluster regions [D: SPP, "
-                         "Phase 2 to latest restudy posting, median of 8 clusters 16.8, high 28.7; low 5 = Order No. "
-                         "2023's 150-day cluster restudy deadline, which SPP's 2016-23 clusters predate]"),
+    "restudy_rho":      (0.0, 0.1, 0.6, "re-study: cost change for remaining requests per unit withdrawn MW share above "
+                         "SPP's median (0.45), on top of SPP's request-level changes [D: SPP, slope of cluster cost ratio "
+                         "on withdrawn share through the origin, 0.11, s.e. about 0.8; zero not excluded]"),
+    "restudy_scale":    (0.5, 1.0, 1.5, "re-study: scale on the request-level log change in upgrade cost, drawn from "
+                         "SPP's changes from Phase 2 to the latest posting [D: data/spp_restudy.json, 325 requests; "
+                         "median -0.17, 10th and 90th percentiles -2.85 and +0.51]"),
+    "restudy_months":   (8, 17, 29, "months from the first complete study result to the agreement in cluster regions "
+                         "under the current process [D: SPP, Phase 2 to the latest restudy posting, censored, median of "
+                         "8 clusters 16.8, high 28.7 (SPP's active-queue file gives no agreement dates); low 8 = Order "
+                         "No. 2023's pro forma 150-day cluster restudy plus 90-day facilities study]"),
     "tx_hosting_gw":    (0.5, 1.5, 3.0, "GW of interconnection room added by one transmission project"),
 }
 GRID_BILL = {
@@ -277,6 +276,13 @@ GRID_BASE = dict(grid="exogenous", grid_cal=None, region_by_year=False, entry_ma
                                     # both runs [D: data/planned_tx.json]; 0 = left out (Sim 7 sensitivity)
                  q_min_law=0.0,     # current-law entry screen, share screened out (relative): 0 central; 0.1 in Sim 7's sensitivity (Order 2023 deposits)
                  q_abs_2106=0.0,    # previous absolute Sec.2106 screen (min P(cost <= value) to enter): sensitivity only
+                 planned_tx_scope="miso",   # approved transmission counted as hosting room: "miso" (LRTP, central) or
+                                            # "all" (with SPP's 2025 ITP and PJM's 2025 RTEP; sensitivity)
+                 screen_rank="completion",  # Sec.2106 screen ranks by chance of completing; "value" = value only
+                 sdp_scope_2106="all",      # requests that skip the re-study round: "all" new requests in an adopting
+                                            # RTO, or "planned" (published locations only)
+                 sdp_cost_2106=False,       # True: the re-study cost change still applies under the single decision
+                 hazard_pause_ia=False,     # True: no background withdrawal between first result and agreement
                  **{k: v[1] for k, v in GRID_LAW.items()},
                  grid_2106=False, grid_2110=0.0, grid_2109=0.0,
                  **{k: v[1] for k, v in GRID_BILL.items() if k not in ("g_2110", "hosting_2109")})

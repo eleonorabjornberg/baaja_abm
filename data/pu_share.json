@@ -1,0 +1,55 @@
+{
+ "meta": {
+  "source": "EIA-861 2025, Sales_Ult_Cust_2025.xlsx (States), Bundled + Delivery",
+  "note": "Usage: python -I data/extract_pu_share.py EIA861_ZIP   -> data/pu_share.json"
+ },
+ "share": {
+  "CAISO": 0.895,
+  "ERCOT": 0.0,
+  "ISO-NE": 0.89,
+  "MISO": 0.779,
+  "NYISO": 0.832,
+  "PJM": 0.881,
+  "SPP": 0.542,
+  "Southeast": 0.57,
+  "West": 0.537
+ },
+ "detail": {
+  "CAISO": {
+   "iou_share": 0.8947974407510659,
+   "twh": 187.176321
+  },
+  "ERCOT": {
+   "iou_share": 0.0,
+   "twh": 126.80731
+  },
+  "ISO-NE": {
+   "iou_share": 0.890058336797958,
+   "twh": 112.506175
+  },
+  "MISO": {
+   "iou_share": 0.7792212170328312,
+   "twh": 650.519312
+  },
+  "NYISO": {
+   "iou_share": 0.8323038005687343,
+   "twh": 143.420561
+  },
+  "PJM": {
+   "iou_share": 0.8807303369535937,
+   "twh": 787.050576
+  },
+  "SPP": {
+   "iou_share": 0.5420022542220689,
+   "twh": 270.149072
+  },
+  "Southeast": {
+   "iou_share": 0.5699870395901709,
+   "twh": 947.958449
+  },
+  "West": {
+   "iou_share": 0.5369780553570779,
+   "twh": 499.360643
+  }
+ }
+}
