@@ -249,3 +249,15 @@ def test_single_decision_scope_planned_leaves_others_in_the_round(cal):
     b = simulate(ex.params(dict(o, grid_2106=False), c), 6, POL)
     for x, y in zip(_gen(a).values(), _gen(b).values()):
         assert np.array_equal(x["done"], y["done"])
+
+
+def test_sec2109_covers_only_lines_finished_from_the_rule_month():
+    """Sec.2109 reaches covered projects carried out under the rule: model lines and approved current-law lines
+    that reach operation from the rule month on, none before."""
+    scn = np.array([0, 1, 1, 2, 4, 4, 5], float)            # cumulative model completions by month
+    plan = [(2, 1.5), (5, 2.0)]
+    assert gr.covered_2109(2, 3, plan, scn) == (0.0, 0.0)   # before the rule: nothing
+    assert gr.covered_2109(3, 3, plan, scn) == (0.0, 1.0)   # the line finished in month 3 counts, earlier ones not
+    assert gr.covered_2109(6, 3, plan, scn) == (2.0, 4.0)   # the approved line of month 2 predates the rule
+    assert gr.covered_2109(60, 3, plan, scn) == (2.0, 4.0)  # past the end of the count: last value
+    assert gr.covered_2109(6, 0, plan, None) == (3.5, 0.0)

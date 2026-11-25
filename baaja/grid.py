@@ -27,7 +27,8 @@ Bill provisions:
                   re-study); a single decision point (no re-study round); security and penalties deter requests with a
                   low chance of completing. RTO/ISO markets only, not ERCOT, Southeast or West.
   Sec.2110        study throughput x (1 + g) from the rule month (FERC-jurisdictional providers: not ERCOT).
-  Sec.2109        extra hosting room per transmission project completed after the rule month.
+  Sec.2109        extra hosting room per transmission project reaching operation from the rule month on, model lines
+                  and approved current-law lines alike, for the public-utility share of the region (s.232(d)).
   Titles I-II     transmission permitting and litigation provisions move transmission completion dates, and so
                   hosting room, through the existing pipeline.
 Current-law transmission (same draws, levers off) is run inside each simulation, so only the bill's change in
@@ -71,6 +72,21 @@ RESTUDY_WSH = float(_SR["withdrawn_median"])
 def month_of(year, month=7):
     """Model month (0 = Nov 2026) of a calendar month."""
     return (year - 2008) * 12 + (month - 1) - FORWARD_OFFSET
+
+
+def covered_2109(t, rule, plan, scn=None):
+    """Transmission projects in service by month t that reached operation from the rule month on, the ones Sec.2109
+    covers ("when carrying out covered projects", s.232(b)(2)): (approved current-law lines, in project-equivalents;
+    model transmission projects). plan: [(in-service month, project-equivalents)]; scn: the model's cumulative
+    transmission completions by month in this region (scenario run), or None."""
+    if t < rule:
+        return 0.0, 0.0
+    cp = sum(k for m, k in plan if rule <= m <= t)
+    if scn is None:
+        return cp, 0.0
+    tt = min(t, len(scn) - 1)
+    before = scn[min(rule - 1, len(scn) - 1)] if rule >= 1 else 0.0
+    return cp, float(scn[tt] - before)
 
 
 D_DATA = np.array([sum(GT["arrivals"][r].get(str(y), 0) for y in range(2021, 2026)) / 60 for r in REGIONS])
@@ -439,15 +455,18 @@ def _region(r, idx, F, out, p, op, U, onpk, ctx, tx, u_adopt, T, T_ext, backcast
     scope = p.get("planned_tx_scope", "miso")
     plan = ([(month_of(y), k) for y, k in PLAN_TX.get(r, [])]
             if not backcast and (scope == "all" or REGIONS[r] == "MISO") else [])
-    pu = PU_SHARE[r]
+    g2109 = p["grid_2109"] * PU_SHARE[r]                             # s.232(d): public utilities only
+    w_plan = p.get("planned_tx", 1.0)
 
     def cong(t):
         a = A[: t + 1].sum()
-        h = p["tx_hosting_gw"] * p.get("planned_tx", 1.0) * sum(k for m, k in plan if t >= m)
+        h = p["tx_hosting_gw"] * w_plan * sum(k for m, k in plan if t >= m)
         if tx is not None:
             tt = min(t, tx["scn"].shape[1] - 1)
-            extra = 1 + (p["grid_2109"] * pu if t >= rule else 0.0)     # s.232(d): public utilities only
-            h += p["tx_hosting_gw"] * (extra * tx["scn"][r, tt] - tx["law"][r, tt])
+            h += p["tx_hosting_gw"] * (tx["scn"][r, tt] - tx["law"][r, tt])
+        if g2109 > 0:
+            cp, cm = covered_2109(t, rule, plan, tx["scn"][r] if tx is not None else None)
+            h += p["tx_hosting_gw"] * g2109 * (w_plan * cp + cm)
         return np.exp(kappa * (a - h) / FLEET_GW[r])
 
     def sign(sel, when):
