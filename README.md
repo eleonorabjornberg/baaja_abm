@@ -163,7 +163,7 @@ with an agent-based queue that sizes the bill's actual mechanisms (below).
 of the variance. Drawing the two interconnection dials across their ranges as well: +33.5 GW [+6.5, +188.7], and
 Sec.2106's dial explains 76% of the variance. **With the grid agents and all their assumptions drawn (first-result reading): +3.0 GW [-32.9,
 +30.5]** (renewables +1.8, gas +4.0, storage -1.7), 2035 shortfall -1.1 GW [-5.2, +0.4]; Sec.2110 throughput
-explains 23% of the variance, realized RTO adoption 22% and the re-study cost scale 13%; nothing else above 3%. By
+explains 23% of the variance, realized RTO adoption 22% and the re-study cost scale 13%; nothing else above 4%. By
 adoption: +13.8 GW if no RTO adopts, +2.3 if some do, -7.9 if all do (medians). Current-law shortfall in 2035: 59-68 GW
 (medians) [21, 133] across the three samples, driven by demand growth.
 

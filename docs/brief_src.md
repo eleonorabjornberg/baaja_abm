@@ -58,8 +58,10 @@ keeps growing after 2041. Of the new requests in RTO regions,
 
 PJM loses most on the first-result reading
 ({{dec:A|+ relative screen (central)/diff_region/PJM ; abs.1f}} GW less with every RTO changing), and MISO gains a
-little ({{dec:A|+ relative screen (central)/diff_region/MISO ; +.1f}} GW), because MISO's study capacity falls well short
-of the requests arriving and a single decision shortens its queue. On the reading that keeps the re-studied cost,
+little ({{dec:A|+ relative screen (central)/diff_region/MISO ; +.1f}} GW), mostly from Sec.2109 on its approved long-range
+lines. Sec.2106 itself costs MISO only
+{{dec:A|without Sec.2106/diff_region/MISO - dec:A|+ relative screen (central)/diff_region/MISO ; .1f}} GW, because
+MISO's study capacity falls well short of the requests arriving and a single decision shortens its queue. On the reading that keeps the re-studied cost,
 MISO gains {{dec:A|re-study cost change kept/diff_region/MISO ; .1f}} of the
 {{dec:A|re-study cost change kept/diff_GW_new/mean ; .1f}} GW.
 
@@ -140,8 +142,9 @@ The full description, in the ODD form of Grimm et al. (2020), is in `docs/ODD.md
 interconnection queue with decision rules for grid operators and developers, coupled to a permitting and litigation
 pipeline and to a supply-and-adequacy account.
 
-Projects. Every generation, storage and transmission request from 2026 to 2041, plus the queue standing at the end
-of 2025, is drawn from LBNL interconnection-queue data by technology and region (Rand et al. 2026). Each goes through
+Projects. Every generation and storage request from 2026 to 2041, plus the queue standing at the end of 2025, is
+drawn from LBNL interconnection-queue data by technology and region (Rand et al. 2026). Transmission projects arrive
+at an assumed rate, placed in regions in proportion to generation requests. Each goes through
 federal permitting if it has a federal hook, possible litigation, possible federal halt, interconnection and
 construction. Permitting and litigation are sized from CEQ, BLM, Army Corps and NEPA-litigation data.
 
@@ -174,10 +177,11 @@ whose successive cluster postings I could obtain, and its clusters predate Order
 Developers enter on the published wait and on their region's projected capacity shortfall. At each study result they
 compare the allocated upgrade cost with the project's value and stay or leave. The shape of the value distribution
 comes from my fit of completion on upgrade cost to LBNL's cost data, which also says that a share of requests do not
-complete at any cost: 23% in RTO regions and 51% elsewhere. In the model those requests leave whatever their cost. The
+complete at any cost: 23% in the five RTOs with LBNL cost data (MISO, PJM, SPP, NYISO and ISO-NE) and 51% in
+balancing areas outside RTOs. In the model those requests leave whatever their cost. The
 share is refitted so that, in the 2010-25 backcast, requests with no upgrade cost complete at the fitted rate (77% and
 49%), since background withdrawal also acts on them; the refitted share that can complete is
-{{cal:calibration/grid_cal/value_a/ISO ; .0%}} in RTO regions and {{cal:calibration/grid_cal/value_a/non-ISO ; .0%}} elsewhere. The level of value is one scale per technology and region,
+{{cal:calibration/grid_cal/value_a/ISO ; .0%}} in the six RTOs and ERCOT and {{cal:calibration/grid_cal/value_a/non-ISO ; .0%}} in the Southeast and West. The level of value is one scale per technology and region,
 fitted so that completion matches LBNL's rates. Value here stands for every reason a project completes or not that the
 model does not otherwise represent; it is not revenue, and the model has no prices. Developers also withdraw over time
 at background rates fitted by region, including while they wait for the re-study. A developer whose result is adverse
@@ -293,7 +297,7 @@ The readings of Sec.2106 change the result more than anything else:
 The interval on the probability-0.5 row of the first table is wide because it mostly records which RTOs happen to
 change their process in each run. The probability of one half is an assumption. The closest precedent is Order No.
 2023: FERC required further filings from each of the five RTOs whose orders I read and found none compliant as filed;
-under it ISO-NE moved from serial to cluster studies and NYISO replaced its Class Year with a cluster process (FERC
+under it ISO-NE moved from serial to cluster studies and NYISO replaced its Class Year process with a new cluster study process (FERC
 2025a-f; 2026a-b). FERC has therefore made RTOs change their processes, but under a rule that set specific requirements;
 s.228(d) lets FERC find an existing process compliant, or a comparable one sufficient. Adoption is drawn independently
 for each RTO here, although one rule sets the standard for all six, so the spread on that row understates the chance
@@ -361,7 +365,7 @@ reading that keeps the re-studied cost, MISO carries
 {{dec:A|re-study cost change kept/diff_region/MISO ; .1f}} of the
 {{dec:A|re-study cost change kept/diff_GW_new/mean ; .1f}} GW.
 
-PJM loses most on the first-result reading. In the model most PJM requests that sign after the rule pay no upgrade
+PJM loses most on the first-result reading. In the model most PJM requests made from the rule month on that sign pay no upgrade
 cost: with every RTO changing its process, {{dec:A|+ relative screen (central)/zero_cost/PJM|Solar/1 ; .0f}} of the
 {{dec:A|+ relative screen (central)/zero_cost/PJM|Solar/0 ; .0f}} solar signers and
 {{dec:A|+ relative screen (central)/zero_cost/PJM|Storage/1 ; .0f}} of the
@@ -536,7 +540,7 @@ adoption, the share of RTO capacity whose process changes, for
 {{unc:grid agents (Phase 2), their assumptions drawn/variance/GW new/top/1/1 ; .0%}}, a tie within sampling error; the
 scale of the re-study cost changes accounts for
 {{unc:grid agents (Phase 2), their assumptions drawn/variance/GW new/top/2/1 ; .0%}}, and no other
-assumption accounts for more than 3%. When no RTO changes its process the median is
+assumption accounts for more than 4%. When no RTO changes its process the median is
 {{unc:grid agents (Phase 2), their assumptions drawn/by_adoption/no RTO adopts/p50 ; +.1f}} GW
 [{{unc:grid agents (Phase 2), their assumptions drawn/by_adoption/no RTO adopts/p5 ; +.1f}},
 {{unc:grid agents (Phase 2), their assumptions drawn/by_adoption/no RTO adopts/p95 ; +.1f}}], above the first row of
@@ -576,14 +580,14 @@ fails others, and the failures bear on the result.
 Fit targets. Grid operators' study throughput was fitted to LBNL request-to-agreement times for 2010-19 cohorts;
 CAISO, ERCOT and MISO have their own fit, and the other six regions, which lack reliable agreement dates, use the
 pooled MISO and CAISO fit. Developers' background withdrawal rates and the hold were fitted to the shares of 2015-19
-requests withdrawn by 12, 36 and 60 months in each region. Developer value scales were fitted to LBNL completion rates
-for 2010-19 requests by technology and region, and the share of requests that fail at any cost was fitted, at the same
+requests withdrawn by 12, 36 and 60 months in each region. Developer value scales were fitted so that the model's
+2010-19 requests complete at LBNL's rates for 2000-20 requests by technology and region, and the share of requests that fail at any cost was fitted, at the same
 time, so that requests with no upgrade cost complete at the rate of my fit to LBNL's cost data. The re-study round was
 fitted to SPP's cluster postings, outside the backcast. The NEPA EIS probabilities and overdue windows were refitted
 with the agents on, and the storage settings were chosen with the backcast in view, so the backcast is not fully
 independent of the fit.
 
-How well the fit worked. Zero-cost completion in RTO regions is
+How well the fit worked. Zero-cost completion in the six RTOs and ERCOT is
 {{cal:grid_fit/cost_completion/ISO/zero/0 ; .3f}} against a target of {{cal:grid_fit/cost_completion/ISO/zero/1 ; .3f}}.
 Outside RTOs the fitted failure share sits at the upper bound of its range, which is the value from my fit to LBNL's
 data, and zero-cost completion is {{cal:grid_fit/cost_completion/non-ISO/zero/0 ; .3f}} against
@@ -605,7 +609,7 @@ is the test that matters most here. Across cost bins from $0-10/kW to over $400/
 {{cal:grid_fit/cost_completion/ISO/by_bin/0 ; .2f}}, {{cal:grid_fit/cost_completion/ISO/by_bin/1 ; .2f}},
 {{cal:grid_fit/cost_completion/ISO/by_bin/2 ; .2f}}, {{cal:grid_fit/cost_completion/ISO/by_bin/3 ; .2f}},
 {{cal:grid_fit/cost_completion/ISO/by_bin/4 ; .2f}} and {{cal:grid_fit/cost_completion/ISO/by_bin/5 ; .2f}} of the
-2010-19 requests in RTO regions that receive a study result, against
+2010-19 requests in the six RTOs and ERCOT that receive a study result, against
 {{cal:grid_fit/cost_completion/ISO/lbnl_by_bin/0 ; .2f}}, {{cal:grid_fit/cost_completion/ISO/lbnl_by_bin/1 ; .2f}},
 {{cal:grid_fit/cost_completion/ISO/lbnl_by_bin/2 ; .2f}}, {{cal:grid_fit/cost_completion/ISO/lbnl_by_bin/3 ; .2f}},
 {{cal:grid_fit/cost_completion/ISO/lbnl_by_bin/4 ; .2f}} and {{cal:grid_fit/cost_completion/ISO/lbnl_by_bin/5 ; .2f}}
@@ -830,26 +834,26 @@ BILLS-119hr2347eas). https://www.congress.gov
 Federal Energy Regulatory Commission (2023, 28 July). Improvements to Generator Interconnection Procedures and
 Agreements, Order No. 2023. 184 FERC ¶ 61,054.
 
-Federal Energy Regulatory Commission (2025a, 4 April). Order on compliance filing, ISO New England Inc., Docket
-Nos. ER24-2007 and ER24-2009.
+Federal Energy Regulatory Commission (2025a, 4 April). Order on compliance and tariff revisions, ISO New England Inc., Docket
+Nos. ER24-2007 and ER24-2009. 191 FERC ¶ 61,018.
 
-Federal Energy Regulatory Commission (2025b, 17 April). Order on compliance filing, New York Independent System
+Federal Energy Regulatory Commission (2025b, 17 April). Order on compliance, New York Independent System
 Operator, Inc., Docket No. ER24-1915.
 
-Federal Energy Regulatory Commission (2025c, 15 May). Order on compliance filing, California Independent System
+Federal Energy Regulatory Commission (2025c, 15 May). Order on compliance, California Independent System
 Operator Corporation, Docket No. ER24-2042.
 
 Federal Energy Regulatory Commission (2025d, 26 June). Order on compliance filing, Southwest Power Pool, Inc.,
 Docket No. ER24-2026. 191 FERC ¶ 61,230 (known to me from FERC 2026a; not retrieved).
 
-Federal Energy Regulatory Commission (2025e, 24 July). Order on compliance filing, PJM Interconnection, L.L.C.,
+Federal Energy Regulatory Commission (2025e, 24 July). Order on compliance, PJM Interconnection, L.L.C.,
 Docket No. ER24-2045.
 
 Federal Energy Regulatory Commission (2025f, 16 October). Order addressing arguments raised on rehearing, and setting
 aside prior order, in part, and on compliance, New York Independent System
 Operator, Inc., Docket No. ER24-1915-002.
 
-Federal Energy Regulatory Commission (2026a, 22 January). Order on compliance filing, Southwest Power Pool, Inc.,
+Federal Energy Regulatory Commission (2026a, 22 January). Order on compliance, Southwest Power Pool, Inc.,
 Docket No. ER24-2026.
 
 Federal Energy Regulatory Commission (2026b, 16 April). Order accepting compliance in part and directing further

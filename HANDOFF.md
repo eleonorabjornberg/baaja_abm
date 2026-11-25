@@ -245,7 +245,7 @@ reopen the model).
   credited only to lines, model and approved MISO, reaching operation from the rule month on; it had been 2.0). Calibration: 26 of 28 completion cells within
   35% (ERCOT storage 0.159 vs 0.117 and geothermal outside the West miss; `tests/test_grid.py` records the ERCOT miss);
   zero-cost completion 0.771 vs 0.772 (RTO) and 0.424 vs 0.493 (non-ISO, `value_a` at its lower bound).
-- Brief: `docs/brief_src.md` is the source; `python -m baaja.brief_numbers` renders `docs/brief.md` (345 numbers from
+- Brief: `docs/brief_src.md` is the source; `python -m baaja.brief_numbers` renders `docs/brief.md` (348 numbers from
   results). Edit the source, never the rendered brief.
 - Stopping rule applied: the final review is verification only (numbers, quotes, code against text).
 

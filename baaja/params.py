@@ -251,9 +251,9 @@ GRID_LAW = {
 }
 GRID_BILL = {
     "adopt_2106":         (0.0, 0.5, 1.0, "Sec.2106(d): probability that an RTO's process changes rather than being "
-                           "found compliant, drawn per RTO [A; check: under Order No. 2023 FERC let every RTO keep its "
-                           "existing cluster process through variations and accepted all five filings in part, so "
-                           "outcomes were alike across RTOs; independence per RTO understates that]"),
+                           "found compliant, drawn per RTO [A; check: under Order No. 2023 FERC accepted each of the five "
+                           "RTO filings only in part and required further filings, so outcomes were alike across "
+                           "RTOs; independence per RTO understates that]"),
     "planned_share_2106": (0.25, 0.5, 0.9, "Sec.2106(a)(2): share of requests able to use a published location"),
     "screen_2106":        (0.1, 0.25, 0.5, "Sec.2106(a)(3): share of requests that non-refundable security and withdrawal "
                            "penalties keep out, those least likely to complete within their technology and region [A; check: "

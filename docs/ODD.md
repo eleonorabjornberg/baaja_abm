@@ -15,7 +15,7 @@ from what depends on how agencies, FERC and RTOs implement it.
 **Patterns the model must reproduce** (calibration targets and checks, section 7.8):
 1. LBNL queue completion by technology and region (share of requests that reach operation).
 2. LBNL request -> interconnection agreement times by request cohort, region by region, including MISO's lengthening
-   from about 19 to about 50 months (2010-19 fitted, 2020-24 held out).
+   from about 21 to about 45 months (2010-19 fitted, 2020-24 held out).
 3. The timing of withdrawal: shares of 2015-19 requests withdrawn by 12, 24, 36 and 60 months, by region.
 4. CEQ's count of environmental impact statements a year by technology; BLM filing -> NEPA notice times (MLRS).
 5. NEPA case outcomes 2001-22: challenger mix, win rates, injunctions, vacatur, case length.

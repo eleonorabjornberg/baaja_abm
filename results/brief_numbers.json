@@ -63,6 +63,10 @@
   "value": 1.7535400000000003,
   "text": "+1.8"
  },
+ "dec:A|without Sec.2106/diff_region/MISO - dec:A|+ relative screen (central)/diff_region/MISO ; .1f": {
+  "value": 0.42846000000000006,
+  "text": "0.4"
+ },
  "dec:A|re-study cost change kept/diff_region/MISO ; .1f": {
   "value": 26.926340000000003,
   "text": "26.9"
