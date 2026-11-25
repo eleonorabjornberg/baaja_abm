@@ -163,19 +163,26 @@ turnover, permitted projects not yet online are halted with probability by techn
   region (`value_mult`, fitted so completion matches LBNL). LBNL's fit, `P(complete | c) = a x (1 - Phi((ln c - mu) /
   sigma))`, also gives a share `1 - a` of requests that do not complete at any cost (0.23 in RTO regions, 0.51 in the
   Southeast and West); those requests get no value (`value_a`, on by default), so a zero-cost draw is not on its own a
-  route to completion. Upgrade cost lognormal by region, with LBNL's share of
+  route to completion. Because the background hazard removes some requests on top, the share `a` is fitted
+  (`calibrate_grid`, `grid_cal["value_a"]`, ISO and non-ISO) so that the model's eventual completion of zero-cost
+  requests with a study result in the 2010-19 backcast cohorts equals LBNL's 0.77 and 0.49. Upgrade cost lognormal by region, with LBNL's share of
   requests at zero cost paying nothing [D: LBNL cost studies], times `exp(kappa x (GW signed since 2026 - hosting
   room) / regional fleet GW)`. `kappa` is 0 / 2.17 / 5.14 (low / central / high): central is the median of MISO, SPP
   and PJM, the three cluster markets where LBNL costs rose between 2010-17 and 2018+ requests; high is PJM; low is 0,
   because three regions cannot pin the rate down. NYISO and the Southeast give negative rates and the West (3.7 GW
   connected over a 183 GW fleet) an implausibly large one, so they are not used. ERCOT has `kappa` = 0: it does not
   allocate network upgrades to generators, and its LBNL costs are point-of-interconnection only.
-- **Decisions.** At the first study result (R = `restudy_months` before the agreement in cluster regions) a developer
-  stays if cost <= value x exp(beta x change in scarcity); withdrawals raise the others' cost by `restudy_rho` x the
-  withdrawn MW share, each remaining request's cost also changes by a lognormal factor (`restudy_mu`, `restudy_sd`),
-  and they decide again at the agreement. The four re-study values are fitted to SPP's DISIS results workbooks (nine
-  clusters, 2016-23, postings 2020-26; `data/spp_restudy.json`). A developer who leaves holds its queue position for an
-  exponential time with regional mean `exit_lag` before the withdrawal is recorded.
+- **Decisions.** In cluster regions under the current process the first study result comes R = `restudy_months`
+  before the agreement, and no sooner than 5 months (150 days) after the cluster study starts; between them is one
+  re-study round. At the first result a developer whose cost is at or below value x exp(beta x change in scarcity)
+  stays; one whose cost is above it holds its queue position for an exponential time with regional mean `exit_lag`
+  and then withdraws. At re-study each remaining request's cost changes by a factor drawn from SPP's request-level
+  changes between Phase 2 and the latest posting (325 requests with a positive Phase 2 cost; a fall to zero floored
+  at $1/kW; scaled by `restudy_scale` on the log), times 1 + `restudy_rho` x (withdrawn MW share - SPP's median
+  0.45); `data/spp_restudy.json`. A developer still holding its position when the re-study result comes stays and
+  signs if its new cost is at or below its value; one whose cost rises above its value withdraws at the agreement
+  stage. Requests already in the queue at end-2025 get the round's cost changes when studied, without extra delay.
+  `hazard_pause_ia` (sensitivity) stops the background hazard during the round.
 - **Entry.** Requests enter with probability `min(mult, 1)`, and extra candidate requests (up to `entry_max` x the base
   rate) enter with probability `(mult - 1) / (entry_max - 1)`, where `mult = (W_ref / W_pub)^entry_wait_elast x
   exp(scarcity_beta x change in scarcity)`, bounded to [0.2, `entry_max`] (the lower bound keeps at least a fifth of
@@ -184,23 +191,30 @@ turnover, permitted projects not yet online are halted with probability by techn
   (`q_min_law` = 0.1, the share of requests screened out, standing for Order 2023's readiness deposits) to both runs.
 - **Transmission.** Transmission projects through the same permitting and court pipeline; each completion adds
   `tx_hosting_gw` of room in a region drawn by generation request shares. Transmission already approved under current
-  law (MISO LRTP Tranches 1 and 2.1, SPP 2025 ITP, PJM 2025 RTEP Window 1 at 500 kV and above; `data/planned_tx.json`)
-  adds room in its own region as it enters service, in both runs, counted in project-equivalents of $0.57 billion
-  (Tranche 1's cost per project); `planned_tx` = 0 leaves it out (Sim 7 sensitivity). Only the bill's change in transmission
+  law adds room in its own region from July of its in-service year, in both runs, counted in project-equivalents of
+  $0.57 billion (Tranche 1's cost per project). The central case counts MISO's LRTP Tranches 1 and 2.1, a step above
+  MISO's historical pace; `planned_tx_scope` = "all" adds SPP's 2025 ITP and PJM's 2025 RTEP Window 1 at 500 kV and
+  above (`data/planned_tx.json`), which may be part of the recurring expansion already in `kappa`; `planned_tx` = 0
+  leaves approved transmission out (Sim 7 sensitivities). Only the bill's change in transmission
   relative to current law (same draws) moves costs; the historical pace is in `kappa`.
 - **Bill.** Sec.2106 in RTOs that adopt (probability `adopt_2106`, drawn per RTO), from the rule month: a share
   `planned_share_2106` of new requests use a published location at a fixed fee (`fee_mult_2106` x the region's
   expected upgrade cost, zero-cost requests included, times the congestion multiplier; 1 = the fee recovers the
-  expected cost; no cost shock, no re-study); one decision at the first result; the share `screen_2106` of new requests least
-  likely to complete (upgrade cost below value) relative to others of the same technology and region do not enter,
-  standing for non-refundable security and withdrawal penalties. Within a technology and region that chance rises
-  with the developer's private value draw, so the screen keeps out requests whose value draw falls in the bottom
-  `screen_2106` share. An earlier version screened on an absolute chance (below 0.25); its units moved with the
+  expected cost; no cost shock, no re-study); one decision at the first result on the first-result cost (the single
+  decision point; `sdp_cost_2106` = True keeps the re-study cost change but takes the decision at the first result;
+  `sdp_scope_2106` = "planned" limits the single decision to published-location requests); the share `screen_2106`
+  of new requests least likely to complete relative to others of the same technology and region do not enter,
+  standing for non-refundable security and withdrawal penalties. Requests that fail at any cost rank lowest (in
+  random order), the rest by private value, so the screen first keeps out requests that would not complete at any
+  cost; `screen_rank` = "value" ranks by value alone (sensitivity). An earlier version screened on an absolute chance (below 0.25); its units moved with the
   calibration, so it was replaced after the recalibrated results were seen, and it is kept as a sensitivity
   (`q_abs_2106`); the post-result hold shrinks by `lag_2106`. Requests made before the rule month keep the current
   process (an assumption: new s.228 has no transition clause). `ix_rule_month` (24 / 36 / 48) is an assumption; the
   statute gives FERC 18 months for the rule and providers 2 years to file. Sec.2110: throughput x (1 + `g_2110`)
-  outside ERCOT. Sec.2109: hosting room x (1 + `hosting_2109`) for projects after the rule month.
+  outside ERCOT. Sec.2109: hosting room x (1 + `hosting_2109` x public-utility share) for projects after the rule
+  month; FPA s.232(d) applies only to public utilities, and the share is the investor-owned share of the region's
+  retail sales (EIA-861 2025, `data/pu_share.json`; ERCOT 0, its utilities being outside FERC's FPA transmission
+  jurisdiction).
 
 ### 7.6 Construction
 Agreement -> operation: LBNL measured medians by technology (2022-25). Exogenous mode for new requests: a build time

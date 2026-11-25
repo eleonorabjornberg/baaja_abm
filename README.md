@@ -264,8 +264,8 @@ the JSON summaries in `data/` from them.
 | `entry_wait_elast` | 0 | 0.3 | 1.0 | Grid agents: elasticity of new requests to the published wait |
 | `scarcity_beta` | 0 | 1 | 3 | Grid agents: developer value and entry rise with the region's projected shortfall (4 years ahead) |
 | `kappa` | 0 | 2.17 | 5.14 | Grid agents: growth of upgrade cost with capacity signed (0 in ERCOT, which does not allocate network upgrades to generators). **From data**: LBNL cost studies, 2018+ vs 2010-17 requests |
-| `restudy_rho`, `restudy_months` | 0, 5 | 0.1, 17 | 0.6, 29 | Grid agents: re-study cost change per withdrawn share; months from first result to agreement in cluster regions. **From data**: SPP DISIS postings, clusters 2016-23 (low months = Order No. 2023's 150-day restudy deadline) |
-| `restudy_mu`, `restudy_sd` | -0.4, 0.3 | -0.08, 0.6 | 0, 1.0 | Grid agents: median and spread of a remaining request's log cost change at re-study. **From data**: SPP DISIS |
+| `restudy_rho`, `restudy_months` | 0, 8 | 0.1, 17 | 0.6, 29 | Grid agents: re-study cost change per withdrawn share above SPP's median; months from first result to agreement in cluster regions. **From data**: SPP DISIS postings, clusters 2016-23, Phase 2 to latest restudy posting (censored; low 8 = Order No. 2023's pro forma 150-day restudy plus 90-day facilities study) |
+| `restudy_scale` | 0.5 | 1 | 1.5 | Grid agents: scale on the request-level log cost change at re-study, drawn from SPP's changes between Phase 2 and the latest posting. **From data**: SPP DISIS |
 | `tx_hosting_gw` | 0.5 | 1.5 | 3.0 | Grid agents: GW of interconnection room added by one transmission project |
 | `adopt_2106` | 0 | 0.5 | 1.0 | Sec.2106(d): chance that an RTO's process changes rather than being found compliant, drawn per RTO |
 | `planned_share_2106` | 0.25 | 0.5 | 0.9 | Sec.2106(a)(2): share of requests able to use a published location |
