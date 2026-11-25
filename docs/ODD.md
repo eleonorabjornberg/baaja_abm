@@ -211,8 +211,8 @@ turnover, permitted projects not yet online are halted with probability by techn
   (`q_abs_2106`); the post-result hold shrinks by `lag_2106`. Requests made before the rule month keep the current
   process (an assumption: new s.228 has no transition clause). `ix_rule_month` (24 / 36 / 48) is an assumption; the
   statute gives FERC 18 months for the rule and providers 2 years to file. Sec.2110: throughput x (1 + `g_2110`)
-  outside ERCOT. Sec.2109: hosting room x (1 + `hosting_2109` x public-utility share) for projects after the rule
-  month; FPA s.232(d) applies only to public utilities, and the share is the investor-owned share of the region's
+  outside ERCOT. Sec.2109: hosting room x (1 + `hosting_2109` x public-utility share) for transmission projects
+  reaching operation from the rule month on, the model's lines and the approved MISO lines alike (`covered_2109`); FPA s.232(d) applies only to public utilities, and the share is the investor-owned share of the region's
   retail sales (EIA-861 2025, `data/pu_share.json`; ERCOT 0, its utilities being outside FERC's FPA transmission
   jurisdiction).
 

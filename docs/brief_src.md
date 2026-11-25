@@ -125,10 +125,9 @@ storage, fuel cells and generators of 5 kW to 5 MW each from wholesale markets, 
 interconnection queue. Sec.2102(b) exempts interstate gas pipeline looping and compression in existing corridors from
 NEPA review. Sec.2109 (new FPA s.232) requires public utilities to evaluate advanced transmission technologies on
 their systems (s.232(b)(1)) and to use them on new and upgraded lines where benefits exceed costs (s.232(b)(2)); the
-model credits only the second, as extra hosting room from the rule month on, and only for the public-utility share
-of each region (s.232(d) applies "only to public utilities"). In the code the extra room applies to every
-transmission request the model completes from November 2026, including lines finished before the rule month, and not
-to MISO's approved Long Range Transmission Plan lines (section 8). Sec.2103 adds interregional
+model credits only the second, as extra hosting room on every line that reaches operation from the rule month on,
+model lines and MISO's approved Long Range Transmission Plan lines alike, and only for the public-utility share of
+each region (s.232(d) applies "only to public utilities"). Sec.2103 adds interregional
 planning with cost allocation; its new FPA s.225(h) deems FERC's orders published in the Federal Register on 11 June
 2024, 6 December 2024 and 28 April 2025 (by their dates, Order No. 1920 and its two orders on rehearing) to satisfy
 the regional planning requirements. In my reading Sec.2103 is the bill's main route to new transmission, and the model
@@ -757,9 +756,10 @@ states on data-center supply is outside the model. On-peak shares of wind, solar
 national values and fall halfway to PJM's ELCC class ratings for 2041/42 by 2041, except in PJM, where they stay at
 2026 values; they do not respond to how much of each is built.
 
-Sec.2109's extra hosting room is applied, from the rule month, to every transmission request the model completes from
-November 2026, so lines finished before the rule month get it too, while MISO's approved Long Range Transmission Plan
-lines, Tranche 2.1 included (in service 2032-34), get none. The two errors go in opposite directions; Sec.2109 is worth
+Sec.2109's extra hosting room goes to every line that reaches operation from the rule month on, the model's lines and
+MISO's approved lines alike. It uses the same rule month as Sec.2106 (three years), although s.232(e)(1) gives FERC
+one year for its order, and it counts a line finished soon after the rule even though most of its design came
+before. The first makes the gain late and the second makes it early. Sec.2109 is worth
 {{sim7:results/BAAJA/diff_vs_baseline/GW_new/mean - sim7:results/BAAJA without Sec.2109 hosting/diff_vs_baseline/GW_new/mean ; .1f}} GW in the central case.
 
 Requests already in the queue when the rule takes effect keep the current process, because the new s.228 has no
