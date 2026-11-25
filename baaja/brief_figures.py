@@ -14,38 +14,42 @@ def _j(res_dir, name):
 
 
 def headline(res_dir, path):
-    """BAAJA minus current law by 2041 (new capacity, relicensed hydro excluded), by model and scenario."""
+    """BAAJA minus current law by 2041 (new capacity, relicensed hydro excluded): the range across what the single
+    decision point removes and how many RTOs change their process (the brief's frame), then the joint draw and the
+    simpler model."""
     s7, un = _j(res_dir, "sim7_grid_agents.json"), _j(res_dir, "uncertainty.json")
+    dc = _j(res_dir, "sec2106_decomposition.json")
     G = "GW_new"
     exo = s7["exogenous"]["BAAJA (exogenous grid)"]["diff_vs_baseline"][G]
     U = {k: v["bands"]["GW new"] for k, v in un.items()}
     r = s7["results"]
     d = lambda k: r[k]["diff_vs_baseline"][G]
+    x = lambda k: dc[k]["diff_GW_new"]
+    C_RD = "#7a5cc7"
     rows = [
-        ("Simpler model, data-sized provisions", exo, C_EXO, "runs"),
-        ("   same, all assumption ranges drawn", U["grid dials at 0 (data-sized provisions)"], C_EXO, "joint"),
-        ("Grid agents: no RTO adopts Sec.2106", d("BAAJA without Sec.2106"), C_AGT, "runs"),
-        ("Grid agents: each RTO adopts with p = 0.5", d("BAAJA"), C_AGT, "runs"),
-        ("Grid agents: every RTO adopts Sec.2106", d("BAAJA, Sec.2106 adopted by every RTO"), C_ALL, "runs"),
-        ("Grid agents, all assumption ranges drawn", U["grid agents (Phase 2), their assumptions drawn"], C_AGT, "joint"),
-        ("Simpler model, study-time cut 0 to ERCOT pace", U["grid dials across their ranges"], "#c9c8c3", "joint"),
+        ("Every RTO, decision on first-result cost, 8-month round", x("B months=8 (Order No. 2023 pro forma)|full Sec.2106"), C_ALL, "runs"),
+        ("Every RTO, decision on first-result cost, 17-month round", d("BAAJA, Sec.2106 adopted by every RTO"), C_ALL, "runs"),
+        ("Every RTO, only published locations skip the round", x("A|only published locations skip the round"), C_RD, "runs"),
+        ("Every RTO, re-study cost change kept", x("A|re-study cost change kept"), C_RD, "runs"),
+        ("No RTO changes its process", d("BAAJA without Sec.2106"), C_EXO, "runs"),
+        ("Each RTO changes with p = 0.5 (convention)", d("BAAJA"), C_AGT, "runs"),
+        ("All assumption ranges drawn (first-result reading)", U["grid agents (Phase 2), their assumptions drawn"], C_AGT, "joint"),
+        ("Simpler model, permitting and courts", exo, "#c9c8c3", "runs"),
     ]
     lo = min(b["p5"] for _, b, _, _ in rows); hi = max(b["p95"] for _, b, _, _ in rows)
-    fig, ax = plt.subplots(figsize=(8.6, 3.9))
+    fig, ax = plt.subplots(figsize=(8.6, 4.2))
     for i, (lab, b, c, kind) in enumerate(rows[::-1]):
         mid = b.get("p50", b["mean"])
         ax.plot([b["p5"], b["p95"]], [i, i], color=c, lw=6 if kind == "joint" else 3, solid_capstyle="butt", alpha=.9)
         ax.plot(mid, i, "o", color=INK, ms=5)
         ax.text(b["p95"] + (hi - lo) * .01, i, f"{mid:+.1f} [{b['p5']:+.1f}, {b['p95']:+.1f}]", va="center", fontsize=8, color=INK2)
-    ax.set_yticks(range(len(rows)), [x[0] for x in rows[::-1]], fontsize=8)
+    ax.set_yticks(range(len(rows)), [x_[0] for x_ in rows[::-1]], fontsize=8)
     ax.axvline(0, color=INK2, lw=.8)
-    ax.set_xlim(min(lo, 0) - (hi - lo) * .03, hi + (hi - lo) * .22); ax.grid(axis="y", visible=False)
+    ax.set_xlim(min(lo, 0) - (hi - lo) * .03, hi + (hi - lo) * .28); ax.grid(axis="y", visible=False)
     ax.set_xlabel("new GW online by Nov 2041, BAAJA minus current law\nthin bars: 5th-95th percentile across 100 paired "
-                  "runs, dot = mean; thick bars: 400 joint samples\nof all assumption ranges, dot = median",
-                  fontsize=8)
+                  "runs, dot = mean\nthick bar: 400 joint samples, dot = median", fontsize=8)
     law = r["Current law"]["totals"][G]["mean"]
-    ax.set_title(f"BAAJA by 2041: {d('BAAJA without Sec.2106')['mean']:+.1f} GW if no RTO adopts Sec.2106, "
-                 f"{d('BAAJA, Sec.2106 adopted by every RTO')['mean']:+.1f} GW if all do (current law: ~{law:,.0f} GW new)",
+    ax.set_title(f"BAAJA by 2041, by reading of Sec.2106's single decision point (current law ~{law:,.0f} GW new)",
                  loc="left", fontsize=9)
     fig.tight_layout(); fig.savefig(path, dpi=200); plt.close(fig)
 
